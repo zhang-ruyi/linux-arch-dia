@@ -1,0 +1,20 @@
+---
+title: SLUB 分配器分配与释放流程
+type: flowchart
+tags: [内存管理, SLUB, slab, kmalloc]
+description: kmalloc 经 kmalloc_slab 选定 slab 缓存后由 slab_alloc_node 分配,kfree 经 slab_free 回收对象
+---
+flowchart TD
+    A[kmalloc<br/>include/linux/slab.h 宏] --> B[__kmalloc_noprof]
+    B --> C[__do_kmalloc_node]
+    C -->|size 超过 KMALLOC_MAX_CACHE_SIZE| D[__kmalloc_large_node_noprof<br/>直接走伙伴系统大页]
+    C --> E[kmalloc_slab<br/>按 size 选定 slab 缓存]
+    E --> F[slab_alloc_node<br/>分配快路径]
+    F -->|当前 slab 有空闲对象| G[从 freelist 取对象<br/>返回内存指针]
+    F -->|无空闲对象| H[__slab_alloc_node<br/>分配慢路径]
+    H --> I[allocate_slab<br/>向伙伴系统申请新 slab]
+    I --> G
+
+    J[kfree] --> K[slab_free<br/>对象回收到 freelist]
+    K --> L[__slab_free<br/>slab 空闲后归还伙伴系统]
+    L --> M[伙伴系统回收页块]

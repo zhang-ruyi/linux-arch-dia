@@ -1,0 +1,28 @@
+---
+title: 中断下半部三机制对比
+type: graph
+tags: [中断, 下半部, softirq, tasklet, workqueue]
+description: softirq、tasklet、workqueue 三种下半部机制的触发与执行路径对比
+---
+graph TB
+    subgraph SO["软中断 softirq"]
+        S1["raise_softirq() / raise_softirq_irqoff()"] --> S2["置 softirq 位图 pending"]
+        S2 --> S3["中断返回或 ksoftirqd 中<br/>do_softirq() → __do_softirq()"]
+        S3 --> S4["按位执行 NET_RX_SOFTIRQ、TIMER_SOFTIRQ 等<br/>open_softirq() 注册的 action"]
+    end
+
+    subgraph TA["tasklet(基于 softirq)"]
+        T1["__tasklet_schedule()"] --> T2["挂入 tasklet_vec 链表"]
+        T2 --> T3["触发 TASKLET_SOFTIRQ / HI_SOFTIRQ"]
+        T3 --> T4["tasklet_action() 遍历执行"]
+    end
+
+    subgraph WQ["工作队列 workqueue"]
+        W1["queue_work()"] --> W2["__queue_work() 挂入 pool->worklist"]
+        W2 --> W3["唤醒内核线程 worker_thread()"]
+        W3 --> W4["进程上下文执行 work 函数<br/>create_worker() 动态创建线程"]
+    end
+
+    S4 -.->|tasklet 复用 softirq 框架| T4
+    SO -.->|softirq 运行于硬中断/软中断上下文,不可睡眠| TA
+    WQ -.->|workqueue 运行于内核线程进程上下文,可睡眠| SO

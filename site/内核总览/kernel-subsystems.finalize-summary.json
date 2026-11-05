@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/tree-kernel-subsystems/candidate.json",
+    "sha256": "95190e7bff45dd3efc840e607dd95741fdccad2a227e0aef01a9ba8fca9d0008",
+    "bytes": 5040
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/kernel-subsystems.html",
+    "sha256": "2a5dbf42faf65b3153bd7209ff2478f956821a547f3e89a2d09aa40b3663da49",
+    "bytes": 874204
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/kernel-subsystems.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/kernel-subsystems.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/kernel-subsystems.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3408,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

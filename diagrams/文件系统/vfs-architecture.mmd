@@ -1,0 +1,39 @@
+---
+title: VFS 虚拟文件系统架构图
+type: graph
+tags: [文件系统, VFS, 架构]
+description: VFS 四大核心对象(super_block/inode/dentry/file)与底层文件系统、页缓存的关系
+---
+graph TB
+    subgraph 用户层
+        App[应用程序<br/>read/write/open]
+    end
+
+    subgraph VFS["VFS 虚拟文件系统(公共接口层)"]
+        SysCall[系统调用<br/>do_sys_open / vfs_read]
+        File[file 结构体<br/>+ file_operations<br/>read_iter/write_iter]
+        Dentry[dentry 目录项<br/>路径 → inode 缓存]
+        Inode[inode 索引节点<br/>+ inode_operations<br/>文件元数据]
+        Super[super_block 超级块<br/>+ super_operations<br/>挂载信息]
+    end
+
+    subgraph 底层
+        Ext4[ext4 / xfs / btrfs<br/>具体文件系统实现]
+        Block[块设备驱动<br/>submit_bio]
+    end
+
+    subgraph 性能层
+        PageCache[页缓存 page cache<br/>address_space<br/>脏页回写]
+    end
+
+    App --> SysCall
+    SysCall --> File
+    File --> Dentry
+    Dentry --> Inode
+    Inode --> Super
+    File -.-> PageCache
+    Inode -.-> PageCache
+    Super --> Ext4
+    Inode --> Ext4
+    PageCache --> Block
+    Ext4 --> Block

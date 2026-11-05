@@ -1,0 +1,34 @@
+---
+title: epoll 三大数据结构原理图
+type: graph
+tags: [网络协议栈, epoll, 事件驱动]
+description: eventpoll 内部红黑树 rbr 与就绪链表 rdllist 的协作,以及 ep_poll_callback 回调机制
+---
+graph TB
+    subgraph 用户接口
+        Create[epoll_create()]
+        Ctl[epoll_ctl(EPOLL_CTL_ADD)]
+        Wait[epoll_wait()]
+    end
+
+    subgraph 内核对象 eventpoll
+        EP[eventpoll 结构体]
+        RBR[红黑树 rbr<br/>管理所有被监听 fd]
+        RDLL[就绪链表 rdllist<br/>存放已就绪 fd]
+        WQ[等待队列 wq<br/>用于 epoll_wait 休眠]
+        CB[ep_poll_callback()<br/>事件就绪回调]
+    end
+
+    Create --> EP
+    EP --> RBR
+    EP --> RDLL
+    EP --> WQ
+
+    Ctl -->|ep_insert()| RBR
+    Ctl --> CB
+    CB -->|fd 就绪时加入| RDLL
+    CB -->|唤醒| WQ
+
+    Wait -->|ep_poll() 检查| RDLL
+    RDLL -->|无事件| WQ
+    WQ -->|被唤醒后再次检查| RDLL

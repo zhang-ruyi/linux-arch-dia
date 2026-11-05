@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "块 IO 路径",
+    "locale": "zh-CN",
+    "output": "site/设备驱动/block-io-flow.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "fs",
+      "type": "backend",
+      "label": "文件系统层",
+      "sublabel": "提交 bio 读请求",
+      "sources": [{ "path": "fs/ext4/page-io.c", "line": 397, "label": "ext4_io_submit" }]
+    },
+    {
+      "id": "submitbio",
+      "type": "backend",
+      "label": "submit_bio",
+      "sublabel": "块层入口",
+      "sources": [{ "path": "block/blk-core.c", "line": 952, "label": "submit_bio" }]
+    },
+    {
+      "id": "noacct",
+      "type": "backend",
+      "label": "submit_bio_noacct",
+      "sublabel": "递归转迭代",
+      "sources": [{ "path": "block/blk-core.c", "line": 817, "label": "submit_bio_noacct" }]
+    },
+    {
+      "id": "blkmq",
+      "type": "backend",
+      "label": "blk_mq_submit_bio",
+      "sublabel": "进入多队列",
+      "sources": [{ "path": "block/blk-mq.c", "line": 3093, "label": "blk_mq_submit_bio" }]
+    },
+    {
+      "id": "sched",
+      "type": "messagebus",
+      "label": "软件队列与调度器",
+      "sublabel": "rq_qos + 电梯调度",
+      "sources": [
+        { "path": "block/blk-mq.c", "line": 1430, "label": "blk_mq_run_hw_queue" },
+        { "path": "block/blk-rq-qos.c", "line": 62, "label": "__rq_qos_throttle" }
+      ]
+    },
+    {
+      "id": "hwq",
+      "type": "backend",
+      "label": "硬件队列",
+      "sublabel": "blk_mq_dispatch_rq_list",
+      "sources": [
+        { "path": "block/blk-mq.c", "line": 2321, "label": "blk_mq_run_hw_queue" },
+        { "path": "block/blk-mq.c", "line": 2085, "label": "blk_mq_dispatch_rq_list" }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "external",
+      "label": "块设备",
+      "sublabel": "硬件执行 IO",
+      "sources": [{ "path": "block/blk-mq.c", "line": 1322, "label": "blk_mq_complete_request" }]
+    }
+  ],
+  "segments": [
+    { "from": 145, "to": 305, "label": "提交与入队" },
+    { "from": 310, "to": 500, "label": "派发与完成" }
+  ],
+  "messages": [
+    {
+      "id": "fs-submit",
+      "from": "fs",
+      "to": "submitbio",
+      "y": 160,
+      "label": "提交 bio 读请求",
+      "variant": "emphasis"
+    },
+    {
+      "id": "submit-noacct",
+      "from": "submitbio",
+      "to": "noacct",
+      "y": 190,
+      "label": "submit_bio_noacct 转换递归为迭代",
+      "variant": "default"
+    },
+    {
+      "id": "noacct-mq",
+      "from": "noacct",
+      "to": "blkmq",
+      "y": 220,
+      "label": "blk_mq_submit_bio 进入多队列",
+      "variant": "default"
+    },
+    {
+      "id": "mq-queue",
+      "from": "blkmq",
+      "to": "sched",
+      "y": 250,
+      "label": "rq_qos_throttle 限流并插入请求",
+      "variant": "default"
+    },
+    {
+      "id": "queue-run",
+      "from": "sched",
+      "to": "hwq",
+      "y": 280,
+      "label": "blk_mq_run_hw_queue 触发硬件队列派发",
+      "variant": "emphasis"
+    },
+    {
+      "id": "hwq-dev",
+      "from": "hwq",
+      "to": "dev",
+      "y": 320,
+      "label": "设备执行 IO 请求",
+      "variant": "default",
+      "note": "blk_mq_dispatch_rq_list 按电梯调度顺序派发"
+    },
+    {
+      "id": "dev-hwq",
+      "from": "dev",
+      "to": "hwq",
+      "y": 390,
+      "label": "硬件中断通知 IO 完成",
+      "variant": "return"
+    },
+    {
+      "id": "hwq-queue",
+      "from": "hwq",
+      "to": "sched",
+      "y": 420,
+      "label": "blk_mq_complete_request 标记请求完成",
+      "variant": "return"
+    },
+    {
+      "id": "queue-mq",
+      "from": "sched",
+      "to": "blkmq",
+      "y": 450,
+      "label": "逐层回传完成",
+      "variant": "return"
+    },
+    {
+      "id": "mq-fs",
+      "from": "blkmq",
+      "to": "fs",
+      "y": 480,
+      "label": "bio_endio 回调上层结束 IO",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "进入块层",
+      "items": [
+        "文件系统通过 submit_bio() 提交 bio",
+        "submit_bio_noacct() 把递归提交转换为迭代",
+        "blk_mq_submit_bio() 进入 blk-mq 多队列路径"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "派发与完成",
+      "items": [
+        "rq_qos_throttle() 限流后把请求插入软件队列",
+        "blk_mq_run_hw_queue() 触发硬件队列派发",
+        "blk_mq_dispatch_rq_list() 按调度顺序把请求交给设备",
+        "完成后经 blk_mq_complete_request() 与 bio_endio() 回传"
+      ]
+    }
+  ]
+}

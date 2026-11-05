@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-page-reclaim/candidate.json",
+    "sha256": "683a81051427158fd9aa2bfaca92b33d75ec7dc96105ba58f16f89e1e2cf3711",
+    "bytes": 7878
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/page-reclaim.html",
+    "sha256": "1528b49db0d6e37bf9c9ad7d3d0a17c1566dd789aff2acae5a49b72ba46353e0",
+    "bytes": 851348
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内存管理/page-reclaim.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内存管理/page-reclaim.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内存管理/page-reclaim.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3628,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

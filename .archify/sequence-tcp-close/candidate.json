@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "TCP 四次挥手时序",
+    "output": "site/网络协议栈/tcp-close.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "主动方进程",
+      "sublabel": "close()",
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1496,
+          "label": "SYSCALL_DEFINE1(close)"
+        }
+      ]
+    },
+    {
+      "id": "active_k",
+      "type": "backend",
+      "label": "主动方内核",
+      "sublabel": "tcp_close()",
+      "sources": [
+        {
+          "path": "net/ipv4/tcp.c",
+          "line": 3308,
+          "label": "tcp_close"
+        },
+        {
+          "path": "net/ipv4/tcp_output.c",
+          "line": 3801,
+          "label": "tcp_send_fin"
+        },
+        {
+          "path": "net/ipv4/tcp_minisocks.c",
+          "line": 326,
+          "label": "tcp_time_wait"
+        }
+      ]
+    },
+    {
+      "id": "passive_k",
+      "type": "backend",
+      "label": "被动方内核",
+      "sublabel": "tcp_v4_rcv()",
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 2067,
+          "label": "tcp_v4_rcv"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 7122,
+          "label": "tcp_rcv_state_process"
+        }
+      ]
+    },
+    {
+      "id": "peer",
+      "type": "backend",
+      "label": "被动方进程",
+      "sublabel": "读到 EOF 后 close()",
+      "sources": [
+        {
+          "path": "net/ipv4/tcp.c",
+          "line": 3308,
+          "label": "tcp_close"
+        },
+        {
+          "path": "fs/open.c",
+          "line": 1496,
+          "label": "SYSCALL_DEFINE1(close)"
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "close-active",
+      "from": "app",
+      "to": "active_k",
+      "y": 160,
+      "label": "close() 关闭连接",
+      "variant": "emphasis"
+    },
+    {
+      "id": "send-fin-u",
+      "from": "active_k",
+      "to": "passive_k",
+      "y": 210,
+      "label": "tcp_send_fin() 发送 FIN seq=u",
+      "note": "tcp_close() 判断 ESTABLISHED,进入 FIN_WAIT_1",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ack-u",
+      "from": "passive_k",
+      "to": "active_k",
+      "y": 270,
+      "label": "回复 ACK ack=u+1",
+      "note": "tcp_v4_do_rcv() → tcp_rcv_state_process() 进入 CLOSE_WAIT",
+      "variant": "return"
+    },
+    {
+      "id": "close-peer",
+      "from": "peer",
+      "to": "passive_k",
+      "y": 325,
+      "label": "应用读到 EOF 后 close()",
+      "note": "主动方收到 ACK 后进入 FIN_WAIT_2"
+    },
+    {
+      "id": "send-fin-v",
+      "from": "passive_k",
+      "to": "active_k",
+      "y": 380,
+      "label": "发送 FIN seq=v",
+      "note": "tcp_send_fin();进入 LAST_ACK",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ack-v",
+      "from": "active_k",
+      "to": "passive_k",
+      "y": 435,
+      "label": "回复 ACK ack=v+1",
+      "note": "主动方收到 FIN 进入 TIME_WAIT;等待 2MSL 后释放连接进入 CLOSED;被动方收到 ACK 进入 CLOSED",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "app",
+      "from": 155,
+      "to": 216,
+      "type": "external"
+    },
+    {
+      "participant": "active_k",
+      "from": 155,
+      "to": 446,
+      "type": "backend"
+    },
+    {
+      "participant": "passive_k",
+      "from": 265,
+      "to": 446,
+      "type": "backend"
+    },
+    {
+      "participant": "peer",
+      "from": 320,
+      "to": 386,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "四次挥手",
+      "items": [
+        "主动方 close() 后由 tcp_send_fin() 发送 FIN",
+        "被动方回 ACK,应用读到 EOF 后再 close() 发送 FIN",
+        "主动方回 ACK 后进入 TIME_WAIT"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "状态迁移",
+      "items": [
+        "主动方 FIN_WAIT_1 → FIN_WAIT_2 → TIME_WAIT → CLOSED",
+        "被动方 CLOSE_WAIT → LAST_ACK → CLOSED"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "TIME_WAIT",
+      "items": [
+        "主动方等待 2MSL 后释放连接",
+        "该等待保证迟到的报文不会污染新连接"
+      ]
+    }
+  ]
+}

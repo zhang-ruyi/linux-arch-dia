@@ -1,0 +1,241 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "CFS 调度主流程（EEVDF）",
+    "locale": "zh-CN",
+    "output": "site/进程管理/cfs-scheduling.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "sched",
+      "label": "CFS 调度主链"
+    }
+  ],
+  "phases": [
+    {
+      "id": "entry",
+      "label": "调度入口",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "pick",
+      "label": "选核",
+      "fromCol": 2,
+      "toCol": 4,
+      "variant": "emphasis"
+    },
+    {
+      "id": "switch",
+      "label": "切换",
+      "fromCol": 5,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "need",
+    "schedule",
+    "pick-task",
+    "fair",
+    "eevdf",
+    "switch"
+  ],
+  "nodes": [
+    {
+      "id": "need",
+      "lane": "sched",
+      "col": 0,
+      "type": "external",
+      "label": "需要调度",
+      "sublabel": "时钟 tick / 抢占 / 主动让出",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 7316,
+          "label": "schedule"
+        }
+      ]
+    },
+    {
+      "id": "schedule",
+      "lane": "sched",
+      "col": 1,
+      "type": "backend",
+      "label": "schedule()",
+      "sublabel": "→ __schedule(sched_mode)",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 7316,
+          "label": "schedule"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 7061,
+          "label": "__schedule"
+        }
+      ]
+    },
+    {
+      "id": "pick-task",
+      "lane": "sched",
+      "col": 2,
+      "type": "backend",
+      "label": "pick_next_task(rq, rf)",
+      "sublabel": "→ __pick_next_task()",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 6216,
+          "label": "pick_next_task"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 6124,
+          "label": "__pick_next_task"
+        }
+      ]
+    },
+    {
+      "id": "fair",
+      "lane": "sched",
+      "col": 3,
+      "type": "backend",
+      "label": "pick_task_fair()",
+      "sublabel": "→ pick_next_entity()",
+      "tag": "当前类为 CFS",
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 9912,
+          "label": "pick_task_fair"
+        },
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 6376,
+          "label": "pick_next_entity"
+        }
+      ]
+    },
+    {
+      "id": "eevdf",
+      "lane": "sched",
+      "col": 4,
+      "type": "backend",
+      "label": "pick_eevdf()",
+      "sublabel": "entity_eligible() 过滤，选 deadline 最小",
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 1136,
+          "label": "pick_eevdf"
+        },
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 939,
+          "label": "entity_eligible"
+        }
+      ]
+    },
+    {
+      "id": "switch",
+      "lane": "sched",
+      "col": 5,
+      "type": "backend",
+      "label": "context_switch()",
+      "sublabel": "task_of(se) → finish_task_switch()",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 5451,
+          "label": "context_switch"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 5318,
+          "label": "finish_task_switch"
+        },
+        {
+          "path": "kernel/sched/sched.h",
+          "line": 1708,
+          "label": "task_of"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "need-schedule",
+      "from": "need",
+      "to": "schedule",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "schedule-pick",
+      "from": "schedule",
+      "to": "pick-task",
+      "role": "main"
+    },
+    {
+      "id": "pick-fair",
+      "from": "pick-task",
+      "to": "fair",
+      "label": "当前类为 CFS",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "fair-eevdf",
+      "from": "fair",
+      "to": "eevdf",
+      "role": "main"
+    },
+    {
+      "id": "eevdf-switch",
+      "from": "eevdf",
+      "to": "switch",
+      "label": "task_of(se) 返回 task_struct",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "switch-need",
+      "from": "switch",
+      "to": "need",
+      "label": "next 进程开始运行",
+      "variant": "dashed",
+      "role": "return",
+      "route": "bottom-channel"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "EEVDF 选核要点",
+      "items": [
+        "EEVDF 按虚拟截止时间 deadline 选择任务",
+        "vruntime 仍用于计算 lag 与 eligible 判断",
+        "选定实体后由 task_of(se) 取回 task_struct"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "完整调用链",
+      "items": [
+        "schedule() → __schedule(sched_mode)",
+        "pick_next_task() → __pick_next_task() → pick_task_fair()",
+        "pick_next_entity() → pick_eevdf() → entity_eligible()",
+        "context_switch() → finish_task_switch()，随后 next 进程运行"
+      ]
+    }
+  ]
+}

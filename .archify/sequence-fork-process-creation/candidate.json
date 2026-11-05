@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "fork() 创建进程时序图",
+    "locale": "zh-CN",
+    "output": "site/进程管理/fork-process-creation.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "调用 fork()",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2828,
+          "label": "SYSCALL_DEFINE0(fork)"
+        }
+      ]
+    },
+    {
+      "id": "libc",
+      "type": "frontend",
+      "label": "libc",
+      "sublabel": "封装系统调用",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2857,
+          "label": "clone 系统调用"
+        }
+      ]
+    },
+    {
+      "id": "sys",
+      "type": "backend",
+      "label": "系统调用层",
+      "sublabel": "进入内核",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2828,
+          "label": "fork syscall"
+        }
+      ]
+    },
+    {
+      "id": "fork",
+      "type": "backend",
+      "label": "kernel_clone()",
+      "sublabel": "kernel/fork.c",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2694,
+          "label": "kernel_clone"
+        }
+      ]
+    },
+    {
+      "id": "copy",
+      "type": "backend",
+      "label": "copy_process()",
+      "sublabel": "复制进程资源",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1994,
+          "label": "copy_process"
+        },
+        {
+          "path": "kernel/fork.c",
+          "line": 2277,
+          "label": "copy_* 资源复制"
+        }
+      ]
+    },
+    {
+      "id": "sched",
+      "type": "backend",
+      "label": "调度器",
+      "sublabel": "wake_up_new_task()",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4941,
+          "label": "wake_up_new_task"
+        }
+      ]
+    },
+    {
+      "id": "child",
+      "type": "backend",
+      "label": "子进程",
+      "sublabel": "TASK_RUNNING",
+      "sources": [
+        {
+          "path": "arch/x86/kernel/process.c",
+          "line": 170,
+          "label": "copy_thread"
+        },
+        {
+          "path": "kernel/fork.c",
+          "line": 2779,
+          "label": "wake_up_new_task 调用"
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-fork",
+      "from": "app",
+      "to": "libc",
+      "y": 160,
+      "label": "fork()",
+      "variant": "default"
+    },
+    {
+      "id": "call-clone",
+      "from": "libc",
+      "to": "sys",
+      "y": 190,
+      "label": "syscall(SYS_clone)",
+      "variant": "default"
+    },
+    {
+      "id": "enter-kernel",
+      "from": "sys",
+      "to": "fork",
+      "y": 220,
+      "label": "kernel_clone(args)",
+      "variant": "default"
+    },
+    {
+      "id": "do-copy",
+      "from": "fork",
+      "to": "copy",
+      "y": 250,
+      "label": "copy_process(NULL, trace, ...)",
+      "variant": "emphasis",
+      "note": "dup_task_struct()\n复制 task_struct 与内核栈"
+    },
+    {
+      "id": "copy-return",
+      "from": "copy",
+      "to": "fork",
+      "y": 320,
+      "label": "返回新 task_struct(p)",
+      "variant": "return",
+      "note": "copy_fs()/copy_files()\ncopy_thread()：子进程返回 0"
+    },
+    {
+      "id": "wake-new",
+      "from": "fork",
+      "to": "sched",
+      "y": 400,
+      "label": "wake_up_new_task(p)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "wake-child",
+      "from": "sched",
+      "to": "child",
+      "y": 430,
+      "label": "唤醒，置为 TASK_RUNNING",
+      "variant": "return"
+    },
+    {
+      "id": "child-return",
+      "from": "child",
+      "to": "app",
+      "y": 460,
+      "label": "返回 0（子进程）",
+      "variant": "return"
+    },
+    {
+      "id": "parent-return",
+      "from": "fork",
+      "to": "app",
+      "y": 490,
+      "label": "返回子进程 PID（父进程）",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "复制是共享与写时复制的组合",
+      "items": [
+        "dup_task_struct() 先复制 task_struct 与内核栈",
+        "copy_mm() 通过 COW 复制地址空间，并非立即复制全部页",
+        "copy_files()/copy_fs()/copy_signal() 共享或复制对应子系统"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "父子返回点不同",
+      "items": [
+        "copy_thread() 让子进程从返回 0 开始",
+        "父进程在 kernel_clone() 返回新任务 PID",
+        "wake_up_new_task() 将子进程放入运行队列"
+      ]
+    }
+  ]
+}

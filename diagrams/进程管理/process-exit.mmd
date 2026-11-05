@@ -1,0 +1,20 @@
+---
+title: 进程退出与回收
+type: flowchart
+tags: [进程管理, do_exit, 僵尸进程, wait]
+description: do_exit 释放资源置僵尸态,父进程 wait 后由 wait_task_zombie 与 release_task 回收
+---
+flowchart TD
+    A["进程调用 do_exit(code)"] --> B["exit_signals() 置 PF_EXITING"]
+    B --> C["exit_mm() 释放地址空间"]
+    C --> D["exit_files() 释放文件描述符"]
+    D --> E["exit_notify()"]
+    E --> F["do_notify_parent() 向父进程发 SIGCHLD"]
+    F --> G["置 exit_state 为 EXIT_ZOMBIE"]
+    G --> H["父进程 wait / wait4 → do_wait()"]
+    H --> I["wait_consider_task() 找到僵尸子进程"]
+    I --> J["wait_task_zombie() 读取退出码"]
+    J --> K["release_task() 释放 task_struct"]
+    K --> L["进程彻底消亡"]
+
+    N["僵尸态——已退出但未被父进程 wait 回收<br/>占 task_struct 不占内存资源"] -.-> G

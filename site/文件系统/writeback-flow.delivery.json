@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b2b24f75-aeca-4dcd-aa88-4be3fdf478e0",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/home/zhang/opencode/code_analsys/.archify/workflow-writeback-flow/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/文件系统/writeback-flow.html",
+  "specification": {
+    "sha256": "615e67d2e2dedc70d0bc8f376ab08a4c7dd5b983d14b23cc98ff4aac91cad979",
+    "bytes": 5711
+  },
+  "artifact": {
+    "sha256": "12f57be96dcf811a498a71cb21f3357e370da91bca58809d11b1cf6316541bfd",
+    "bytes": 843138
+  }
+}

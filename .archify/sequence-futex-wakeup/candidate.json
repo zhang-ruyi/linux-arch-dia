@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "futex 用户态锁的等待与唤醒",
+    "locale": "zh-CN",
+    "output": "site/进程管理/futex-wakeup.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "a",
+      "type": "external",
+      "label": "线程A",
+      "sublabel": "等待锁",
+      "sources": [
+        {
+          "path": "kernel/futex/waitwake.c",
+          "line": 741,
+          "label": "futex_wait"
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "type": "backend",
+      "label": "futex_wait",
+      "sublabel": "__futex_wait 等待路径",
+      "sources": [
+        {
+          "path": "kernel/futex/waitwake.c",
+          "line": 741,
+          "label": "futex_wait"
+        },
+        {
+          "path": "kernel/futex/waitwake.c",
+          "line": 701,
+          "label": "__futex_wait"
+        }
+      ]
+    },
+    {
+      "id": "hb",
+      "type": "database",
+      "label": "futex_hash_bucket",
+      "sublabel": "hb->chain 优先级链表",
+      "sources": [
+        {
+          "path": "kernel/futex/core.c",
+          "line": 260,
+          "label": "futex_hash"
+        },
+        {
+          "path": "kernel/futex/core.c",
+          "line": 844,
+          "label": "__futex_queue"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "type": "external",
+      "label": "线程B",
+      "sublabel": "释放锁",
+      "sources": [
+        {
+          "path": "kernel/futex/waitwake.c",
+          "line": 178,
+          "label": "futex_wake"
+        }
+      ]
+    },
+    {
+      "id": "wake",
+      "type": "backend",
+      "label": "futex_wake",
+      "sublabel": "唤醒路径",
+      "sources": [
+        {
+          "path": "kernel/futex/waitwake.c",
+          "line": 178,
+          "label": "futex_wake"
+        }
+      ]
+    },
+    {
+      "id": "sched",
+      "type": "backend",
+      "label": "wake_up_q",
+      "sublabel": "批量唤醒队列",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 1150,
+          "label": "wake_q_add_safe"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 1156,
+          "label": "wake_up_q"
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-wait",
+      "from": "a",
+      "to": "wait",
+      "y": 160,
+      "label": "futex_wait(uaddr, val)",
+      "variant": "emphasis",
+      "note": "futex_wait_setup() → get_futex_key() 计算键\nfutex_hash() 定位哈希桶\n原子校验 uaddr 值仍等于 val，避免丢唤醒"
+    },
+    {
+      "id": "queue-futex",
+      "from": "wait",
+      "to": "hb",
+      "y": 270,
+      "label": "futex_queue() 挂入 hb->chain",
+      "variant": "default"
+    },
+    {
+      "id": "sleep",
+      "from": "wait",
+      "to": "a",
+      "y": 310,
+      "label": "futex_do_wait() 睡眠，放弃 CPU",
+      "variant": "return"
+    },
+    {
+      "id": "call-wake",
+      "from": "b",
+      "to": "wake",
+      "y": 360,
+      "label": "释放锁，futex_wake(uaddr, nr_wake)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "locate-hb",
+      "from": "wake",
+      "to": "hb",
+      "y": 400,
+      "label": "futex_hash() 定位同一哈希桶，加 spin_lock",
+      "variant": "default"
+    },
+    {
+      "id": "mark-wake",
+      "from": "wake",
+      "to": "hb",
+      "y": 440,
+      "label": "遍历 hb->chain，匹配 key",
+      "variant": "default",
+      "note": "futex_wake_mark() 标记出队"
+    },
+    {
+      "id": "collect",
+      "from": "wake",
+      "to": "sched",
+      "y": 510,
+      "label": "wake_q_add_safe() 收集待唤醒任务",
+      "variant": "default"
+    },
+    {
+      "id": "batch-wake",
+      "from": "wake",
+      "to": "sched",
+      "y": 550,
+      "label": "wake_up_q() 批量唤醒",
+      "variant": "emphasis"
+    },
+    {
+      "id": "woken",
+      "from": "sched",
+      "to": "a",
+      "y": 600,
+      "label": "线程A 被唤醒，重新抢锁",
+      "variant": "return",
+      "note": "无竞争时 pthread_mutex 只做原子 CAS，\n不进入内核，零系统调用开销"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "等待侧",
+      "items": [
+        "futex_wait_setup() 计算 futex key 并校验用户态值",
+        "futex_queue() 把 futex_q 挂入哈希桶链表",
+        "futex_do_wait() 进入睡眠并让出 CPU"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "唤醒侧",
+      "items": [
+        "futex_wake() 定位同一哈希桶并加 spin_lock",
+        "futex_wake_mark() 标记匹配的等待者出队",
+        "wake_q_add_safe() 收集任务，wake_up_q() 批量唤醒"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "无竞争快路径",
+      "items": [
+        "pthread_mutex 在用户态只做原子 CAS 增减",
+        "无竞争时不进入内核，零系统调用开销"
+      ]
+    }
+  ]
+}

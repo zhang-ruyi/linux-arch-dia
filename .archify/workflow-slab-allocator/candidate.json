@@ -1,0 +1,173 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "SLUB 分配器分配与释放流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/slab-allocator.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "alloc_main", "label": "分配 · 主路径与返回" },
+    { "id": "alloc_large", "label": "分配 · 大对象" },
+    { "id": "alloc_slow", "label": "分配 · slab 慢路径" },
+    { "id": "free_main", "label": "释放 · 回收路径" }
+  ],
+  "mainPath": ["a", "b", "c", "e", "f", "g"],
+  "nodes": [
+    {
+      "id": "a",
+      "lane": "alloc_main",
+      "col": 0,
+      "type": "backend",
+      "label": "kmalloc",
+      "sublabel": "include/linux/slab.h 宏",
+      "sources": [{ "path": "include/linux/slab.h", "line": 1034 }]
+    },
+    {
+      "id": "b",
+      "lane": "alloc_main",
+      "col": 1,
+      "type": "backend",
+      "label": "__kmalloc_noprof",
+      "sources": [{ "path": "mm/slub.c", "line": 5379 }]
+    },
+    {
+      "id": "c",
+      "lane": "alloc_main",
+      "col": 2,
+      "type": "backend",
+      "label": "__do_kmalloc_node",
+      "sources": [{ "path": "mm/slub.c", "line": 5342 }]
+    },
+    {
+      "id": "e",
+      "lane": "alloc_main",
+      "col": 3,
+      "type": "backend",
+      "label": "kmalloc_slab",
+      "sublabel": "按 size 选定 slab 缓存",
+      "sources": [{ "path": "mm/slab.h", "line": 389 }]
+    },
+    {
+      "id": "f",
+      "lane": "alloc_main",
+      "col": 4,
+      "type": "backend",
+      "label": "slab_alloc_node",
+      "sublabel": "分配快路径",
+      "sources": [{ "path": "mm/slub.c", "line": 4920 }]
+    },
+    {
+      "id": "g",
+      "lane": "alloc_main",
+      "col": 5,
+      "type": "backend",
+      "label": "从 freelist 取对象",
+      "sublabel": "返回内存指针",
+      "icon": "success",
+      "sources": [{ "path": "mm/slub.c", "line": 4933 }]
+    },
+    {
+      "id": "d",
+      "lane": "alloc_large",
+      "col": 2,
+      "type": "backend",
+      "label": "__kmalloc_large_node_noprof",
+      "sublabel": "超过 KMALLOC_MAX_CACHE_SIZE",
+      "sources": [{ "path": "mm/slub.c", "line": 5331 }]
+    },
+    {
+      "id": "h",
+      "lane": "alloc_slow",
+      "col": 4,
+      "type": "backend",
+      "label": "__slab_alloc_node",
+      "sublabel": "分配慢路径",
+      "sources": [{ "path": "mm/slub.c", "line": 4529 }]
+    },
+    {
+      "id": "i",
+      "lane": "alloc_slow",
+      "col": 5,
+      "type": "backend",
+      "label": "allocate_slab",
+      "sublabel": "向伙伴系统申请新 slab",
+      "sources": [{ "path": "mm/slub.c", "line": 3387 }]
+    },
+    {
+      "id": "j",
+      "lane": "free_main",
+      "col": 0,
+      "type": "backend",
+      "label": "kfree",
+      "sources": [{ "path": "include/linux/slab.h", "line": 579 }]
+    },
+    {
+      "id": "k",
+      "lane": "free_main",
+      "col": 1,
+      "type": "backend",
+      "label": "slab_free",
+      "sublabel": "对象回收到 freelist",
+      "sources": [{ "path": "mm/slub.c", "line": 6399 }]
+    },
+    {
+      "id": "l",
+      "lane": "free_main",
+      "col": 2,
+      "type": "backend",
+      "label": "__slab_free",
+      "sublabel": "slab 空闲后归还页块",
+      "sources": [{ "path": "mm/slub.c", "line": 5664 }]
+    },
+    {
+      "id": "m",
+      "lane": "free_main",
+      "col": 3,
+      "type": "database",
+      "label": "伙伴系统回收页块",
+      "sublabel": "free_slab 归还伙伴",
+      "sources": [{ "path": "mm/slub.c", "line": 3490 }]
+    }
+  ],
+  "edges": [
+    { "id": "a-b", "from": "a", "to": "b", "role": "main" },
+    { "id": "b-c", "from": "b", "to": "c", "role": "main" },
+    { "id": "c-d", "from": "c", "to": "d", "label": "size 超限", "variant": "dashed", "role": "branch", "fromSide": "bottom", "toSide": "top" },
+    { "id": "c-e", "from": "c", "to": "e", "role": "main" },
+    { "id": "e-f", "from": "e", "to": "f", "role": "main" },
+    { "id": "f-g", "from": "f", "to": "g", "role": "main", "fromSide": "right", "toSide": "left" },
+    { "id": "f-h", "from": "f", "to": "h", "label": "无空闲对象", "variant": "dashed", "role": "branch", "fromSide": "bottom", "toSide": "top" },
+    { "id": "h-i", "from": "h", "to": "i", "role": "main" },
+    { "id": "i-g", "from": "i", "to": "g", "role": "return", "fromSide": "right", "toSide": "right", "route": "outside-right" },
+    { "id": "j-k", "from": "j", "to": "k", "role": "main" },
+    { "id": "k-l", "from": "k", "to": "l", "role": "main" },
+    { "id": "l-m", "from": "l", "to": "m", "role": "main" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "分配主路径",
+      "items": [
+        "kmalloc 经 __kmalloc_noprof 进入 __do_kmalloc_node",
+        "kmalloc_slab 按 size 选定缓存,slab_alloc_node 优先从 freelist 取对象",
+        "size 超过 KMALLOC_MAX_CACHE_SIZE 时走 __kmalloc_large_node_noprof 大页路径"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "慢路径与释放",
+      "items": [
+        "freelist 无对象时进入 __slab_alloc_node,由 allocate_slab 向伙伴系统申请新 slab",
+        "kfree 经 slab_free 把对象回收到 freelist",
+        "__slab_free 在 slab 空闲后通过 free_slab 把页块归还伙伴系统"
+      ]
+    }
+  ]
+}

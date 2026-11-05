@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "信号生命周期",
+    "locale": "zh-CN",
+    "output": "site/进程管理/signal-handling.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "sender",
+      "type": "external",
+      "label": "发送方进程",
+      "sublabel": "调用 kill()",
+      "sources": [{ "path": "kernel/signal.c", "line": 1579, "label": "kill_something_info" }]
+    },
+    {
+      "id": "sys",
+      "type": "backend",
+      "label": "kill() 系统调用",
+      "sublabel": "系统调用层",
+      "sources": [{ "path": "kernel/signal.c", "line": 1579, "label": "kill_something_info" }]
+    },
+    {
+      "id": "sig",
+      "type": "backend",
+      "label": "内核 signal.c",
+      "sublabel": "信号投递",
+      "sources": [
+        { "path": "kernel/signal.c", "line": 1040, "label": "__send_signal_locked" },
+        { "path": "kernel/signal.c", "line": 963, "label": "complete_signal" }
+      ]
+    },
+    {
+      "id": "target",
+      "type": "backend",
+      "label": "目标进程",
+      "sublabel": "TIF_SIGPENDING",
+      "sources": [{ "path": "kernel/entry/common.c", "line": 64, "label": "TIF_SIGPENDING 检查" }]
+    },
+    {
+      "id": "arch",
+      "type": "backend",
+      "label": "架构层 signal.c",
+      "sublabel": "构造/恢复信号帧",
+      "sources": [
+        { "path": "arch/x86/kernel/signal.c", "line": 333, "label": "arch_do_signal_or_restart" },
+        { "path": "arch/x86/kernel/signal_64.c", "line": 246, "label": "rt_sigreturn" }
+      ]
+    },
+    {
+      "id": "user",
+      "type": "external",
+      "label": "用户态 handler",
+      "sublabel": "signal handler",
+      "sources": [{ "path": "arch/x86/kernel/signal_64.c", "line": 246, "label": "rt_sigreturn" }]
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-kill",
+      "from": "sender",
+      "to": "sys",
+      "y": 160,
+      "label": "kill(pid, sig)",
+      "variant": "emphasis",
+      "note": "kill_something_info()\nkill_pid_info() → group_send_sig_info()\ndo_send_sig_info() → send_signal_locked()"
+    },
+    { "id": "to-signal", "from": "sys", "to": "sig", "y": 250, "label": "kill_something_info()", "variant": "default" },
+    {
+      "id": "queue-signal",
+      "from": "sig",
+      "to": "target",
+      "y": 290,
+      "label": "置 TIF_SIGPENDING 并唤醒",
+      "variant": "return",
+      "note": "__send_signal_locked() 置 pending 位图\ncomplete_signal() 唤醒目标"
+    },
+    {
+      "id": "fetch-signal",
+      "from": "target",
+      "to": "sig",
+      "y": 370,
+      "label": "get_signal() 取出 pending 信号",
+      "variant": "default",
+      "note": "在 exit_to_user_mode_loop() 中\n检查 TIF_SIGPENDING"
+    },
+    { "id": "do-signal", "from": "sig", "to": "arch", "y": 450, "label": "arch_do_signal_or_restart()", "variant": "default" },
+    {
+      "id": "setup-frame",
+      "from": "arch",
+      "to": "target",
+      "y": 490,
+      "label": "修改 regs 指向 handler 入口",
+      "variant": "return",
+      "note": "handle_signal() → setup_rt_frame()\n在用户栈构造 rt_sigframe"
+    },
+    { "id": "enter-handler", "from": "target", "to": "user", "y": 570, "label": "进入 handler 执行", "variant": "emphasis" },
+    { "id": "sigreturn", "from": "user", "to": "arch", "y": 610, "label": "handler 返回，调用 rt_sigreturn", "variant": "default" },
+    {
+      "id": "restore-ctx",
+      "from": "arch",
+      "to": "target",
+      "y": 650,
+      "label": "返回被中断的用户态指令继续执行",
+      "variant": "return",
+      "note": "SYSCALL_DEFINE0(rt_sigreturn)\nrestore_sigcontext() 恢复现场"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "投递阶段",
+      "items": [
+        "kill() 经 kill_something_info() 找到目标进程",
+        "信号挂入 pending 位图并置 TIF_SIGPENDING",
+        "complete_signal() 负责唤醒目标"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "处理阶段",
+      "items": [
+        "返回用户态前 exit_to_user_mode_loop() 检查待处理信号",
+        "get_signal() 取出信号，架构层构造 rt_sigframe",
+        "regs 被改为指向用户态 handler"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "返回阶段",
+      "items": [
+        "handler 结束调用 rt_sigreturn",
+        "restore_sigcontext() 恢复被中断的现场",
+        "目标进程继续执行原用户态指令"
+      ]
+    }
+  ]
+}

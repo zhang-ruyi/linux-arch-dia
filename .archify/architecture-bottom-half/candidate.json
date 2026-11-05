@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "中断下半部三机制对比",
+    "locale": "zh-CN",
+    "output": "site/进程管理/bottom-half.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "t1",
+      "type": "backend",
+      "label": "__tasklet_schedule()",
+      "sublabel": "调度 tasklet",
+      "pos": [40, 80],
+      "size": [210, 72],
+      "sources": [{ "path": "kernel/softirq.c", "line": 838, "label": "__tasklet_schedule" }]
+    },
+    {
+      "id": "t2",
+      "type": "messagebus",
+      "label": "挂入 tasklet_vec 链表",
+      "sublabel": "每 CPU 链表",
+      "pos": [40, 190],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/softirq.c", "line": 819, "label": "tasklet_vec" },
+        { "path": "kernel/softirq.c", "line": 822, "label": "__tasklet_schedule_common" }
+      ]
+    },
+    {
+      "id": "t3",
+      "type": "backend",
+      "label": "触发 TASKLET_SOFTIRQ",
+      "sublabel": "或 HI_SOFTIRQ",
+      "pos": [40, 300],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/softirq.c", "line": 840, "label": "TASKLET_SOFTIRQ" },
+        { "path": "kernel/softirq.c", "line": 847, "label": "HI_SOFTIRQ" }
+      ]
+    },
+    {
+      "id": "t4",
+      "type": "backend",
+      "label": "tasklet_action()",
+      "sublabel": "遍历执行",
+      "pos": [40, 410],
+      "size": [210, 72],
+      "sources": [{ "path": "kernel/softirq.c", "line": 963, "label": "tasklet_action" }]
+    },
+    {
+      "id": "s1",
+      "type": "backend",
+      "label": "raise_softirq()",
+      "sublabel": "raise_softirq_irqoff()",
+      "pos": [440, 80],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/softirq.c", "line": 790, "label": "raise_softirq" },
+        { "path": "kernel/softirq.c", "line": 773, "label": "raise_softirq_irqoff" }
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "backend",
+      "label": "置 softirq 位图 pending",
+      "sublabel": "标记待处理软中断",
+      "pos": [440, 190],
+      "size": [210, 72],
+      "sources": [{ "path": "kernel/softirq.c", "line": 773, "label": "raise_softirq_irqoff" }]
+    },
+    {
+      "id": "s3",
+      "type": "backend",
+      "label": "do_softirq()",
+      "sublabel": "→ __do_softirq()",
+      "pos": [440, 300],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/softirq.c", "line": 510, "label": "do_softirq" },
+        { "path": "kernel/softirq.c", "line": 654, "label": "__do_softirq" }
+      ]
+    },
+    {
+      "id": "s4",
+      "type": "backend",
+      "label": "执行 open_softirq() 注册的 action",
+      "sublabel": "NET_RX_SOFTIRQ / TIMER_SOFTIRQ 等",
+      "pos": [440, 410],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/softirq.c", "line": 806, "label": "open_softirq" },
+        { "path": "kernel/softirq.c", "line": 654, "label": "__do_softirq" }
+      ]
+    },
+    {
+      "id": "w1",
+      "type": "backend",
+      "label": "queue_work()",
+      "sublabel": "提交工作项",
+      "pos": [880, 80],
+      "size": [210, 72],
+      "sources": [{ "path": "include/linux/workqueue.h", "line": 696, "label": "queue_work" }]
+    },
+    {
+      "id": "w2",
+      "type": "messagebus",
+      "label": "__queue_work()",
+      "sublabel": "挂入 pool->worklist",
+      "pos": [880, 190],
+      "size": [210, 72],
+      "sources": [{ "path": "kernel/workqueue.c", "line": 2275, "label": "__queue_work" }]
+    },
+    {
+      "id": "w3",
+      "type": "backend",
+      "label": "唤醒 worker_thread()",
+      "sublabel": "内核线程",
+      "pos": [880, 300],
+      "size": [210, 72],
+      "sources": [{ "path": "kernel/workqueue.c", "line": 3431, "label": "worker_thread" }]
+    },
+    {
+      "id": "w4",
+      "type": "backend",
+      "label": "进程上下文执行 work 函数",
+      "sublabel": "create_worker() 动态创建线程",
+      "pos": [880, 410],
+      "size": [210, 72],
+      "sources": [
+        { "path": "kernel/workqueue.c", "line": 3431, "label": "worker_thread" },
+        { "path": "kernel/workqueue.c", "line": 2836, "label": "create_worker" }
+      ]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "tasklet（基于 softirq）", "wraps": ["t1", "t2", "t3", "t4"] },
+    { "kind": "region", "label": "软中断 softirq", "wraps": ["s1", "s2", "s3", "s4"] },
+    { "kind": "region", "label": "工作队列 workqueue", "wraps": ["w1", "w2", "w3", "w4"] }
+  ],
+  "connections": [
+    { "id": "t1-t2", "from": "t1", "to": "t2", "fromSide": "bottom", "toSide": "top" },
+    { "id": "t2-t3", "from": "t2", "to": "t3", "fromSide": "bottom", "toSide": "top" },
+    { "id": "t3-t4", "from": "t3", "to": "t4", "fromSide": "bottom", "toSide": "top" },
+    { "id": "s1-s2", "from": "s1", "to": "s2", "fromSide": "bottom", "toSide": "top" },
+    { "id": "s2-s3", "from": "s2", "to": "s3", "fromSide": "bottom", "toSide": "top" },
+    { "id": "s3-s4", "from": "s3", "to": "s4", "fromSide": "bottom", "toSide": "top" },
+    { "id": "w1-w2", "from": "w1", "to": "w2", "fromSide": "bottom", "toSide": "top" },
+    { "id": "w2-w3", "from": "w2", "to": "w3", "fromSide": "bottom", "toSide": "top" },
+    { "id": "w3-w4", "from": "w3", "to": "w4", "fromSide": "bottom", "toSide": "top" },
+    {
+      "id": "t4-s4",
+      "from": "t4",
+      "to": "s4",
+      "label": "复用 softirq 框架",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "s3-t3",
+      "from": "s3",
+      "to": "t3",
+      "label": "中断上下文，不可睡眠",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "w4-s4",
+      "from": "w4",
+      "to": "s4",
+      "label": "进程上下文，可睡眠",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "softirq",
+      "items": [
+        "由 raise_softirq()/raise_softirq_irqoff() 置位 pending",
+        "在中断返回或 ksoftirqd 中执行 do_softirq() → __do_softirq()",
+        "运行于硬中断/软中断上下文，不可睡眠",
+        "按 open_softirq() 注册的 action 分类型执行"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "tasklet",
+      "items": [
+        "基于 softirq 框架实现",
+        "__tasklet_schedule() 挂入 tasklet_vec 并触发 TASKLET_SOFTIRQ/HI_SOFTIRQ",
+        "由 tasklet_action() 遍历执行",
+        "同样运行于软中断上下文，不可睡眠"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "workqueue",
+      "items": [
+        "queue_work() → __queue_work() 挂入 pool->worklist",
+        "唤醒内核线程 worker_thread() 执行",
+        "运行于进程上下文，可以睡眠",
+        "create_worker() 按需动态创建 worker 线程"
+      ]
+    }
+  ]
+}

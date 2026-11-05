@@ -1,0 +1,20 @@
+---
+title: CFS 调度主流程(EEVDF)
+type: flowchart
+tags: [进程管理, 调度器, CFS, EEVDF]
+description: 从 schedule() 入口到 context_switch() 的调度主调用链,pick_eevdf() 选 deadline 最小者
+---
+flowchart TD
+    A["需要调度<br/>时钟 tick / 抢占 / 主动让出"] --> B["schedule()"]
+    B --> C["__schedule(sched_mode)"]
+    C --> D["pick_next_task(rq, rf)"]
+    D --> E["__pick_next_task()"]
+    E -->|当前类为 CFS| F["pick_task_fair()"]
+    F --> G["pick_next_entity()"]
+    G --> H["pick_eevdf()"]
+    H --> I["entity_eligible() 过滤 eligible 实体"]
+    I --> J["选出虚拟截止时间 deadline 最小者"]
+    J -->|task_of(se) 返回 task_struct| K["context_switch()"]
+    K --> L["finish_task_switch()"]
+    L -->|next 进程开始运行| A
+    N["说明——EEVDF 按 deadline 选任务<br/>vruntime 仍用于计算 lag 与 eligible 判断"] -.-> H

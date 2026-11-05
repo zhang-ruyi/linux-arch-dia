@@ -1,0 +1,30 @@
+---
+title: x86 缺页异常处理流程
+type: flowchart
+tags: [内存管理, 缺页异常, x86, page fault]
+description: 从 exc_page_fault 到 handle_pte_fault 的缺页分发,覆盖匿名页、文件页、COW、换入四条分支
+---
+flowchart TD
+    A[CPU 触发缺页异常<br/>硬件保存错误码与 CR2] --> B[exc_page_fault<br/>arch/x86/mm/fault.c<br/>DEFINE_IDTENTRY_RAW_ERRORCODE]
+    B --> C[handle_page_fault<br/>区分内核态与用户态缺页]
+    C --> D[do_user_addr_fault<br/>用户态缺页,查找 VMA]
+    D --> E[handle_mm_fault<br/>mm/memory.c 核心入口]
+    E --> F[__handle_mm_fault<br/>逐级分配 pgd p4d pud pmd]
+    F --> G[handle_pte_fault<br/>按 PTE 状态分发]
+
+    G -->|pte 为空,缺页| H[do_pte_missing]
+    G -->|pte 不在内存,swap 项| I[do_swap_page<br/>页换入]
+    G -->|NUMA 保护页| J[do_numa_page<br/>跨节点迁移]
+    G -->|写只读页| K[do_wp_page<br/>COW 写时复制]
+
+    H -->|vma_is_anonymous 匿名映射| L[do_anonymous_page<br/>分配匿名零页]
+    H -->|文件映射| M[do_fault<br/>文件页缺页]
+
+    M -->|只读缺页| N[do_read_fault]
+    M -->|私有映射写缺页| O[do_cow_fault]
+    M -->|共享映射写缺页| P[do_shared_fault]
+
+    N --> Q[__do_fault 调用<br/>vm_ops 的 fault 回调]
+    O --> Q
+    P --> Q
+    Q --> R[filemap_fault<br/>读入文件页,读盘]

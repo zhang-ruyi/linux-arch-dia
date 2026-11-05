@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "内核启动流程",
+    "locale": "zh-CN",
+    "output": "site/设备驱动/startup-boot.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    },
+    "viewBox": [
+      1000,
+      620
+    ]
+  },
+  "participants": [
+    {
+      "id": "cpu",
+      "type": "external",
+      "label": "CPU",
+      "sublabel": "上电执行固件",
+      "sources": [
+        {
+          "path": "arch/x86/boot/header.S",
+          "line": 547,
+          "label": "start_of_setup"
+        }
+      ]
+    },
+    {
+      "id": "bios",
+      "type": "external",
+      "label": "BIOS",
+      "sublabel": "固件引导",
+      "sources": [
+        {
+          "path": "arch/x86/boot/main.c",
+          "line": 133,
+          "label": "boot/main.c 入口"
+        }
+      ]
+    },
+    {
+      "id": "boot",
+      "type": "external",
+      "label": "Bootloader",
+      "sublabel": "装入内核镜像",
+      "sources": [
+        {
+          "path": "arch/x86/boot/main.c",
+          "line": 180,
+          "label": "go_to_protected_mode"
+        }
+      ]
+    },
+    {
+      "id": "head",
+      "type": "backend",
+      "label": "startup_64",
+      "sublabel": "x86 内核入口",
+      "sources": [
+        {
+          "path": "arch/x86/kernel/head_64.S",
+          "line": 38,
+          "label": "startup_64"
+        }
+      ]
+    },
+    {
+      "id": "startkernel",
+      "type": "backend",
+      "label": "start_kernel",
+      "sublabel": "各子系统初始化",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 972,
+          "label": "start_kernel"
+        }
+      ]
+    },
+    {
+      "id": "restinit",
+      "type": "backend",
+      "label": "rest_init",
+      "sublabel": "创建 init 与线程",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 671,
+          "label": "rest_init"
+        }
+      ]
+    },
+    {
+      "id": "kernelinit",
+      "type": "backend",
+      "label": "kernel_init",
+      "sublabel": "PID 1 进程",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 1539,
+          "label": "kernel_init"
+        }
+      ]
+    },
+    {
+      "id": "kthreadd",
+      "type": "backend",
+      "label": "kthreadd",
+      "sublabel": "内核线程父进程",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 695,
+          "label": "kernel_thread(kthreadd)"
+        }
+      ]
+    },
+    {
+      "id": "init",
+      "type": "external",
+      "label": "/sbin/init",
+      "sublabel": "用户态 init",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 1604,
+          "label": "run_init_process(\"/sbin/init\")"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 145,
+      "to": 235,
+      "label": "固件与引导"
+    },
+    {
+      "from": 240,
+      "to": 300,
+      "label": "内核初始化"
+    },
+    {
+      "from": 305,
+      "to": 500,
+      "label": "创建 init 与内核线程"
+    }
+  ],
+  "messages": [
+    {
+      "id": "cpu-bios",
+      "from": "cpu",
+      "to": "bios",
+      "y": 160,
+      "label": "上电执行 BIOS 固件",
+      "variant": "default"
+    },
+    {
+      "id": "bios-boot",
+      "from": "bios",
+      "to": "boot",
+      "y": 190,
+      "label": "引导装入内核镜像",
+      "variant": "default"
+    },
+    {
+      "id": "boot-head",
+      "from": "boot",
+      "to": "head",
+      "y": 220,
+      "label": "装载内核跳转到 startup_64 入口",
+      "variant": "emphasis"
+    },
+    {
+      "id": "head-start",
+      "from": "head",
+      "to": "startkernel",
+      "y": 250,
+      "label": "完成保护模式与页表初始化后调用 start_kernel",
+      "variant": "emphasis"
+    },
+    {
+      "id": "start-rest",
+      "from": "startkernel",
+      "to": "restinit",
+      "y": 280,
+      "label": "完成各子系统初始化后调用 rest_init",
+      "variant": "emphasis"
+    },
+    {
+      "id": "rest-init",
+      "from": "restinit",
+      "to": "kernelinit",
+      "y": 320,
+      "label": "user_mode_thread 创建 kernel_init 一号进程",
+      "variant": "default"
+    },
+    {
+      "id": "rest-kthreadd",
+      "from": "restinit",
+      "to": "kthreadd",
+      "y": 360,
+      "label": "kernel_thread 创建 kthreadd 内核线程",
+      "variant": "default",
+      "note": "此后当前进程退化为 idle 进程"
+    },
+    {
+      "id": "kernelinit-init",
+      "from": "kernelinit",
+      "to": "init",
+      "y": 420,
+      "label": "run_init_process 执行 /sbin/init",
+      "variant": "return",
+      "note": "挂载 rootfs 根文件系统；/sbin/init 进入用户态启动系统服务"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "引导阶段",
+      "items": [
+        "CPU 上电执行 BIOS 固件",
+        "BIOS 把引导权交给 Bootloader 并装入内核镜像",
+        "内核入口 startup_64 完成保护模式与页表初始化"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "两棵进程树",
+      "items": [
+        "rest_init() 用 user_mode_thread() 创建 kernel_init（PID 1）",
+        "rest_init() 用 kernel_thread() 创建 kthreadd",
+        "kernel_init 挂载 rootfs 后执行 /sbin/init"
+      ]
+    }
+  ]
+}

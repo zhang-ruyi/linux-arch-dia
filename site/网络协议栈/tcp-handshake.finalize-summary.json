@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
+    "sha256": "5beb3a0ea68c40b83248ab1e4a98c2b584f6480363c916ae5dd5829d61b17e7e",
+    "bytes": 4377
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+    "sha256": "67bdb53e9e3ccdb3d0bb7df5c42e4cb795bce1f3598d989f4f0e82d8e405b822",
+    "bytes": 833983
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3238,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

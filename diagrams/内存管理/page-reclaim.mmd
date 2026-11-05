@@ -1,0 +1,24 @@
+---
+title: 内存回收流程
+type: flowchart
+tags: [内存管理, 内存回收, kswapd, LRU]
+description: 内存压力唤醒 kswapd,经 balance_pgdat 与 shrink_node 扫描 LRU,脏页回写或页换出
+---
+flowchart TD
+    A[内存压力触发<br/>wakeup_kswapd 唤醒] --> B[kswapd<br/>mm/vmscan.c 内核线程]
+    B --> C[balance_pgdat<br/>按节点水位回收]
+    C --> D[shrink_node<br/>扫描节点内页]
+    D --> E[shrink_node_memcgs<br/>遍历内存 cgroup]
+    E --> F[shrink_lruvec<br/>按比例扫描 anon 与 file LRU]
+    F --> G[shrink_list<br/>区分 active 与 inactive]
+    G -->|active LRU| H[shrink_active_list<br/>活跃页降级到非活跃]
+    G -->|inactive LRU| I[shrink_inactive_list<br/>隔离非活跃页]
+    I --> J[shrink_folio_list<br/>逐页判定回收]
+
+    J -->|干净文件页| K[直接回收,回伙伴系统]
+    J -->|匿名页| L[pageout 换出<br/>swap_writeout]
+    J -->|shmem 脏页| M[shmem_writeout<br/>写回共享内存]
+    J -->|文件脏页| N[写回脏页<br/>页面回写 writeback]
+
+    H --> G
+    L --> O[__swap_writepage<br/>写入交换设备]

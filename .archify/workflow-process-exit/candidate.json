@@ -1,0 +1,231 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "进程退出与回收",
+    "locale": "zh-CN",
+    "output": "site/进程管理/process-exit.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "exit",
+      "label": "进程退出与父进程回收"
+    }
+  ],
+  "phases": [
+    {
+      "id": "cleanup",
+      "label": "资源清理",
+      "fromCol": 0,
+      "toCol": 2
+    },
+    {
+      "id": "zombie",
+      "label": "僵尸态",
+      "fromCol": 3,
+      "toCol": 3,
+      "variant": "dashed"
+    },
+    {
+      "id": "reap",
+      "label": "父进程回收",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "mainPath": [
+    "do-exit",
+    "free-res",
+    "notify",
+    "zombie",
+    "wait",
+    "release"
+  ],
+  "nodes": [
+    {
+      "id": "do-exit",
+      "lane": "exit",
+      "col": 0,
+      "type": "backend",
+      "label": "do_exit(code)",
+      "sublabel": "置 PF_EXITING",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 929,
+          "label": "do_exit"
+        },
+        {
+          "path": "kernel/signal.c",
+          "line": 3128,
+          "label": "exit_signals"
+        }
+      ]
+    },
+    {
+      "id": "free-res",
+      "lane": "exit",
+      "col": 1,
+      "type": "backend",
+      "label": "exit_mm() / exit_files()",
+      "sublabel": "释放地址空间与文件",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 581,
+          "label": "exit_mm"
+        },
+        {
+          "path": "fs/file.c",
+          "line": 518,
+          "label": "exit_files"
+        }
+      ]
+    },
+    {
+      "id": "notify",
+      "lane": "exit",
+      "col": 2,
+      "type": "backend",
+      "label": "exit_notify()",
+      "sublabel": "发 SIGCHLD",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 771,
+          "label": "exit_notify"
+        },
+        {
+          "path": "kernel/signal.c",
+          "line": 2175,
+          "label": "do_notify_parent"
+        }
+      ]
+    },
+    {
+      "id": "zombie",
+      "lane": "exit",
+      "col": 3,
+      "type": "backend",
+      "label": "EXIT_ZOMBIE",
+      "sublabel": "等待父进程回收",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 783,
+          "label": "exit_state = EXIT_ZOMBIE"
+        },
+        {
+          "path": "include/linux/sched.h",
+          "line": 114,
+          "label": "EXIT_ZOMBIE"
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "lane": "exit",
+      "col": 4,
+      "type": "backend",
+      "label": "父进程 wait()",
+      "sublabel": "do_wait()",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 1939,
+          "label": "wait4"
+        },
+        {
+          "path": "kernel/exit.c",
+          "line": 1487,
+          "label": "wait_consider_task"
+        },
+        {
+          "path": "kernel/exit.c",
+          "line": 1207,
+          "label": "wait_task_zombie"
+        }
+      ]
+    },
+    {
+      "id": "release",
+      "lane": "exit",
+      "col": 5,
+      "type": "backend",
+      "label": "release_task()",
+      "sublabel": "释放 task_struct",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 249,
+          "label": "release_task"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "exit-signals",
+      "from": "do-exit",
+      "to": "free-res",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "res-notify",
+      "from": "free-res",
+      "to": "notify",
+      "role": "main"
+    },
+    {
+      "id": "notify-zombie",
+      "from": "notify",
+      "to": "zombie",
+      "label": "置 EXIT_ZOMBIE",
+      "role": "main"
+    },
+    {
+      "id": "zombie-wait",
+      "from": "zombie",
+      "to": "wait",
+      "label": "父进程等待",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "wait-release",
+      "from": "wait",
+      "to": "release",
+      "label": "读取退出码后回收",
+      "role": "main"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "僵尸态",
+      "items": [
+        "已退出但尚未被父进程 wait() 回收",
+        "保留 task_struct 与退出码，地址空间等资源已释放",
+        "父进程需调用 wait()/wait4() 才能完成回收"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "完整回收路径",
+      "items": [
+        "do_exit() → exit_signals() → exit_mm() → exit_files()",
+        "exit_notify() → do_notify_parent() 向父进程发送 SIGCHLD",
+        "父进程 do_wait() → wait_consider_task() → wait_task_zombie()",
+        "release_task() 释放 task_struct，进程彻底消亡"
+      ]
+    }
+  ]
+}

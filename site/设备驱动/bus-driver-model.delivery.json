@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "95ea7abc-1824-4120-8c7e-7bb518f1445f",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/zhang/opencode/code_analsys/.archify/architecture-bus-driver-model/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/设备驱动/bus-driver-model.html",
+  "specification": {
+    "sha256": "76b647b9800c83c917625620773020732e5dd6bcaae2f9fcd3c1346d7535b140",
+    "bytes": 8106
+  },
+  "artifact": {
+    "sha256": "d658d37062579e76167c996a241c0379d2aa70fe7a838024ea152b892fa596b9",
+    "bytes": 846598
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "socket() 系统调用创建流程",
+    "output": "site/网络协议栈/socket-create.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "proc",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "socket(AF_INET, SOCK_STREAM, 0)",
+      "sources": [
+        { "path": "net/socket.c", "line": 1805, "label": "SYSCALL_DEFINE3(socket)" }
+      ]
+    },
+    {
+      "id": "syscall",
+      "type": "backend",
+      "label": "系统调用层",
+      "sublabel": "__sys_socket()",
+      "sources": [
+        { "path": "net/socket.c", "line": 1788, "label": "__sys_socket" }
+      ]
+    },
+    {
+      "id": "sock",
+      "type": "backend",
+      "label": "socket 层",
+      "sublabel": "sock_create / __sock_create",
+      "sources": [
+        { "path": "net/socket.c", "line": 1580, "label": "__sock_create" },
+        { "path": "net/socket.c", "line": 1707, "label": "sock_create" },
+        { "path": "net/socket.c", "line": 680, "label": "sock_alloc" }
+      ]
+    },
+    {
+      "id": "inet",
+      "type": "backend",
+      "label": "inet 层",
+      "sublabel": "inet_create()",
+      "sources": [
+        { "path": "net/ipv4/af_inet.c", "line": 259, "label": "inet_create" },
+        { "path": "net/ipv4/af_inet.c", "line": 333, "label": "sk_alloc" }
+      ]
+    },
+    {
+      "id": "obj",
+      "type": "backend",
+      "label": "内核对象",
+      "sublabel": "struct sock",
+      "sources": [
+        { "path": "net/core/sock.c", "line": 2303, "label": "sk_alloc" }
+      ]
+    }
+  ],
+  "messages": [
+    { "id": "user-socket", "from": "proc", "to": "syscall", "y": 160, "label": "socket(AF_INET, SOCK_STREAM, 0)", "variant": "emphasis" },
+    { "id": "sock-create", "from": "syscall", "to": "sock", "y": 205, "label": "sock_create()" },
+    { "id": "family-dispatch", "from": "sock", "to": "inet", "y": 250, "label": "按 family 查找协议,调用 inet_create()", "note": "__sock_create() → sock_alloc() 分配 struct socket" },
+    { "id": "sk-alloc", "from": "inet", "to": "obj", "y": 300, "label": "sk_alloc() 分配 struct sock" },
+    { "id": "return-objects", "from": "inet", "to": "sock", "y": 345, "label": "返回 socket 与 sock", "variant": "return", "note": "绑定协议操作集 tcp_prot,设置 sk_prot 与回调函数" },
+    { "id": "alloc-fd", "from": "sock", "to": "syscall", "y": 390, "label": "分配文件描述符", "variant": "return" },
+    { "id": "return-fd", "from": "syscall", "to": "proc", "y": 435, "label": "返回 fd", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "proc", "from": 155, "to": 216, "type": "external" },
+    { "participant": "syscall", "from": 155, "to": 441, "type": "backend" },
+    { "participant": "sock", "from": 200, "to": 396, "type": "backend" },
+    { "participant": "inet", "from": 245, "to": 351, "type": "backend" },
+    { "participant": "obj", "from": 295, "to": 306, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "系统调用入口",
+      "items": [
+        "socket() 进入 __sys_socket(),最终向用户返回 fd",
+        "协议族与套接字类型由调用参数决定"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "两层对象分配",
+      "items": [
+        "sock_alloc() 分配 struct socket",
+        "sk_alloc() 分配 struct sock 并关联协议操作集"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "协议绑定",
+      "items": [
+        "inet_create() 按 family 查找并实例化 inet 协议",
+        "tcp_prot 的 sk_prot 与回调在此绑定"
+      ]
+    }
+  ]
+}

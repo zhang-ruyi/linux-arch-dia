@@ -1,0 +1,164 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "打开文件流程",
+    "locale": "zh-CN",
+    "output": "site/文件系统/open-flow.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "entry", "label": "系统调用入口" },
+    { "id": "vfs", "label": "VFS 打开与参数解析" },
+    { "id": "walk", "label": "路径解析与打开" }
+  ],
+  "nodes": [
+    {
+      "id": "app",
+      "lane": "entry",
+      "col": 0,
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "调用 open 系统调用",
+      "sources": [{ "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }]
+    },
+    {
+      "id": "sysopen",
+      "lane": "entry",
+      "col": 1,
+      "type": "backend",
+      "label": "SYSCALL_DEFINE3(open)",
+      "sublabel": "open 系统调用入口",
+      "sources": [{ "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }]
+    },
+    {
+      "id": "dosysopen",
+      "lane": "entry",
+      "col": 2,
+      "type": "backend",
+      "label": "do_sys_open()",
+      "sublabel": "构造 open_how",
+      "sources": [{ "path": "fs/open.c", "line": 1371, "label": "do_sys_open" }]
+    },
+    {
+      "id": "dosysopenat2",
+      "lane": "vfs",
+      "col": 3,
+      "type": "backend",
+      "label": "do_sys_openat2()",
+      "sublabel": "解析 open_how 参数",
+      "sources": [{ "path": "fs/open.c", "line": 1359, "label": "do_sys_openat2" }]
+    },
+    {
+      "id": "dofileopen",
+      "lane": "vfs",
+      "col": 4,
+      "type": "backend",
+      "label": "do_file_open()",
+      "sublabel": "构造 nameidata",
+      "sources": [{ "path": "fs/namei.c", "line": 4882, "label": "do_file_open" }]
+    },
+    {
+      "id": "pathopenat",
+      "lane": "vfs",
+      "col": 5,
+      "type": "backend",
+      "label": "path_openat()",
+      "sublabel": "分配空 file 结构体",
+      "sources": [{ "path": "fs/namei.c", "line": 4843, "label": "path_openat" }]
+    },
+    {
+      "id": "linkpathwalk",
+      "lane": "walk",
+      "col": 0,
+      "type": "backend",
+      "label": "link_path_walk()",
+      "sublabel": "逐级解析路径分量",
+      "sources": [{ "path": "fs/namei.c", "line": 2578, "label": "link_path_walk" }]
+    },
+    {
+      "id": "openlast",
+      "lane": "walk",
+      "col": 1,
+      "type": "backend",
+      "label": "open_last_lookups()",
+      "sublabel": "处理末级分量",
+      "sources": [{ "path": "fs/namei.c", "line": 4560, "label": "open_last_lookups" }]
+    },
+    {
+      "id": "doopen",
+      "lane": "walk",
+      "col": 2,
+      "type": "backend",
+      "label": "do_open()",
+      "sublabel": "权限检查与截断处理",
+      "sources": [{ "path": "fs/namei.c", "line": 4652, "label": "do_open" }]
+    },
+    {
+      "id": "vfsopen",
+      "lane": "walk",
+      "col": 3,
+      "type": "backend",
+      "label": "vfs_open()",
+      "sublabel": "调用 f_op->open",
+      "sources": [{ "path": "fs/open.c", "line": 1047, "label": "vfs_open" }]
+    },
+    {
+      "id": "fopopen",
+      "lane": "walk",
+      "col": 4,
+      "type": "backend",
+      "label": "f_op->open",
+      "sublabel": "具体文件系统打开实现",
+      "sources": [{ "path": "fs/open.c", "line": 945, "label": "f->f_op->open" }]
+    },
+    {
+      "id": "done",
+      "lane": "walk",
+      "col": 5,
+      "type": "backend",
+      "label": "返回 fd",
+      "sublabel": "返回用户进程",
+      "sources": [{ "path": "fs/open.c", "line": 1047, "label": "vfs_open 返回 file" }]
+    }
+  ],
+  "edges": [
+    { "id": "app-sysopen", "from": "app", "to": "sysopen", "role": "main" },
+    { "id": "sysopen-dosysopen", "from": "sysopen", "to": "dosysopen", "role": "main" },
+    { "id": "dosysopen-openat2", "from": "dosysopen", "to": "dosysopenat2", "role": "main" },
+    { "id": "openat2-fileopen", "from": "dosysopenat2", "to": "dofileopen", "role": "main" },
+    { "id": "fileopen-pathopenat", "from": "dofileopen", "to": "pathopenat", "role": "main" },
+    { "id": "pathopenat-linkwalk", "from": "pathopenat", "to": "linkpathwalk", "role": "main" },
+    { "id": "linkwalk-openlast", "from": "linkpathwalk", "to": "openlast", "label": "解析到末级分量", "role": "main" },
+    { "id": "openlast-doopen", "from": "openlast", "to": "doopen", "role": "main" },
+    { "id": "doopen-vfsopen", "from": "doopen", "to": "vfsopen", "role": "main" },
+    { "id": "vfsopen-fopopen", "from": "vfsopen", "to": "fopopen", "role": "main" },
+    { "id": "fopopen-done", "from": "fopopen", "to": "done", "role": "main" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "入口与参数",
+      "items": [
+        "SYSCALL_DEFINE3(open) 进入后统一走 do_sys_open()",
+        "do_sys_open() 把 flags/mode 构造为 open_how",
+        "do_sys_openat2() 负责解析 open_how 参数"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "路径解析与打开",
+      "items": [
+        "do_file_open() 构造 nameidata 后进入 path_openat()",
+        "link_path_walk() 逐级解析路径分量",
+        "末级分量由 open_last_lookups() 与 do_open() 处理",
+        "vfs_open() 最终调用具体文件系统的 f_op->open"
+      ]
+    }
+  ]
+}

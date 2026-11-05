@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "33323ff7-0e0e-4d90-aa13-e27d931549e3",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-read-write-flow/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/文件系统/read-write-flow.html",
+  "specification": {
+    "sha256": "afc788cdc751c893730875072a0eaf19ed27115b63928faed29de552cfa6adce",
+    "bytes": 4968
+  },
+  "artifact": {
+    "sha256": "02feb2aaacb46453a6e3bef5c1c8a403a0a1cfd3f5e556b69de45b64910e5ebb",
+    "bytes": 836477
+  }
+}

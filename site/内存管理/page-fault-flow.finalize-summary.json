@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+    "sha256": "7eca06af5d94058e2ff6e7d58b06244ac25dff1d73d0e8e7568704dfa93f98fb",
+    "bytes": 8318
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "workflow/explicit-pin-conflict",
+      "severity": "error",
+      "message": "Workflow edge \"missing-anon\" has explicit geometry that violates explicit route-route corridor clearance.",
+      "subject": {
+        "diagramType": "workflow",
+        "edge": "missing-anon",
+        "from": "ptemissing",
+        "to": "anon"
+      },
+      "evidence": {
+        "invariant": "explicit route-route corridor clearance",
+        "conflictingPins": [
+          {
+            "edge": "missing-anon",
+            "field": "fromSide",
+            "path": "/edges/10/fromSide",
+            "value": "bottom"
+          },
+          {
+            "edge": "missing-anon",
+            "field": "toSide",
+            "path": "/edges/10/toSide",
+            "value": "top"
+          }
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 3,
+        "routeSegments": [
+          {
+            "edge": "file-shared",
+            "from": [
+              344.4,
+              1069
+            ],
+            "to": [
+              481.4,
+              1069
+            ]
+          },
+          {
+            "edge": "missing-anon",
+            "from": [
+              1221.4,
+              1069
+            ],
+            "to": [
+              192.4,
+              1069
+            ]
+          }
+        ],
+        "overlapStart": [
+          344.4,
+          1069
+        ],
+        "overlapEnd": [
+          481.4,
+          1069
+        ],
+        "overlapLengthPx": 137,
+        "minimumClearancePx": 8
+      }
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1368,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

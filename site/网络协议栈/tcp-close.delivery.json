@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b2e196c4-7c0b-4d4a-be7a-b5a2b6dd3eef",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-close/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-close.html",
+  "specification": {
+    "sha256": "521a496fe8397ae98b10d6698c41f140cbdd19141d119f8644596a91973cf75d",
+    "bytes": 4574
+  },
+  "artifact": {
+    "sha256": "53bf10248249274f1533a6b88fdf542bef79a04725e95a4943730410cf4e5fe9",
+    "bytes": 832369
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/lifecycle-process-states/candidate.json",
+    "sha256": "bd5cf02bab4cfd72d8bc00d752c69a51c59f74c7df517db9c787432cdb522404",
+    "bytes": 5424
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/process-states.html",
+    "sha256": "a7f72b128773e616aa019a01cbad79818cea2ba1f385281d1054376066a2a21b",
+    "bytes": 843379
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/进程管理/process-states.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/进程管理/process-states.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/进程管理/process-states.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3131,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "run-rotate",
+            "from": "running",
+            "to": "running",
+            "label": "时间片轮转 / 被抢占",
+            "collectionIndex": 1,
+            "artifactIndex": 2
+          },
+          "bends": 2,
+          "stretch": 3.308
+        }
+      ],
+      "truncated": false
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux 内核原理图解</title>
+<style>
+:root {
+  --bg:#0e1319; --panel:#151d26; --card:#1a2430; --border:#29343f;
+  --text:#dce5ef; --muted:#8b9aab; --accent:#57a8ff; --hover:#22303f;
+}
+html[data-theme="light"] {
+  --bg:#f2f5f9; --panel:#fff; --card:#fff; --border:#dbe2ea;
+  --text:#182230; --muted:#5b6b7c; --accent:#1668c4; --hover:#edf3fa;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { display:flex; min-height:100vh; background:var(--bg); color:var(--text);
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif; }
+aside { width:280px; flex-shrink:0; height:100vh; position:sticky; top:0; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border); padding:20px 16px; }
+aside h1 { font-size:18px; }
+aside .sub { color:var(--muted); font-size:12px; margin:4px 0 16px; }
+#search { width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg); color:var(--text); font-size:13px; outline:none; }
+#search:focus { border-color:var(--accent); }
+.toc-cat { margin-top:14px; }
+.toc-cat-head { width:100%; text-align:left; background:none; border:none; color:var(--text);
+  font-size:14px; font-weight:600; cursor:pointer; padding:6px 4px; border-radius:6px;
+  display:flex; justify-content:space-between; align-items:center; }
+.toc-cat-head:hover { background:var(--hover); color:var(--accent); }
+.count { background:var(--hover); color:var(--muted); font-size:11px; border-radius:10px; padding:1px 8px; font-weight:400; }
+.toc-items { list-style:none; padding-left:10px; }
+.toc-items a { display:block; color:var(--muted); text-decoration:none; font-size:12.5px;
+  padding:3px 6px; border-radius:5px; }
+.toc-items a:hover { color:var(--accent); background:var(--hover); }
+main { flex:1; padding:24px 28px; }
+.toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px;
+  position:sticky; top:0; z-index:5; background:var(--bg); padding:10px 0; }
+.chip { border:1px solid var(--border); background:var(--panel); color:var(--muted);
+  padding:5px 14px; border-radius:999px; font-size:12.5px; cursor:pointer; }
+.chip.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.chip:hover { border-color:var(--accent); color:var(--accent); }
+#theme-toggle, #clear-filter { border:none; background:none; color:var(--accent);
+  cursor:pointer; font-size:12.5px; }
+#theme-toggle { border:1px solid var(--border); background:var(--panel); color:var(--muted);
+  padding:5px 12px; border-radius:999px; }
+#clear-filter { margin-left:auto; }
+#stats { color:var(--muted); font-size:12.5px; margin-bottom:14px; }
+#cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(520px,1fr)); gap:18px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+.card-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.card h3 { font-size:15.5px; }
+.desc { color:var(--muted); font-size:12.5px; line-height:1.5; margin-top:6px; }
+.badge { font-size:11px; padding:2px 9px; border-radius:999px; white-space:nowrap; flex-shrink:0; }
+.badge-architecture { background:#173a5e; color:#7cc0ff; }
+.badge-workflow { background:#174a2e; color:#7ee0a8; }
+.badge-sequence { background:#3d1a5e; color:#d3a0ff; }
+.badge-lifecycle { background:#4a3a17; color:#ffd77c; }
+.badge-tree { background:#4a1a2e; color:#ff9cc0; }
+.badge-dataflow, .badge-erd, .badge-class, .badge-timeline, .badge-waterfall { background:#26313d; color:#a9bfd4; }
+.preview { margin-top:10px; border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--panel); }
+.preview iframe { width:100%; height:420px; border:0; display:block; }
+.card-foot { display:flex; justify-content:space-between; align-items:center; margin-top:10px;
+  color:var(--muted); font-size:12px; }
+.card-foot .open { color:var(--accent); text-decoration:none; }
+.card-foot .open:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Linux 内核原理图解</h1>
+  <div class="sub">Archify 交互式内核原理图 · 共 30 张</div>
+  <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('进程管理')">
+          进程管理 <span class="count">8</span>
+        </button>
+        <ul class="toc-items"><li><a href="#bottom-half">中断下半部三机制对比</a></li><li><a href="#process-states">Linux 进程状态机</a></li><li><a href="#context-switch">上下文切换细节</a></li><li><a href="#fork-process-creation">fork() 创建进程时序图</a></li><li><a href="#futex-wakeup">futex 用户态锁的等待与唤醒</a></li><li><a href="#signal-handling">信号生命周期</a></li><li><a href="#cfs-scheduling">CFS 调度主流程（EEVDF）</a></li><li><a href="#process-exit">进程退出与回收</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('设备驱动')">
+          设备驱动 <span class="count">3</span>
+        </button>
+        <ul class="toc-items"><li><a href="#bus-driver-model">设备驱动模型</a></li><li><a href="#block-io-flow">块 IO 路径</a></li><li><a href="#startup-boot">内核启动流程</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('网络协议栈')">
+          网络协议栈 <span class="count">7</span>
+        </button>
+        <ul class="toc-items"><li><a href="#epoll-principle">epoll 三大数据结构与回调原理</a></li><li><a href="#tcp-state-machine">TCP 11 态状态机</a></li><li><a href="#napi-receive">NAPI 收包处理路径</a></li><li><a href="#packet-send">TCP 数据发送路径</a></li><li><a href="#socket-create">socket() 系统调用创建流程</a></li><li><a href="#tcp-close">TCP 四次挥手时序</a></li><li><a href="#tcp-handshake">TCP 三次握手时序</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('文件系统')">
+          文件系统 <span class="count">5</span>
+        </button>
+        <ul class="toc-items"><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('内存管理')">
+          内存管理 <span class="count">6</span>
+        </button>
+        <ul class="toc-items"><li><a href="#mmap-flow">mmap() 建立映射时序图</a></li><li><a href="#page-cache-read">文件读路径经 page cache 时序图</a></li><li><a href="#buddy-allocator">伙伴系统分配与释放流程</a></li><li><a href="#page-fault-flow">x86 缺页异常处理流程</a></li><li><a href="#page-reclaim">内存回收流程</a></li><li><a href="#slab-allocator">SLUB 分配器分配与释放流程</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('内核总览')">
+          内核总览 <span class="count">1</span>
+        </button>
+        <ul class="toc-items"><li><a href="#kernel-subsystems">Linux 内核核心子系统总览</a></li></ul>
+      </div>
+</aside>
+<main>
+  <div class="toolbar">
+<button class="chip active" data-type="all" onclick="setType('all')">全部</button><button class="chip" data-type="architecture" onclick="setType('architecture')">架构图</button><button class="chip" data-type="lifecycle" onclick="setType('lifecycle')">状态机</button><button class="chip" data-type="sequence" onclick="setType('sequence')">时序图</button><button class="chip" data-type="tree" onclick="setType('tree')">树形图</button><button class="chip" data-type="workflow" onclick="setType('workflow')">流程图</button>
+    <button id="clear-filter" onclick="clearFilters()">清除筛选</button>
+    <button id="theme-toggle" onclick="toggleTheme()">浅色模式</button>
+  </div>
+  <div id="stats"></div>
+  <div id="cards">
+
+      <article class="card" data-type="architecture"
+               data-category="进程管理"
+               data-search="中断下半部三机制对比 softirq、tasklet、workqueue 三种下半部机制的触发与执行路径对比 进程管理 architecture">
+        <header class="card-head">
+          <h3>中断下半部三机制对比</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        <p class="desc">softirq、tasklet、workqueue 三种下半部机制的触发与执行路径对比</p>
+        <div class="preview">
+          <iframe src="进程管理/bottom-half.html" loading="lazy" title="中断下半部三机制对比"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/bottom-half.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
+               data-category="设备驱动"
+               data-search="设备驱动模型 bus_type device_driver device 三者与 kobject 的关系及驱动注册绑定流程 设备驱动 architecture">
+        <header class="card-head">
+          <h3>设备驱动模型</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        <p class="desc">bus_type device_driver device 三者与 kobject 的关系及驱动注册绑定流程</p>
+        <div class="preview">
+          <iframe src="设备驱动/bus-driver-model.html" loading="lazy" title="设备驱动模型"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">设备驱动</span>
+          <a class="open" href="设备驱动/bus-driver-model.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
+               data-category="网络协议栈"
+               data-search="epoll 三大数据结构与回调原理 eventpoll 内部红黑树 rbr 与就绪链表 rdllist 的协作,以及 ep_poll_callback 回调机制 网络协议栈 architecture">
+        <header class="card-head">
+          <h3>epoll 三大数据结构与回调原理</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        <p class="desc">eventpoll 内部红黑树 rbr 与就绪链表 rdllist 的协作,以及 ep_poll_callback 回调机制</p>
+        <div class="preview">
+          <iframe src="网络协议栈/epoll-principle.html" loading="lazy" title="epoll 三大数据结构与回调原理"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/epoll-principle.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
+               data-category="文件系统"
+               data-search="vfs 虚拟文件系统架构 vfs 四大核心对象(super_block/inode/dentry/file)与底层文件系统、页缓存的关系 文件系统 architecture">
+        <header class="card-head">
+          <h3>VFS 虚拟文件系统架构</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        <p class="desc">VFS 四大核心对象(super_block/inode/dentry/file)与底层文件系统、页缓存的关系</p>
+        <div class="preview">
+          <iframe src="文件系统/vfs-architecture.html" loading="lazy" title="VFS 虚拟文件系统架构"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/vfs-architecture.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="lifecycle"
+               data-category="进程管理"
+               data-search="linux 进程状态机 task_struct 主要状态迁移关系(task_running / interruptible / uninterruptible / stopped / zombie) 进程管理 lifecycle">
+        <header class="card-head">
+          <h3>Linux 进程状态机</h3>
+          <span class="badge badge-lifecycle">状态机</span>
+        </header>
+        <p class="desc">task_struct 主要状态迁移关系(TASK_RUNNING / INTERRUPTIBLE / UNINTERRUPTIBLE / STOPPED / ZOMBIE)</p>
+        <div class="preview">
+          <iframe src="进程管理/process-states.html" loading="lazy" title="Linux 进程状态机"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/process-states.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="lifecycle"
+               data-category="网络协议栈"
+               data-search="tcp 11 态状态机 tcp 连接生命周期 11 个状态及其迁移,标注触发的报文(syn / syn+ack / ack / fin) 网络协议栈 lifecycle">
+        <header class="card-head">
+          <h3>TCP 11 态状态机</h3>
+          <span class="badge badge-lifecycle">状态机</span>
+        </header>
+        <p class="desc">TCP 连接生命周期 11 个状态及其迁移,标注触发的报文(SYN / SYN+ACK / ACK / FIN)</p>
+        <div class="preview">
+          <iframe src="网络协议栈/tcp-state-machine.html" loading="lazy" title="TCP 11 态状态机"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/tcp-state-machine.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="设备驱动"
+               data-search="块 io 路径 bio 从提交进入 blk-mq 软件队列经调度器到硬件队列执行并完成回调 设备驱动 sequence">
+        <header class="card-head">
+          <h3>块 IO 路径</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">bio 从提交进入 blk-mq 软件队列经调度器到硬件队列执行并完成回调</p>
+        <div class="preview">
+          <iframe src="设备驱动/block-io-flow.html" loading="lazy" title="块 IO 路径"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">设备驱动</span>
+          <a class="open" href="设备驱动/block-io-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="进程管理"
+               data-search="上下文切换细节 进程a 通过 switch_to 宏切换到进程b,涉及寄存器、内核栈与地址空间切换 进程管理 sequence">
+        <header class="card-head">
+          <h3>上下文切换细节</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">进程A 通过 switch_to 宏切换到进程B,涉及寄存器、内核栈与地址空间切换</p>
+        <div class="preview">
+          <iframe src="进程管理/context-switch.html" loading="lazy" title="上下文切换细节"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/context-switch.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="进程管理"
+               data-search="fork() 创建进程时序图 从用户态调用 fork() 到子进程被唤醒的完整调用链(kernel_clone → copy_process) 进程管理 sequence">
+        <header class="card-head">
+          <h3>fork() 创建进程时序图</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">从用户态调用 fork() 到子进程被唤醒的完整调用链(kernel_clone → copy_process)</p>
+        <div class="preview">
+          <iframe src="进程管理/fork-process-creation.html" loading="lazy" title="fork() 创建进程时序图"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/fork-process-creation.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="进程管理"
+               data-search="futex 用户态锁的等待与唤醒 线程a futex_wait 挂入哈希桶等待,线程b futex_wake 经 wake_up_q 唤醒,无竞争时纯用户态 进程管理 sequence">
+        <header class="card-head">
+          <h3>futex 用户态锁的等待与唤醒</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">线程A futex_wait 挂入哈希桶等待,线程B futex_wake 经 wake_up_q 唤醒,无竞争时纯用户态</p>
+        <div class="preview">
+          <iframe src="进程管理/futex-wakeup.html" loading="lazy" title="futex 用户态锁的等待与唤醒"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/futex-wakeup.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="内存管理"
+               data-search="mmap() 建立映射时序图 用户进程调用 mmap 建立虚拟地址映射,匿名页走 vma_set_anonymous,文件页走 f_op-&gt;mmap 回调 内存管理 sequence">
+        <header class="card-head">
+          <h3>mmap() 建立映射时序图</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">用户进程调用 mmap 建立虚拟地址映射,匿名页走 vma_set_anonymous,文件页走 f_op-&gt;mmap 回调</p>
+        <div class="preview">
+          <iframe src="内存管理/mmap-flow.html" loading="lazy" title="mmap() 建立映射时序图"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/mmap-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="网络协议栈"
+               data-search="napi 收包处理路径 从网卡硬中断经 napi_schedule 到软中断 napi_poll,再到 ip 层 ip_rcv 与 tcp 层 tcp_v4_rcv 网络协议栈 sequence">
+        <header class="card-head">
+          <h3>NAPI 收包处理路径</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">从网卡硬中断经 napi_schedule 到软中断 napi_poll,再到 IP 层 ip_rcv 与 TCP 层 tcp_v4_rcv</p>
+        <div class="preview">
+          <iframe src="网络协议栈/napi-receive.html" loading="lazy" title="NAPI 收包处理路径"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/napi-receive.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="网络协议栈"
+               data-search="tcp 数据发送路径 从用户 write() 经 tcp_sendmsg 到 tcp_transmit_skb、ip_queue_xmit 直至网卡 ndo_start_xmit 网络协议栈 sequence">
+        <header class="card-head">
+          <h3>TCP 数据发送路径</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">从用户 write() 经 tcp_sendmsg 到 tcp_transmit_skb、ip_queue_xmit 直至网卡 ndo_start_xmit</p>
+        <div class="preview">
+          <iframe src="网络协议栈/packet-send.html" loading="lazy" title="TCP 数据发送路径"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/packet-send.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="内存管理"
+               data-search="文件读路径经 page cache 时序图 read 系统调用经 vfs_read 与 filemap_read,页缺失时 read_folio 触发 submit_bio 读盘 内存管理 sequence">
+        <header class="card-head">
+          <h3>文件读路径经 page cache 时序图</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">read 系统调用经 vfs_read 与 filemap_read,页缺失时 read_folio 触发 submit_bio 读盘</p>
+        <div class="preview">
+          <iframe src="内存管理/page-cache-read.html" loading="lazy" title="文件读路径经 page cache 时序图"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/page-cache-read.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="文件系统"
+               data-search="文件读写全路径 read 系统调用经由 vfs 与页缓存命中或缺失后提交 bio 到块设备 文件系统 sequence">
+        <header class="card-head">
+          <h3>文件读写全路径</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">read 系统调用经由 VFS 与页缓存命中或缺失后提交 bio 到块设备</p>
+        <div class="preview">
+          <iframe src="文件系统/read-write-flow.html" loading="lazy" title="文件读写全路径"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/read-write-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="进程管理"
+               data-search="信号生命周期 从 kill() 发送信号到目标进程执行 handler 并 rt_sigreturn 返回内核的完整流程 进程管理 sequence">
+        <header class="card-head">
+          <h3>信号生命周期</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">从 kill() 发送信号到目标进程执行 handler 并 rt_sigreturn 返回内核的完整流程</p>
+        <div class="preview">
+          <iframe src="进程管理/signal-handling.html" loading="lazy" title="信号生命周期"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/signal-handling.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="网络协议栈"
+               data-search="socket() 系统调用创建流程 用户 socket() 经 __sys_socket、sock_create、inet_create 分配 struct sock 并绑定协议 ops 后返回 fd 网络协议栈 sequence">
+        <header class="card-head">
+          <h3>socket() 系统调用创建流程</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">用户 socket() 经 __sys_socket、sock_create、inet_create 分配 struct sock 并绑定协议 ops 后返回 fd</p>
+        <div class="preview">
+          <iframe src="网络协议栈/socket-create.html" loading="lazy" title="socket() 系统调用创建流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/socket-create.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="设备驱动"
+               data-search="内核启动流程 从 cpu 上电经过 bios 引导装载内核到 start_kernel 创建 init 与 kthreadd 并执行 init 设备驱动 sequence">
+        <header class="card-head">
+          <h3>内核启动流程</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">从 CPU 上电经过 BIOS 引导装载内核到 start_kernel 创建 init 与 kthreadd 并执行 init</p>
+        <div class="preview">
+          <iframe src="设备驱动/startup-boot.html" loading="lazy" title="内核启动流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">设备驱动</span>
+          <a class="open" href="设备驱动/startup-boot.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="网络协议栈"
+               data-search="tcp 四次挥手时序 主动关闭方 close() 触发四次挥手,含 tcp_send_fin 发 fin 与 time_wait 2msl 等待 网络协议栈 sequence">
+        <header class="card-head">
+          <h3>TCP 四次挥手时序</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">主动关闭方 close() 触发四次挥手,含 tcp_send_fin 发 FIN 与 TIME_WAIT 2MSL 等待</p>
+        <div class="preview">
+          <iframe src="网络协议栈/tcp-close.html" loading="lazy" title="TCP 四次挥手时序"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/tcp-close.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="网络协议栈"
+               data-search="tcp 三次握手时序 客户端 connect() 与服务端 accept() 之间的三次握手,标注内核关键函数 网络协议栈 sequence">
+        <header class="card-head">
+          <h3>TCP 三次握手时序</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        <p class="desc">客户端 connect() 与服务端 accept() 之间的三次握手,标注内核关键函数</p>
+        <div class="preview">
+          <iframe src="网络协议栈/tcp-handshake.html" loading="lazy" title="TCP 三次握手时序"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/tcp-handshake.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="tree"
+               data-category="内核总览"
+               data-search="linux 内核核心子系统总览 按子系统分解,括号内为源码树代表位置(head 3b029c0,局部放大见各专题图) 内核总览 tree">
+        <header class="card-head">
+          <h3>Linux 内核核心子系统总览</h3>
+          <span class="badge badge-tree">树形图</span>
+        </header>
+        <p class="desc">按子系统分解,括号内为源码树代表位置(HEAD 3b029c0,局部放大见各专题图)</p>
+        <div class="preview">
+          <iframe src="内核总览/kernel-subsystems.html" loading="lazy" title="Linux 内核核心子系统总览"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内核总览</span>
+          <a class="open" href="内核总览/kernel-subsystems.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="伙伴系统分配与释放流程 alloc_pages 分配路径经 get_page_from_freelist 与 rmqueue,__free_pages 释放路径经 __free_one_page 伙伴合并 内存管理 workflow">
+        <header class="card-head">
+          <h3>伙伴系统分配与释放流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">alloc_pages 分配路径经 get_page_from_freelist 与 rmqueue,__free_pages 释放路径经 __free_one_page 伙伴合并</p>
+        <div class="preview">
+          <iframe src="内存管理/buddy-allocator.html" loading="lazy" title="伙伴系统分配与释放流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/buddy-allocator.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="进程管理"
+               data-search="cfs 调度主流程（eevdf） 从 schedule() 入口到 context_switch() 的调度主调用链,pick_eevdf() 选 deadline 最小者 进程管理 workflow">
+        <header class="card-head">
+          <h3>CFS 调度主流程（EEVDF）</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">从 schedule() 入口到 context_switch() 的调度主调用链,pick_eevdf() 选 deadline 最小者</p>
+        <div class="preview">
+          <iframe src="进程管理/cfs-scheduling.html" loading="lazy" title="CFS 调度主流程（EEVDF）"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/cfs-scheduling.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="文件系统"
+               data-search="dentry 缓存路径查找 路径分量查找时优先命中 dentry cache 否则走慢路径调用 inode_operations 的 lookup 读目录块 文件系统 workflow">
+        <header class="card-head">
+          <h3>dentry 缓存路径查找</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">路径分量查找时优先命中 dentry cache 否则走慢路径调用 inode_operations 的 lookup 读目录块</p>
+        <div class="preview">
+          <iframe src="文件系统/dentry-lookup.html" loading="lazy" title="dentry 缓存路径查找"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/dentry-lookup.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="文件系统"
+               data-search="打开文件流程 从 open 系统调用到调用具体文件系统 f_op-&gt;open 的完整路径解析与打开流程 文件系统 workflow">
+        <header class="card-head">
+          <h3>打开文件流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">从 open 系统调用到调用具体文件系统 f_op-&gt;open 的完整路径解析与打开流程</p>
+        <div class="preview">
+          <iframe src="文件系统/open-flow.html" loading="lazy" title="打开文件流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/open-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="x86 缺页异常处理流程 从 exc_page_fault 到 handle_pte_fault 的缺页分发,覆盖匿名页、文件页、cow、换入四条分支 内存管理 workflow">
+        <header class="card-head">
+          <h3>x86 缺页异常处理流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">从 exc_page_fault 到 handle_pte_fault 的缺页分发,覆盖匿名页、文件页、COW、换入四条分支</p>
+        <div class="preview">
+          <iframe src="内存管理/page-fault-flow.html" loading="lazy" title="x86 缺页异常处理流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/page-fault-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="内存回收流程 内存压力唤醒 kswapd,经 balance_pgdat 与 shrink_node 扫描 lru,脏页回写或页换出 内存管理 workflow">
+        <header class="card-head">
+          <h3>内存回收流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">内存压力唤醒 kswapd,经 balance_pgdat 与 shrink_node 扫描 LRU,脏页回写或页换出</p>
+        <div class="preview">
+          <iframe src="内存管理/page-reclaim.html" loading="lazy" title="内存回收流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/page-reclaim.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="进程管理"
+               data-search="进程退出与回收 do_exit 释放资源置僵尸态,父进程 wait 后由 wait_task_zombie 与 release_task 回收 进程管理 workflow">
+        <header class="card-head">
+          <h3>进程退出与回收</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">do_exit 释放资源置僵尸态,父进程 wait 后由 wait_task_zombie 与 release_task 回收</p>
+        <div class="preview">
+          <iframe src="进程管理/process-exit.html" loading="lazy" title="进程退出与回收"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/process-exit.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="slub 分配器分配与释放流程 kmalloc 经 kmalloc_slab 选定 slab 缓存后由 slab_alloc_node 分配,kfree 经 slab_free 回收对象 内存管理 workflow">
+        <header class="card-head">
+          <h3>SLUB 分配器分配与释放流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">kmalloc 经 kmalloc_slab 选定 slab 缓存后由 slab_alloc_node 分配,kfree 经 slab_free 回收对象</p>
+        <div class="preview">
+          <iframe src="内存管理/slab-allocator.html" loading="lazy" title="SLUB 分配器分配与释放流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/slab-allocator.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="文件系统"
+               data-search="脏页写回流程 页面写脏后经过节流与内核线程 wb_workfn 将 inode 脏页写回并提交 bio 文件系统 workflow">
+        <header class="card-head">
+          <h3>脏页写回流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        <p class="desc">页面写脏后经过节流与内核线程 wb_workfn 将 inode 脏页写回并提交 bio</p>
+        <div class="preview">
+          <iframe src="文件系统/writeback-flow.html" loading="lazy" title="脏页写回流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/writeback-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+  </div>
+</main>
+<script>
+let curCategory = 'all';
+let curType = 'all';
+
+function applyFilters() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('.card').forEach(card => {
+    const okCat = curCategory === 'all' || card.dataset.category === curCategory;
+    const okType = curType === 'all' || card.dataset.type === curType;
+    const okSearch = !q || card.dataset.search.includes(q);
+    const show = okCat && okType && okSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('stats').textContent =
+    '显示 ' + visible + ' / ' + document.querySelectorAll('.card').length + ' 张';
+}
+
+function setCategory(cat) {
+  curCategory = (curCategory === cat) ? 'all' : cat;
+  applyFilters();
+}
+
+function setType(t) {
+  curType = t;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.type === t));
+  applyFilters();
+}
+
+function clearFilters() {
+  curCategory = 'all'; curType = 'all';
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.type === 'all'));
+  applyFilters();
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const toLight = root.getAttribute('data-theme') !== 'light';
+  root.setAttribute('data-theme', toLight ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = toLight ? '深色模式' : '浅色模式';
+  localStorage.setItem('kd-theme', toLight ? 'light' : 'dark');
+}
+
+(function () {
+  if (localStorage.getItem('kd-theme') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('theme-toggle').textContent = '深色模式';
+  }
+  applyFilters();
+})();
+window.addEventListener('load', applyFilters);
+</script>
+</body>
+</html>

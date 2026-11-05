@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-open-flow/candidate.json",
+    "sha256": "6bc101220b870841663a0594845fafbed364ad09012fed7253d194e6ab993950",
+    "bytes": 5416
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/open-flow.html",
+    "sha256": "32d69a938280f0ad5872c5b544a7ba6322775ee0818564e21cae533da1c4df05",
+    "bytes": 843883
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/文件系统/open-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/open-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/open-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3772,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

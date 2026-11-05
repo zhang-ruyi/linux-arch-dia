@@ -1,0 +1,28 @@
+---
+title: 内核启动流程
+type: sequence
+tags: [内核启动, 启动流程, x86, init]
+description: 从 CPU 上电经过 BIOS 引导装载内核到 start_kernel 创建 init 与 kthreadd 并执行 init
+---
+sequenceDiagram
+    participant Cpu as CPU
+    participant Bios as BIOS
+    participant Boot as Bootloader
+    participant Head as startup_64
+    participant StartKernel as start_kernel
+    participant RestInit as rest_init
+    participant KernelInit as kernel_init 一号进程
+    participant Kthreadd as kthreadd 内核线程
+    participant Init as /sbin/init 用户态
+
+    Cpu->>Bios: 上电执行 BIOS 固件
+    Bios->>Boot: 引导装入内核镜像
+    Boot->>Head: 装载内核跳转到 startup_64 入口
+    Head->>StartKernel: 完成保护模式与页表初始化后调用 start_kernel
+    StartKernel->>RestInit: 完成各子系统初始化后调用 rest_init
+    RestInit->>KernelInit: user_mode_thread 创建 kernel_init 一号进程
+    RestInit->>Kthreadd: kernel_thread 创建 kthreadd 内核线程
+    RestInit->>RestInit: 当前进程退化为 idle 进程
+    KernelInit->>KernelInit: 挂载 rootfs 根文件系统
+    KernelInit->>Init: run_init_process 执行 /sbin/init
+    Init->>Init: 进入用户态 init 启动系统服务

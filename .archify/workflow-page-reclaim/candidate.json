@@ -1,0 +1,403 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "内存回收流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/page-reclaim.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "wake",
+      "label": "压力与唤醒"
+    },
+    {
+      "id": "scan",
+      "label": "节点与 LRU 扫描"
+    },
+    {
+      "id": "lru",
+      "label": "LRU 列表"
+    },
+    {
+      "id": "folio",
+      "label": "逐页回收"
+    },
+    {
+      "id": "outcome",
+      "label": "回收去向"
+    },
+    {
+      "id": "swap",
+      "label": "交换写入"
+    }
+  ],
+  "mainPath": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g"
+  ],
+  "nodes": [
+    {
+      "id": "a",
+      "lane": "wake",
+      "col": 0,
+      "type": "messagebus",
+      "label": "内存压力触发",
+      "sublabel": "wakeup_kswapd 唤醒",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 7480
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "lane": "wake",
+      "col": 1,
+      "type": "backend",
+      "label": "kswapd",
+      "sublabel": "mm/vmscan.c 内核线程",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 7399
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "lane": "wake",
+      "col": 2,
+      "type": "backend",
+      "label": "balance_pgdat",
+      "sublabel": "按节点水位回收",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 7064
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "lane": "scan",
+      "col": 2,
+      "type": "backend",
+      "label": "shrink_node",
+      "sublabel": "扫描节点内页",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 6146
+        }
+      ]
+    },
+    {
+      "id": "e",
+      "lane": "scan",
+      "col": 3,
+      "type": "backend",
+      "label": "shrink_node_memcgs",
+      "sublabel": "遍历内存 cgroup",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 6067
+        }
+      ]
+    },
+    {
+      "id": "f",
+      "lane": "scan",
+      "col": 4,
+      "type": "backend",
+      "label": "shrink_lruvec",
+      "sublabel": "按比例扫描 anon 与 file LRU",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 5876
+        }
+      ]
+    },
+    {
+      "id": "g",
+      "lane": "scan",
+      "col": 5,
+      "type": "backend",
+      "label": "shrink_list",
+      "sublabel": "区分 active 与 inactive",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 2215
+        }
+      ]
+    },
+    {
+      "id": "h",
+      "lane": "lru",
+      "col": 5,
+      "type": "backend",
+      "label": "shrink_active_list",
+      "sublabel": "活跃页降级到非活跃",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 2068
+        }
+      ]
+    },
+    {
+      "id": "i",
+      "lane": "lru",
+      "col": 4,
+      "type": "backend",
+      "label": "shrink_inactive_list",
+      "sublabel": "隔离非活跃页",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 1986
+        }
+      ]
+    },
+    {
+      "id": "j",
+      "lane": "folio",
+      "col": 4,
+      "type": "backend",
+      "label": "shrink_folio_list",
+      "sublabel": "逐页判定回收",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 1055
+        }
+      ]
+    },
+    {
+      "id": "k",
+      "lane": "outcome",
+      "col": 2,
+      "type": "database",
+      "label": "直接回收",
+      "sublabel": "干净文件页回伙伴系统",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 1582
+        }
+      ]
+    },
+    {
+      "id": "l",
+      "lane": "outcome",
+      "col": 3,
+      "type": "backend",
+      "label": "pageout 换出",
+      "sublabel": "swap_writeout",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 657
+        },
+        {
+          "path": "mm/page_io.c",
+          "line": 251
+        }
+      ]
+    },
+    {
+      "id": "m",
+      "lane": "outcome",
+      "col": 4,
+      "type": "backend",
+      "label": "shmem_writeout",
+      "sublabel": "写回共享内存",
+      "sources": [
+        {
+          "path": "mm/shmem.c",
+          "line": 1591
+        }
+      ]
+    },
+    {
+      "id": "n",
+      "lane": "outcome",
+      "col": 5,
+      "type": "backend",
+      "label": "写回脏页",
+      "sublabel": "页面 writeback",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 618
+        }
+      ]
+    },
+    {
+      "id": "o",
+      "lane": "swap",
+      "col": 3,
+      "type": "database",
+      "label": "__swap_writepage",
+      "sublabel": "写入交换设备",
+      "sources": [
+        {
+          "path": "mm/page_io.c",
+          "line": 466
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "a-b",
+      "from": "a",
+      "to": "b",
+      "role": "main"
+    },
+    {
+      "id": "b-c",
+      "from": "b",
+      "to": "c",
+      "role": "main"
+    },
+    {
+      "id": "c-d",
+      "from": "c",
+      "to": "d",
+      "role": "main"
+    },
+    {
+      "id": "d-e",
+      "from": "d",
+      "to": "e",
+      "role": "main"
+    },
+    {
+      "id": "e-f",
+      "from": "e",
+      "to": "f",
+      "role": "main"
+    },
+    {
+      "id": "f-g",
+      "from": "f",
+      "to": "g",
+      "role": "main"
+    },
+    {
+      "id": "g-h",
+      "from": "g",
+      "to": "h",
+      "label": "active LRU",
+      "role": "branch",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "g-i",
+      "from": "g",
+      "to": "i",
+      "label": "inactive LRU",
+      "variant": "emphasis",
+      "role": "main",
+      "fromSide": "left",
+      "toSide": "top"
+    },
+    {
+      "id": "h-g",
+      "from": "h",
+      "to": "g",
+      "role": "return",
+      "fromSide": "right",
+      "toSide": "right",
+      "route": "outside-right"
+    },
+    {
+      "id": "i-j",
+      "from": "i",
+      "to": "j",
+      "role": "main"
+    },
+    {
+      "id": "j-k",
+      "from": "j",
+      "to": "k",
+      "label": "干净文件页",
+      "role": "branch"
+    },
+    {
+      "id": "j-l",
+      "from": "j",
+      "to": "l",
+      "label": "匿名页",
+      "variant": "emphasis",
+      "role": "branch"
+    },
+    {
+      "id": "j-m",
+      "from": "j",
+      "to": "m",
+      "label": "shmem 脏页",
+      "role": "branch"
+    },
+    {
+      "id": "j-n",
+      "from": "j",
+      "to": "n",
+      "label": "文件脏页",
+      "role": "branch"
+    },
+    {
+      "id": "l-o",
+      "from": "l",
+      "to": "o",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "回收主干",
+      "items": [
+        "内存压力通过 wakeup_kswapd 唤醒 kswapd 内核线程",
+        "balance_pgdat → shrink_node → shrink_node_memcgs 逐层进入节点与 cgroup",
+        "shrink_lruvec 按比例调用 shrink_list,区分 active 与 inactive LRU"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "LRU 分支",
+      "items": [
+        "active LRU 由 shrink_active_list 降级后回到 shrink_list",
+        "inactive LRU 由 shrink_inactive_list 隔离并交给 shrink_folio_list"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "四种回收去向",
+      "items": [
+        "干净文件页直接回收并回到伙伴系统",
+        "匿名页经 pageout 与 swap_writeout 换出,最终由 __swap_writepage 写入交换设备",
+        "shmem 脏页走 shmem_writeout,文件脏页走页面 writeback"
+      ]
+    }
+  ]
+}

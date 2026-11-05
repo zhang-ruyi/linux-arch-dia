@@ -1,0 +1,165 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "dentry 缓存路径查找",
+    "locale": "zh-CN",
+    "output": "site/文件系统/dentry-lookup.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "walk", "label": "VFS 路径遍历" },
+    { "id": "dcache", "label": "dcache 慢路径" },
+    { "id": "ext4", "label": "ext4 目录查找" }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "lane": "walk",
+      "col": 0,
+      "type": "backend",
+      "label": "link_path_walk()",
+      "sublabel": "逐级遍历路径",
+      "sources": [{ "path": "fs/namei.c", "line": 2578, "label": "link_path_walk" }]
+    },
+    {
+      "id": "walkcomp",
+      "lane": "walk",
+      "col": 1,
+      "type": "backend",
+      "label": "walk_component()",
+      "sublabel": "处理单个路径分量",
+      "sources": [{ "path": "fs/namei.c", "line": 2265, "label": "walk_component" }]
+    },
+    {
+      "id": "lookupfast",
+      "lane": "walk",
+      "col": 2,
+      "type": "database",
+      "label": "lookup_fast()",
+      "sublabel": "快速查找 dcache",
+      "sources": [{ "path": "fs/namei.c", "line": 1843, "label": "lookup_fast" }]
+    },
+    {
+      "id": "hit",
+      "lane": "walk",
+      "col": 4,
+      "type": "database",
+      "label": "命中已缓存 dentry",
+      "sublabel": "直接返回",
+      "sources": [{ "path": "fs/namei.c", "line": 1843, "label": "lookup_fast 返回 dentry" }]
+    },
+    {
+      "id": "next",
+      "lane": "walk",
+      "col": 5,
+      "type": "backend",
+      "label": "继续下一分量或结束",
+      "sublabel": "link_path_walk 主循环",
+      "sources": [{ "path": "fs/namei.c", "line": 2653, "label": "walk_component 调用点" }]
+    },
+    {
+      "id": "lookupslow",
+      "lane": "dcache",
+      "col": 2,
+      "type": "database",
+      "label": "lookup_slow()",
+      "sublabel": "慢速路径",
+      "sources": [{ "path": "fs/namei.c", "line": 1929, "label": "lookup_slow" }]
+    },
+    {
+      "id": "slowcore",
+      "lane": "dcache",
+      "col": 3,
+      "type": "database",
+      "label": "__lookup_slow()",
+      "sublabel": "分配并设置 dentry",
+      "sources": [{ "path": "fs/namei.c", "line": 1893, "label": "__lookup_slow" }]
+    },
+    {
+      "id": "ioplookup",
+      "lane": "dcache",
+      "col": 4,
+      "type": "backend",
+      "label": "inode->i_op->lookup",
+      "sublabel": "回调具体文件系统",
+      "sources": [{ "path": "fs/namei.c", "line": 1919, "label": "i_op->lookup" }]
+    },
+    {
+      "id": "addcache",
+      "lane": "dcache",
+      "col": 5,
+      "type": "database",
+      "label": "加入 dcache 并返回",
+      "sublabel": "__lookup_slow 返回 dentry",
+      "sources": [{ "path": "fs/namei.c", "line": 1893, "label": "__lookup_slow 返回" }]
+    },
+    {
+      "id": "ext4lookup",
+      "lane": "ext4",
+      "col": 4,
+      "type": "backend",
+      "label": "ext4_lookup()",
+      "sublabel": "具体文件系统查找",
+      "sources": [{ "path": "fs/ext4/namei.c", "line": 1760, "label": "ext4_lookup" }]
+    },
+    {
+      "id": "ext4entry",
+      "lane": "ext4",
+      "col": 5,
+      "type": "backend",
+      "label": "ext4_lookup_entry()",
+      "sublabel": "读目录块查找目录项",
+      "yOffset": -70,
+      "sources": [{ "path": "fs/ext4/namei.c", "line": 1689, "label": "ext4_lookup_entry" }]
+    },
+    {
+      "id": "fillinode",
+      "lane": "ext4",
+      "col": 5,
+      "type": "backend",
+      "label": "填充 inode 信息",
+      "sublabel": "ext4_iget 读取索引节点",
+      "yOffset": 70,
+      "sources": [{ "path": "fs/ext4/namei.c", "line": 1785, "label": "ext4_iget" }]
+    }
+  ],
+  "edges": [
+    { "id": "start-walk", "from": "start", "to": "walkcomp", "role": "main" },
+    { "id": "walk-fast", "from": "walkcomp", "to": "lookupfast", "role": "main" },
+    { "id": "fast-hit", "from": "lookupfast", "to": "hit", "label": "cache 命中", "role": "branch" },
+    { "id": "fast-miss", "from": "lookupfast", "to": "lookupslow", "label": "cache 未命中", "role": "branch" },
+    { "id": "slow-core", "from": "lookupslow", "to": "slowcore", "role": "main" },
+    { "id": "core-iop", "from": "slowcore", "to": "ioplookup", "role": "main" },
+    { "id": "iop-ext4", "from": "ioplookup", "to": "ext4lookup", "role": "main" },
+    { "id": "ext4-entry", "from": "ext4lookup", "to": "ext4entry", "role": "main" },
+    { "id": "entry-fill", "from": "ext4entry", "to": "fillinode", "role": "main" },
+    { "id": "fill-add", "from": "fillinode", "to": "addcache", "role": "main" },
+    { "id": "hit-next", "from": "hit", "to": "next", "role": "main" },
+    { "id": "add-next", "from": "addcache", "to": "next", "role": "main" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "快路径",
+      "items": [
+        "lookup_fast() 在 dcache 中查找已缓存 dentry",
+        "命中时直接返回，不再调用具体文件系统"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "慢路径",
+      "items": [
+        "lookup_slow() 进入 __lookup_slow() 分配 dentry",
+        "通过 inode->i_op->lookup 回调具体文件系统",
+        "ext4 读取目录块并填充 inode 后加入 dcache"
+      ]
+    }
+  ]
+}

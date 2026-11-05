@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-vfs-architecture/candidate.json",
+    "sha256": "8e70dec08351b030837416a3329fe093af7f4fd63e8421c880515eb70d0bc1f9",
+    "bytes": 6130
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/vfs-architecture.html",
+    "sha256": "dd66ba1f2c3f49d8a0d8ae8687fec7789de86b4fa9d3e1cdbbf347bf8039f44f",
+    "bytes": 845619
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/文件系统/vfs-architecture.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/vfs-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/vfs-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3361,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 2,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "file-pagecache",
+            "from": "file",
+            "to": "pagecache",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "bends": 3,
+          "stretch": 1
+        },
+        {
+          "relationship": {
+            "id": "inode-ext4",
+            "from": "inode",
+            "to": "ext4",
+            "label": "",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "bends": 3,
+          "stretch": 1.403,
+          "directCorridorBlockers": [
+            {
+              "id": "super",
+              "label": "super_block 超级块",
+              "box": [
+                360,
+                590,
+                180,
+                64
+              ]
+            }
+          ]
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "file → pagecache needs 3 bends: move node file or pagecache so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

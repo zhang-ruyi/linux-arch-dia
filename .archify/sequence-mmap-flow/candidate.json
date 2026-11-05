@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "mmap() 建立映射时序图",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/mmap-flow.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "调用 mmap(2)",
+      "icon": "person",
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 613,
+          "label": "syscall entry"
+        }
+      ]
+    },
+    {
+      "id": "sys",
+      "type": "backend",
+      "label": "系统调用层",
+      "sublabel": "mmap_pgoff(2)",
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 613
+        }
+      ]
+    },
+    {
+      "id": "ksys",
+      "type": "backend",
+      "label": "ksys_mmap_pgoff",
+      "sublabel": "mm/mmap.c",
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 568
+        }
+      ]
+    },
+    {
+      "id": "vmm",
+      "type": "backend",
+      "label": "vm_mmap_pgoff",
+      "sublabel": "mm/util.c",
+      "sources": [
+        {
+          "path": "mm/util.c",
+          "line": 565
+        }
+      ]
+    },
+    {
+      "id": "dom",
+      "type": "backend",
+      "label": "do_mmap",
+      "sublabel": "mm/mmap.c",
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 336
+        }
+      ]
+    },
+    {
+      "id": "reg",
+      "type": "backend",
+      "label": "mmap_region",
+      "sublabel": "mm/vma.c",
+      "sources": [
+        {
+          "path": "mm/vma.c",
+          "line": 2833
+        }
+      ]
+    },
+    {
+      "id": "newv",
+      "type": "backend",
+      "label": "__mmap_new_vma",
+      "sublabel": "mm/vma.c",
+      "sources": [
+        {
+          "path": "mm/vma.c",
+          "line": 2535
+        }
+      ]
+    },
+    {
+      "id": "fs",
+      "type": "backend",
+      "label": "f_op->mmap",
+      "sublabel": "vfs_mmap 回调",
+      "sources": [
+        {
+          "path": "mm/vma.c",
+          "line": 2496
+        },
+        {
+          "path": "include/linux/fs.h",
+          "line": 2061
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 158,
+      "to": 250,
+      "label": "系统调用入口"
+    },
+    {
+      "from": 250,
+      "to": 390,
+      "label": "VMA 建立"
+    },
+    {
+      "from": 390,
+      "to": 525,
+      "label": "映射类型分支"
+    },
+    {
+      "from": 525,
+      "to": 555,
+      "label": "返回用户态"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "app",
+      "to": "sys",
+      "y": 170,
+      "label": "mmap(addr, len, prot, flags, fd, offset)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m2",
+      "from": "sys",
+      "to": "ksys",
+      "y": 200,
+      "label": "进入内核,传递参数",
+      "note": "非 MAP_ANONYMOUS 时 fget(fd) 获取 struct file"
+    },
+    {
+      "id": "m3",
+      "from": "ksys",
+      "to": "vmm",
+      "y": 270,
+      "label": "调用 vm_mmap_pgoff(file, ...)"
+    },
+    {
+      "id": "m4",
+      "from": "vmm",
+      "to": "dom",
+      "y": 300,
+      "label": "调用 do_mmap(file, ...)"
+    },
+    {
+      "id": "m5",
+      "from": "dom",
+      "to": "reg",
+      "y": 330,
+      "label": "校验地址与权限后调用 mmap_region",
+      "note": "__mmap_region 分配或合并 VMA,检查地址空间上限"
+    },
+    {
+      "id": "m6",
+      "from": "reg",
+      "to": "newv",
+      "y": 400,
+      "label": "__mmap_new_vma 新建 vm_area_struct",
+      "note": "匿名映射调用 vma_set_anonymous;共享匿名 MAP_SHARED 调用 shmem_zero_setup"
+    },
+    {
+      "id": "m7",
+      "from": "newv",
+      "to": "fs",
+      "y": 482,
+      "label": "mmap_file 经 vfs_mmap 调用 file->f_op->mmap"
+    },
+    {
+      "id": "m8",
+      "from": "fs",
+      "to": "newv",
+      "y": 510,
+      "label": "文件驱动建立映射",
+      "variant": "return"
+    },
+    {
+      "id": "m9",
+      "from": "reg",
+      "to": "app",
+      "y": 542,
+      "label": "返回映射起始地址",
+      "variant": "return",
+      "note": "仅建立虚拟映射,物理页由缺页分配"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "app",
+      "from": 165,
+      "to": 552,
+      "type": "external"
+    },
+    {
+      "participant": "sys",
+      "from": 170,
+      "to": 210,
+      "type": "backend"
+    },
+    {
+      "participant": "ksys",
+      "from": 195,
+      "to": 275,
+      "type": "backend"
+    },
+    {
+      "participant": "vmm",
+      "from": 265,
+      "to": 305,
+      "type": "backend"
+    },
+    {
+      "participant": "dom",
+      "from": 295,
+      "to": 335,
+      "type": "backend"
+    },
+    {
+      "participant": "reg",
+      "from": 325,
+      "to": 552,
+      "type": "backend"
+    },
+    {
+      "participant": "newv",
+      "from": 395,
+      "to": 517,
+      "type": "backend"
+    },
+    {
+      "participant": "fs",
+      "from": 465,
+      "to": 517,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "调用主链",
+      "items": [
+        "用户进程经 SYSCALL_DEFINE6(mmap_pgoff) 进入 ksys_mmap_pgoff",
+        "ksys_mmap_pgoff 对非匿名映射执行 fget(fd),随后调用 vm_mmap_pgoff",
+        "do_mmap 校验后交给 mmap_region,由 __mmap_new_vma 创建 vm_area_struct"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "映射类型分支",
+      "items": [
+        "匿名映射调用 vma_set_anonymous,物理页留待缺页分配",
+        "共享匿名 MAP_SHARED 调用 shmem_zero_setup",
+        "文件映射经 mmap_file 与 vfs_mmap 调用 file->f_op->mmap"
+      ]
+    }
+  ]
+}

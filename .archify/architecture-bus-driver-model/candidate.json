@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "设备驱动模型",
+    "locale": "zh-CN",
+    "output": "site/设备驱动/bus-driver-model.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "kobj",
+      "type": "backend",
+      "label": "kobject",
+      "sublabel": "内核对象模型",
+      "pos": [
+        60,
+        240
+      ],
+      "size": [
+        160,
+        70
+      ],
+      "sources": [
+        {
+          "path": "include/linux/kobject.h",
+          "line": 64,
+          "label": "struct kobject"
+        }
+      ]
+    },
+    {
+      "id": "bus",
+      "type": "messagebus",
+      "label": "struct bus_type",
+      "sublabel": "通过 subsys_private 持有 kset",
+      "pos": [
+        60,
+        80
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "include/linux/device/bus.h",
+          "line": 83,
+          "label": "struct bus_type"
+        },
+        {
+          "path": "drivers/base/base.h",
+          "line": 43,
+          "label": "struct subsys_private"
+        }
+      ]
+    },
+    {
+      "id": "drv",
+      "type": "backend",
+      "label": "struct device_driver",
+      "sublabel": "通过 driver_private 持有 kobject",
+      "pos": [
+        340,
+        243
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "include/linux/device/driver.h",
+          "line": 100,
+          "label": "struct device_driver"
+        },
+        {
+          "path": "drivers/base/base.h",
+          "line": 80,
+          "label": "struct driver_private"
+        }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "backend",
+      "label": "struct device",
+      "sublabel": "内嵌 kobject kobj",
+      "pos": [
+        60,
+        400
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "include/linux/device.h",
+          "line": 701,
+          "label": "struct device"
+        }
+      ]
+    },
+    {
+      "id": "driverreg",
+      "type": "backend",
+      "label": "driver_register()",
+      "sublabel": "注册驱动",
+      "pos": [
+        620,
+        40
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/driver.c",
+          "line": 150,
+          "label": "driver_register"
+        }
+      ]
+    },
+    {
+      "id": "busadd",
+      "type": "backend",
+      "label": "bus_add_driver()",
+      "sublabel": "加入总线链表",
+      "pos": [
+        620,
+        140
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/bus.c",
+          "line": 732,
+          "label": "bus_add_driver"
+        }
+      ]
+    },
+    {
+      "id": "attach",
+      "type": "backend",
+      "label": "driver_attach()",
+      "sublabel": "遍历设备",
+      "pos": [
+        620,
+        240
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 1307,
+          "label": "driver_attach"
+        }
+      ]
+    },
+    {
+      "id": "attach2",
+      "type": "backend",
+      "label": "__driver_attach()",
+      "sublabel": "尝试匹配设备",
+      "pos": [
+        620,
+        340
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 1232,
+          "label": "__driver_attach"
+        }
+      ]
+    },
+    {
+      "id": "probedev",
+      "type": "backend",
+      "label": "driver_probe_device()",
+      "sublabel": "探测绑定",
+      "pos": [
+        620,
+        440
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 892,
+          "label": "driver_probe_device"
+        }
+      ]
+    },
+    {
+      "id": "reallyprobe",
+      "type": "backend",
+      "label": "really_probe()",
+      "sublabel": "真正绑定",
+      "pos": [
+        620,
+        540
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 652,
+          "label": "really_probe"
+        }
+      ]
+    },
+    {
+      "id": "probecall",
+      "type": "backend",
+      "label": "drv->probe",
+      "sublabel": "驱动探针函数",
+      "pos": [
+        620,
+        640
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 620,
+          "label": "call_driver_probe"
+        }
+      ]
+    },
+    {
+      "id": "bound",
+      "type": "backend",
+      "label": "绑定成功",
+      "sublabel": "设备与驱动绑定",
+      "pos": [
+        620,
+        740
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 892,
+          "label": "driver_probe_device 返回 0"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "核心对象与 kobject 关系",
+      "wraps": [
+        "bus",
+        "kobj",
+        "drv",
+        "dev"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "驱动注册与绑定流程",
+      "wraps": [
+        "driverreg",
+        "busadd",
+        "attach",
+        "attach2",
+        "probedev",
+        "reallyprobe",
+        "probecall",
+        "bound"
+      ],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    {
+      "id": "bus-kobj",
+      "from": "bus",
+      "to": "kobj",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [
+        [
+          300,
+          112
+        ],
+        [
+          300,
+          200
+        ],
+        [
+          140,
+          200
+        ]
+      ]
+    },
+    {
+      "id": "drv-kobj",
+      "from": "drv",
+      "to": "kobj",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "dev-kobj",
+      "from": "dev",
+      "to": "kobj",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "via": [
+        [
+          300,
+          432
+        ],
+        [
+          300,
+          360
+        ],
+        [
+          140,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "drv-driverreg",
+      "from": "drv",
+      "to": "driverreg",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [
+        [
+          580,
+          275
+        ],
+        [
+          580,
+          68
+        ]
+      ]
+    },
+    {
+      "id": "reg-busadd",
+      "from": "driverreg",
+      "to": "busadd"
+    },
+    {
+      "id": "busadd-attach",
+      "from": "busadd",
+      "to": "attach"
+    },
+    {
+      "id": "attach-attach2",
+      "from": "attach",
+      "to": "attach2"
+    },
+    {
+      "id": "attach2-probedev",
+      "from": "attach2",
+      "to": "probedev"
+    },
+    {
+      "id": "probedev-really",
+      "from": "probedev",
+      "to": "reallyprobe"
+    },
+    {
+      "id": "really-probecall",
+      "from": "reallyprobe",
+      "to": "probecall"
+    },
+    {
+      "id": "probecall-bound",
+      "from": "probecall",
+      "to": "bound"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三个核心对象",
+      "items": [
+        "bus_type 通过 subsys_private 持有设备与驱动的 kset",
+        "device_driver 通过 driver_private 持有 kobject",
+        "device 直接内嵌 kobject，统一接入 sysfs 对象模型"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "注册与绑定",
+      "items": [
+        "driver_register() 把驱动加入总线，并触发 driver_attach()",
+        "__driver_attach() 对每个设备尝试匹配",
+        "driver_probe_device() → really_probe() → drv->probe 完成绑定"
+      ]
+    }
+  ]
+}

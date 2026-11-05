@@ -1,0 +1,379 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "TCP 11 态状态机",
+    "output": "site/网络协议栈/tcp-state-machine.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "mainPath": [
+    "closed",
+    "listen",
+    "syn_recv",
+    "established",
+    "close_wait",
+    "last_ack"
+  ],
+  "states": [
+    {
+      "id": "closed",
+      "type": "start",
+      "label": "CLOSED",
+      "sublabel": "TCPF_CLOSE",
+      "tag": "初始/终止",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 19,
+          "label": "TCP_CLOSE"
+        },
+        {
+          "path": "net/ipv4/tcp.c",
+          "line": 2960,
+          "label": "tcp_set_state"
+        }
+      ]
+    },
+    {
+      "id": "listen",
+      "type": "waiting",
+      "label": "LISTEN",
+      "sublabel": "TCPF_LISTEN",
+      "tag": "被动打开",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 22,
+          "label": "TCP_LISTEN"
+        },
+        {
+          "path": "net/ipv4/af_inet.c",
+          "line": 198,
+          "label": "__inet_listen_sk"
+        }
+      ]
+    },
+    {
+      "id": "syn_sent",
+      "type": "active",
+      "label": "SYN_SENT",
+      "sublabel": "TCPF_SYN_SENT",
+      "tag": "主动打开",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 14,
+          "label": "TCP_SYN_SENT"
+        },
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 221,
+          "label": "tcp_v4_connect"
+        },
+        {
+          "path": "net/ipv4/tcp_output.c",
+          "line": 4294,
+          "label": "tcp_connect"
+        }
+      ]
+    },
+    {
+      "id": "syn_recv",
+      "type": "active",
+      "label": "SYN_RECV",
+      "sublabel": "TCPF_SYN_RECV",
+      "tag": "收到 SYN",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 15,
+          "label": "TCP_SYN_RECV"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 7009,
+          "label": "tcp_set_state(TCP_SYN_RECV)"
+        }
+      ]
+    },
+    {
+      "id": "established",
+      "type": "active",
+      "label": "ESTABLISHED",
+      "sublabel": "TCPF_ESTABLISHED",
+      "tag": "数据传输",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 13,
+          "label": "TCP_ESTABLISHED"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 6709,
+          "label": "tcp_set_state(TCP_ESTABLISHED)"
+        }
+      ]
+    },
+    {
+      "id": "fin_wait_1",
+      "type": "active",
+      "label": "FIN_WAIT_1",
+      "sublabel": "TCPF_FIN_WAIT1",
+      "tag": "主动关闭",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 16,
+          "label": "TCP_FIN_WAIT1"
+        },
+        {
+          "path": "net/ipv4/tcp.c",
+          "line": 3040,
+          "label": "tcp_close_state"
+        }
+      ]
+    },
+    {
+      "id": "fin_wait_2",
+      "type": "waiting",
+      "label": "FIN_WAIT_2",
+      "sublabel": "TCPF_FIN_WAIT2",
+      "tag": "等待 FIN",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 17,
+          "label": "TCP_FIN_WAIT2"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 7278,
+          "label": "tcp_set_state(TCP_FIN_WAIT2)"
+        }
+      ]
+    },
+    {
+      "id": "close_wait",
+      "type": "waiting",
+      "label": "CLOSE_WAIT",
+      "sublabel": "TCPF_CLOSE_WAIT",
+      "tag": "被动关闭",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 20,
+          "label": "TCP_CLOSE_WAIT"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 4909,
+          "label": "tcp_set_state(TCP_CLOSE_WAIT)"
+        }
+      ]
+    },
+    {
+      "id": "closing",
+      "type": "active",
+      "label": "CLOSING",
+      "sublabel": "TCPF_CLOSING",
+      "tag": "同时关闭",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 23,
+          "label": "TCP_CLOSING"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 4929,
+          "label": "tcp_set_state(TCP_CLOSING)"
+        }
+      ]
+    },
+    {
+      "id": "last_ack",
+      "type": "waiting",
+      "label": "LAST_ACK",
+      "sublabel": "TCPF_LAST_ACK",
+      "tag": "等待最后 ACK",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 21,
+          "label": "TCP_LAST_ACK"
+        },
+        {
+          "path": "net/ipv4/tcp.c",
+          "line": 3047,
+          "label": "new_state[TCP_CLOSE_WAIT]"
+        }
+      ]
+    },
+    {
+      "id": "time_wait",
+      "type": "waiting",
+      "label": "TIME_WAIT",
+      "sublabel": "TCPF_TIME_WAIT",
+      "tag": "2MSL 等待",
+      "sources": [
+        {
+          "path": "include/net/tcp_states.h",
+          "line": 18,
+          "label": "TCP_TIME_WAIT"
+        },
+        {
+          "path": "net/ipv4/tcp_minisocks.c",
+          "line": 326,
+          "label": "tcp_time_wait"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 4934,
+          "label": "tcp_time_wait(TCP_TIME_WAIT)"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "closed-listen",
+      "from": "closed",
+      "to": "listen",
+      "label": "listen()"
+    },
+    {
+      "id": "closed-syn-sent",
+      "from": "closed",
+      "to": "syn_sent",
+      "label": "connect() 主动打开,发 SYN"
+    },
+    {
+      "id": "listen-syn-recv",
+      "from": "listen",
+      "to": "syn_recv",
+      "label": "收到 SYN"
+    },
+    {
+      "id": "syn-sent-syn-recv",
+      "from": "syn_sent",
+      "to": "syn_recv",
+      "label": "同时打开,收到 SYN"
+    },
+    {
+      "id": "syn-sent-established",
+      "from": "syn_sent",
+      "to": "established",
+      "label": "收到 SYN+ACK,回 ACK"
+    },
+    {
+      "id": "syn-recv-established",
+      "from": "syn_recv",
+      "to": "established",
+      "label": "ACK"
+    },
+    {
+      "id": "syn-recv-listen",
+      "from": "syn_recv",
+      "to": "listen",
+      "label": "收到 RST",
+      "variant": "security"
+    },
+    {
+      "id": "established-fin-wait-1",
+      "from": "established",
+      "to": "fin_wait_1",
+      "label": "close() 主动关闭,发 FIN"
+    },
+    {
+      "id": "established-close-wait",
+      "from": "established",
+      "to": "close_wait",
+      "label": "FIN → ACK"
+    },
+    {
+      "id": "fin-wait-1-fin-wait-2",
+      "from": "fin_wait_1",
+      "to": "fin_wait_2",
+      "label": "收到 ACK"
+    },
+    {
+      "id": "fin-wait-1-closing",
+      "from": "fin_wait_1",
+      "to": "closing",
+      "label": "同时关闭,收到 FIN,回 ACK"
+    },
+    {
+      "id": "fin-wait-1-time-wait",
+      "from": "fin_wait_1",
+      "to": "time_wait",
+      "label": "收到 FIN+ACK"
+    },
+    {
+      "id": "fin-wait-2-time-wait",
+      "from": "fin_wait_2",
+      "to": "time_wait",
+      "label": "收到 FIN,回 ACK"
+    },
+    {
+      "id": "closing-time-wait",
+      "from": "closing",
+      "to": "time_wait",
+      "label": "收到 ACK"
+    },
+    {
+      "id": "close-wait-last-ack",
+      "from": "close_wait",
+      "to": "last_ack",
+      "label": "close()"
+    },
+    {
+      "id": "last-ack-closed",
+      "from": "last_ack",
+      "to": "closed",
+      "label": "收到 ACK"
+    },
+    {
+      "id": "time-wait-closed",
+      "from": "time_wait",
+      "to": "closed",
+      "label": "2MSL 超时",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "打开与关闭两条路径",
+      "items": [
+        "被动打开:CLOSED → LISTEN → SYN_RECV → ESTABLISHED",
+        "LISTEN 收到 SYN 回 SYN+ACK,SYN_RECV 收到 ACK 后建立",
+        "ESTABLISHED 收到 FIN 回 ACK 进入 CLOSE_WAIT",
+        "主动关闭与被动关闭分别经过 FIN_WAIT / CLOSE_WAIT"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "同时事件",
+      "items": [
+        "同时打开:SYN_SENT 收到 SYN 进入 SYN_RECV",
+        "同时关闭:FIN_WAIT_1 收到 FIN 进入 CLOSING"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "终止与复用",
+      "items": [
+        "LAST_ACK 收到 ACK 后回到 CLOSED",
+        "TIME_WAIT 等待 2MSL 后回到 CLOSED",
+        "SYN_RECV 收到 RST 可退回 LISTEN"
+      ]
+    }
+  ]
+}

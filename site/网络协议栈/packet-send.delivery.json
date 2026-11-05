@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "d9d9e5ab-e885-4ef7-af28-ab8a1b099ce9",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-packet-send/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/packet-send.html",
+  "specification": {
+    "sha256": "05765d93ea905a1986d245f30d0cde2eb421523762ec5f9332eb0bcf25b9146b",
+    "bytes": 4029
+  },
+  "artifact": {
+    "sha256": "d4ac8d488bc840e00ca298fe2377b9ad7500ab63e22159bf8c4e8046265573da",
+    "bytes": 830500
+  }
+}

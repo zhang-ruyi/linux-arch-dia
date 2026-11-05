@@ -1,0 +1,23 @@
+---
+title: socket() 系统调用创建流程时序图
+type: sequence
+tags: [网络协议栈, socket, 系统调用]
+description: 用户 socket() 经 __sys_socket、sock_create、inet_create 分配 struct sock 并绑定协议 ops 后返回 fd
+---
+sequenceDiagram
+    autonumber
+    participant P as 用户进程
+    participant SYSCALL as 系统调用层<br/>__sys_socket()
+    participant SOCK as socket 层<br/>sock_create / __sock_create
+    participant INET as inet 层<br/>inet_create()
+    participant OBJ as 内核对象
+
+    P->>SYSCALL: socket(AF_INET, SOCK_STREAM, 0)
+    SYSCALL->>SOCK: sock_create()
+    SOCK->>SOCK: __sock_create()<br/>sock_alloc() 分配 struct socket
+    SOCK->>INET: 按 family 查找协议<br/>调用 inet_create()
+    INET->>OBJ: sk_alloc() 分配 struct sock
+    INET->>INET: 绑定协议操作集 tcp_prot<br/>设置 sk_prot 与回调函数
+    INET->>SOCK: 返回 socket 与 sock
+    SOCK->>SYSCALL: 分配文件描述符
+    SYSCALL->>P: 返回 fd

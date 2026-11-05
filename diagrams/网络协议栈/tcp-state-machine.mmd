@@ -1,0 +1,39 @@
+---
+title: TCP 11 态状态机
+type: stateDiagram
+tags: [网络协议栈, TCP, 状态机]
+description: TCP 连接生命周期 11 个状态及其迁移,标注触发的报文(SYN / SYN+ACK / ACK / FIN)
+---
+stateDiagram-v2
+    [*] --> CLOSED: 初始状态
+
+    state "CLOSED (TCPF_CLOSE)" as CLOSED
+    state "LISTEN (TCPF_LISTEN)" as LISTEN
+    state "SYN_SENT (TCPF_SYN_SENT)" as SYN_SENT
+    state "SYN_RECV (TCPF_SYN_RECV)" as SYN_RECV
+    state "ESTABLISHED (TCPF_ESTABLISHED)" as ESTABLISHED
+    state "FIN_WAIT_1 (TCPF_FIN_WAIT1)" as FIN_WAIT_1
+    state "FIN_WAIT_2 (TCPF_FIN_WAIT2)" as FIN_WAIT_2
+    state "CLOSE_WAIT (TCPF_CLOSE_WAIT)" as CLOSE_WAIT
+    state "CLOSING (TCPF_CLOSING)" as CLOSING
+    state "LAST_ACK (TCPF_LAST_ACK)" as LAST_ACK
+    state "TIME_WAIT (TCPF_TIME_WAIT)" as TIME_WAIT
+
+    CLOSED --> LISTEN: listen() 被动打开
+    CLOSED --> SYN_SENT: connect() 主动打开,发 SYN
+    LISTEN --> SYN_RECV: 收到 SYN,回 SYN+ACK
+    SYN_SENT --> SYN_RECV: 同时打开,收到 SYN
+    SYN_SENT --> ESTABLISHED: 收到 SYN+ACK,回 ACK
+    SYN_RECV --> ESTABLISHED: 收到 ACK
+    SYN_RECV --> LISTEN: 收到 RST
+
+    ESTABLISHED --> FIN_WAIT_1: close() 主动关闭,发 FIN
+    ESTABLISHED --> CLOSE_WAIT: 收到 FIN,回 ACK
+    FIN_WAIT_1 --> FIN_WAIT_2: 收到 ACK
+    FIN_WAIT_1 --> CLOSING: 同时关闭,收到 FIN,回 ACK
+    FIN_WAIT_1 --> TIME_WAIT: 收到 FIN+ACK
+    FIN_WAIT_2 --> TIME_WAIT: 收到 FIN,回 ACK
+    CLOSING --> TIME_WAIT: 收到 ACK
+    CLOSE_WAIT --> LAST_ACK: close(),发 FIN
+    LAST_ACK --> CLOSED: 收到 ACK
+    TIME_WAIT --> CLOSED: 2MSL 超时

@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "epoll 三大数据结构与回调原理",
+    "output": "site/网络协议栈/epoll-principle.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "create",
+      "type": "frontend",
+      "label": "epoll_create()",
+      "sublabel": "创建 eventpoll 对象",
+      "pos": [
+        60,
+        180
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2476,
+          "label": "do_epoll_create"
+        },
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2512,
+          "label": "SYSCALL_DEFINE1(epoll_create)"
+        }
+      ]
+    },
+    {
+      "id": "ctl",
+      "type": "frontend",
+      "label": "epoll_ctl(EPOLL_CTL_ADD)",
+      "sublabel": "添加被监听 fd",
+      "pos": [
+        60,
+        60
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2708,
+          "label": "do_epoll_ctl"
+        },
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2732,
+          "label": "SYSCALL_DEFINE4(epoll_ctl)"
+        },
+        {
+          "path": "fs/eventpoll.c",
+          "line": 1880,
+          "label": "ep_insert"
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "type": "frontend",
+      "label": "epoll_wait()",
+      "sublabel": "获取就绪事件",
+      "pos": [
+        60,
+        330
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2814,
+          "label": "SYSCALL_DEFINE4(epoll_wait)"
+        },
+        {
+          "path": "fs/eventpoll.c",
+          "line": 2239,
+          "label": "ep_poll"
+        }
+      ]
+    },
+    {
+      "id": "ep",
+      "type": "backend",
+      "label": "eventpoll 结构体",
+      "sublabel": "struct eventpoll",
+      "tag": "内核对象",
+      "pos": [
+        330,
+        165
+      ],
+      "size": [
+        180,
+        90
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 295,
+          "label": "struct eventpoll"
+        }
+      ]
+    },
+    {
+      "id": "cb",
+      "type": "backend",
+      "label": "ep_poll_callback()",
+      "sublabel": "事件就绪回调",
+      "pos": [
+        880,
+        340
+      ],
+      "size": [
+        190,
+        70
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 1475,
+          "label": "ep_poll_callback"
+        }
+      ]
+    },
+    {
+      "id": "rbr",
+      "type": "backend",
+      "label": "红黑树 rbr",
+      "sublabel": "管理所有被监听 fd",
+      "pos": [
+        650,
+        85
+      ],
+      "size": [
+        190,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 320,
+          "label": "struct rb_root_cached rbr"
+        }
+      ]
+    },
+    {
+      "id": "rdllist",
+      "type": "backend",
+      "label": "就绪链表 rdllist",
+      "sublabel": "存放已就绪 fd",
+      "pos": [
+        650,
+        215
+      ],
+      "size": [
+        190,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 311,
+          "label": "struct list_head rdllist"
+        }
+      ]
+    },
+    {
+      "id": "wq",
+      "type": "backend",
+      "label": "等待队列 wq",
+      "sublabel": "epoll_wait 休眠",
+      "pos": [
+        650,
+        345
+      ],
+      "size": [
+        190,
+        60
+      ],
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 305,
+          "label": "wait_queue_head_t wq"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "用户接口 (syscalls)",
+      "wraps": [
+        "create",
+        "ctl",
+        "wait"
+      ],
+      "pad": 30
+    },
+    {
+      "kind": "region",
+      "label": "内核对象 eventpoll",
+      "wraps": [
+        "ep",
+        "cb",
+        "rbr",
+        "rdllist",
+        "wq"
+      ],
+      "pad": 60
+    }
+  ],
+  "connections": [
+    {
+      "id": "create-ep",
+      "from": "create",
+      "to": "ep"
+    },
+    {
+      "id": "ep-rbr",
+      "from": "ep",
+      "to": "rbr"
+    },
+    {
+      "id": "ep-rdllist",
+      "from": "ep",
+      "to": "rdllist"
+    },
+    {
+      "id": "ep-wq",
+      "from": "ep",
+      "to": "wq"
+    },
+    {
+      "id": "ctl-rbr",
+      "from": "ctl",
+      "to": "rbr",
+      "label": "ep_insert()"
+    },
+    {
+      "id": "ctl-cb",
+      "from": "ctl",
+      "to": "cb",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          140,
+          150
+        ],
+        [
+          20,
+          150
+        ],
+        [
+          20,
+          450
+        ],
+        [
+          975,
+          450
+        ]
+      ]
+    },
+    {
+      "id": "cb-rdllist",
+      "from": "cb",
+      "to": "rdllist",
+      "label": "fd 就绪时加入"
+    },
+    {
+      "id": "cb-wq",
+      "from": "cb",
+      "to": "wq",
+      "label": "唤醒"
+    },
+    {
+      "id": "wait-rdllist",
+      "from": "wait",
+      "to": "rdllist",
+      "label": "ep_poll() 检查"
+    },
+    {
+      "id": "rdllist-wq",
+      "from": "rdllist",
+      "to": "wq",
+      "label": "无事件"
+    },
+    {
+      "id": "wq-rdllist",
+      "from": "wq",
+      "to": "rdllist",
+      "label": "被唤醒后再次检查"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三大数据结构",
+      "items": [
+        "rbr 红黑树管理所有被监听的 fd",
+        "rdllist 就绪链表存放已就绪 fd",
+        "wq 等待队列用于 epoll_wait 休眠"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "回调驱动",
+      "items": [
+        "epoll_ctl(EPOLL_CTL_ADD) 经 ep_insert() 插入 rbr",
+        "fd 就绪时 ep_poll_callback() 将其加入 rdllist",
+        "回调同时唤醒等待队列 wq"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "等待与重查",
+      "items": [
+        "epoll_wait() 经 ep_poll() 检查 rdllist",
+        "无事件时休眠在 wq 上",
+        "被唤醒后再次检查 rdllist"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+---
+title: 伙伴系统分配与释放流程
+type: flowchart
+tags: [内存管理, 伙伴系统, buddy allocator, page allocator]
+description: alloc_pages 分配路径经 get_page_from_freelist 与 rmqueue,__free_pages 释放路径经 __free_one_page 伙伴合并
+---
+flowchart TD
+    subgraph ALLOC[分配路径]
+        A1[alloc_pages<br/>include/linux/gfp.h 宏] --> A2[__alloc_pages_noprof]
+        A2 --> A3[__alloc_frozen_pages_noprof]
+        A3 --> A4[get_page_from_freelist<br/>遍历 zonelist 快速分配]
+        A4 --> A5[rmqueue<br/>从 zone 取页块]
+        A5 -->|order 允许 PCP| A6[rmqueue_pcplist<br/>每 CPU 页表快路径]
+        A5 -->|大 order 走伙伴| A7[__rmqueue<br/>伙伴系统慢路径]
+        A7 --> A8[__rmqueue_smallest<br/>从最低阶查找]
+        A8 --> A9[expand<br/>剩余块回插伙伴表]
+    end
+
+    subgraph FREE[释放路径]
+        F1[__free_pages 或 free_pages] --> F2[___free_pages<br/>引用计数归零]
+        F2 --> F3[__free_frozen_pages]
+        F3 -->|order 允许 PCP| F4[free_frozen_page_commit<br/>回填每 CPU 页表]
+        F3 -->|大 order 走伙伴| F5[__free_pages_ok]
+        F5 --> F6[free_one_page]
+        F6 --> F7[__free_one_page<br/>查找伙伴向上合并]
+        F4 -->|pcp 满后批量释放| F7
+    end

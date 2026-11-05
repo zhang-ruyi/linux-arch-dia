@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/candidate.json",
+    "sha256": "617e4b2ee2c168dbf92806b45e1cdc149cf0e3986cca84762c5a48232ebcd109",
+    "bytes": 4992
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.html",
+    "sha256": "4efa14c57b58e8b5200f58391806eb67b6067a2df4f249edda0e30267efa1eb1",
+    "bytes": 846131
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3239,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 2,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "create-ep",
+            "from": "create",
+            "to": "ep",
+            "label": "",
+            "collectionIndex": 0,
+            "artifactIndex": 1
+          },
+          "right": {
+            "id": "ctl-cb",
+            "from": "ctl",
+            "to": "cb",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "point": [
+            306,
+            210
+          ]
+        },
+        {
+          "left": {
+            "id": "ep-wq",
+            "from": "ep",
+            "to": "wq",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "cb-rdllist",
+            "from": "cb",
+            "to": "rdllist",
+            "label": "fd 就绪时加入",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "point": [
+            626,
+            259
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "wait-rdllist",
+            "from": "wait",
+            "to": "rdllist",
+            "label": "ep_poll() 检查",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "bends": 3,
+          "stretch": 1.114
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "create → ep crosses ctl → cb: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "ep → wq crosses cb → rdllist: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "wait → rdllist needs 3 bends: move node wait or rdllist so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

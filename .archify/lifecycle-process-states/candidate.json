@@ -1,0 +1,234 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Linux 进程状态机",
+    "locale": "zh-CN",
+    "output": "site/进程管理/process-states.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "mainPath": [
+    "new",
+    "running",
+    "zombie",
+    "reaped"
+  ],
+  "states": [
+    {
+      "id": "new",
+      "type": "start",
+      "label": "创建",
+      "sublabel": "fork() 后被唤醒",
+      "tag": "初始",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2694,
+          "label": "kernel_clone"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4941,
+          "label": "wake_up_new_task"
+        }
+      ]
+    },
+    {
+      "id": "running",
+      "type": "active",
+      "label": "TASK_RUNNING",
+      "sublabel": "运行或可运行",
+      "tag": "R",
+      "sources": [
+        {
+          "path": "include/linux/sched.h",
+          "line": 107,
+          "label": "TASK_RUNNING"
+        }
+      ]
+    },
+    {
+      "id": "zombie",
+      "type": "neutral",
+      "label": "TASK_ZOMBIE",
+      "sublabel": "已退出，等待父进程回收",
+      "tag": "Z",
+      "sources": [
+        {
+          "path": "include/linux/sched.h",
+          "line": 114,
+          "label": "EXIT_ZOMBIE"
+        },
+        {
+          "path": "kernel/exit.c",
+          "line": 783,
+          "label": "exit_state = EXIT_ZOMBIE"
+        }
+      ]
+    },
+    {
+      "id": "reaped",
+      "type": "success",
+      "label": "已回收",
+      "sublabel": "release_task() 释放 task_struct",
+      "tag": "终态",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 249,
+          "label": "release_task"
+        }
+      ]
+    },
+    {
+      "id": "interruptible",
+      "type": "waiting",
+      "label": "TASK_INTERRUPTIBLE",
+      "sublabel": "可被信号打断的睡眠",
+      "tag": "S",
+      "sources": [
+        {
+          "path": "include/linux/sched.h",
+          "line": 108,
+          "label": "TASK_INTERRUPTIBLE"
+        },
+        {
+          "path": "include/linux/wait.h",
+          "line": 501,
+          "label": "wait_event_interruptible"
+        }
+      ]
+    },
+    {
+      "id": "uninterruptible",
+      "type": "waiting",
+      "label": "TASK_UNINTERRUPTIBLE",
+      "sublabel": "D 状态，不可被信号打断",
+      "tag": "D",
+      "sources": [
+        {
+          "path": "include/linux/sched.h",
+          "line": 109,
+          "label": "TASK_UNINTERRUPTIBLE"
+        },
+        {
+          "path": "include/linux/wait.h",
+          "line": 345,
+          "label": "wait_event"
+        }
+      ]
+    },
+    {
+      "id": "stopped",
+      "type": "waiting",
+      "label": "TASK_STOPPED",
+      "sublabel": "SIGSTOP / ptrace 暂停",
+      "tag": "T",
+      "sources": [
+        {
+          "path": "include/linux/sched.h",
+          "line": 138,
+          "label": "TASK_STOPPED"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "fork-wake",
+      "from": "new",
+      "to": "running",
+      "label": "fork() 创建后被唤醒"
+    },
+    {
+      "id": "run-rotate",
+      "from": "running",
+      "to": "running",
+      "label": "时间片轮转 / 被抢占"
+    },
+    {
+      "id": "run-sleep-int",
+      "from": "running",
+      "to": "interruptible",
+      "label": "等待事件",
+      "note": "wait_event_interruptible()"
+    },
+    {
+      "id": "run-sleep-unint",
+      "from": "running",
+      "to": "uninterruptible",
+      "label": "等待不可中断事件",
+      "note": "wait_event()，常用于磁盘 IO 等待"
+    },
+    {
+      "id": "unint-wake",
+      "from": "uninterruptible",
+      "to": "running",
+      "label": "事件完成 wake_up()"
+    },
+    {
+      "id": "run-stop",
+      "from": "running",
+      "to": "stopped",
+      "label": "SIGSTOP / ptrace"
+    },
+    {
+      "id": "stop-cont",
+      "from": "stopped",
+      "to": "running",
+      "label": "SIGCONT"
+    },
+    {
+      "id": "run-exit",
+      "from": "running",
+      "to": "zombie",
+      "label": "do_exit()",
+      "note": "进程退出后等待父进程 wait()"
+    },
+    {
+      "id": "zombie-reap",
+      "from": "zombie",
+      "to": "reaped",
+      "label": "父进程回收 release_task()"
+    },
+    {
+      "id": "int-wake",
+      "from": "interruptible",
+      "to": "running",
+      "label": "事件 / 信号唤醒",
+      "note": "wake_up()；可中断睡眠也可被信号唤醒"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "运行态",
+      "items": [
+        "TASK_RUNNING 同时表示正在运行与在运行队列中可运行",
+        "时间片轮转与抢占都会重新进入 schedule()"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "睡眠态",
+      "items": [
+        "TASK_INTERRUPTIBLE 可被信号唤醒",
+        "TASK_UNINTERRUPTIBLE 不响应信号，对应 D 状态",
+        "TASK_STOPPED 由 SIGSTOP 或 ptrace 进入"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "退出与回收",
+      "items": [
+        "TASK_ZOMBIE 已释放大部分资源，仅保留 task_struct",
+        "父进程 wait()/waitpid() 后由 release_task() 彻底回收"
+      ]
+    }
+  ]
+}

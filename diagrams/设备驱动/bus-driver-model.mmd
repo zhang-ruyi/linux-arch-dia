@@ -1,0 +1,28 @@
+---
+title: 设备驱动模型
+type: graph
+tags: [设备驱动, 驱动模型, kobject, probe]
+description: bus_type device_driver device 三者与 kobject 的关系及驱动注册绑定流程
+---
+graph TB
+    subgraph 核心对象与 kobject 关系
+        Kobj[kobject 内核对象模型]
+        Bus[struct bus_type<br/>通过 subsys_private 持有 kset]
+        Drv[struct device_driver<br/>通过 driver_private 持有 kobject]
+        Dev[struct device<br/>内嵌 kobject kobj]
+        Bus --> Kobj
+        Drv --> Kobj
+        Dev --> Kobj
+    end
+
+    subgraph 驱动注册绑定流程
+        DriverRegister[driver_register 注册驱动] --> BusAddDriver[bus_add_driver 加入总线链表]
+        BusAddDriver --> DriverAttach[driver_attach 遍历设备]
+        DriverAttach --> DriverAttach2[__driver_attach 尝试匹配设备]
+        DriverAttach2 --> DriverProbe[driver_probe_device 探测绑定]
+        DriverProbe --> ReallyProbe[really_probe 真正绑定]
+        ReallyProbe --> ProbeCall[调用 drv->probe 驱动探针函数]
+        ProbeCall --> Bound[设备与驱动绑定成功]
+    end
+
+    Drv -.-> DriverRegister

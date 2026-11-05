@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "脏页写回流程",
+    "locale": "zh-CN",
+    "output": "site/文件系统/writeback-flow.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "write", "label": "写路径与脏页节流" },
+    { "id": "wb", "label": "回写内核线程" },
+    { "id": "done", "label": "完成与清理" }
+  ],
+  "nodes": [
+    {
+      "id": "write",
+      "lane": "write",
+      "col": 0,
+      "type": "external",
+      "label": "write 系统调用",
+      "sublabel": "写入数据",
+      "sources": [
+        { "path": "fs/read_write.c", "line": 667, "label": "vfs_write" },
+        { "path": "mm/filemap.c", "line": 4330, "label": "generic_perform_write" }
+      ]
+    },
+    {
+      "id": "dirty",
+      "lane": "write",
+      "col": 1,
+      "type": "database",
+      "label": "页缓存页被标记为脏页",
+      "sublabel": "folio_mark_dirty",
+      "sources": [
+        { "path": "mm/filemap.c", "line": 4009, "label": "folio_mark_dirty" },
+        { "path": "mm/page-writeback.c", "line": 2778, "label": "folio_mark_dirty" }
+      ]
+    },
+    {
+      "id": "throttle",
+      "lane": "write",
+      "col": 2,
+      "type": "backend",
+      "label": "balance_dirty_pages()",
+      "sublabel": "脏页节流",
+      "sources": [
+        { "path": "mm/page-writeback.c", "line": 1802, "label": "balance_dirty_pages" },
+        { "path": "mm/filemap.c", "line": 4351, "label": "balance_dirty_pages_ratelimited" }
+      ]
+    },
+    {
+      "id": "wbthread",
+      "lane": "wb",
+      "col": 0,
+      "type": "backend",
+      "label": "wb_workfn()",
+      "sublabel": "bdi 内核线程",
+      "sources": [{ "path": "fs/fs-writeback.c", "line": 2460, "label": "wb_workfn" }]
+    },
+    {
+      "id": "wbinodes",
+      "lane": "wb",
+      "col": 1,
+      "type": "backend",
+      "label": "writeback_sb_inodes()",
+      "sublabel": "遍历超级块脏 inode",
+      "sources": [{ "path": "fs/fs-writeback.c", "line": 1980, "label": "writeback_sb_inodes" }]
+    },
+    {
+      "id": "single",
+      "lane": "wb",
+      "col": 2,
+      "type": "backend",
+      "label": "__writeback_single_inode()",
+      "sublabel": "写回单个 inode",
+      "sources": [{ "path": "fs/fs-writeback.c", "line": 1776, "label": "__writeback_single_inode" }]
+    },
+    {
+      "id": "dowritepages",
+      "lane": "wb",
+      "col": 3,
+      "type": "backend",
+      "label": "do_writepages()",
+      "sublabel": "调用 address_space 的 writepages",
+      "sources": [
+        { "path": "mm/page-writeback.c", "line": 2560, "label": "do_writepages" },
+        { "path": "fs/fs-writeback.c", "line": 1787, "label": "do_writepages 调用" }
+      ]
+    },
+    {
+      "id": "ext4writepages",
+      "lane": "wb",
+      "col": 4,
+      "type": "backend",
+      "label": "ext4_writepages()",
+      "sublabel": "生成写请求",
+      "sources": [{ "path": "fs/ext4/inode.c", "line": 3026, "label": "ext4_writepages" }]
+    },
+    {
+      "id": "submitbio",
+      "lane": "wb",
+      "col": 5,
+      "type": "backend",
+      "label": "提交 bio 到块设备",
+      "sublabel": "ext4_io_submit",
+      "sources": [{ "path": "fs/ext4/page-io.c", "line": 397, "label": "ext4_io_submit" }]
+    },
+    {
+      "id": "complete",
+      "lane": "done",
+      "col": 4,
+      "type": "backend",
+      "label": "bio 完成回调",
+      "sublabel": "清除脏标志",
+      "sources": [
+        { "path": "block/bio.c", "line": 1762, "label": "bio_endio" },
+        { "path": "mm/filemap.c", "line": 1681, "label": "folio_end_writeback" }
+      ]
+    },
+    {
+      "id": "clean",
+      "lane": "done",
+      "col": 5,
+      "type": "database",
+      "label": "页变为干净页",
+      "sublabel": "writeback 结束",
+      "sources": [
+        { "path": "mm/page-writeback.c", "line": 2958, "label": "__folio_end_writeback" },
+        { "path": "mm/filemap.c", "line": 1681, "label": "folio_end_writeback" }
+      ]
+    }
+  ],
+  "edges": [
+    { "id": "write-dirty", "from": "write", "to": "dirty", "role": "main" },
+    { "id": "dirty-throttle", "from": "dirty", "to": "throttle", "role": "main" },
+    { "id": "throttle-wb", "from": "throttle", "to": "wbthread", "label": "超过阈值", "role": "branch" },
+    { "id": "wb-inodes", "from": "wbthread", "to": "wbinodes", "role": "main" },
+    { "id": "inodes-single", "from": "wbinodes", "to": "single", "role": "main" },
+    { "id": "single-writepages", "from": "single", "to": "dowritepages", "role": "main" },
+    { "id": "writepages-ext4", "from": "dowritepages", "to": "ext4writepages", "role": "main" },
+    { "id": "ext4-submit", "from": "ext4writepages", "to": "submitbio", "role": "main" },
+    { "id": "submit-complete", "from": "submitbio", "to": "complete", "role": "main" },
+    { "id": "complete-clean", "from": "complete", "to": "clean", "role": "main" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "脏页产生与节流",
+      "items": [
+        "write() 通过页缓存写入并标记 folio 为脏",
+        "balance_dirty_pages() 在超过阈值时节流写进程",
+        "回写工作由 bdi_writeback 内核线程推进"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "回写与完成",
+      "items": [
+        "writeback_sb_inodes() 遍历超级块上的脏 inode",
+        "__writeback_single_inode() 调用 address_space->writepages",
+        "ext4_writepages() 生成并提交 bio，完成后清除脏标志"
+      ]
+    }
+  ]
+}

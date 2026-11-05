@@ -1,0 +1,29 @@
+---
+title: fork() 创建进程时序图
+type: sequence
+tags: [进程管理, fork, clone, 系统调用]
+description: 从用户态调用 fork() 到子进程被唤醒的完整调用链(kernel_clone → copy_process)
+---
+sequenceDiagram
+    autonumber
+    participant App as 用户进程
+    participant Libc as libc
+    participant Sys as 系统调用层
+    participant Fork as kernel/fork.c<br/>kernel_clone()
+    participant Copy as copy_process()
+    participant Sched as 调度器
+    participant Child as 子进程
+
+    App->>Libc: fork()
+    Libc->>Sys: syscall(SYS_clone)
+    Sys->>Fork: kernel_clone(args)
+    Fork->>Copy: copy_process(NULL, trace, ...)
+    Note over Copy: dup_task_struct()<br/>复制 task_struct + 内核栈
+    Copy->>Copy: copy_mm() 复制地址空间<br/>(COW 写时复制)
+    Copy->>Copy: copy_fs() / copy_files()<br/>copy_sighand() / copy_signal()
+    Copy->>Copy: copy_thread()<br/>复制寄存器上下文<br/>子进程返回 0
+    Copy-->>Fork: 返回新 task_struct(p)
+    Fork->>Sched: wake_up_new_task(p)
+    Sched-->>Child: 唤醒,置为 TASK_RUNNING
+    Child->>App: 返回 0(子进程)
+    Fork-->>App: 返回子进程 PID(父进程)

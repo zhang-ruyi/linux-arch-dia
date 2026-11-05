@@ -1,0 +1,18 @@
+---
+title: 打开文件流程
+type: flowchart
+tags: [文件系统, VFS, open, path_openat]
+description: 从 open 系统调用到调用具体文件系统 f_op->open 的完整路径解析与打开流程
+---
+flowchart TD
+    App[用户进程调用 open 系统调用] --> SysOpen[SYSCALL_DEFINE3 open 系统调用入口]
+    SysOpen --> doSysOpen[do_sys_open]
+    doSysOpen --> doSysOpenat2[do_sys_openat2 解析 open_how 参数]
+    doSysOpenat2 --> doFileOpen[do_file_open 构造 nameidata]
+    doFileOpen --> pathOpenat[path_openat 分配空 file 结构体]
+    pathOpenat --> linkPathWalk[link_path_walk 逐级解析路径分量]
+    linkPathWalk --> |解析到末级分量| openLastLookups[open_last_lookups 处理末级分量]
+    openLastLookups --> doOpen[do_open 做权限检查与截断处理]
+    doOpen --> vfsOpen[vfs_open 调用 f_op->open]
+    vfsOpen --> FopOpen[f_op->open 具体文件系统打开实现]
+    FopOpen --> Done[返回 fd 给用户进程]

@@ -1,0 +1,17 @@
+---
+title: 脏页写回流程
+type: flowchart
+tags: [文件系统, 页缓存, writeback, 脏页]
+description: 页面写脏后经过节流与内核线程 wb_workfn 将 inode 脏页写回并提交 bio
+---
+flowchart TD
+    Write[write 系统调用写入数据] --> Dirty[页缓存页被标记为脏页]
+    Dirty --> Throttle[balance_dirty_pages 脏页节流]
+    Throttle --> |超过阈值| WbThread[bdi 内核线程 wb_workfn]
+    WbThread --> WbInodes[writeback_sb_inodes 遍历超级块脏 inode]
+    WbInodes --> SingleInode[__writeback_single_inode 写回单个 inode]
+    SingleInode --> DoWritepages[调用 address_space 的 writepages]
+    DoWritepages --> Ext4Writepages[ext4_writepages 生成写请求]
+    Ext4Writepages --> SubmitBio[提交 bio 到块设备]
+    SubmitBio --> Complete[bio 完成回调清除脏标志]
+    Complete --> Clean[页变为干净页]

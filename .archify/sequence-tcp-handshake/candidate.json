@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "TCP 三次握手时序",
+    "output": "site/网络协议栈/tcp-handshake.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "客户端",
+      "sublabel": "socket() → connect()",
+      "sources": [
+        { "path": "net/socket.c", "line": 1805, "label": "SYSCALL_DEFINE3(socket)" },
+        { "path": "net/socket.c", "line": 2157, "label": "SYSCALL_DEFINE3(connect)" }
+      ]
+    },
+    {
+      "id": "client_k",
+      "type": "backend",
+      "label": "客户端内核",
+      "sublabel": "tcp_v4_connect()",
+      "sources": [
+        { "path": "net/ipv4/tcp_ipv4.c", "line": 221, "label": "tcp_v4_connect" },
+        { "path": "net/ipv4/tcp_output.c", "line": 4294, "label": "tcp_connect" }
+      ]
+    },
+    {
+      "id": "server_k",
+      "type": "backend",
+      "label": "服务端内核",
+      "sublabel": "tcp_v4_rcv()",
+      "sources": [
+        { "path": "net/ipv4/tcp_ipv4.c", "line": 2067, "label": "tcp_v4_rcv" },
+        { "path": "net/ipv4/tcp_ipv4.c", "line": 1827, "label": "tcp_v4_do_rcv" },
+        { "path": "net/ipv4/tcp_input.c", "line": 7122, "label": "tcp_rcv_state_process" }
+      ]
+    },
+    {
+      "id": "server",
+      "type": "backend",
+      "label": "服务端进程",
+      "sublabel": "listen() → accept()",
+      "sources": [
+        { "path": "net/ipv4/af_inet.c", "line": 237, "label": "inet_listen" },
+        { "path": "net/socket.c", "line": 1992, "label": "SYSCALL_DEFINE2(listen)" },
+        { "path": "net/socket.c", "line": 2100, "label": "SYSCALL_DEFINE3(accept)" }
+      ]
+    }
+  ],
+  "messages": [
+    { "id": "listen", "from": "server", "to": "server_k", "y": 160, "label": "socket() + bind() + listen()", "note": "进入 LISTEN 状态", "variant": "default" },
+    { "id": "connect", "from": "client", "to": "client_k", "y": 210, "label": "socket() → connect()", "note": "tcp_v4_connect() → tcp_connect() 构造 SYN" },
+    { "id": "send-syn", "from": "client_k", "to": "server_k", "y": 260, "label": "发送 SYN seq=x", "variant": "emphasis" },
+    { "id": "half-queue", "from": "server_k", "to": "server", "y": 310, "label": "放入 accept 队列(半连接队列)", "note": "tcp_v4_do_rcv() → tcp_rcv_state_process(): LISTEN → SYN_RECV" },
+    { "id": "send-synack", "from": "server_k", "to": "client_k", "y": 360, "label": "回复 SYN+ACK (seq=y, ack=x+1)", "note": "tcp_v4_send_synack() 构造并发送 SYN+ACK", "variant": "return" },
+    { "id": "send-ack", "from": "client_k", "to": "server_k", "y": 430, "label": "发送 ACK ack=y+1", "note": "SYN_SENT → ESTABLISHED", "variant": "emphasis" },
+    { "id": "accept-return", "from": "server_k", "to": "server", "y": 480, "label": "accept() 返回已连接 fd", "note": "SYN_RECV → ESTABLISHED;移入全连接队列", "variant": "return" },
+    { "id": "established", "from": "client", "to": "server", "y": 545, "label": "双方进入 ESTABLISHED,开始数据传输", "variant": "emphasis" }
+  ],
+  "activations": [
+    { "participant": "server", "from": 155, "to": 316, "type": "backend" },
+    { "participant": "client", "from": 205, "to": 551, "type": "external" },
+    { "participant": "client_k", "from": 255, "to": 436, "type": "backend" },
+    { "participant": "server_k", "from": 305, "to": 486, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "连接建立",
+      "items": [
+        "SYN、SYN+ACK、ACK 三个报文完成三次握手",
+        "服务端先进入半连接队列,再移入全连接队列",
+        "accept() 返回已建立的连接 fd"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "内核入口",
+      "items": [
+        "客户端 tcp_v4_connect() 调用 tcp_connect() 构造 SYN",
+        "服务端 tcp_v4_rcv() → tcp_v4_do_rcv() → tcp_rcv_state_process()"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "状态迁移",
+      "items": [
+        "服务端 LISTEN → SYN_RECV → ESTABLISHED",
+        "客户端 SYN_SENT → ESTABLISHED"
+      ]
+    }
+  ]
+}

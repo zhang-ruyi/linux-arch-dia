@@ -1,0 +1,36 @@
+---
+title: mmap() 建立映射时序图
+type: sequence
+tags: [内存管理, mmap, 虚拟内存, VMA]
+description: 用户进程调用 mmap 建立虚拟地址映射,匿名页走 vma_set_anonymous,文件页走 f_op->mmap 回调
+---
+sequenceDiagram
+    autonumber
+    participant App as 用户进程
+    participant Sys as 系统调用层<br/>SYSCALL_DEFINE6(mmap)
+    participant Ksys as ksys_mmap_pgoff<br/>mm/mmap.c
+    participant Vmm as vm_mmap_pgoff<br/>mm/util.c
+    participant DoM as do_mmap<br/>mm/mmap.c
+    participant Reg as mmap_region<br/>mm/vma.c
+    participant NewV as __mmap_new_vma<br/>mm/vma.c
+    participant Fs as 文件系统 f_op->mmap
+
+    App->>Sys: mmap(addr, len, prot, flags, fd, offset)
+    Sys->>Ksys: 进入内核,传递参数
+    Ksys->>Ksys: 非 MAP_ANONYMOUS 时<br/>fget(fd) 获取 struct file
+    Ksys->>Vmm: 调用 vm_mmap_pgoff(file, ...)
+    Vmm->>DoM: 调用 do_mmap(file, ...)
+    DoM->>Reg: 校验地址与权限后调用 mmap_region
+    Reg->>Reg: __mmap_region 分配或合并 VMA<br/>检查地址空间上限
+    Reg->>NewV: __mmap_new_vma 新建 vm_area_struct
+
+    alt 匿名映射
+        NewV->>NewV: vma_set_anonymous(vma)<br/>标记为匿名,物理页留待缺页分配
+    else 共享匿名 MAP_SHARED
+        NewV->>NewV: shmem_zero_setup(vma)<br/>建立共享匿名映射
+    else 文件映射
+        NewV->>Fs: mmap_file 经 vfs_mmap<br/>调用 file->f_op->mmap
+        Fs-->>NewV: 文件驱动建立映射
+    end
+
+    Reg-->>App: 返回映射起始地址<br/>仅建立虚拟映射,物理页由缺页分配

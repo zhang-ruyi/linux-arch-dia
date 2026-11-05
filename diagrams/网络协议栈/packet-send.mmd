@@ -1,0 +1,23 @@
+---
+title: TCP 数据发送路径时序图
+type: sequence
+tags: [网络协议栈, TCP, 发包, IP]
+description: 从用户 write() 经 tcp_sendmsg 到 tcp_transmit_skb、ip_queue_xmit 直至网卡 ndo_start_xmit
+---
+sequenceDiagram
+    autonumber
+    participant P as 用户进程
+    participant TCP as TCP 层<br/>tcp_sendmsg
+    participant IP as IP 层<br/>ip_queue_xmit
+    participant DEV as 设备层<br/>dev_queue_xmit
+    participant NIC as 网卡驱动<br/>ndo_start_xmit
+
+    P->>TCP: write() 系统调用
+    TCP->>TCP: tcp_sendmsg() 拷贝数据到发送队列
+    TCP->>TCP: tcp_write_xmit() 计算发送窗口<br/>组织待发送 skb
+    TCP->>TCP: tcp_transmit_skb() → __tcp_transmit_skb()<br/>构造 TCP 头
+    TCP->>IP: ip_queue_xmit() 构造 IP 头
+    IP->>IP: __ip_queue_xmit() → ip_local_out()
+    IP->>DEV: dev_queue_xmit() → __dev_queue_xmit()<br/>流量控制与排队
+    DEV->>NIC: 调用 ndo_start_xmit()
+    NIC->>NIC: 网卡硬件发送<br/>发送完成后释放 skb

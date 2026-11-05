@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "文件读写全路径",
+    "locale": "zh-CN",
+    "output": "site/文件系统/read-write-flow.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "调用 read 系统调用",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "SYSCALL_DEFINE3(read)"
+        }
+      ]
+    },
+    {
+      "id": "sysread",
+      "type": "backend",
+      "label": "ksys_read",
+      "sublabel": "read 系统调用入口",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read"
+        }
+      ]
+    },
+    {
+      "id": "vfsread",
+      "type": "backend",
+      "label": "vfs_read",
+      "sublabel": "定位 fd 对应 file",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
+      ]
+    },
+    {
+      "id": "ext4",
+      "type": "backend",
+      "label": "ext4_file_read_iter",
+      "sublabel": "f_op->read_iter",
+      "sources": [
+        {
+          "path": "fs/ext4/file.c",
+          "line": 130,
+          "label": "ext4_file_read_iter"
+        },
+        {
+          "path": "fs/ext4/file.c",
+          "line": 976,
+          "label": ".read_iter"
+        }
+      ]
+    },
+    {
+      "id": "filemap",
+      "type": "database",
+      "label": "filemap_read",
+      "sublabel": "页缓存读取",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2777,
+          "label": "filemap_read"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 2662,
+          "label": "filemap_readahead"
+        }
+      ]
+    },
+    {
+      "id": "block",
+      "type": "external",
+      "label": "submit_bio",
+      "sublabel": "块设备",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 952,
+          "label": "submit_bio"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 280,
+      "to": 315,
+      "label": "命中"
+    },
+    {
+      "from": 340,
+      "to": 500,
+      "label": "未命中"
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-read",
+      "from": "app",
+      "to": "sysread",
+      "y": 160,
+      "label": "调用 read 系统调用",
+      "variant": "default"
+    },
+    {
+      "id": "sys-vfs",
+      "from": "sysread",
+      "to": "vfsread",
+      "y": 190,
+      "label": "vfs_read 定位 fd 对应 file",
+      "variant": "default"
+    },
+    {
+      "id": "vfs-ext4",
+      "from": "vfsread",
+      "to": "ext4",
+      "y": 220,
+      "label": "调用 f_op->read_iter",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ext4-filemap",
+      "from": "ext4",
+      "to": "filemap",
+      "y": 250,
+      "label": "generic_file_read_iter 进入页缓存读取",
+      "variant": "emphasis",
+      "note": "检查页缓存是否命中"
+    },
+    {
+      "id": "hit-return",
+      "from": "filemap",
+      "to": "app",
+      "y": 300,
+      "label": "命中：拷贝数据到用户缓冲区并返回",
+      "variant": "return"
+    },
+    {
+      "id": "miss-readahead",
+      "from": "filemap",
+      "to": "ext4",
+      "y": 360,
+      "label": "未命中：触发 readahead 读取 folio 到缓存",
+      "variant": "default"
+    },
+    {
+      "id": "ext4-submit",
+      "from": "ext4",
+      "to": "block",
+      "y": 390,
+      "label": "submit_bio 提交读请求",
+      "variant": "emphasis"
+    },
+    {
+      "id": "block-return",
+      "from": "block",
+      "to": "ext4",
+      "y": 420,
+      "label": "数据从块设备返回",
+      "variant": "return"
+    },
+    {
+      "id": "ext4-fill",
+      "from": "ext4",
+      "to": "filemap",
+      "y": 450,
+      "label": "folio 填充完成",
+      "variant": "return"
+    },
+    {
+      "id": "miss-return",
+      "from": "filemap",
+      "to": "app",
+      "y": 480,
+      "label": "拷贝数据到用户缓冲区并返回",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "读路径",
+      "items": [
+        "read 系统调用经 ksys_read() 进入 vfs_read()",
+        "VFS 通过 file->f_op->read_iter 调用 ext4_file_read_iter()",
+        "ext4 交给 generic_file_read_iter()/filemap_read() 使用页缓存"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "命中与未命中",
+      "items": [
+        "页缓存命中时直接把数据拷贝到用户缓冲区",
+        "未命中时触发 readahead，并通过 submit_bio 读取块设备",
+        "块设备返回后填充 folio，再完成用户缓冲区拷贝"
+      ]
+    }
+  ]
+}

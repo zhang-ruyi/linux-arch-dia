@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-socket-create/candidate.json",
+    "sha256": "1999cf0f432a171be17e0ad98a8b68b9381aab7d60bb18bdb30cb3e8aec4ed0a",
+    "bytes": 3911
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/socket-create.html",
+    "sha256": "33087c6a3907e4603767e070e2c8fed878dedcb8f17008610608dd3a3f0b3f86",
+    "bytes": 833108
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/socket-create.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/socket-create.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/socket-create.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3208,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

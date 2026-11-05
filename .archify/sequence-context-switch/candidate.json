@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "上下文切换细节",
+    "locale": "zh-CN",
+    "output": "site/进程管理/context-switch.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "a",
+      "type": "backend",
+      "label": "进程A（prev）",
+      "sublabel": "被换出",
+      "sources": [{ "path": "kernel/sched/core.c", "line": 5451, "label": "context_switch" }]
+    },
+    {
+      "id": "ctx",
+      "type": "backend",
+      "label": "context_switch()",
+      "sublabel": "切换调度上下文",
+      "sources": [{ "path": "kernel/sched/core.c", "line": 5451, "label": "context_switch" }]
+    },
+    {
+      "id": "mm",
+      "type": "backend",
+      "label": "switch_mm_irqs_off()",
+      "sublabel": "切换地址空间",
+      "sources": [{ "path": "arch/x86/mm/tlb.c", "line": 783, "label": "switch_mm_irqs_off" }]
+    },
+    {
+      "id": "macro",
+      "type": "backend",
+      "label": "switch_to 宏",
+      "sublabel": "保存/恢复入口",
+      "sources": [{ "path": "arch/x86/include/asm/switch_to.h", "line": 49, "label": "switch_to" }]
+    },
+    {
+      "id": "asm",
+      "type": "backend",
+      "label": "__switch_to_asm",
+      "sublabel": "汇编与 C 恢复现场",
+      "sources": [
+        { "path": "arch/x86/entry/entry_64.S", "line": 177, "label": "__switch_to_asm" },
+        { "path": "arch/x86/kernel/process_64.c", "line": 610, "label": "__switch_to" }
+      ]
+    },
+    {
+      "id": "b",
+      "type": "backend",
+      "label": "进程B（next）",
+      "sublabel": "被换入",
+      "sources": [{ "path": "arch/x86/kernel/process_64.c", "line": 610, "label": "__switch_to" }]
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-switch",
+      "from": "a",
+      "to": "ctx",
+      "y": 160,
+      "label": "context_switch(prev, next)",
+      "variant": "emphasis",
+      "note": "prepare_task_switch()\n更新 rq->curr 与统计"
+    },
+    {
+      "id": "switch-mm",
+      "from": "ctx",
+      "to": "mm",
+      "y": 250,
+      "label": "switch_mm_irqs_off(prev->active_mm, next->mm)",
+      "variant": "default",
+      "note": "切换页表 CR3\n切到进程B 地址空间"
+    },
+    { "id": "mm-done", "from": "mm", "to": "ctx", "y": 340, "label": "地址空间已切到进程B", "variant": "return" },
+    {
+      "id": "switch-to",
+      "from": "ctx",
+      "to": "macro",
+      "y": 400,
+      "label": "switch_to(prev, next, prev)",
+      "variant": "emphasis",
+      "note": "保存进程A 寄存器与 rsp\n到其内核栈"
+    },
+    {
+      "id": "asm-switch",
+      "from": "macro",
+      "to": "asm",
+      "y": 480,
+      "label": "保存进程A 上下文",
+      "variant": "default",
+      "note": "从进程B 内核栈恢复 rsp 与寄存器\n__switch_to 处理 TLS、浮点等"
+    },
+    {
+      "id": "macro-return",
+      "from": "macro",
+      "to": "ctx",
+      "y": 570,
+      "label": "返回（已是进程B 上下文）",
+      "variant": "return",
+      "note": "返回后已运行在进程B 的内核栈"
+    },
+    {
+      "id": "resume-b",
+      "from": "ctx",
+      "to": "b",
+      "y": 650,
+      "label": "进程B 继续执行用户态",
+      "variant": "return",
+      "note": "finish_task_switch()\n释放 prev 的 rq 锁并 mmdrop"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "地址空间切换",
+      "items": [
+        "switch_mm_irqs_off() 负责切换页表与 CR3",
+        "内核线程没有自己的 mm 时借用 active_mm"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "寄存器与栈切换",
+      "items": [
+        "switch_to 宏把 prev 的寄存器与 rsp 保存到其内核栈",
+        "__switch_to_asm 切换栈后由 __switch_to 处理 TLS、浮点等状态",
+        "返回时 CPU 已运行在 next 的内核栈上"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "切换后收尾",
+      "items": [
+        "finish_task_switch() 释放 prev 的 rq 锁",
+        "必要时执行 mmdrop() 释放旧地址空间引用"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+---
+title: NAPI 收包处理路径时序图
+type: sequence
+tags: [网络协议栈, NAPI, 软中断, 收包]
+description: 从网卡硬中断经 napi_schedule 到软中断 napi_poll,再到 IP 层 ip_rcv 与 TCP 层 tcp_v4_rcv
+---
+sequenceDiagram
+    autonumber
+    participant NIC as 网卡(硬件)
+    participant DRV as 网卡驱动<br/>中断处理
+    participant SOFT as 内核软中断<br/>NET_RX_SOFTIRQ
+    participant IP as IP 层<br/>ip_rcv / ip_local_deliver
+    participant TCP as TCP 层<br/>tcp_v4_rcv
+
+    NIC->>DRV: 硬件中断(报文到达)
+    DRV->>DRV: 关闭本网卡中断<br/>调用 napi_schedule()
+    DRV->>SOFT: 触发软中断 NET_RX_SOFTIRQ
+    SOFT->>DRV: 执行 napi_poll() 轮询收包
+    DRV->>DRV: 从环形队列取 skb<br/>napi_gro_receive()
+    DRV->>SOFT: 调用 netif_receive_skb()
+    SOFT->>SOFT: __netif_receive_skb_core()<br/>按协议分发,进入 IP
+    SOFT->>IP: ip_rcv() 校验 IP 头
+    IP->>IP: ip_rcv_finish() 查路由<br/>本地报文走 ip_local_deliver()
+    IP->>IP: ip_local_deliver_finish()<br/>按 L4 协议分发
+    IP->>TCP: tcp_v4_rcv() 定位 socket
+    TCP->>TCP: tcp_v4_do_rcv()<br/>进入 TCP 状态机处理

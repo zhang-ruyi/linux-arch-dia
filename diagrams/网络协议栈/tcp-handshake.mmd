@@ -1,0 +1,25 @@
+---
+title: TCP 三次握手时序图
+type: sequence
+tags: [网络协议栈, TCP, 三次握手]
+description: 客户端 connect() 与服务端 accept() 之间的三次握手,标注内核关键函数
+---
+sequenceDiagram
+    autonumber
+    participant C as 客户端
+    participant CK as 客户端内核<br/>tcp_v4_connect()
+    participant SK as 服务端内核<br/>tcp_v4_rcv()
+    participant S as 服务端进程<br/>listen() → accept()
+
+    S->>SK: socket() + bind() + listen()<br/>进入 LISTEN 状态
+    C->>CK: socket() → connect()
+    CK->>CK: tcp_v4_connect()<br/>→ tcp_connect() 构造 SYN
+    CK->>SK: 发送 SYN seq=x
+    SK->>SK: tcp_v4_do_rcv()<br/>→ tcp_rcv_state_process()<br/>LISTEN → SYN_RECV
+    SK->>S: 放入 accept 队列(半连接队列)
+    SK->>CK: 回复 SYN+ACK seq=y, ack=x+1<br/>tcp_v4_send_synack()
+    CK->>CK: SYN_SENT → ESTABLISHED
+    CK->>SK: 发送 ACK ack=y+1
+    SK->>SK: SYN_RECV → ESTABLISHED<br/>移入 accept 队列(全连接队列)
+    SK->>S: accept() 返回已连接 fd
+    C->>S: 双方进入 ESTABLISHED<br/>开始数据传输

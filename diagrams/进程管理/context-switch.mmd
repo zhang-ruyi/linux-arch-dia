@@ -1,0 +1,26 @@
+---
+title: 上下文切换细节
+type: sequence
+tags: [进程管理, 调度器, 上下文切换, 汇编]
+description: 进程A 通过 switch_to 宏切换到进程B,涉及寄存器、内核栈与地址空间切换
+---
+sequenceDiagram
+    autonumber
+    participant A as 进程A(prev)
+    participant Ctx as context_switch()
+    participant MM as switch_mm_irqs_off()
+    participant Macro as switch_to 宏
+    participant Asm as __switch_to / __switch_to_asm
+    participant B as 进程B(next)
+
+    A->>Ctx: context_switch(prev, next)
+    Ctx->>Ctx: prepare_task_switch()<br/>更新 rq->curr 与统计
+    Ctx->>MM: switch_mm_irqs_off(prev->active_mm, next->mm)<br/>切换页表 CR3 地址空间
+    MM-->>Ctx: 地址空间已切到进程B
+    Ctx->>Macro: switch_to(prev, next, prev)
+    Macro->>Asm: 保存进程A 寄存器与 rsp 到其内核栈
+    Asm->>Asm: 从进程B 内核栈恢复 rsp 与寄存器<br/>__switch_to 处理 TLS、浮点等
+    Note over Macro,Asm: 返回后已运行在进程B 的内核栈
+    Macro-->>Ctx: 返回(此时已是进程B 上下文)
+    Ctx->>Ctx: finish_task_switch()<br/>释放 prev 的 rq 锁与 mmdrop
+    Ctx->>B: 进程B 继续执行用户态

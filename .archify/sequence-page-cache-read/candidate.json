@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "文件读路径经 page cache 时序图",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/page-cache-read.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    },
+    "viewBox": [
+      1085,
+      680
+    ]
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "read(2)",
+      "icon": "person",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read entry"
+        }
+      ]
+    },
+    {
+      "id": "ksys",
+      "type": "backend",
+      "label": "ksys_read",
+      "sublabel": "fs/read_write.c",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705
+        }
+      ]
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "vfs_read",
+      "sublabel": "fs/read_write.c",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 554
+        }
+      ]
+    },
+    {
+      "id": "iter",
+      "type": "backend",
+      "label": "read_iter",
+      "sublabel": "mm/filemap.c",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2965
+        }
+      ]
+    },
+    {
+      "id": "fmap",
+      "type": "backend",
+      "label": "filemap_read",
+      "sublabel": "mm/filemap.c",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2777
+        }
+      ]
+    },
+    {
+      "id": "get",
+      "type": "backend",
+      "label": "get_pages",
+      "sublabel": "mm/filemap.c",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2676
+        }
+      ]
+    },
+    {
+      "id": "folio",
+      "type": "backend",
+      "label": "create_folio",
+      "sublabel": "mm/filemap.c",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2609
+        }
+      ]
+    },
+    {
+      "id": "rd",
+      "type": "backend",
+      "label": "read_folio",
+      "sublabel": "a_ops->read_folio",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2500
+        },
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 394
+        }
+      ]
+    },
+    {
+      "id": "bio",
+      "type": "messagebus",
+      "label": "submit_bio",
+      "sublabel": "block/blk-core.c",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 952
+        }
+      ]
+    },
+    {
+      "id": "disk",
+      "type": "external",
+      "label": "块设备与磁盘",
+      "sublabel": "块设备完成 I/O",
+      "icon": "database",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 952
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 250,
+      "label": "read 系统调用与 page cache 查找"
+    },
+    {
+      "from": 250,
+      "to": 318,
+      "label": "命中:直接返回缓存 folio"
+    },
+    {
+      "from": 318,
+      "to": 475,
+      "label": "缺失:分配 folio 并读盘"
+    },
+    {
+      "from": 475,
+      "to": 534,
+      "label": "拷贝并返回用户态"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "app",
+      "to": "ksys",
+      "y": 160,
+      "label": "read(fd, buf, count)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m2",
+      "from": "ksys",
+      "to": "vfs",
+      "y": 188,
+      "label": "调用 vfs_read(file, ...)"
+    },
+    {
+      "id": "m3",
+      "from": "vfs",
+      "to": "iter",
+      "y": 216,
+      "label": "file->f_op->read_iter 即 generic_file_read_iter"
+    },
+    {
+      "id": "m4",
+      "from": "iter",
+      "to": "fmap",
+      "y": 244,
+      "label": "调用 filemap_read(iocb, iter)"
+    },
+    {
+      "id": "m5",
+      "from": "fmap",
+      "to": "get",
+      "y": 272,
+      "label": "filemap_get_pages(iocb, ...)"
+    },
+    {
+      "id": "m6",
+      "from": "get",
+      "to": "fmap",
+      "y": 300,
+      "label": "直接返回缓存 folio",
+      "variant": "return"
+    },
+    {
+      "id": "m7",
+      "from": "get",
+      "to": "folio",
+      "y": 328,
+      "label": "filemap_create_folio 分配 folio"
+    },
+    {
+      "id": "m8",
+      "from": "folio",
+      "to": "rd",
+      "y": 356,
+      "label": "filemap_read_folio 调用 mapping->a_ops->read_folio"
+    },
+    {
+      "id": "m9",
+      "from": "rd",
+      "to": "bio",
+      "y": 384,
+      "label": "构造 bio 并 submit_bio"
+    },
+    {
+      "id": "m10",
+      "from": "bio",
+      "to": "disk",
+      "y": 412,
+      "label": "提交读请求,等待磁盘完成"
+    },
+    {
+      "id": "m11",
+      "from": "disk",
+      "to": "rd",
+      "y": 440,
+      "label": "数据读入,folio 置为 uptodate",
+      "variant": "return"
+    },
+    {
+      "id": "m12",
+      "from": "rd",
+      "to": "get",
+      "y": 468,
+      "label": "返回已更新的 folio",
+      "variant": "return"
+    },
+    {
+      "id": "m13",
+      "from": "get",
+      "to": "fmap",
+      "y": 496,
+      "label": "返回页批量",
+      "variant": "return"
+    },
+    {
+      "id": "m14",
+      "from": "fmap",
+      "to": "app",
+      "y": 524,
+      "label": "返回已读字节数",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "app",
+      "from": 155,
+      "to": 532,
+      "type": "external"
+    },
+    {
+      "participant": "ksys",
+      "from": 160,
+      "to": 200,
+      "type": "backend"
+    },
+    {
+      "participant": "vfs",
+      "from": 185,
+      "to": 228,
+      "type": "backend"
+    },
+    {
+      "participant": "iter",
+      "from": 213,
+      "to": 258,
+      "type": "backend"
+    },
+    {
+      "participant": "fmap",
+      "from": 241,
+      "to": 532,
+      "type": "backend"
+    },
+    {
+      "participant": "get",
+      "from": 269,
+      "to": 505,
+      "type": "backend"
+    },
+    {
+      "participant": "folio",
+      "from": 323,
+      "to": 470,
+      "type": "backend"
+    },
+    {
+      "participant": "rd",
+      "from": 350,
+      "to": 468,
+      "type": "backend"
+    },
+    {
+      "participant": "bio",
+      "from": 380,
+      "to": 440,
+      "type": "messagebus"
+    },
+    {
+      "participant": "disk",
+      "from": 405,
+      "to": 440,
+      "type": "external"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "命中路径",
+      "items": [
+        "filemap_get_pages 命中 page cache 时直接返回缓存 folio",
+        "命中路径不触发 submit_bio,也不分配新 folio"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "缺失路径",
+      "items": [
+        "页缺失时先 page_cache_sync_ra 同步预读",
+        "filemap_create_folio 分配 folio,read_folio 回调构造 bio",
+        "submit_bio 提交读请求,磁盘完成数据读入并置 uptodate"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "返回用户态",
+      "items": [
+        "filemap_read 用 copy_folio_to_iter 把数据拷贝到用户空间",
+        "最终返回已读字节数"
+      ]
+    }
+  ]
+}

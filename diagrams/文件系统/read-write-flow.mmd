@@ -1,0 +1,28 @@
+---
+title: 文件读写全路径
+type: sequence
+tags: [文件系统, VFS, ext4, 页缓存]
+description: read 系统调用经由 VFS 与页缓存命中或缺失后提交 bio 到块设备
+---
+sequenceDiagram
+    participant App as 用户进程
+    participant SysRead as ksys_read
+    participant VfsRead as vfs_read
+    participant Ext4 as ext4_file_read_iter
+    participant Filemap as filemap_read 页缓存
+    participant Block as submit_bio 块设备
+
+    App->>SysRead: 调用 read 系统调用
+    SysRead->>VfsRead: vfs_read 定位 fd 对应 file
+    VfsRead->>Ext4: 调用 f_op->read_iter
+    Ext4->>Filemap: generic_file_read_iter 进入页缓存读取
+    Filemap->>Filemap: 检查页缓存是否命中
+    alt 页缓存命中
+        Filemap-->>App: 拷贝数据到用户缓冲区并返回
+    else 页缓存未命中
+        Filemap->>Ext4: 触发 readahead 读取 folio 到缓存
+        Ext4->>Block: submit_bio 提交读请求
+        Block-->>Ext4: 数据从块设备返回
+        Ext4-->>Filemap: folio 填充完成
+        Filemap-->>App: 拷贝数据到用户缓冲区并返回
+    end

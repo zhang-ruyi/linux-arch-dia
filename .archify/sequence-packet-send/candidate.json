@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "TCP 数据发送路径",
+    "output": "site/网络协议栈/packet-send.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "proc",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "write()",
+      "sources": [
+        { "path": "fs/read_write.c", "line": 747, "label": "SYSCALL_DEFINE3(write)" },
+        { "path": "net/socket.c", "line": 1222, "label": "sock_write_iter" }
+      ]
+    },
+    {
+      "id": "tcp",
+      "type": "backend",
+      "label": "TCP 层",
+      "sublabel": "tcp_sendmsg",
+      "sources": [
+        { "path": "net/ipv4/tcp.c", "line": 1446, "label": "tcp_sendmsg" },
+        { "path": "net/ipv4/tcp_output.c", "line": 2964, "label": "tcp_write_xmit" },
+        { "path": "net/ipv4/tcp_output.c", "line": 1536, "label": "__tcp_transmit_skb" }
+      ]
+    },
+    {
+      "id": "ip",
+      "type": "backend",
+      "label": "IP 层",
+      "sublabel": "ip_queue_xmit",
+      "sources": [
+        { "path": "net/ipv4/ip_output.c", "line": 545, "label": "ip_queue_xmit" },
+        { "path": "net/ipv4/ip_output.c", "line": 462, "label": "__ip_queue_xmit" },
+        { "path": "net/ipv4/ip_output.c", "line": 125, "label": "ip_local_out" }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "backend",
+      "label": "设备层",
+      "sublabel": "dev_queue_xmit",
+      "sources": [
+        { "path": "include/linux/netdevice.h", "line": 3444, "label": "dev_queue_xmit" },
+        { "path": "net/core/dev.c", "line": 4768, "label": "__dev_queue_xmit" }
+      ]
+    },
+    {
+      "id": "nic",
+      "type": "backend",
+      "label": "网卡驱动",
+      "sublabel": "ndo_start_xmit",
+      "sources": [
+        { "path": "include/linux/netdevice.h", "line": 1451, "label": "ndo_start_xmit" },
+        { "path": "include/linux/netdevice.h", "line": 5400, "label": "netdev_start_xmit" }
+      ]
+    }
+  ],
+  "messages": [
+    { "id": "write", "from": "proc", "to": "tcp", "y": 160, "label": "write() 系统调用", "variant": "emphasis" },
+    { "id": "tcp-transmit", "from": "tcp", "to": "ip", "y": 210, "label": "ip_queue_xmit() 构造 IP 头", "note": "tcp_sendmsg() → tcp_write_xmit() → tcp_transmit_skb() 构造 TCP 头", "variant": "emphasis" },
+    { "id": "dev-queue", "from": "ip", "to": "dev", "y": 275, "label": "dev_queue_xmit() 流量控制与排队", "note": "__ip_queue_xmit() → ip_local_out()", "variant": "emphasis" },
+    { "id": "ndo-xmit", "from": "dev", "to": "nic", "y": 335, "label": "调用 ndo_start_xmit()", "note": "网卡硬件发送;发送完成后释放 skb", "variant": "emphasis" }
+  ],
+  "activations": [
+    { "participant": "proc", "from": 155, "to": 216, "type": "external" },
+    { "participant": "tcp", "from": 155, "to": 281, "type": "backend" },
+    { "participant": "ip", "from": 205, "to": 341, "type": "backend" },
+    { "participant": "dev", "from": 270, "to": 341, "type": "backend" },
+    { "participant": "nic", "from": 330, "to": 356, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "TCP 发送",
+      "items": [
+        "write() 进入 tcp_sendmsg(),数据拷贝到发送队列",
+        "tcp_write_xmit() 计算发送窗口并组织待发送 skb",
+        "tcp_transmit_skb() 构造 TCP 头"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "IP 与设备层",
+      "items": [
+        "ip_queue_xmit() 构造 IP 头",
+        "__ip_queue_xmit() 调用 ip_local_out()",
+        "dev_queue_xmit() 完成流量控制与排队"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "驱动发送",
+      "items": [
+        "设备层调用网卡的 ndo_start_xmit()",
+        "网卡硬件发送完成后释放 skb"
+      ]
+    }
+  ]
+}

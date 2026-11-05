@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "VFS 虚拟文件系统架构",
+    "locale": "zh-CN",
+    "output": "site/文件系统/vfs-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "应用程序",
+      "sublabel": "read / write / open",
+      "pos": [360, 40],
+      "size": [180, 60],
+      "sources": [
+        { "path": "fs/read_write.c", "line": 705, "label": "ksys_read" },
+        { "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }
+      ]
+    },
+    {
+      "id": "syscall",
+      "type": "backend",
+      "label": "系统调用",
+      "sublabel": "do_sys_open / vfs_read",
+      "pos": [360, 150],
+      "size": [180, 64],
+      "sources": [
+        { "path": "fs/open.c", "line": 1371, "label": "do_sys_open" },
+        { "path": "fs/read_write.c", "line": 554, "label": "vfs_read" }
+      ]
+    },
+    {
+      "id": "file",
+      "type": "backend",
+      "label": "file 结构体",
+      "sublabel": "+ file_operations",
+      "tag": "read_iter / write_iter",
+      "pos": [360, 260],
+      "size": [180, 64],
+      "sources": [
+        { "path": "include/linux/fs.h", "line": 1255, "label": "struct file" },
+        { "path": "include/linux/fs.h", "line": 1921, "label": "struct file_operations" }
+      ]
+    },
+    {
+      "id": "dentry",
+      "type": "backend",
+      "label": "dentry 目录项",
+      "sublabel": "路径 → inode 缓存",
+      "pos": [360, 370],
+      "size": [180, 64],
+      "sources": [
+        { "path": "include/linux/dcache.h", "line": 93, "label": "struct dentry" }
+      ]
+    },
+    {
+      "id": "inode",
+      "type": "backend",
+      "label": "inode 索引节点",
+      "sublabel": "+ inode_operations",
+      "pos": [360, 480],
+      "size": [180, 64],
+      "sources": [
+        { "path": "include/linux/fs.h", "line": 762, "label": "struct inode" },
+        { "path": "include/linux/fs.h", "line": 1996, "label": "struct inode_operations" }
+      ]
+    },
+    {
+      "id": "super",
+      "type": "backend",
+      "label": "super_block 超级块",
+      "sublabel": "+ super_operations",
+      "pos": [360, 590],
+      "size": [180, 64],
+      "sources": [
+        { "path": "include/linux/fs/super_types.h", "line": 132, "label": "struct super_block" },
+        { "path": "include/linux/fs/super_types.h", "line": 83, "label": "struct super_operations" }
+      ]
+    },
+    {
+      "id": "ext4",
+      "type": "backend",
+      "label": "ext4 / xfs / btrfs",
+      "sublabel": "具体文件系统实现",
+      "pos": [350, 710],
+      "size": [200, 64],
+      "sources": [
+        { "path": "fs/ext4/file.c", "line": 974, "label": "ext4_file_operations" },
+        { "path": "fs/ext4/namei.c", "line": 4224, "label": ".lookup = ext4_lookup" }
+      ]
+    },
+    {
+      "id": "block",
+      "type": "backend",
+      "label": "块设备驱动",
+      "sublabel": "submit_bio",
+      "pos": [620, 710],
+      "size": [200, 64],
+      "sources": [
+        { "path": "block/blk-core.c", "line": 952, "label": "submit_bio" }
+      ]
+    },
+    {
+      "id": "pagecache",
+      "type": "database",
+      "label": "页缓存 page cache",
+      "sublabel": "address_space",
+      "tag": "脏页回写",
+      "pos": [620, 360],
+      "size": [200, 80],
+      "sources": [
+        { "path": "include/linux/fs.h", "line": 472, "label": "struct address_space" },
+        { "path": "mm/filemap.c", "line": 2777, "label": "filemap_read" }
+      ]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "用户层", "wraps": ["app"], "pad": 18 },
+    { "kind": "region", "label": "VFS 虚拟文件系统（公共接口层）", "wraps": ["syscall", "file", "dentry", "inode", "super"], "pad": 18 },
+    { "kind": "region", "label": "性能层 · 页缓存", "wraps": ["pagecache"], "pad": 18 },
+    { "kind": "region", "label": "底层文件系统与块设备", "wraps": ["ext4", "block"], "pad": 18 }
+  ],
+  "connections": [
+    { "id": "app-syscall", "from": "app", "to": "syscall" },
+    { "id": "syscall-file", "from": "syscall", "to": "file" },
+    { "id": "file-dentry", "from": "file", "to": "dentry" },
+    { "id": "dentry-inode", "from": "dentry", "to": "inode" },
+    { "id": "inode-super", "from": "inode", "to": "super" },
+    {
+      "id": "file-pagecache",
+      "from": "file",
+      "to": "pagecache",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [[580, 292], [580, 330], [720, 330]]
+    },
+    {
+      "id": "inode-pagecache",
+      "from": "inode",
+      "to": "pagecache",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [[580, 512], [580, 400]]
+    },
+    { "id": "super-ext4", "from": "super", "to": "ext4" },
+    {
+      "id": "inode-ext4",
+      "from": "inode",
+      "to": "ext4",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "via": [[585, 512], [585, 800], [450, 800]]
+    },
+    { "id": "pagecache-block", "from": "pagecache", "to": "block" },
+    { "id": "ext4-block", "from": "ext4", "to": "block" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "四大核心对象",
+      "items": [
+        "file 表示进程打开的文件，通过 file_operations 调用读写",
+        "dentry 缓存路径分量到 inode 的映射",
+        "inode 保存文件元数据，通过 inode_operations 完成目录查找等操作",
+        "super_block 描述已挂载的文件系统，通过 super_operations 管理生命周期"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "页缓存与底层",
+      "items": [
+        "file 与 inode 的读写都通过 address_space 接入页缓存",
+        "页缓存最终把脏页或缺失页通过块设备层提交 I/O",
+        "ext4 等具体文件系统通过 file_operations / inode_operations 落地实现"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+---
+title: dentry 缓存路径查找
+type: flowchart
+tags: [文件系统, VFS, dentry, dcache]
+description: 路径分量查找时优先命中 dentry cache 否则走慢路径调用 inode_operations 的 lookup 读目录块
+---
+flowchart TD
+    Start[link_path_walk 逐级遍历路径] --> WalkComponent[walk_component 处理单个路径分量]
+    WalkComponent --> LookupFast[lookup_fast 快速查找 dcache]
+    LookupFast --> |cache 命中| Hit[直接返回已缓存 dentry]
+    LookupFast --> |cache 未命中| LookupSlow[lookup_slow 慢速路径]
+    LookupSlow --> LookupSlowCore[__lookup_slow 分配并设置 dentry]
+    LookupSlowCore --> IopLookup[inode->i_op->lookup 回调]
+    IopLookup --> Ext4Lookup[ext4_lookup 具体文件系统查找]
+    Ext4Lookup --> Ext4Entry[ext4_lookup_entry 读目录块查找目录项]
+    Ext4Entry --> FillInode[找到目录项后填充 inode 信息]
+    FillInode --> AddCache[加入 dcache 并返回 dentry]
+    Hit --> Next[继续下一个路径分量或结束]
+    AddCache --> Next

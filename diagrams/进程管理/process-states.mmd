@@ -1,0 +1,26 @@
+---
+title: Linux 进程状态机
+type: stateDiagram
+tags: [进程管理, 调度器, 状态机]
+description: task_struct 主要状态迁移关系(TASK_RUNNING / INTERRUPTIBLE / UNINTERRUPTIBLE / STOPPED / ZOMBIE)
+---
+stateDiagram-v2
+    [*] --> TASK_RUNNING: fork() 创建后被唤醒
+
+    TASK_RUNNING --> TASK_RUNNING: 时间片轮转<br/>被抢占 / schedule()
+
+    TASK_RUNNING --> TASK_INTERRUPTIBLE: 等待事件<br/>wait_event_interruptible()
+    TASK_INTERRUPTIBLE --> TASK_RUNNING: 事件到来 / 收到信号<br/>wake_up()
+    TASK_INTERRUPTIBLE --> TASK_RUNNING: 信号唤醒(可中断)
+
+    TASK_RUNNING --> TASK_UNINTERRUPTIBLE: 等待IO等不可中断事件<br/>wait_event()
+    TASK_UNINTERRUPTIBLE --> TASK_RUNNING: 事件完成<br/>wake_up()
+
+    TASK_RUNNING --> TASK_STOPPED: SIGSTOP / ptrace
+    TASK_STOPPED --> TASK_RUNNING: SIGCONT
+
+    TASK_RUNNING --> TASK_ZOMBIE: do_exit()<br/>等待父进程 wait()
+    TASK_ZOMBIE --> [*]: 父进程回收 release_task()
+
+    note right of TASK_UNINTERRUPTIBLE: D 状态,不可被信号打断<br/>常用于磁盘IO等待
+    note right of TASK_ZOMBIE: 僵尸态——已退出但未回收<br/>父进程需调用 wait/waitpid

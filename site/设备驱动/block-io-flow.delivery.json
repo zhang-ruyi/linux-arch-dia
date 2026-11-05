@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "a2483270-39df-42cc-8ffa-378be1afb1c8",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+  "specification": {
+    "sha256": "3cca13da8061ac2a99cccde4027365d32a922bc0e333d9152ed1119b5c544489",
+    "bytes": 4837
+  },
+  "artifact": {
+    "sha256": "130a6c6075a9e538a0df7998afaf89d6fbd79d5d805b5109438dcdae57a4518b",
+    "bytes": 838609
+  }
+}

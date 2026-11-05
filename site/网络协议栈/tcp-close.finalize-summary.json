@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-close/candidate.json",
+    "sha256": "521a496fe8397ae98b10d6698c41f140cbdd19141d119f8644596a91973cf75d",
+    "bytes": 4574
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-close.html",
+    "sha256": "53bf10248249274f1533a6b88fdf542bef79a04725e95a4943730410cf4e5fe9",
+    "bytes": 832369
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-close.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-close.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-close.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3276,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

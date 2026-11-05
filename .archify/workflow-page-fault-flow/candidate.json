@@ -1,0 +1,474 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "x86 缺页异常处理流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/page-fault-flow.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "hw",
+      "label": "1 · 硬件触发"
+    },
+    {
+      "id": "entry",
+      "label": "2 · x86 异常入口"
+    },
+    {
+      "id": "dispatch",
+      "label": "3 · 入口分发"
+    },
+    {
+      "id": "user",
+      "label": "4 · 用户态缺页"
+    },
+    {
+      "id": "mm",
+      "label": "5 · mm 缺页入口"
+    },
+    {
+      "id": "table",
+      "label": "6 · 逐级页表"
+    },
+    {
+      "id": "ptedist",
+      "label": "7 · PTE 分发"
+    },
+    {
+      "id": "ptestate",
+      "label": "8 · PTE 状态分支"
+    },
+    {
+      "id": "anonfile",
+      "label": "9 · 匿名/文件缺页"
+    },
+    {
+      "id": "filetype",
+      "label": "10 · 文件缺页策略"
+    },
+    {
+      "id": "callback",
+      "label": "11 · 统一 fault 回调"
+    },
+    {
+      "id": "fileio",
+      "label": "12 · 文件页读入"
+    }
+  ],
+  "mainPath": [
+    "cpu",
+    "exc",
+    "handle",
+    "userfault",
+    "mmfault",
+    "walk",
+    "ptedist"
+  ],
+  "nodes": [
+    {
+      "id": "cpu",
+      "lane": "hw",
+      "col": 0,
+      "type": "external",
+      "label": "CPU 触发缺页异常",
+      "sublabel": "硬件保存错误码与 CR2",
+      "icon": "failure",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1492,
+          "label": "exc_page_fault entry"
+        }
+      ]
+    },
+    {
+      "id": "exc",
+      "lane": "entry",
+      "col": 0,
+      "type": "backend",
+      "label": "exc_page_fault",
+      "sublabel": "DEFINE_IDTENTRY_RAW_ERRORCODE",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1492
+        }
+      ]
+    },
+    {
+      "id": "handle",
+      "lane": "dispatch",
+      "col": 0,
+      "type": "backend",
+      "label": "handle_page_fault",
+      "sublabel": "区分内核态与用户态缺页",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1471
+        }
+      ]
+    },
+    {
+      "id": "userfault",
+      "lane": "user",
+      "col": 0,
+      "type": "backend",
+      "label": "do_user_addr_fault",
+      "sublabel": "用户态缺页,查找 VMA",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1216
+        }
+      ]
+    },
+    {
+      "id": "mmfault",
+      "lane": "mm",
+      "col": 0,
+      "type": "backend",
+      "label": "handle_mm_fault",
+      "sublabel": "mm/memory.c 核心入口",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6651
+        }
+      ]
+    },
+    {
+      "id": "walk",
+      "lane": "table",
+      "col": 0,
+      "type": "backend",
+      "label": "__handle_mm_fault",
+      "sublabel": "逐级分配 pgd/p4d/pud/pmd",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6417
+        }
+      ]
+    },
+    {
+      "id": "ptedist",
+      "lane": "ptedist",
+      "col": 1,
+      "type": "backend",
+      "label": "handle_pte_fault",
+      "sublabel": "按 PTE 状态分发",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6335
+        }
+      ]
+    },
+    {
+      "id": "ptemissing",
+      "lane": "ptestate",
+      "col": 0,
+      "type": "backend",
+      "label": "do_pte_missing",
+      "sublabel": "PTE 为空,页缺失",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4561
+        }
+      ]
+    },
+    {
+      "id": "swap",
+      "lane": "ptestate",
+      "col": 1,
+      "type": "backend",
+      "label": "do_swap_page",
+      "sublabel": "PTE 不在内存,页换入",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4747
+        }
+      ]
+    },
+    {
+      "id": "numa",
+      "lane": "ptestate",
+      "col": 2,
+      "type": "backend",
+      "label": "do_numa_page",
+      "sublabel": "NUMA 保护页,跨节点迁移",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6109
+        }
+      ]
+    },
+    {
+      "id": "wp",
+      "lane": "ptestate",
+      "col": 3,
+      "type": "backend",
+      "label": "do_wp_page",
+      "sublabel": "写只读页,COW 写时复制",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4244
+        }
+      ]
+    },
+    {
+      "id": "anon",
+      "lane": "anonfile",
+      "col": 0,
+      "type": "backend",
+      "label": "do_anonymous_page",
+      "sublabel": "vma_is_anonymous,分配匿名零页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5287
+        }
+      ]
+    },
+    {
+      "id": "filefault",
+      "lane": "anonfile",
+      "col": 1,
+      "type": "backend",
+      "label": "do_fault",
+      "sublabel": "文件映射缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5964
+        }
+      ]
+    },
+    {
+      "id": "readfault",
+      "lane": "filetype",
+      "col": 1,
+      "type": "backend",
+      "label": "do_read_fault",
+      "sublabel": "只读缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5840
+        }
+      ]
+    },
+    {
+      "id": "cowfault",
+      "lane": "filetype",
+      "col": 2,
+      "type": "backend",
+      "label": "do_cow_fault",
+      "sublabel": "私有映射写缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5872
+        }
+      ]
+    },
+    {
+      "id": "sharedfault",
+      "lane": "filetype",
+      "col": 3,
+      "type": "backend",
+      "label": "do_shared_fault",
+      "sublabel": "共享映射写缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5914
+        }
+      ]
+    },
+    {
+      "id": "dofault",
+      "lane": "callback",
+      "col": 2,
+      "type": "backend",
+      "label": "__do_fault",
+      "sublabel": "调用 vm_ops->fault 回调",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5398
+        }
+      ]
+    },
+    {
+      "id": "filemap",
+      "lane": "fileio",
+      "col": 2,
+      "type": "database",
+      "label": "filemap_fault",
+      "sublabel": "读入文件页,读盘",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 3540
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "cpu-exc",
+      "from": "cpu",
+      "to": "exc",
+      "role": "main"
+    },
+    {
+      "id": "exc-handle",
+      "from": "exc",
+      "to": "handle",
+      "role": "main"
+    },
+    {
+      "id": "handle-user",
+      "from": "handle",
+      "to": "userfault",
+      "role": "main"
+    },
+    {
+      "id": "user-mm",
+      "from": "userfault",
+      "to": "mmfault",
+      "role": "main"
+    },
+    {
+      "id": "mm-walk",
+      "from": "mmfault",
+      "to": "walk",
+      "role": "main"
+    },
+    {
+      "id": "walk-pte",
+      "from": "walk",
+      "to": "ptedist",
+      "role": "main"
+    },
+    {
+      "id": "pte-missing",
+      "from": "ptedist",
+      "to": "ptemissing",
+      "label": "pte 为空,缺页",
+      "variant": "emphasis"
+    },
+    {
+      "id": "pte-swap",
+      "from": "ptedist",
+      "to": "swap",
+      "label": "pte 不在内存,swap 项"
+    },
+    {
+      "id": "pte-numa",
+      "from": "ptedist",
+      "to": "numa",
+      "label": "NUMA 保护页"
+    },
+    {
+      "id": "pte-wp",
+      "from": "ptedist",
+      "to": "wp",
+      "label": "写只读页",
+      "variant": "security"
+    },
+    {
+      "id": "missing-anon",
+      "from": "ptemissing",
+      "to": "anon",
+      "label": "vma_is_anonymous 匿名映射"
+    },
+    {
+      "id": "missing-file",
+      "from": "ptemissing",
+      "to": "filefault",
+      "label": "文件映射"
+    },
+    {
+      "id": "file-read",
+      "from": "filefault",
+      "to": "readfault",
+      "label": "只读缺页"
+    },
+    {
+      "id": "file-cow",
+      "from": "filefault",
+      "to": "cowfault",
+      "label": "私有映射写缺页",
+      "variant": "security"
+    },
+    {
+      "id": "file-shared",
+      "from": "filefault",
+      "to": "sharedfault",
+      "label": "共享映射写缺页"
+    },
+    {
+      "id": "read-cb",
+      "from": "readfault",
+      "to": "dofault"
+    },
+    {
+      "id": "cow-cb",
+      "from": "cowfault",
+      "to": "dofault"
+    },
+    {
+      "id": "shared-cb",
+      "from": "sharedfault",
+      "to": "dofault"
+    },
+    {
+      "id": "cb-filemap",
+      "from": "dofault",
+      "to": "filemap"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "分发主干",
+      "items": [
+        "exc_page_fault 读取 CR2 后进入 handle_page_fault",
+        "do_user_addr_fault 查找 VMA 后交给 handle_mm_fault",
+        "__handle_mm_fault 逐级补齐页表,最终由 handle_pte_fault 按 PTE 状态分发"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "四条 PTE 分支",
+      "items": [
+        "PTE 为空走 do_pte_missing,再按匿名或文件映射分流",
+        "swap 项走 do_swap_page,NUMA 保护页走 do_numa_page",
+        "写只读页走 do_wp_page 完成 COW"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "文件缺页收敛",
+      "items": [
+        "只读、私有写、共享写分别进入 do_read_fault、do_cow_fault、do_shared_fault",
+        "三者统一经 __do_fault 调用 vm_ops->fault",
+        "filemap_fault 负责从磁盘读入文件页"
+      ]
+    }
+  ]
+}

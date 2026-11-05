@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-packet-send/candidate.json",
+    "sha256": "05765d93ea905a1986d245f30d0cde2eb421523762ec5f9332eb0bcf25b9146b",
+    "bytes": 4029
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/packet-send.html",
+    "sha256": "d4ac8d488bc840e00ca298fe2377b9ad7500ab63e22159bf8c4e8046265573da",
+    "bytes": 830500
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/packet-send.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/packet-send.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/网络协议栈/packet-send.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2456,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

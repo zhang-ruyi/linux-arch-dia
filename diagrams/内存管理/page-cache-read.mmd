@@ -1,0 +1,40 @@
+---
+title: 文件读路径经 page cache 时序图
+type: sequence
+tags: [内存管理, page cache, 文件系统, 块设备]
+description: read 系统调用经 vfs_read 与 filemap_read,页缺失时 read_folio 触发 submit_bio 读盘
+---
+sequenceDiagram
+    autonumber
+    participant App as 用户进程
+    participant Ksys as ksys_read<br/>fs/read_write.c
+    participant Vfs as vfs_read<br/>fs/read_write.c
+    participant Iter as generic_file_read_iter<br/>mm/filemap.c
+    participant Fmap as filemap_read<br/>mm/filemap.c
+    participant Get as filemap_get_pages<br/>mm/filemap.c
+    participant Folio as filemap_create_folio<br/>mm/filemap.c
+    participant Rd as read_folio 回调<br/>如 ext4_read_folio
+    participant Bio as submit_bio<br/>block/blk-core.c
+    participant Disk as 块设备层与磁盘
+
+    App->>Ksys: read(fd, buf, count)
+    Ksys->>Vfs: 调用 vfs_read(file, ...)
+    Vfs->>Iter: file->f_op->read_iter<br/>即 generic_file_read_iter
+    Iter->>Fmap: 调用 filemap_read(iocb, iter)
+    Fmap->>Get: filemap_get_pages(iocb, ...)
+
+    alt 页命中 page cache
+        Get-->>Fmap: 直接返回缓存 folio
+    else 页缺失
+        Get->>Get: page_cache_sync_ra 同步预读
+        Get->>Folio: filemap_create_folio 分配 folio
+        Folio->>Rd: filemap_read_folio 调用<br/>mapping->a_ops->read_folio
+        Rd->>Bio: 构造 bio 并 submit_bio
+        Bio->>Disk: 提交读请求,等待磁盘完成
+        Disk-->>Rd: 数据读入,folio 置为 uptodate
+        Rd-->>Get: 返回已更新的 folio
+    end
+
+    Get-->>Fmap: 返回页批量
+    Fmap->>Fmap: copy_folio_to_iter 拷贝到用户空间
+    Fmap-->>App: 返回已读字节数

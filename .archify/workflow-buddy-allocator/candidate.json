@@ -1,0 +1,418 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "伙伴系统分配与释放流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "site/内存管理/buddy-allocator.html",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "alloc_entry",
+      "label": "分配 · 入口链"
+    },
+    {
+      "id": "alloc_pcp",
+      "label": "分配 · PCP 快路径"
+    },
+    {
+      "id": "alloc_buddy",
+      "label": "分配 · 伙伴慢路径"
+    },
+    {
+      "id": "free_entry",
+      "label": "释放 · 入口链"
+    },
+    {
+      "id": "free_pcp",
+      "label": "释放 · PCP 快路径"
+    },
+    {
+      "id": "free_buddy",
+      "label": "释放 · 伙伴合并"
+    }
+  ],
+  "mainPath": [
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+    "a7",
+    "a8",
+    "a9"
+  ],
+  "nodes": [
+    {
+      "id": "a1",
+      "lane": "alloc_entry",
+      "col": 0,
+      "type": "backend",
+      "label": "alloc_pages",
+      "sublabel": "include/linux/gfp.h 宏",
+      "sources": [
+        {
+          "path": "include/linux/gfp.h",
+          "line": 351
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "lane": "alloc_entry",
+      "col": 1,
+      "type": "backend",
+      "label": "__alloc_pages_noprof",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5333
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "lane": "alloc_entry",
+      "col": 2,
+      "type": "backend",
+      "label": "__alloc_frozen_pages_noprof",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5268
+        }
+      ]
+    },
+    {
+      "id": "a4",
+      "lane": "alloc_entry",
+      "col": 3,
+      "type": "backend",
+      "label": "get_page_from_freelist",
+      "sublabel": "遍历 zonelist 快速分配",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 3792
+        }
+      ]
+    },
+    {
+      "id": "a5",
+      "lane": "alloc_entry",
+      "col": 4,
+      "type": "backend",
+      "label": "rmqueue",
+      "sublabel": "从 zone 取页块",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 3401
+        }
+      ]
+    },
+    {
+      "id": "a6",
+      "lane": "alloc_pcp",
+      "col": 5,
+      "type": "backend",
+      "label": "rmqueue_pcplist",
+      "sublabel": "每 CPU 页表快路径",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 3359
+        }
+      ]
+    },
+    {
+      "id": "a7",
+      "lane": "alloc_buddy",
+      "col": 4,
+      "yOffset": -90,
+      "type": "backend",
+      "label": "__rmqueue",
+      "sublabel": "伙伴系统慢路径",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 2454
+        }
+      ]
+    },
+    {
+      "id": "a8",
+      "lane": "alloc_buddy",
+      "col": 4,
+      "yOffset": 0,
+      "type": "backend",
+      "label": "__rmqueue_smallest",
+      "sublabel": "从最低阶查找",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1889
+        }
+      ]
+    },
+    {
+      "id": "a9",
+      "lane": "alloc_buddy",
+      "col": 4,
+      "yOffset": 90,
+      "type": "backend",
+      "label": "expand",
+      "sublabel": "剩余块回插伙伴表",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1702
+        }
+      ]
+    },
+    {
+      "id": "f1",
+      "lane": "free_entry",
+      "col": 0,
+      "type": "backend",
+      "label": "__free_pages / free_pages",
+      "sublabel": "释放入口",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5421
+        }
+      ]
+    },
+    {
+      "id": "f2",
+      "lane": "free_entry",
+      "col": 1,
+      "type": "backend",
+      "label": "___free_pages",
+      "sublabel": "引用计数归零",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5376
+        }
+      ]
+    },
+    {
+      "id": "f3",
+      "lane": "free_entry",
+      "col": 2,
+      "type": "backend",
+      "label": "__free_frozen_pages",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 2937
+        }
+      ]
+    },
+    {
+      "id": "f4",
+      "lane": "free_pcp",
+      "col": 2,
+      "type": "backend",
+      "label": "free_frozen_page_commit",
+      "sublabel": "回填每 CPU 页表",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 2832
+        }
+      ]
+    },
+    {
+      "id": "f5",
+      "lane": "free_buddy",
+      "col": 3,
+      "yOffset": -90,
+      "type": "backend",
+      "label": "__free_pages_ok",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1578
+        }
+      ]
+    },
+    {
+      "id": "f6",
+      "lane": "free_buddy",
+      "col": 3,
+      "yOffset": 0,
+      "type": "backend",
+      "label": "free_one_page",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1542
+        }
+      ]
+    },
+    {
+      "id": "f7",
+      "lane": "free_buddy",
+      "col": 3,
+      "yOffset": 90,
+      "type": "backend",
+      "label": "__free_one_page",
+      "sublabel": "查找伙伴向上合并",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 936
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "a1-a2",
+      "from": "a1",
+      "to": "a2",
+      "role": "main"
+    },
+    {
+      "id": "a2-a3",
+      "from": "a2",
+      "to": "a3",
+      "role": "main"
+    },
+    {
+      "id": "a3-a4",
+      "from": "a3",
+      "to": "a4",
+      "role": "main"
+    },
+    {
+      "id": "a4-a5",
+      "from": "a4",
+      "to": "a5",
+      "role": "main"
+    },
+    {
+      "id": "a5-a6",
+      "from": "a5",
+      "to": "a6",
+      "label": "order 允许 PCP",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "a5-a7",
+      "from": "a5",
+      "to": "a7",
+      "label": "大 order 走伙伴",
+      "variant": "emphasis",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "a7-a8",
+      "from": "a7",
+      "to": "a8",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "a8-a9",
+      "from": "a8",
+      "to": "a9",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "f1-f2",
+      "from": "f1",
+      "to": "f2",
+      "role": "main"
+    },
+    {
+      "id": "f2-f3",
+      "from": "f2",
+      "to": "f3",
+      "role": "main"
+    },
+    {
+      "id": "f3-f4",
+      "from": "f3",
+      "to": "f4",
+      "label": "order 允许 PCP",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "f3-f5",
+      "from": "f3",
+      "to": "f5",
+      "label": "大 order 走伙伴",
+      "variant": "emphasis",
+      "role": "main",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "f5-f6",
+      "from": "f5",
+      "to": "f6",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "f6-f7",
+      "from": "f6",
+      "to": "f7",
+      "role": "main",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "f4-f7",
+      "from": "f4",
+      "to": "f7",
+      "label": "pcp 满后批量释放",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "bottom",
+      "toSide": "left"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "分配两条路径",
+      "items": [
+        "rmqueue 先尝试每 CPU 页表 rmqueue_pcplist",
+        "大 order 或 PCP 不足时进入 __rmqueue 伙伴慢路径",
+        "__rmqueue_smallest 从最低阶取出,expand 把剩余块回插伙伴表"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "释放两条路径",
+      "items": [
+        "__free_frozen_pages 可把单页回填 PCP 页表",
+        "大 order 走 __free_pages_ok → free_one_page → __free_one_page",
+        "PCP 满后批量释放最终也进入 __free_one_page 向上合并伙伴"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "NAPI 收包处理路径",
+    "output": "site/网络协议栈/napi-receive.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "nic",
+      "type": "external",
+      "label": "网卡(硬件)",
+      "sublabel": "硬件中断",
+      "sources": [
+        { "path": "Documentation/networking/napi.rst", "line": 9, "label": "NAPI event handling" },
+        { "path": "Documentation/networking/napi.rst", "line": 18, "label": "softirq processing" }
+      ]
+    },
+    {
+      "id": "drv",
+      "type": "backend",
+      "label": "网卡驱动",
+      "sublabel": "中断处理",
+      "sources": [
+        { "path": "net/core/dev.c", "line": 6733, "label": "napi_schedule_prep" },
+        { "path": "include/linux/netdevice.h", "line": 558, "label": "napi_schedule" },
+        { "path": "include/linux/netdevice.h", "line": 4314, "label": "napi_gro_receive" }
+      ]
+    },
+    {
+      "id": "soft",
+      "type": "backend",
+      "label": "内核软中断",
+      "sublabel": "NET_RX_SOFTIRQ",
+      "sources": [
+        { "path": "net/core/dev.c", "line": 7910, "label": "net_rx_action" },
+        { "path": "net/core/dev.c", "line": 7782, "label": "napi_poll" },
+        { "path": "net/core/dev.c", "line": 5976, "label": "__netif_receive_skb_core" }
+      ]
+    },
+    {
+      "id": "ip",
+      "type": "backend",
+      "label": "IP 层",
+      "sublabel": "ip_rcv / ip_local_deliver",
+      "sources": [
+        { "path": "net/ipv4/ip_input.c", "line": 603, "label": "ip_rcv" },
+        { "path": "net/ipv4/ip_input.c", "line": 250, "label": "ip_local_deliver" },
+        { "path": "net/ipv4/ip_input.c", "line": 229, "label": "ip_local_deliver_finish" }
+      ]
+    },
+    {
+      "id": "tcp",
+      "type": "backend",
+      "label": "TCP 层",
+      "sublabel": "tcp_v4_rcv",
+      "sources": [
+        { "path": "net/ipv4/tcp_ipv4.c", "line": 2067, "label": "tcp_v4_rcv" },
+        { "path": "net/ipv4/tcp_ipv4.c", "line": 1827, "label": "tcp_v4_do_rcv" },
+        { "path": "net/ipv4/tcp_input.c", "line": 7122, "label": "tcp_rcv_state_process" }
+      ]
+    }
+  ],
+  "messages": [
+    { "id": "hw-irq", "from": "nic", "to": "drv", "y": 160, "label": "硬件中断(报文到达)", "variant": "emphasis" },
+    { "id": "schedule-napi", "from": "drv", "to": "soft", "y": 210, "label": "napi_schedule() 触发 NET_RX_SOFTIRQ", "note": "关闭本网卡中断", "variant": "emphasis" },
+    { "id": "poll", "from": "soft", "to": "drv", "y": 260, "label": "执行 napi_poll() 轮询收包", "variant": "return" },
+    { "id": "receive-skb", "from": "drv", "to": "soft", "y": 310, "label": "netif_receive_skb()", "note": "从环形队列取 skb;napi_gro_receive()", "variant": "emphasis" },
+    { "id": "ip-rcv", "from": "soft", "to": "ip", "y": 360, "label": "ip_rcv() 校验 IP 头", "note": "__netif_receive_skb_core() 按协议分发", "variant": "emphasis" },
+    { "id": "tcp-rcv", "from": "ip", "to": "tcp", "y": 415, "label": "tcp_v4_rcv() 定位 socket", "note": "ip_rcv_finish() 查路由;ip_local_deliver() → ip_local_deliver_finish() 按 L4 分发;tcp_v4_do_rcv() → tcp_rcv_state_process()", "variant": "emphasis" }
+  ],
+  "activations": [
+    { "participant": "nic", "from": 155, "to": 216, "type": "external" },
+    { "participant": "drv", "from": 155, "to": 316, "type": "backend" },
+    { "participant": "soft", "from": 205, "to": 366, "type": "backend" },
+    { "participant": "ip", "from": 355, "to": 421, "type": "backend" },
+    { "participant": "tcp", "from": 410, "to": 441, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "硬中断到软中断",
+      "items": [
+        "网卡收到报文后触发硬件中断",
+        "驱动关闭本网卡中断并调用 napi_schedule()",
+        "NET_RX_SOFTIRQ 中通过 napi_poll() 轮询收包"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "协议栈分发",
+      "items": [
+        "netif_receive_skb() → __netif_receive_skb_core() 按协议分发",
+        "ip_rcv() 校验 IP 头,ip_rcv_finish() 查路由",
+        "本地报文经 ip_local_deliver() 交给 L4"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "进入 TCP",
+      "items": [
+        "tcp_v4_rcv() 定位 socket",
+        "tcp_v4_do_rcv() 进入 TCP 状态机处理"
+      ]
+    }
+  ]
+}

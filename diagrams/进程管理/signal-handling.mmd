@@ -1,0 +1,32 @@
+---
+title: 信号生命周期
+type: sequence
+tags: [进程管理, 信号, 系统调用, rt_sigreturn]
+description: 从 kill() 发送信号到目标进程执行 handler 并 rt_sigreturn 返回内核的完整流程
+---
+sequenceDiagram
+    autonumber
+    participant Sender as 发送方进程
+    participant Sys as kill() 系统调用
+    participant Sig as 内核 signal.c
+    participant Target as 目标进程
+    participant Arch as 架构层 signal.c
+    participant User as 用户态 handler
+
+    Sender->>Sys: kill(pid, sig)
+    Sys->>Sig: kill_something_info()
+    Sig->>Sig: kill_pid_info() → group_send_sig_info()
+    Sig->>Sig: do_send_sig_info() → send_signal_locked()
+    Sig->>Sig: __send_signal_locked() 置 pending 位图<br/>complete_signal() 唤醒目标
+    Sig-->>Target: 目标置 TIF_SIGPENDING 并唤醒
+
+    Target->>Target: 中断/系统调用返回用户态前<br/>exit_to_user_mode_loop()
+    Target->>Sig: get_signal() 取出 pending 信号
+    Sig->>Arch: arch_do_signal_or_restart()
+    Arch->>Arch: handle_signal(ksig, regs)
+    Arch->>Arch: setup_rt_frame() 在用户栈构造 rt_sigframe
+    Arch-->>Target: 修改 regs 指向 handler 入口
+    Target->>User: 进入 handler 执行
+    User->>Arch: handler 返回,调用 rt_sigreturn
+    Arch->>Arch: SYSCALL_DEFINE0(rt_sigreturn)<br/>restore_sigcontext() 恢复现场
+    Arch-->>Target: 返回被中断的用户态指令继续执行

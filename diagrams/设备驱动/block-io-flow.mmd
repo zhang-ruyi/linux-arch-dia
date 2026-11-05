@@ -1,0 +1,26 @@
+---
+title: 块 IO 路径
+type: sequence
+tags: [块设备, blk-mq, 调度器, bio]
+description: bio 从提交进入 blk-mq 软件队列经调度器到硬件队列执行并完成回调
+---
+sequenceDiagram
+    participant Fs as 文件系统层
+    participant SubmitBio as submit_bio
+    participant Noacct as submit_bio_noacct
+    participant BlkMq as blk_mq_submit_bio
+    participant Sched as 软件队列与调度器
+    participant Hwq as 硬件队列
+    participant Dev as 块设备
+
+    Fs->>SubmitBio: 提交 bio 读请求
+    SubmitBio->>Noacct: submit_bio_noacct 转换递归为迭代
+    Noacct->>BlkMq: blk_mq_submit_bio 进入多队列
+    BlkMq->>Sched: rq_qos_throttle 限流与 blk_mq_insert_request 插入
+    Sched->>Hwq: blk_mq_run_hw_queue 触发硬件队列派发
+    Hwq->>Hwq: blk_mq_dispatch_rq_list 按电梯调度顺序派发
+    Hwq->>Dev: 设备执行 IO 请求
+    Dev-->>Hwq: 硬件中断通知 IO 完成
+    Hwq-->>Sched: blk_mq_complete_request 标记请求完成
+    Sched-->>BlkMq: 逐层回传完成
+    BlkMq-->>Fs: bio_endio 回调上层结束 IO

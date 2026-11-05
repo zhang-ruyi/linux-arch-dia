@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-dentry-lookup/candidate.json",
+    "sha256": "7e7652360969411c52f6b130967a9d21f9671ab41c014a41cf8cf38c88be5642",
+    "bytes": 5440
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/dentry-lookup.html",
+    "sha256": "0729afcd16ef59b2850ccce73b1d774ee5bee3b7204946bd19b01c22322682ab",
+    "bytes": 844657
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/文件系统/dentry-lookup.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/dentry-lookup.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/文件系统/dentry-lookup.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3314,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
