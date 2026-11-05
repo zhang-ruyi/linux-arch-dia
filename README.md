@@ -294,9 +294,19 @@ ls site/*/
 | 新图不出现在首页 | 确认 `meta.output` 指向 `site/<分类>/<slug>.html`,且已成功 finalize,然后重建首页 |
 | 打开首页样式异常 | 用 HTTP 服务访问,不要用 `file://` |
 
+## 版权与使用限制
+
+Copyright © 2026 zhang-ruyi (Ruyi.zhang). All rights reserved.
+
+- **未经作者书面许可,请勿将本仓库内容(图表、图源 JSON、脚本、文档)用于任何商业用途。**
+- **未经作者书面许可,请勿直接转载、复制或再发布本仓库内容。**
+- 个人学习、研究、教学等非商业性使用,须保留本版权声明并注明来源(仓库地址与提交版本)。
+- 商业授权、转载授权请联系:www.zhangyi.studio@gmail.com
+- Linux 内核源码本身遵循其各自许可(主要为 GPL-2.0);本仓库仅包含对内核机制的分析整理与图示,不包含内核源码副本。
+
 ## 说明
 
 - 源码基线:Linux `3b029c035b34bbc693405ddf759f0e9b920c27f1`(v7.2-rc3);图的 `meta.repository` 使用 `link_mode: "local-only"`,便于在任意机器上复现
 - “四门禁通过”是自动化校验(结构、交付、可复现性、真实浏览器视图),不等同于人工视觉审查;需要视觉复核时可对单图运行 Archify 的 `visual-check`
 - `diagrams/` 中的 `.mmd` 是早期 Mermaid 版本,保留仅作溯源;仓库的正式产物是 `site/` 与 `.archify/`
-- Archify 采用 Apache-2.0 许可;本仓库的图表内容为对 Linux 内核源码的分析整理
+- Archify 为第三方开源工具(Apache-2.0),该许可仅适用于 Archify 本身;本仓库原创图表与文档的版权与使用限制以上一节为准
