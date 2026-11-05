@@ -1,0 +1,329 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "NVMe PCIe 驱动初始化流程",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-pcie-init.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "pci",
+      "label": "PCI 绑定与映射"
+    },
+    {
+      "id": "ctrl",
+      "label": "控制器使能"
+    },
+    {
+      "id": "io",
+      "label": "I/O 队列与中断"
+    },
+    {
+      "id": "nl",
+      "label": "启动与扫描"
+    },
+    {
+      "id": "quirk",
+      "label": "特例与复位",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "bind",
+      "label": "绑定与映射",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "enable",
+      "label": "使能与识别",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "queue",
+      "label": "队列与中断",
+      "fromCol": 4,
+      "toCol": 4
+    },
+    {
+      "id": "live",
+      "label": "启动与扫描",
+      "fromCol": 5,
+      "toCol": 5
+    }
+  ],
+  "mainPath": [
+    "probe",
+    "map",
+    "enable",
+    "admin",
+    "iqueues",
+    "live"
+  ],
+  "nodes": [
+    {
+      "id": "probe",
+      "lane": "pci",
+      "col": 0,
+      "type": "backend",
+      "label": "PCI 驱动入口",
+      "sublabel": "module_init → pci_register_driver",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 4309,
+          "label": "nvme_init"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 4316,
+          "label": "pci_register_driver"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3747,
+          "label": "nvme_probe"
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "lane": "pci",
+      "col": 1,
+      "type": "backend",
+      "label": "设备分配与映射",
+      "sublabel": "alloc_dev → add_ctrl → dev_map",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3673,
+          "label": "nvme_pci_alloc_dev"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 5244,
+          "label": "nvme_add_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3568,
+          "label": "nvme_dev_map"
+        }
+      ]
+    },
+    {
+      "id": "enable",
+      "lane": "ctrl",
+      "col": 2,
+      "type": "backend",
+      "label": "控制器使能",
+      "sublabel": "读 CAP 并计算 q_depth",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3193,
+          "label": "nvme_pci_enable"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3223,
+          "label": "q_depth 计算"
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "lane": "ctrl",
+      "col": 3,
+      "type": "backend",
+      "label": "管理队列与识别",
+      "sublabel": "AQA/ASQ/ACQ → init_ctrl_finish",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2332,
+          "label": "nvme_pci_configure_admin_queue"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 2744,
+          "label": "nvme_enable_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 3736,
+          "label": "nvme_init_ctrl_finish"
+        }
+      ]
+    },
+    {
+      "id": "iqueues",
+      "lane": "io",
+      "col": 4,
+      "type": "backend",
+      "label": "I/O 队列与 MSI-X",
+      "sublabel": "setup_io_queues → MSI-X",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2944,
+          "label": "nvme_setup_io_queues"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2893,
+          "label": "nvme_setup_irqs"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2410,
+          "label": "nvme_create_io_queues"
+        }
+      ]
+    },
+    {
+      "id": "live",
+      "lane": "nl",
+      "col": 5,
+      "type": "backend",
+      "label": "LIVE 与命名空间扫描",
+      "sublabel": "start_ctrl → scan_work",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 5064,
+          "label": "nvme_start_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4578,
+          "label": "nvme_scan_work"
+        }
+      ]
+    },
+    {
+      "id": "qdepth",
+      "lane": "quirk",
+      "col": 2,
+      "type": "security",
+      "label": "q_depth 特例",
+      "sublabel": "三组队列深度特例",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3239,
+          "label": "QDEPTH_ONE"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3243,
+          "label": "PM1725"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3254,
+          "label": "SHARED_TAGS"
+        }
+      ]
+    },
+    {
+      "id": "flr",
+      "lane": "quirk",
+      "col": 3,
+      "type": "security",
+      "label": "复位回退",
+      "sublabel": "disable 失败 → FLR 重试",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2367,
+          "label": "pcie_reset_flr"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "probe-map",
+      "from": "probe",
+      "to": "map",
+      "label": "pci probe",
+      "role": "main"
+    },
+    {
+      "id": "map-enable",
+      "from": "map",
+      "to": "enable",
+      "label": "BAR 映射完成",
+      "role": "main"
+    },
+    {
+      "id": "enable-admin",
+      "from": "enable",
+      "to": "admin",
+      "label": "admin queue",
+      "role": "main"
+    },
+    {
+      "id": "admin-iqueues",
+      "from": "admin",
+      "to": "iqueues",
+      "label": "identify + host mem",
+      "role": "main"
+    },
+    {
+      "id": "iqueues-live",
+      "from": "iqueues",
+      "to": "live",
+      "label": "LIVE",
+      "role": "main"
+    },
+    {
+      "id": "enable-qdepth",
+      "from": "enable",
+      "to": "qdepth",
+      "label": "应用特例",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "admin-flr",
+      "from": "admin",
+      "to": "flr",
+      "label": "禁用失败",
+      "variant": "dashed",
+      "role": "branch"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "队列深度",
+      "items": [
+        "io_queue_depth 默认 1024,允许范围 2..4095",
+        "q_depth = min(NVME_CAP_MQES + 1, io_queue_depth)",
+        "NVME_AQ_DEPTH 固定为 32,管理队列按 32 项分配",
+        "QDEPTH_ONE→2;PM1725→64;SHARED_TAGS 下限 34"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "启动语义",
+      "items": [
+        "nvme_start_ctrl 先启用 AEN,再 queue scan",
+        "LIVE 状态下 unquiesce I/O 队列并更新多路径",
+        "scan_work 仅在 LIVE 且 tagset 存在时扫描命名空间"
+      ]
+    }
+  ]
+}

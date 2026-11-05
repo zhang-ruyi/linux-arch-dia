@@ -1,0 +1,277 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "NVMe 控制器状态机与超时复位",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-ctrl-states.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "mainPath": [
+    "new",
+    "connecting",
+    "live",
+    "resetting"
+  ],
+  "states": [
+    {
+      "id": "new",
+      "type": "start",
+      "label": "NVME_CTRL_NEW",
+      "sublabel": "控制器刚分配,初始状态",
+      "tag": "初始",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 306,
+          "label": "NVME_CTRL_NEW"
+        }
+      ]
+    },
+    {
+      "id": "connecting",
+      "type": "active",
+      "label": "NVME_CTRL_CONNECTING",
+      "sublabel": "初始化/重连传输层",
+      "tag": "连接",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 309,
+          "label": "NVME_CTRL_CONNECTING"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3783,
+          "label": "probe 置 CONNECTING"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3418,
+          "label": "reset_work 置 CONNECTING"
+        }
+      ]
+    },
+    {
+      "id": "live",
+      "type": "success",
+      "label": "NVME_CTRL_LIVE",
+      "sublabel": "已连接,可执行 I/O",
+      "tag": "可 I/O",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 307,
+          "label": "NVME_CTRL_LIVE"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3820,
+          "label": "probe 置 LIVE"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3470,
+          "label": "reset_work 置 LIVE"
+        }
+      ]
+    },
+    {
+      "id": "resetting",
+      "type": "waiting",
+      "label": "NVME_CTRL_RESETTING",
+      "sublabel": "已调度或正在复位",
+      "tag": "复位",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 308,
+          "label": "NVME_CTRL_RESETTING"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 215,
+          "label": "nvme_reset_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 2003,
+          "label": "timeout disable 置 RESETTING"
+        }
+      ]
+    },
+    {
+      "id": "deleting",
+      "type": "active",
+      "label": "NVME_CTRL_DELETING",
+      "sublabel": "已调度或正在删除",
+      "tag": "删除",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 310,
+          "label": "NVME_CTRL_DELETING"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 259,
+          "label": "nvme_delete_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3890,
+          "label": "nvme_remove 置 DELETING"
+        }
+      ]
+    },
+    {
+      "id": "deleting_noio",
+      "type": "neutral",
+      "label": "NVME_CTRL_DELETING_NOIO",
+      "sublabel": "删除收尾,不再屏蔽 I/O",
+      "tag": "删除收尾",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 311,
+          "label": "NVME_CTRL_DELETING_NOIO"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4668,
+          "label": "nvme_remove_namespaces"
+        }
+      ]
+    },
+    {
+      "id": "dead",
+      "type": "failure",
+      "label": "NVME_CTRL_DEAD",
+      "sublabel": "设备非存在/无响应",
+      "tag": "终端",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 312,
+          "label": "NVME_CTRL_DEAD"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 3894,
+          "label": "设备移除时置 DEAD"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "new-connecting",
+      "from": "new",
+      "to": "connecting",
+      "label": "probe 初始化"
+    },
+    {
+      "id": "connecting-live",
+      "from": "connecting",
+      "to": "live",
+      "label": "初始化完成"
+    },
+    {
+      "id": "live-resetting",
+      "from": "live",
+      "to": "resetting",
+      "label": "复位触发",
+      "variant": "emphasis",
+      "note": "复位/超时"
+    },
+    {
+      "id": "resetting-connecting",
+      "from": "resetting",
+      "to": "connecting",
+      "label": "复位重连",
+      "note": "nvme_reset_work: 若已 ENABLE 先 nvme_dev_disable,再 nvme_sync_queues → nvme_pci_enable,随后置 CONNECTING"
+    },
+    {
+      "id": "live-deleting",
+      "from": "live",
+      "to": "deleting",
+      "label": "删除"
+    },
+    {
+      "id": "connecting-deleting",
+      "from": "connecting",
+      "to": "deleting",
+      "label": "连接超时",
+      "variant": "dashed"
+    },
+    {
+      "id": "resetting-deleting",
+      "from": "resetting",
+      "to": "deleting",
+      "label": "复位失败",
+      "variant": "security",
+      "note": "reset_work 失败"
+    },
+    {
+      "id": "deleting-dead",
+      "from": "deleting",
+      "to": "dead",
+      "label": "设备已移除",
+      "variant": "security",
+      "note": "nvme_remove 检测到 pci_device_is_present 为假时置 DEAD 并 disable"
+    },
+    {
+      "id": "deleting-noio",
+      "from": "deleting",
+      "to": "deleting_noio",
+      "label": "移除命名空间",
+      "variant": "dashed",
+      "note": "nvme_remove_namespaces 在删除收尾置 DELETING_NOIO,之后移除命名空间"
+    },
+    {
+      "id": "dead-noio",
+      "from": "dead",
+      "to": "deleting_noio",
+      "label": "DEAD 收尾",
+      "variant": "dashed",
+      "note": "处于 DEAD 时 nvme_remove_namespaces 先把命名空间标记为 dead,再转 DELETING_NOIO"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "主循环",
+      "items": [
+        "NEW 只能经 CONNECTING 进入 LIVE,不能直接跳到 LIVE",
+        "LIVE 是唯一可正常执行 I/O 的状态",
+        "复位完成后必须重新经过 CONNECTING 才能回到 LIVE",
+        "状态迁移由 nvme_change_ctrl_state 的允许表约束"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "超时与复位",
+      "items": [
+        "nvme_timeout 先 poll 队列,寻找可能漏掉的中断",
+        "admin 队列命令或已 abort 的命令触发控制器复位",
+        "普通 I/O 先发 abort 命令,再次超时才复位",
+        "RESETTING 状态下超时返回 BLK_EH_RESET_TIMER 等待复位"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "删除与终结",
+      "items": [
+        "DELETING 与 DELETING_NOIO 都是不可恢复的删除阶段",
+        "DEAD 表示设备已消失,链路无法继续",
+        "最终命名空间在 DELETING_NOIO 阶段移除",
+        "删除路径不会回到 LIVE"
+      ]
+    }
+  ]
+}

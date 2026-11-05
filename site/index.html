@@ -69,7 +69,7 @@ main { flex:1; padding:24px 28px; }
 <body>
 <aside>
   <h1>Linux 内核原理图解</h1>
-  <div class="sub">Archify 交互式内核原理图 · 共 30 张</div>
+  <div class="sub">Archify 交互式内核原理图 · 共 37 张</div>
   <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
 
       <div class="toc-cat">
@@ -98,6 +98,13 @@ main { flex:1; padding:24px 28px; }
           文件系统 <span class="count">5</span>
         </button>
         <ul class="toc-items"><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('NVMe驱动')">
+          NVMe驱动 <span class="count">7</span>
+        </button>
+        <ul class="toc-items"><li><a href="#nvme-ctrl-states">NVMe 控制器状态机与超时复位</a></li><li><a href="#nvme-io-path">用户态完整 I/O 路径(读写)</a></li><li><a href="#nvme-queue-doorbell">SQ/CQ 队列对与门铃机制</a></li><li><a href="#nvme-uring-passthrough">io_uring 命令透传(uring_cmd)路径</a></li><li><a href="#nvme-support-scope">NVMe 支持范围与限制</a></li><li><a href="#nvme-identify-scan">控制器识别与命名空间扫描</a></li><li><a href="#nvme-pcie-init">NVMe PCIe 驱动初始化流程</a></li></ul>
       </div>
 
       <div class="toc-cat">
@@ -188,6 +195,23 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">文件系统</span>
           <a class="open" href="文件系统/vfs-architecture.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="lifecycle"
+               data-category="NVMe驱动"
+               data-search="nvme 控制器状态机与超时复位  nvme驱动 lifecycle">
+        <header class="card-head">
+          <h3>NVMe 控制器状态机与超时复位</h3>
+          <span class="badge badge-lifecycle">状态机</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-ctrl-states.html" loading="lazy" title="NVMe 控制器状态机与超时复位"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-ctrl-states.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -324,6 +348,57 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">网络协议栈</span>
           <a class="open" href="网络协议栈/napi-receive.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="NVMe驱动"
+               data-search="用户态完整 i/o 路径(读写)  nvme驱动 sequence">
+        <header class="card-head">
+          <h3>用户态完整 I/O 路径(读写)</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-io-path.html" loading="lazy" title="用户态完整 I/O 路径(读写)"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-io-path.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="NVMe驱动"
+               data-search="sq/cq 队列对与门铃机制  nvme驱动 sequence">
+        <header class="card-head">
+          <h3>SQ/CQ 队列对与门铃机制</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-queue-doorbell.html" loading="lazy" title="SQ/CQ 队列对与门铃机制"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-queue-doorbell.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="NVMe驱动"
+               data-search="io_uring 命令透传(uring_cmd)路径  nvme驱动 sequence">
+        <header class="card-head">
+          <h3>io_uring 命令透传(uring_cmd)路径</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-uring-passthrough.html" loading="lazy" title="io_uring 命令透传(uring_cmd)路径"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-uring-passthrough.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -480,6 +555,23 @@ main { flex:1; padding:24px 28px; }
         </footer>
       </article>
 
+      <article class="card" data-type="tree"
+               data-category="NVMe驱动"
+               data-search="nvme 支持范围与限制  nvme驱动 tree">
+        <header class="card-head">
+          <h3>NVMe 支持范围与限制</h3>
+          <span class="badge badge-tree">树形图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-support-scope.html" loading="lazy" title="NVMe 支持范围与限制"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-support-scope.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
       <article class="card" data-type="workflow"
                data-category="内存管理"
                data-search="伙伴系统分配与释放流程 alloc_pages 分配路径经 get_page_from_freelist 与 rmqueue,__free_pages 释放路径经 __free_one_page 伙伴合并 内存管理 workflow">
@@ -528,6 +620,40 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">文件系统</span>
           <a class="open" href="文件系统/dentry-lookup.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="NVMe驱动"
+               data-search="控制器识别与命名空间扫描  nvme驱动 workflow">
+        <header class="card-head">
+          <h3>控制器识别与命名空间扫描</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-identify-scan.html" loading="lazy" title="控制器识别与命名空间扫描"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-identify-scan.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="NVMe驱动"
+               data-search="nvme pcie 驱动初始化流程  nvme驱动 workflow">
+        <header class="card-head">
+          <h3>NVMe PCIe 驱动初始化流程</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/nvme-pcie-init.html" loading="lazy" title="NVMe PCIe 驱动初始化流程"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/nvme-pcie-init.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 

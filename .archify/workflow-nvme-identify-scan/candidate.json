@@ -1,0 +1,278 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "控制器识别与命名空间扫描",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-identify-scan.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "core",
+      "label": "核心初始化"
+    },
+    {
+      "id": "identify",
+      "label": "Identify 控制器"
+    },
+    {
+      "id": "scan",
+      "label": "扫描调度"
+    },
+    {
+      "id": "fallback",
+      "label": "顺序回退",
+      "variant": "exception"
+    },
+    {
+      "id": "ns",
+      "label": "命名空间"
+    }
+  ],
+  "phases": [
+    {
+      "id": "finish",
+      "label": "完成初始化",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "identify",
+      "label": "识别控制器",
+      "fromCol": 1,
+      "toCol": 2,
+      "variant": "emphasis"
+    },
+    {
+      "id": "choose",
+      "label": "选择扫描方式",
+      "fromCol": 3,
+      "toCol": 4
+    },
+    {
+      "id": "alloc",
+      "label": "分配命名空间",
+      "fromCol": 5,
+      "toCol": 5
+    }
+  ],
+  "mainPath": [
+    "finish",
+    "idctrl",
+    "ready",
+    "scanw",
+    "nslist",
+    "alloc"
+  ],
+  "nodes": [
+    {
+      "id": "finish",
+      "lane": "core",
+      "col": 0,
+      "type": "backend",
+      "label": "nvme_init_ctrl_finish",
+      "sublabel": "读 VS → nvme_init_identify",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 3736,
+          "label": "nvme_init_ctrl_finish"
+        }
+      ]
+    },
+    {
+      "id": "idctrl",
+      "lane": "identify",
+      "col": 1,
+      "type": "backend",
+      "label": "Identify Controller",
+      "sublabel": "identify_ctrl · CNS=CTRL",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 1479,
+          "label": "nvme_identify_ctrl"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 3589,
+          "label": "nvme_init_identify"
+        }
+      ]
+    },
+    {
+      "id": "ready",
+      "lane": "core",
+      "col": 2,
+      "type": "backend",
+      "label": "控制器识别完成",
+      "sublabel": "APST/时间戳/hwmon → identified",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 3766,
+          "label": "configure APST"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 3795,
+          "label": "identified = true"
+        }
+      ]
+    },
+    {
+      "id": "scanw",
+      "lane": "scan",
+      "col": 3,
+      "type": "backend",
+      "label": "nvme_scan_work",
+      "sublabel": "LIVE + tagset 才扫描",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4578,
+          "label": "nvme_scan_work"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4608,
+          "label": "扫描方式选择"
+        }
+      ]
+    },
+    {
+      "id": "nslist",
+      "lane": "scan",
+      "col": 4,
+      "type": "backend",
+      "label": "扫描 NS List",
+      "sublabel": "scan_ns_list · 活动列表",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4486,
+          "label": "nvme_scan_ns_list"
+        }
+      ]
+    },
+    {
+      "id": "seq",
+      "lane": "fallback",
+      "col": 4,
+      "type": "security",
+      "label": "顺序扫描",
+      "sublabel": "scan_ns_sequential · 1..nn",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4537,
+          "label": "nvme_scan_ns_sequential"
+        }
+      ]
+    },
+    {
+      "id": "alloc",
+      "lane": "ns",
+      "col": 5,
+      "type": "backend",
+      "label": "扫描并分配命名空间",
+      "sublabel": "scan_ns → alloc_ns → 加入列表",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4391,
+          "label": "nvme_scan_ns"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4191,
+          "label": "nvme_alloc_ns"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4178,
+          "label": "nvme_ns_add_to_ctrl_list"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "finish-idctrl",
+      "from": "finish",
+      "to": "idctrl",
+      "label": "identify ctrl",
+      "role": "main"
+    },
+    {
+      "id": "idctrl-ready",
+      "from": "idctrl",
+      "to": "ready",
+      "label": "id_ctrl 返回",
+      "role": "main"
+    },
+    {
+      "id": "ready-scanw",
+      "from": "ready",
+      "to": "scanw",
+      "label": "LIVE 后 queue_scan",
+      "role": "main"
+    },
+    {
+      "id": "scanw-nslist",
+      "from": "scanw",
+      "to": "nslist",
+      "label": "支持 NS List",
+      "role": "main"
+    },
+    {
+      "id": "scanw-seq",
+      "from": "scanw",
+      "to": "seq",
+      "label": "不支持 / DNR",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "nslist-alloc",
+      "from": "nslist",
+      "to": "alloc",
+      "label": "列表 nsid",
+      "role": "main"
+    },
+    {
+      "id": "seq-alloc",
+      "from": "seq",
+      "to": "alloc",
+      "label": "逐个 nsid",
+      "variant": "dashed",
+      "role": "branch"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Identify 数据",
+      "items": [
+        "CNS=NVME_ID_CNS_CTRL 读取控制器能力与限制",
+        "识别结果决定队列与命名空间上限",
+        "nvme_identify_ctrl 失败返回 -EIO 并中止初始化"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "扫描选择",
+      "items": [
+        "不支持 NS Active List 时走顺序扫描",
+        "NS List 命令返回 DNR 时回退顺序扫描",
+        "nvme_alloc_ns 建立块设备并加入控制器命名空间列表"
+      ]
+    }
+  ]
+}

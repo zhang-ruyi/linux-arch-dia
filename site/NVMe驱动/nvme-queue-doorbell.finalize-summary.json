@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-queue-doorbell/candidate.json",
+    "sha256": "13af8ccbcf5a3a4705efb751fb32586eb48d0d34a68fa400b41a2e66f111e8fb",
+    "bytes": 6654
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-queue-doorbell.html",
+    "sha256": "17972d592f1ba125779b5a03ad094d6684b787a05316e4ec78fe348a24749877",
+    "bytes": 842937
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-queue-doorbell.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-queue-doorbell.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-queue-doorbell.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3698,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

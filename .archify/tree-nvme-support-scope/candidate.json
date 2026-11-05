@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "NVMe 支持范围与限制",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-support-scope.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "layout": {
+    "direction": "right",
+    "nodeW": 180,
+    "nodeMaxW": 260,
+    "gapX": 56,
+    "gapY": 28
+  },
+  "nodes": [
+    {
+      "id": "nvme",
+      "label": "NVMe 支持范围",
+      "sublabel": "Linux v7.2-rc3 · drivers/nvme",
+      "sources": [
+        { "path": "drivers/nvme/host/Kconfig", "line": 5 },
+        { "path": "drivers/nvme/target/Kconfig", "line": 3 }
+      ]
+    },
+
+    {
+      "id": "host",
+      "label": "主机传输",
+      "parent": "nvme",
+      "sublabel": "drivers/nvme/host · 6 种传输",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 47 }]
+    },
+    {
+      "id": "host_pcie",
+      "label": "PCIe · BLK_DEV_NVME",
+      "parent": "host",
+      "sublabel": "本机 NVMe 块设备",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 5 }]
+    },
+    {
+      "id": "host_rdma",
+      "label": "RDMA · NVME_RDMA",
+      "parent": "host",
+      "sublabel": "RoCE / iWARP / InfiniBand",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 52 }]
+    },
+    {
+      "id": "host_fc",
+      "label": "FC · NVME_FC",
+      "parent": "host",
+      "sublabel": "光纤通道传输",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 67 }]
+    },
+    {
+      "id": "host_tcp",
+      "label": "TCP · NVME_TCP",
+      "parent": "host",
+      "sublabel": "NVMe/TCP 主机",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 83 }]
+    },
+    {
+      "id": "host_tcp_tls",
+      "label": "TCP TLS · NVME_TCP_TLS",
+      "parent": "host",
+      "sublabel": "TLS 加密传输",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 100 }]
+    },
+    {
+      "id": "host_apple",
+      "label": "Apple · NVME_APPLE",
+      "parent": "host",
+      "sublabel": "Apple 控制器",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 125 }]
+    },
+
+    {
+      "id": "core",
+      "label": "核心特性",
+      "parent": "nvme",
+      "sublabel": "NVME_CORE 之上的可选能力",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 2 }]
+    },
+    {
+      "id": "core_mp",
+      "label": "多路径 · NVME_MULTIPATH",
+      "parent": "core",
+      "sublabel": "多控制器路径聚合",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 17 }]
+    },
+    {
+      "id": "core_err",
+      "label": "详细错误 · NVME_VERBOSE_ERRORS",
+      "parent": "core",
+      "sublabel": "错误翻译表",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 31 }]
+    },
+    {
+      "id": "core_hwmon",
+      "label": "HWMON · NVME_HWMON",
+      "parent": "core",
+      "sublabel": "温度与传感器",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 39 }]
+    },
+    {
+      "id": "core_fabrics",
+      "label": "Fabrics 基础 · NVME_FABRICS",
+      "parent": "core",
+      "sublabel": "传输抽象层",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 47 }]
+    },
+    {
+      "id": "core_auth",
+      "label": "主机认证 · NVME_HOST_AUTH",
+      "parent": "core",
+      "sublabel": "控制器认证",
+      "sources": [{ "path": "drivers/nvme/host/Kconfig", "line": 114 }]
+    },
+
+    {
+      "id": "target",
+      "label": "目标端",
+      "parent": "nvme",
+      "sublabel": "drivers/nvme/target",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 3 }]
+    },
+    {
+      "id": "target_core",
+      "label": "目标核心 · NVME_TARGET",
+      "parent": "target",
+      "sublabel": "导出块设备为 NVMe 子系统",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 3 }]
+    },
+    {
+      "id": "target_loop",
+      "label": "LOOP · NVME_TARGET_LOOP",
+      "parent": "target",
+      "sublabel": "本机回环",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 41 }]
+    },
+    {
+      "id": "target_rdma",
+      "label": "RDMA · NVME_TARGET_RDMA",
+      "parent": "target",
+      "sublabel": "RDMA 目标",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 52 }]
+    },
+    {
+      "id": "target_fc",
+      "label": "FC · NVME_TARGET_FC",
+      "parent": "target",
+      "sublabel": "光纤通道目标",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 63 }]
+    },
+    {
+      "id": "target_tcp",
+      "label": "TCP · NVME_TARGET_TCP",
+      "parent": "target",
+      "sublabel": "TCP 目标",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 87 }]
+    },
+    {
+      "id": "target_tcp_tls",
+      "label": "TCP TLS · NVME_TARGET_TCP_TLS",
+      "parent": "target",
+      "sublabel": "TLS 目标",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 97 }]
+    },
+    {
+      "id": "target_auth",
+      "label": "认证 · NVME_TARGET_AUTH",
+      "parent": "target",
+      "sublabel": "目标端认证",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 110 }]
+    },
+    {
+      "id": "target_epf",
+      "label": "PCI EPF · NVME_TARGET_PCI_EPF",
+      "parent": "target",
+      "sublabel": "PCIe 端点功能",
+      "sources": [{ "path": "drivers/nvme/target/Kconfig", "line": 129 }]
+    },
+
+    {
+      "id": "limits",
+      "label": "限制与配额",
+      "parent": "nvme",
+      "sublabel": "队列深度与设备特例",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 3223 }]
+    },
+    {
+      "id": "limit_aq",
+      "label": "管理队列 · NVME_AQ_DEPTH=32",
+      "parent": "limits",
+      "sublabel": "固定 32 项",
+      "sources": [{ "path": "include/linux/nvme.h", "line": 121 }]
+    },
+    {
+      "id": "limit_io",
+      "label": "I/O 深度默认 1024",
+      "parent": "limits",
+      "sublabel": "可调范围 2..4095",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 108 },
+        { "path": "drivers/nvme/host/pci.c", "line": 100 },
+        { "path": "drivers/nvme/host/pci.c", "line": 101 }
+      ]
+    },
+    {
+      "id": "limit_formula",
+      "label": "q_depth = min(MQES+1, io_queue_depth)",
+      "parent": "limits",
+      "sublabel": "按控制器 CAP 截断",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 3223 }]
+    },
+    {
+      "id": "limit_maxq",
+      "label": "最大 I/O 队列",
+      "parent": "limits",
+      "sublabel": "共享 tags 时为 1,否则 possible+write+poll",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 2932 }]
+    },
+    {
+      "id": "limit_one",
+      "label": "QDEPTH_ONE → q_depth=2",
+      "parent": "limits",
+      "sublabel": "单队列深度设备",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 3239 }]
+    },
+    {
+      "id": "limit_pm",
+      "label": "Samsung PM1725 → q_depth=64",
+      "parent": "limits",
+      "sublabel": "MQES=0 特例",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 3243 }]
+    },
+    {
+      "id": "limit_shared",
+      "label": "SHARED_TAGS → q_depth≥34",
+      "parent": "limits",
+      "sublabel": "为管理队列预留 32+2",
+      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 3254 }]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "主机与目标",
+      "items": [
+        "主机侧 6 种传输共享 NVME_FABRICS 抽象",
+        "目标侧通过 NVME_TARGET 导出块设备",
+        "认证与 TLS 分别由独立配置项控制"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "深度约束",
+      "items": [
+        "io_queue_depth 允许 2..4095,默认 1024",
+        "管理队列固定 32 项,共享 tags 时 I/O 深度下限 34",
+        "PM1725 与 QDEPTH_ONE 设备覆盖通用深度计算"
+      ]
+    }
+  ]
+}

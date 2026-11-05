@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "97890497-fb73-4d14-bbb3-956276d46ed6",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-queue-doorbell/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-queue-doorbell.html",
+  "specification": {
+    "sha256": "13af8ccbcf5a3a4705efb751fb32586eb48d0d34a68fa400b41a2e66f111e8fb",
+    "bytes": 6654
+  },
+  "artifact": {
+    "sha256": "17972d592f1ba125779b5a03ad094d6684b787a05316e4ec78fe348a24749877",
+    "bytes": 842937
+  }
+}

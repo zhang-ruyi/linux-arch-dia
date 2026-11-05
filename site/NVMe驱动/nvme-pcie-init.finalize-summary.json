@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/candidate.json",
+    "sha256": "39dc6cf5f98f953c75fdbe2cff1b6525a29e83c6c4b9e3dbb9549a96c123c864",
+    "bytes": 7287
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.html",
+    "sha256": "2f563446b0903fbe60b0b61fc52d894db1fd02ff252a47ef1c9c77fa4f881053",
+    "bytes": 843673
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3409,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "io_uring 命令透传(uring_cmd)路径",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-uring-passthrough.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "应用",
+      "sublabel": "liburing 提交 SQE128",
+      "sources": [
+        {
+          "path": "include/uapi/linux/nvme_ioctl.h",
+          "line": 74,
+          "label": "struct nvme_uring_cmd"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 302,
+          "label": "IORING_OP_URING_CMD"
+        }
+      ]
+    },
+    {
+      "id": "iou",
+      "type": "backend",
+      "label": "io_uring 核心",
+      "sublabel": "io_uring_cmd 分发",
+      "sources": [
+        {
+          "path": "io_uring/uring_cmd.c",
+          "line": 239,
+          "label": "io_uring_cmd"
+        },
+        {
+          "path": "io_uring/uring_cmd.c",
+          "line": 271,
+          "label": "f_op->uring_cmd"
+        }
+      ]
+    },
+    {
+      "id": "chr",
+      "type": "backend",
+      "label": "NVMe 字符设备",
+      "sublabel": "字符设备入口",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 672,
+          "label": "nvme_ns_chr_uring_cmd"
+        },
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 783,
+          "label": "nvme_dev_uring_cmd"
+        }
+      ]
+    },
+    {
+      "id": "cmdio",
+      "type": "backend",
+      "label": "uring_cmd_io",
+      "sublabel": "nvme_uring_cmd_io",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 445,
+          "label": "nvme_uring_cmd_io"
+        },
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 463,
+          "label": "flags 必须为 0"
+        },
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 482,
+          "label": "nvme_cmd_allowed"
+        }
+      ]
+    },
+    {
+      "id": "blk",
+      "type": "messagebus",
+      "label": "块层",
+      "sublabel": "blk_execute_rq",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1415,
+          "label": "blk_execute_rq_nowait"
+        }
+      ]
+    },
+    {
+      "id": "submit",
+      "type": "backend",
+      "label": "nvme_queue_rq",
+      "sublabel": "写 SQ 门铃",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1436,
+          "label": "nvme_queue_rq"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1460,
+          "label": "nvme_write_sq_db"
+        }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "external",
+      "label": "NVMe 设备",
+      "sublabel": "执行命令并回 CQE",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1630,
+          "label": "nvme_irq"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1562,
+          "label": "nvme_handle_cqe"
+        }
+      ]
+    },
+    {
+      "id": "endio",
+      "type": "backend",
+      "label": "end_io",
+      "sublabel": "nvme_uring_cmd_end_io",
+      "sources": [
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 411,
+          "label": "nvme_uring_cmd_end_io"
+        },
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 438,
+          "label": "io_uring_cmd_done32"
+        },
+        {
+          "path": "drivers/nvme/host/ioctl.c",
+          "line": 440,
+          "label": "task_work 完成"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 505,
+      "label": "提交与下发"
+    },
+    {
+      "from": 510,
+      "to": 595,
+      "label": "完成与回传"
+    }
+  ],
+  "messages": [
+    {
+      "id": "submit-sqe",
+      "from": "app",
+      "to": "iou",
+      "y": 165,
+      "label": "提交 SQE128 (IORING_OP_URING_CMD)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "dispatch-uring-cmd",
+      "from": "iou",
+      "to": "chr",
+      "y": 195,
+      "label": "f_op->uring_cmd(ioucmd, issue_flags)",
+      "variant": "default",
+      "note": "前置条件: 需 SQE128 + CQE32, 否则 -EOPNOTSUPP"
+    },
+    {
+      "id": "enter-cmdio",
+      "from": "chr",
+      "to": "cmdio",
+      "y": 270,
+      "label": "nvme_ns_uring_cmd",
+      "variant": "default",
+      "note": "限制: cmd.flags=0; nsid 校验; 需写权限"
+    },
+    {
+      "id": "execute",
+      "from": "cmdio",
+      "to": "blk",
+      "y": 375,
+      "label": "blk_execute_rq_nowait(req, false)",
+      "variant": "default",
+      "note": "限制: 固定缓冲; NOWAIT; IOPOLL"
+    },
+    {
+      "id": "run-hw-queue",
+      "from": "blk",
+      "to": "submit",
+      "y": 470,
+      "label": "blk_mq_run_hw_queue",
+      "variant": "default"
+    },
+    {
+      "id": "ring-doorbell",
+      "from": "submit",
+      "to": "dev",
+      "y": 498,
+      "label": "nvme_sq_copy_cmd",
+      "variant": "default"
+    },
+    {
+      "id": "device-cqe",
+      "from": "dev",
+      "to": "endio",
+      "y": 526,
+      "label": "CQE: status / result",
+      "variant": "return"
+    },
+    {
+      "id": "uring-done",
+      "from": "endio",
+      "to": "iou",
+      "y": 554,
+      "label": "io_uring_cmd_done32",
+      "variant": "return"
+    },
+    {
+      "id": "cqe-visible",
+      "from": "iou",
+      "to": "app",
+      "y": 582,
+      "label": "CQE 可见",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "iou",
+      "from": 165,
+      "to": 586,
+      "type": "backend"
+    },
+    {
+      "participant": "chr",
+      "from": 195,
+      "to": 300,
+      "type": "backend"
+    },
+    {
+      "participant": "cmdio",
+      "from": 270,
+      "to": 430,
+      "type": "backend"
+    },
+    {
+      "participant": "blk",
+      "from": 375,
+      "to": 480,
+      "type": "messagebus"
+    },
+    {
+      "participant": "submit",
+      "from": 470,
+      "to": 505,
+      "type": "backend"
+    },
+    {
+      "participant": "endio",
+      "from": 526,
+      "to": 560,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "正常路径",
+      "items": [
+        "SQE128 携带 struct nvme_uring_cmd,由 io_uring 分发到 f_op->uring_cmd",
+        "驱动构造 nvme_command,映射用户缓冲后异步提交",
+        "设备回 CQE,驱动在 end_io 中回填 status/result"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "校验门禁",
+      "items": [
+        "cmd.common.flags 非 0 直接 -EINVAL",
+        "nsid 必须与命名空间匹配,且命令需通过 nvme_cmd_allowed",
+        "写类命令要求文件以 FMODE_WRITE 打开"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "完成语义",
+      "items": [
+        "IOPOLL 同环上下文可内联完成,否则走 task_work",
+        "pdu 保存 bio/req,完成后卸载用户映射",
+        "返回 -EIOCBQUEUED 表示请求已异步排队"
+      ]
+    }
+  ]
+}

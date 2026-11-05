@@ -150,6 +150,9 @@ python3 -m http.server 8000 -d site --bind 0.0.0.0
 | epoll | `eventpoll`(rbtree + rdllist)、`ep_poll_callback`、`ep_poll` |
 | 驱动模型 | `driver_register()` → `bus_add_driver()` → `driver_attach()` → `really_probe()` |
 | 块 IO | `submit_bio()` → `submit_bio_noacct()` → `blk_mq_submit_bio()` → `bio_endio()` |
+| NVMe 初始化 | `nvme_probe()` → `nvme_pci_enable()` → `nvme_init_ctrl_finish()` → `nvme_start_ctrl()` |
+| NVMe I/O | `nvme_queue_rq()` → SQ tail 门铃 → `nvme_irq()` → `nvme_handle_cqe()` → `nvme_complete_rq()` |
+| NVMe 复位 | `nvme_timeout()` → `nvme_reset_ctrl()` → `nvme_reset_work()` |
 | 中断下半部 | `raise_softirq`/`do_softirq`、`tasklet`、`queue_work`/`worker_thread` |
 | 启动 | `startup_64` → `start_kernel()` → `rest_init()` → `kernel_init()` |
 

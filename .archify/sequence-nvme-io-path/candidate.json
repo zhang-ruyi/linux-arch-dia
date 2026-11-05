@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "用户态完整 I/O 路径(读写)",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-io-path.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "应用进程",
+      "sublabel": "read() / write()",
+      "sources": [
+        { "path": "fs/read_write.c", "line": 705, "label": "ksys_read" },
+        { "path": "fs/read_write.c", "line": 728, "label": "ksys_write" }
+      ]
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "VFS",
+      "sublabel": "系统调用入口",
+      "sources": [
+        { "path": "fs/read_write.c", "line": 554, "label": "vfs_read" }
+      ]
+    },
+    {
+      "id": "fs",
+      "type": "backend",
+      "label": "文件系统 / 块设备",
+      "sublabel": "read_iter / write_iter",
+      "sources": [
+        { "path": "fs/ext4/file.c", "line": 130, "label": "ext4_file_read_iter" },
+        { "path": "block/fops.c", "line": 786, "label": "blkdev_read_iter" },
+        { "path": "block/fops.c", "line": 721, "label": "blkdev_write_iter" }
+      ]
+    },
+    {
+      "id": "block",
+      "type": "messagebus",
+      "label": "块层 blk-mq",
+      "sublabel": "submit_bio → queue_rq",
+      "sources": [
+        { "path": "block/blk-core.c", "line": 817, "label": "submit_bio_noacct" },
+        { "path": "block/blk-mq.c", "line": 3093, "label": "blk_mq_submit_bio" },
+        { "path": "block/blk-mq.c", "line": 3015, "label": "blk_mq_get_new_requests" }
+      ]
+    },
+    {
+      "id": "driver",
+      "type": "backend",
+      "label": "NVMe 驱动",
+      "sublabel": "nvme_queue_rq",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 1436, "label": "nvme_queue_rq" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1399, "label": "nvme_prep_rq" },
+        { "path": "drivers/nvme/host/core.c", "line": 1097, "label": "nvme_setup_cmd" }
+      ]
+    },
+    {
+      "id": "ctrl",
+      "type": "external",
+      "label": "NVMe 控制器/设备",
+      "sublabel": "DMA 执行命令",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 718, "label": "nvme_write_sq_db" },
+        { "path": "drivers/nvme/host/pci.c", "line": 731, "label": "writel sq_tail" }
+      ]
+    },
+    {
+      "id": "irq",
+      "type": "backend",
+      "label": "MSI-X 中断",
+      "sublabel": "nvme_irq",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 1630, "label": "nvme_irq" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1562, "label": "nvme_handle_cqe" }
+      ]
+    },
+    {
+      "id": "complete",
+      "type": "backend",
+      "label": "完成与回收",
+      "sublabel": "blk_mq_end_request",
+      "sources": [
+        { "path": "drivers/nvme/host/core.c", "line": 508, "label": "nvme_complete_rq" },
+        { "path": "drivers/nvme/host/core.c", "line": 461, "label": "nvme_end_req" },
+        { "path": "block/bio.c", "line": 1762, "label": "bio_endio" }
+      ]
+    }
+  ],
+  "segments": [
+    { "from": 145, "to": 390, "label": "提交 I/O 请求" },
+    { "from": 395, "to": 675, "label": "设备执行与完成" }
+  ],
+  "messages": [
+    { "id": "syscall", "from": "app", "to": "vfs", "y": 160, "label": "read() / write()", "variant": "default", "note": "ksys_read / ksys_write → vfs_read" },
+    { "id": "read-iter", "from": "vfs", "to": "fs", "y": 220, "label": "read_iter / write_iter", "variant": "default", "note": "ext4_file_read_iter / blkdev_*_iter" },
+    { "id": "submit-bio", "from": "fs", "to": "block", "y": 280, "label": "submit_bio", "variant": "emphasis" },
+    { "id": "queue-rq", "from": "block", "to": "driver", "y": 315, "label": "queue_rq", "variant": "emphasis", "note": "blk_mq_submit_bio 分配 request" },
+    { "id": "submit-sqe", "from": "driver", "to": "ctrl", "y": 375, "label": "提交 SQE + SQ 门铃", "variant": "default", "note": "nvme_sq_copy_cmd 拷贝；writel(sq_tail)" },
+    { "id": "msix", "from": "ctrl", "to": "irq", "y": 435, "label": "MSI-X 中断", "variant": "dashed", "note": "DMA 取 SQE 执行，回写 CQE" },
+    { "id": "handle-cqe", "from": "irq", "to": "complete", "y": 495, "label": "nvme_handle_cqe", "variant": "default", "note": "→ nvme_complete_rq；AEN 特判" },
+    { "id": "end-request", "from": "complete", "to": "block", "y": 555, "label": "blk_mq_end_request", "variant": "return" },
+    { "id": "bio-endio", "from": "block", "to": "fs", "y": 585, "label": "bio_endio", "variant": "return" },
+    { "id": "bytes", "from": "fs", "to": "vfs", "y": 615, "label": "返回字节数", "variant": "return" },
+    { "id": "return-app", "from": "vfs", "to": "app", "y": 645, "label": "read()/write() 返回", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "vfs", "from": 160, "to": 650, "type": "backend" },
+    { "participant": "fs", "from": 220, "to": 620, "type": "backend" },
+    { "participant": "block", "from": 280, "to": 590, "type": "messagebus" },
+    { "participant": "driver", "from": 315, "to": 380, "type": "backend" },
+    { "participant": "ctrl", "from": 375, "to": 440, "type": "external" },
+    { "participant": "irq", "from": 435, "to": 500, "type": "backend" },
+    { "participant": "complete", "from": 495, "to": 560, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "提交路径",
+      "items": [
+        "read()/write() 经 ksys_* 进入 vfs_read，并由文件的 read_iter/write_iter 下发",
+        "普通文件走 ext4_file_read_iter，裸块设备走 blkdev_read_iter/write_iter",
+        "submit_bio_noacct 进入 blk-mq，分配 request 后由 nvme_queue_rq 处理"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "NVMe 提交",
+      "items": [
+        "nvme_setup_cmd 生成 64 字节 SQE，nvme_sq_copy_cmd 写入主机 SQ",
+        "nvme_write_sq_db 通过 writel(sq_tail) 写 BAR 门铃通知控制器",
+        "控制器 DMA 读取 SQE 并执行，完成后写 CQE 并触发 MSI-X"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "完成路径",
+      "items": [
+        "nvme_irq → nvme_handle_cqe 用 command_id 找回 request",
+        "nvme_complete_rq → nvme_end_req → blk_mq_end_request 逐层回收",
+        "bio_endio 结束 bio，read()/write() 将字节数返回用户态"
+      ]
+    }
+  ]
+}

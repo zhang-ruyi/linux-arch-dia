@@ -73,6 +73,9 @@ permission:
 | TCP 收/发 | `tcp_v4_rcv()`… / `tcp_sendmsg()` → `tcp_write_xmit()` → `ip_queue_xmit()` |
 | 驱动 | `driver_register()` → `driver_attach()` → `really_probe()` |
 | 块 IO | `submit_bio()` → `submit_bio_noacct()` → `blk_mq_submit_bio()` |
+| NVMe 初始化 | `nvme_probe()` → `nvme_pci_enable()` → `nvme_init_ctrl_finish()` → `nvme_start_ctrl()` |
+| NVMe I/O | `nvme_queue_rq()` → SQ 门铃 → `nvme_irq()` → `nvme_complete_rq()` |
+| NVMe 复位 | `nvme_timeout()` → `nvme_reset_ctrl()` → `nvme_reset_work()` |
 | 启动 | `startup_64` → `start_kernel()` → `rest_init()` → `kernel_init()` |
 
 ## 交付前自检

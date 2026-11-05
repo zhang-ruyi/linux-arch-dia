@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "SQ/CQ 队列对与门铃机制",
+    "locale": "zh-CN",
+    "output": "site/NVMe驱动/nvme-queue-doorbell.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "driver",
+      "type": "backend",
+      "label": "NVMe 主机驱动",
+      "sublabel": "nvme_queue_rq",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 1436, "label": "nvme_queue_rq" },
+        { "path": "drivers/nvme/host/pci.c", "line": 718, "label": "nvme_write_sq_db" },
+        { "path": "drivers/nvme/host/pci.c", "line": 735, "label": "nvme_sq_copy_cmd" }
+      ]
+    },
+    {
+      "id": "sq",
+      "type": "messagebus",
+      "label": "提交队列 SQ",
+      "sublabel": "64B SQE 环形缓冲",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 2134, "label": "nvme_alloc_queue" },
+        { "path": "drivers/nvme/host/pci.c", "line": 2148, "label": "nvme_alloc_sq_cmds" },
+        { "path": "drivers/nvme/host/pci.c", "line": 735, "label": "nvme_sq_copy_cmd" }
+      ]
+    },
+    {
+      "id": "doorbell",
+      "type": "external",
+      "label": "门铃寄存器",
+      "sublabel": "BAR MMIO",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 731, "label": "writel sq_tail" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1552, "label": "writel cq_head" },
+        { "path": "drivers/nvme/host/pci.c", "line": 718, "label": "nvme_write_sq_db" }
+      ]
+    },
+    {
+      "id": "ctrl",
+      "type": "external",
+      "label": "NVMe 控制器",
+      "sublabel": "DMA 取指 / 执行",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 2391, "label": "ASQ/ACQ DMA 地址" },
+        { "path": "drivers/nvme/host/pci.c", "line": 731, "label": "SQ tail 门铃" }
+      ]
+    },
+    {
+      "id": "cq",
+      "type": "messagebus",
+      "label": "完成队列 CQ",
+      "sublabel": "16B CQE 环形缓冲",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 1565, "label": "nvmeq->cqes[idx]" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1597, "label": "nvme_update_cq_head" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1541, "label": "nvme_cqe_pending" }
+      ]
+    },
+    {
+      "id": "irq",
+      "type": "backend",
+      "label": "MSI-X 中断",
+      "sublabel": "nvme_irq",
+      "sources": [
+        { "path": "drivers/nvme/host/pci.c", "line": 1630, "label": "nvme_irq" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1562, "label": "nvme_handle_cqe" },
+        { "path": "drivers/nvme/host/pci.c", "line": 1546, "label": "nvme_ring_cq_doorbell" }
+      ]
+    },
+    {
+      "id": "complete",
+      "type": "backend",
+      "label": "请求完成回收",
+      "sublabel": "blk_mq_end_request",
+      "sources": [
+        { "path": "drivers/nvme/host/core.c", "line": 508, "label": "nvme_complete_rq" },
+        { "path": "drivers/nvme/host/core.c", "line": 461, "label": "nvme_end_req" },
+        { "path": "drivers/nvme/host/core.c", "line": 466, "label": "blk_mq_end_request" }
+      ]
+    }
+  ],
+  "segments": [
+    { "from": 145, "to": 395, "label": "提交与设备执行" },
+    { "from": 404, "to": 640, "label": "中断与完成回收" }
+  ],
+  "messages": [
+    { "id": "copy-sqe", "from": "driver", "to": "sq", "y": 160, "label": "① 拷贝 64B SQE", "variant": "emphasis", "note": "nvme_sq_copy_cmd 写入 sq_cmds[sq_tail]" },
+    { "id": "sq-doorbell", "from": "driver", "to": "doorbell", "y": 220, "label": "② 写 SQ tail 门铃", "variant": "emphasis", "note": "writel(nvmeq->sq_tail, q_db)" },
+    { "id": "notify", "from": "doorbell", "to": "ctrl", "y": 280, "label": "③ 控制器开始取指", "variant": "default", "note": "DMA 读取主机内存中的 SQE" },
+    { "id": "write-cqe", "from": "ctrl", "to": "cq", "y": 340, "label": "④ 执行并写 CQE", "variant": "default", "note": "command_id / status / result 写入 CQ" },
+    { "id": "msix", "from": "ctrl", "to": "irq", "y": 400, "label": "⑤ 发出 MSI-X 中断", "variant": "dashed" },
+    { "id": "handle-cqe", "from": "irq", "to": "complete", "y": 430, "label": "⑥ nvme_handle_cqe", "variant": "default", "note": "command_id 找回 request；AEN 特判" },
+    { "id": "reclaim", "from": "complete", "to": "irq", "y": 490, "label": "request 回收并返回", "variant": "return" },
+    { "id": "cq-doorbell", "from": "irq", "to": "doorbell", "y": 520, "label": "⑦ 写 CQ head 门铃", "variant": "emphasis", "note": "writel(cq_head, q_db + db_stride)" },
+    { "id": "release", "from": "doorbell", "to": "ctrl", "y": 580, "label": "⑧ 释放 CQ 槽位", "variant": "default" },
+    { "id": "irq-done", "from": "irq", "to": "driver", "y": 610, "label": "中断处理结束 IRQ_HANDLED", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "driver", "from": 160, "to": 225, "type": "backend" },
+    { "participant": "sq", "from": 160, "to": 220, "type": "messagebus" },
+    { "participant": "doorbell", "from": 220, "to": 285, "type": "external" },
+    { "participant": "ctrl", "from": 280, "to": 405, "type": "external" },
+    { "participant": "cq", "from": 340, "to": 435, "type": "messagebus" },
+    { "participant": "irq", "from": 400, "to": 520, "type": "backend" },
+    { "participant": "complete", "from": 430, "to": 495, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "提交侧门铃",
+      "items": [
+        "nvme_queue_rq 在 sq_lock 下调用 nvme_sq_copy_cmd，把 64B SQE 拷入主机 SQ",
+        "sq_tail 自增后由 nvme_write_sq_db 写门铃；批量提交时只写一次",
+        "writel(sq_tail, q_db) 落在 BAR 映射的 SQ tail doorbell 上"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "队列对生命周期",
+      "items": [
+        "nvme_alloc_queue 分配 CQ 与 SQ 命令区，并把 DMA 地址写入 ASQ/ACQ",
+        "q_depth 取 min(NVME_CAP_MQES+1, io_queue_depth)，io_queue_depth 默认 1024",
+        "admin queue 深度固定为 NVME_AQ_DEPTH=32"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "完成侧门铃",
+      "items": [
+        "nvme_handle_cqe 用 command_id 找回 request，AEN 走特判分支",
+        "nvme_complete_rq → nvme_end_req → blk_mq_end_request 完成回收",
+        "处理完 CQE 后 nvme_update_cq_head，再写 CQ head doorbell 归还槽位"
+      ]
+    }
+  ]
+}
