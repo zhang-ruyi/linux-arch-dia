@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "bdba8782-4e59-4af6-8e1f-241f8db6aad5",
+  "receiptId": "ded5b749-aa14-4099-9941-9864eb8907f5",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
   "specification": {
-    "sha256": "f1adeba8565d4b367911bb6959dcf10b1c0981543a2d82999d57475e86204063",
+    "sha256": "82ace3d37646c42b7ce6f46cef27fdbda194d2e09a6b108cd97ae01b43abed9a",
     "bytes": 10861
   },
   "artifact": {
-    "sha256": "f8ecc369201ed021216e416bb6a4e6822fd5b7a7346d37342946c70f6113dc48",
+    "sha256": "9156f339fb3685634b9d67db08c2f33a868e285004c06f694f87c40e1655e792",
     "bytes": 862785
   }
 }

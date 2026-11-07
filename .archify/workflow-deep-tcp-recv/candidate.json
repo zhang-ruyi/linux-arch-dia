@@ -645,9 +645,9 @@
       "dot": "cyan",
       "title": "收包主链(源码核实)",
       "items": [
-        "net_rx_action — net/core/dev.c:7910 → napi_poll — net/core/dev.c:7782 → __napi_poll—net/core/dev.c:7971",
-        "__napi_poll 调用驱动 poll,经 napi_gro_receive — include/linux/netdevice.h:4314 进入协议栈",
-        "netif_receive_skb — net/core/dev.c:6458 → netif_receive_skb_internal — net/core/dev.c:6383 → __netif_receive_skb_core—net/core/dev.c:6197"
+        "net_rx_action — net/core/dev.c:8166 → napi_poll — net/core/dev.c:8038 → __napi_poll—net/core/dev.c:7971",
+        "__napi_poll 调用驱动 poll,经 napi_gro_receive — include/linux/netdevice.h:4371 进入协议栈",
+        "netif_receive_skb — net/core/dev.c:6687 → netif_receive_skb_internal — net/core/dev.c:6612 → __netif_receive_skb_core—net/core/dev.c:6197"
       ]
     },
     {
@@ -657,17 +657,17 @@
         "ip_rcv — net/ipv4/ip_input.c:603 → ip_rcv_core — net/ipv4/ip_input.c:499 校验首部",
         "ip_rcv_finish — net/ipv4/ip_input.c:478 → ip_rcv_finish_core — net/ipv4/ip_input.c:361 查路由",
         "ip_local_deliver — net/ipv4/ip_input.c:250 → ip_local_deliver_finish — net/ipv4/ip_input.c:229 → ip_protocol_deliver_rcu — net/ipv4/ip_input.c:189",
-        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067 → tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827;快路径 tcp_rcv_established — net/ipv4/tcp_input.c:6470,慢路径 tcp_rcv_state_process—net/ipv4/tcp_input.c:7212"
+        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2075 → tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1835;快路径 tcp_rcv_established — net/ipv4/tcp_input.c:6556,慢路径 tcp_rcv_state_process—net/ipv4/tcp_input.c:7212"
       ]
     },
     {
       "dot": "violet",
       "title": "数据排队与唤醒",
       "items": [
-        "tcp_rcv_established 与 tcp_rcv_state_process 均在 net/ipv4/tcp_input.c:6659 / :7371 调用 tcp_data_queue",
-        "tcp_data_queue — net/ipv4/tcp_input.c:5577 → tcp_queue_rcv — net/ipv4/tcp_input.c:5502 挂入接收队列",
-        "乱序分支:tcp_data_queue → tcp_data_queue_ofo — net/ipv4/tcp_input.c:5351 → tcp_ofo_queue—net/ipv4/tcp_input.c:5339",
-        "tcp_data_ready — net/ipv4/tcp_input.c:5571 → sock_def_readable — net/core/sock.c:3647 → wake_up_interruptible_sync_poll — include/linux/wait.h:246 → __wake_up_common — kernel/sched/wait.c:92 → ep_poll_callback—fs/eventpoll.c:1491"
+        "tcp_rcv_established — net/ipv4/tcp_input.c:6556;tcp_rcv_state_process — net/ipv4/tcp_input.c:7212;二者调用 tcp_data_queue — net/ipv4/tcp_input.c:5644(调用点 6745 / 7456)",
+        "tcp_data_queue — net/ipv4/tcp_input.c:5644 → tcp_queue_rcv — net/ipv4/tcp_input.c:5567 挂入接收队列",
+        "乱序分支:tcp_data_queue → tcp_data_queue_ofo — net/ipv4/tcp_input.c:5416 → tcp_ofo_queue—net/ipv4/tcp_input.c:5339",
+        "tcp_data_ready — net/ipv4/tcp_input.c:5638 → sock_def_readable — net/core/sock.c:3728 → wake_up_interruptible_sync_poll — include/linux/wait.h:246 → __wake_up_common — kernel/sched/wait.c:92 → ep_poll_callback—fs/eventpoll.c:1491"
       ]
     }
   ]

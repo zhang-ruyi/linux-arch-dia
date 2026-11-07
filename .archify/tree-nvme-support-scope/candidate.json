@@ -427,7 +427,7 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "nvme_probe (PCIe)—drivers/nvme/host/pci.c:3994",
+        "nvme_probe — drivers/nvme/host/pci.c:3994(PCIe 传输)",
         "nvme_rdma_create_ctrl—drivers/nvme/host/rdma.c:2361",
         "nvme_fc_create_ctrl—drivers/nvme/host/fc.c:3705",
         "nvme_tcp_create_ctrl—drivers/nvme/host/tcp.c:3282",

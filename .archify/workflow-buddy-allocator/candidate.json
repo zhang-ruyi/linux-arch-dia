@@ -423,15 +423,15 @@
         "__alloc_frozen_pages_noprof—mm/page_alloc.c:5411",
         "get_page_from_freelist—mm/page_alloc.c:3797",
         "rmqueue—mm/page_alloc.c:3410",
-        "rmqueue_pcplist — mm/page_alloc.c:3359 (PCP 快路径)",
-        "rmqueue_buddy — mm/page_alloc.c:3210 (伙伴慢路径)",
+        "rmqueue_pcplist — mm/page_alloc.c:3368 (PCP 快路径)",
+        "rmqueue_buddy — mm/page_alloc.c:3216 (伙伴慢路径)",
         "__rmqueue—mm/page_alloc.c:2461",
         "__rmqueue_smallest — mm/page_alloc.c:1889",
         "expand — mm/page_alloc.c:1702",
         "__free_pages—mm/page_alloc.c:5593",
         "___free_pages—mm/page_alloc.c:5548",
         "__free_frozen_pages—mm/page_alloc.c:2944",
-        "free_frozen_page_commit — mm/page_alloc.c:2832 (PCP 回填)",
+        "free_frozen_page_commit — mm/page_alloc.c:2839 (PCP 回填)",
         "free_one_page—mm/page_alloc.c:1539",
         "__free_one_page—mm/page_alloc.c:923"
       ]

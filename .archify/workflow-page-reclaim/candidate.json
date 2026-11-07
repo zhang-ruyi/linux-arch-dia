@@ -409,13 +409,13 @@
         "shrink_node_memcgs—mm/vmscan.c:6378",
         "shrink_lruvec—mm/vmscan.c:6187",
         "shrink_list—mm/vmscan.c:2332",
-        "shrink_active_list — mm/vmscan.c:2068 (active LRU)",
-        "shrink_inactive_list — mm/vmscan.c:1986 (inactive LRU)",
+        "shrink_active_list — mm/vmscan.c:2185 (active LRU)",
+        "shrink_inactive_list — mm/vmscan.c:2103 (inactive LRU)",
         "shrink_folio_list—mm/vmscan.c:1161",
         "pageout—mm/vmscan.c:693",
-        "swap_writeout — mm/page_io.c:251 (匿名页)",
+        "swap_writeout — mm/page_io.c:204 (匿名页)",
         "__swap_writeout—mm/page_io.c:376",
-        "shmem_writeout — mm/shmem.c:1591 (shmem 脏页)"
+        "shmem_writeout — mm/shmem.c:1845 (shmem 脏页)"
       ]
     }
   ]

@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T14:51:17.818Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/candidate.json",
+    "sha256": "f833097f9e1904dcec0d6c76cece7c9139bb34a9871dce035efa40e621371292",
+    "bytes": 7213
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+    "sha256": "275be7705b9f4c7a1847f3365b8aa663ce7dfbe092bdb103c3fb907a98dd94ed",
+    "bytes": 845358
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 173,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "c92316ec-6ef8-4779-88be-4bba5bc20bec",
+        "stage": "prepare",
+        "type": "workflow",
+        "input": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+        "error": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\" through lock \"/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json\".",
+        "diagnostics": [
+          {
+            "code": "delivery/concurrent-attempt",
+            "severity": "error",
+            "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\" through lock \"/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json\".",
+            "subject": {
+              "output": "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\" through lock \"/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json\"."
+            },
+            "supportedFixes": [
+              "wait for the active delivery to finish, then retry"
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\" through lock \"/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html\" through lock \"/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/review-4/slab-allocator.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/review-4/slab-allocator.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-07T14:51:18.070Z",
+  "durationMs": 252,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
