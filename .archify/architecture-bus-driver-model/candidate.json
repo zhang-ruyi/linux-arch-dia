@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -50,12 +50,12 @@
       "sources": [
         {
           "path": "include/linux/device/bus.h",
-          "line": 83,
+          "line": 81,
           "label": "struct bus_type"
         },
         {
           "path": "drivers/base/base.h",
-          "line": 43,
+          "line": 44,
           "label": "struct subsys_private"
         }
       ]
@@ -81,7 +81,7 @@
         },
         {
           "path": "drivers/base/base.h",
-          "line": 80,
+          "line": 82,
           "label": "struct driver_private"
         }
       ]
@@ -102,7 +102,7 @@
       "sources": [
         {
           "path": "include/linux/device.h",
-          "line": 701,
+          "line": 708,
           "label": "struct device"
         }
       ]
@@ -144,7 +144,7 @@
       "sources": [
         {
           "path": "drivers/base/bus.c",
-          "line": 732,
+          "line": 746,
           "label": "bus_add_driver"
         }
       ]
@@ -165,7 +165,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 1307,
+          "line": 1315,
           "label": "driver_attach"
         }
       ]
@@ -186,7 +186,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 1232,
+          "line": 1240,
           "label": "__driver_attach"
         }
       ]
@@ -207,7 +207,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 892,
+          "line": 893,
           "label": "driver_probe_device"
         }
       ]
@@ -228,7 +228,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 652,
+          "line": 653,
           "label": "really_probe"
         }
       ]
@@ -249,7 +249,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 620,
+          "line": 622,
           "label": "call_driver_probe"
         }
       ]
@@ -270,7 +270,7 @@
       "sources": [
         {
           "path": "drivers/base/dd.c",
-          "line": 892,
+          "line": 893,
           "label": "driver_probe_device 返回 0"
         }
       ]
@@ -432,13 +432,13 @@
       "title": "完整调用链(源码核实)",
       "items": [
         "driver_register — drivers/base/driver.c:150",
-        "bus_add_driver — drivers/base/bus.c:732",
-        "driver_attach — drivers/base/dd.c:1307",
-        "__driver_attach — drivers/base/dd.c:1232",
-        "driver_probe_device — drivers/base/dd.c:892",
-        "really_probe — drivers/base/dd.c:652",
-        "call_driver_probe — drivers/base/dd.c:621",
-        "drv->probe — drivers/base/dd.c:628"
+        "bus_add_driver—drivers/base/bus.c:746",
+        "driver_attach—drivers/base/dd.c:1315",
+        "__driver_attach—drivers/base/dd.c:1240",
+        "driver_probe_device—drivers/base/dd.c:893",
+        "really_probe—drivers/base/dd.c:653",
+        "call_driver_probe—drivers/base/dd.c:622",
+        "drv->probe—drivers/base/dd.c:629"
       ]
     }
   ]

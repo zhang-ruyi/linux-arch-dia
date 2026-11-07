@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -28,12 +28,12 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2694,
+          "line": 2744,
           "label": "kernel_clone"
         },
         {
           "path": "kernel/sched/core.c",
-          "line": 4941,
+          "line": 5014,
           "label": "wake_up_new_task"
         }
       ]
@@ -66,7 +66,7 @@
         },
         {
           "path": "kernel/exit.c",
-          "line": 783,
+          "line": 754,
           "label": "exit_state = EXIT_ZOMBIE"
         }
       ]
@@ -80,7 +80,7 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 249,
+          "line": 243,
           "label": "release_task"
         }
       ]
@@ -234,17 +234,17 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "kernel_clone() — kernel/fork.c:2694",
-        "wake_up_new_task() — kernel/sched/core.c:4941",
-        "schedule() — kernel/sched/core.c:7316",
-        "__schedule() — kernel/sched/core.c:7061",
+        "kernel_clone()—kernel/fork.c:2744",
+        "wake_up_new_task()—kernel/sched/core.c:5014",
+        "schedule()—kernel/sched/core.c:7464",
+        "__schedule()—kernel/sched/core.c:7207",
         "wait_event_interruptible() — include/linux/wait.h:501",
         "wait_event() — include/linux/wait.h:345",
-        "try_to_wake_up() — kernel/sched/core.c:4251",
-        "wake_up_process() — kernel/sched/core.c:4545",
-        "do_exit() — kernel/exit.c:929",
-        "exit_signals() — kernel/signal.c:3128",
-        "release_task() — kernel/exit.c:249"
+        "try_to_wake_up()—kernel/sched/core.c:4324",
+        "wake_up_process()—kernel/sched/core.c:4618",
+        "do_exit()—kernel/exit.c:900",
+        "exit_signals()—kernel/signal.c:3199",
+        "release_task()—kernel/exit.c:243"
       ]
     }
   ]

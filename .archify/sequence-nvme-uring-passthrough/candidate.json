@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -26,7 +26,7 @@
         },
         {
           "path": "include/uapi/linux/io_uring.h",
-          "line": 302,
+          "line": 303,
           "label": "IORING_OP_URING_CMD"
         }
       ]
@@ -39,12 +39,12 @@
       "sources": [
         {
           "path": "io_uring/uring_cmd.c",
-          "line": 239,
+          "line": 228,
           "label": "io_uring_cmd"
         },
         {
           "path": "io_uring/uring_cmd.c",
-          "line": 271,
+          "line": 258,
           "label": "f_op->uring_cmd"
         }
       ]
@@ -57,12 +57,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 672,
+          "line": 708,
           "label": "nvme_ns_chr_uring_cmd"
         },
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 783,
+          "line": 819,
           "label": "nvme_dev_uring_cmd"
         }
       ]
@@ -75,17 +75,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 445,
+          "line": 480,
           "label": "nvme_uring_cmd_io"
         },
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 463,
+          "line": 499,
           "label": "flags 必须为 0"
         },
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 482,
+          "line": 518,
           "label": "nvme_cmd_allowed"
         }
       ]
@@ -98,7 +98,7 @@
       "sources": [
         {
           "path": "block/blk-mq.c",
-          "line": 1415,
+          "line": 1436,
           "label": "blk_execute_rq_nowait"
         }
       ]
@@ -111,12 +111,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 1436,
+          "line": 1663,
           "label": "nvme_queue_rq"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 1460,
+          "line": 1687,
           "label": "nvme_write_sq_db"
         }
       ]
@@ -129,12 +129,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 1630,
+          "line": 1862,
           "label": "nvme_irq"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 1562,
+          "line": 1789,
           "label": "nvme_handle_cqe"
         }
       ]
@@ -147,17 +147,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 411,
+          "line": 444,
           "label": "nvme_uring_cmd_end_io"
         },
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 438,
-          "label": "io_uring_cmd_done32"
+          "line": 441,
+          "label": "__io_uring_cmd_done"
         },
         {
           "path": "drivers/nvme/host/ioctl.c",
-          "line": 440,
+          "line": 475,
           "label": "task_work 完成"
         }
       ]
@@ -240,7 +240,7 @@
       "from": "endio",
       "to": "iou",
       "y": 554,
-      "label": "io_uring_cmd_done32",
+      "label": "__io_uring_cmd_done",
       "variant": "return"
     },
     {
@@ -322,15 +322,15 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "io_uring_cmd — io_uring/uring_cmd.c:239",
-        "nvme_ns_chr_uring_cmd — drivers/nvme/host/ioctl.c:672",
-        "nvme_ns_uring_cmd — drivers/nvme/host/ioctl.c:648",
-        "nvme_uring_cmd_io — drivers/nvme/host/ioctl.c:445",
-        "nvme_alloc_user_request — drivers/nvme/host/ioctl.c:101",
-        "nvme_map_user_request — drivers/nvme/host/ioctl.c:124",
-        "blk_execute_rq_nowait — block/blk-mq.c:1415",
-        "nvme_queue_rq — drivers/nvme/host/pci.c:1436",
-        "nvme_uring_cmd_end_io — drivers/nvme/host/ioctl.c:411"
+        "io_uring_cmd—io_uring/uring_cmd.c:228",
+        "nvme_ns_chr_uring_cmd—drivers/nvme/host/ioctl.c:708",
+        "nvme_ns_uring_cmd—drivers/nvme/host/ioctl.c:684",
+        "nvme_uring_cmd_io—drivers/nvme/host/ioctl.c:480",
+        "nvme_alloc_user_request—drivers/nvme/host/ioctl.c:133",
+        "nvme_map_user_request—drivers/nvme/host/ioctl.c:156",
+        "blk_execute_rq_nowait—block/blk-mq.c:1436",
+        "nvme_queue_rq—drivers/nvme/host/pci.c:1663",
+        "nvme_uring_cmd_end_io—drivers/nvme/host/ioctl.c:444"
       ]
     }
   ]

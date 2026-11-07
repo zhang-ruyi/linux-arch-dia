@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -93,7 +93,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2828,
+          "line": 2879,
           "label": "SYSCALL_DEFINE0(fork)"
         }
       ]
@@ -108,7 +108,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2694,
+          "line": 2744,
           "label": "kernel_clone"
         }
       ]
@@ -123,7 +123,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1994,
+          "line": 2029,
           "label": "copy_process"
         }
       ]
@@ -139,7 +139,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 914,
+          "line": 916,
           "label": "dup_task_struct"
         }
       ]
@@ -155,7 +155,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1642,
+          "line": 1676,
           "label": "copy_files"
         }
       ]
@@ -171,7 +171,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1568,
+          "line": 1575,
           "label": "copy_mm"
         }
       ]
@@ -203,7 +203,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 4803,
+          "line": 4876,
           "label": "sched_fork"
         }
       ]
@@ -219,7 +219,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 4874,
+          "line": 4947,
           "label": "sched_cgroup_fork"
         }
       ]
@@ -235,7 +235,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 899,
+          "line": 901,
           "label": "arch_dup_task_struct"
         }
       ]
@@ -251,7 +251,7 @@
       "sources": [
         {
           "path": "fs/file.c",
-          "line": 383,
+          "line": 437,
           "label": "dup_fd"
         }
       ]
@@ -267,7 +267,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1527,
+          "line": 1526,
           "label": "dup_mm"
         }
       ]
@@ -283,7 +283,7 @@
       "sources": [
         {
           "path": "arch/x86/kernel/fpu/core.c",
-          "line": 656,
+          "line": 677,
           "label": "fpu_clone"
         }
       ]
@@ -299,7 +299,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 4563,
+          "line": 4636,
           "label": "__sched_fork"
         }
       ]
@@ -315,7 +315,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 2076,
+          "line": 2089,
           "label": "uclamp_fork"
         }
       ]
@@ -331,7 +331,7 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 14880,
+          "line": 15381,
           "label": "task_fork_fair"
         }
       ]
@@ -347,7 +347,7 @@
       "sources": [
         {
           "path": "kernel/sched/ext/ext.c",
-          "line": 3819,
+          "line": 4836,
           "label": "scx_fork"
         }
       ]
@@ -363,7 +363,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1085,
+          "line": 1090,
           "label": "mm_init"
         }
       ]
@@ -379,7 +379,7 @@
       "sources": [
         {
           "path": "mm/mmap.c",
-          "line": 1731,
+          "line": 1708,
           "label": "dup_mmap"
         }
       ]
@@ -395,7 +395,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 1507,
+          "line": 1550,
           "label": "copy_page_range"
         }
       ]
@@ -411,7 +411,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 4941,
+          "line": 5014,
           "label": "wake_up_new_task"
         }
       ]
@@ -427,7 +427,7 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 9544,
+          "line": 9914,
           "label": "select_task_rq_fair"
         }
       ]
@@ -443,7 +443,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 2219,
+          "line": 2232,
           "label": "activate_task"
         }
       ]
@@ -459,7 +459,7 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 7802,
+          "line": 8159,
           "label": "enqueue_task_fair"
         }
       ]
@@ -475,7 +475,7 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 5968,
+          "line": 6329,
           "label": "place_entity"
         }
       ]

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "dd4ffe3c-3af7-4c93-b8fb-2bc3103f3868",
+  "receiptId": "da07ac07-67e1-4d75-a8d0-83742e5973da",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
   "specification": {
-    "sha256": "4b57483851b98199b8194f4a8d47d79261fe048be96bf3c4aa64dba0f153ba56",
-    "bytes": 7986
+    "sha256": "c0a9751ef22f9fb96ee5073174c6afde9b029f1ffa035717f6ccc5523870074f",
+    "bytes": 7968
   },
   "artifact": {
-    "sha256": "8a7abcdafa38412ce82c716eaaeb270d2c242ac03bf0050ac6271cab0395b1db",
-    "bytes": 842910
+    "sha256": "6998787df3c4acdc179d097a35a5ee30136236f81ebd421d4e608b2b9312751f",
+    "bytes": 842892
   }
 }

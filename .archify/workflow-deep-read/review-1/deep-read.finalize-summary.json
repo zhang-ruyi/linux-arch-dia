@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/candidate.json",
+    "sha256": "3749844788d81e52501705b0355ab85f9e8147cda753a81e09b618545e245b24",
+    "bytes": 15007
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/deep-read.html",
+    "sha256": "c0ade290426516c8cca7101723ab8f6fa0f876a1b7484b9f42892bf30cb520f7",
+    "bytes": 875616
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/文件系统/deep-read.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/文件系统/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/文件系统/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/review-1/deep-read.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/review-1/deep-read.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/review-1/deep-read.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 6036,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

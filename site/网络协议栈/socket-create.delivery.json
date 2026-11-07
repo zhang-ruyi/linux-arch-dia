@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "9661d6de-d8fe-426d-9260-e104a0a0e52d",
+  "receiptId": "b985430f-9cca-4d6a-b214-8ea1483b7f23",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-socket-create/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/socket-create.html",
   "specification": {
-    "sha256": "dfda6c32517435ba52c375f69db0985d90d37c467fd8114d7b1b3d21ad30a837",
-    "bytes": 5071
+    "sha256": "2af79f54df50c7cffecbc39898f36b43f7a89bdb163700476ace058e9dc3cef0",
+    "bytes": 5056
   },
   "artifact": {
-    "sha256": "9b595ac76d7b64ca59770391309b0f52548b46c4869b10d641443c4f54f502dc",
-    "bytes": 833708
+    "sha256": "804678ce062427f673853b206b0852ce5a9e7817e0fad0542b7e75d183189302",
+    "bytes": 833694
   }
 }

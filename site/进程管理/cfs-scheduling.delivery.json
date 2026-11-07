@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "9278cf1e-4943-49a5-8ff6-97fecdf97e9f",
+  "receiptId": "e52da58f-92f0-4f05-a24f-56b80b2d088a",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-cfs-scheduling/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/cfs-scheduling.html",
   "specification": {
-    "sha256": "3730915b9613eac5de9ff4442285b1bed73dd380331a9e17c04bc4adf1fb172e",
-    "bytes": 6026
+    "sha256": "c892236811248fd3910e038b15866eb46243c1cd9e14dbb55192d8174277ea0c",
+    "bytes": 6010
   },
   "artifact": {
-    "sha256": "19b8e19591f40cb09248df31dd2b47dc13b3e1ced986e20d2d4e044519c2b933",
-    "bytes": 837794
+    "sha256": "6953613b0d1f6bdee6c31c72b1e424c575b9a573f68c53e53889d4385f6e7fcd",
+    "bytes": 837778
   }
 }

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -138,7 +138,7 @@
       "sources": [
         {
           "path": "mm/mmap_lock.c",
-          "line": 496
+          "line": 623
         }
       ]
     },
@@ -152,7 +152,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 6651
+          "line": 6949
         }
       ]
     },
@@ -167,7 +167,7 @@
       "sources": [
         {
           "path": "mm/hugetlb.c",
-          "line": 5941
+          "line": 6108
         }
       ]
     },
@@ -181,7 +181,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 6417
+          "line": 6714
         }
       ]
     },
@@ -195,7 +195,7 @@
       "sources": [
         {
           "path": "include/linux/mm.h",
-          "line": 3585
+          "line": 3853
         }
       ]
     },
@@ -209,7 +209,7 @@
       "sources": [
         {
           "path": "include/linux/mm.h",
-          "line": 3592
+          "line": 3860
         }
       ]
     },
@@ -223,7 +223,7 @@
       "sources": [
         {
           "path": "include/linux/mm.h",
-          "line": 3599
+          "line": 3867
         }
       ]
     },
@@ -237,7 +237,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 6335
+          "line": 6621
         }
       ]
     },
@@ -251,7 +251,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 4561
+          "line": 4773
         }
       ]
     },
@@ -265,7 +265,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5287
+          "line": 5539
         }
       ]
     },
@@ -280,7 +280,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 4747
+          "line": 4987
         }
       ]
     },
@@ -295,7 +295,7 @@
       "sources": [
         {
           "path": "mm/swap_state.c",
-          "line": 974
+          "line": 1051
         }
       ]
     },
@@ -310,7 +310,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 6109
+          "line": 6395
         }
       ]
     },
@@ -325,7 +325,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 4244
+          "line": 4458
         }
       ]
     },
@@ -340,7 +340,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 3853
+          "line": 4058
         }
       ]
     },
@@ -354,7 +354,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5964
+          "line": 6216
         }
       ]
     },
@@ -369,7 +369,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5840
+          "line": 6092
         }
       ]
     },
@@ -383,7 +383,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5872
+          "line": 6124
         }
       ]
     },
@@ -398,7 +398,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5914
+          "line": 6166
         }
       ]
     },
@@ -412,7 +412,7 @@
       "sources": [
         {
           "path": "mm/memory.c",
-          "line": 5398
+          "line": 5650
         }
       ]
     },
@@ -427,7 +427,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 3540
+          "line": 3572
         }
       ]
     },
@@ -442,7 +442,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2500
+          "line": 2539
         }
       ]
     }

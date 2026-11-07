@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "fail",
+  "visualReview": "not-requested",
+  "provenance": "locked",
+  "deliveryReceiptId": "03626dec-a1bb-42b9-a76a-f1b954f2af1d",
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/context-switch.html",
+    "sha256": "6fb9d4976693459f6a12daa94f0bdcf35b3f0e9d708ad9e9a686481dbf43f1df",
+    "bytes": 835205
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "/home/zhang/.cache/archify-chrome/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/进程管理/context-switch.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "containment": {
+    "status": "fail",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": []
+  },
+  "themeStates": {
+    "status": "fail",
+    "viewports": []
+  },
+  "readability": {
+    "status": "fail",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": []
+  },
+  "viewerChrome": {
+    "status": "fail",
+    "viewports": []
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "directory": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/review-2",
+    "receipt": "context-switch.browser-check.json",
+    "files": []
+  },
+  "error": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact."
+}

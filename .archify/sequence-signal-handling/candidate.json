@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -18,14 +18,26 @@
       "type": "external",
       "label": "发送方进程",
       "sublabel": "调用 kill()",
-      "sources": [{ "path": "kernel/signal.c", "line": 1579, "label": "kill_something_info" }]
+      "sources": [
+        {
+          "path": "kernel/signal.c",
+          "line": 1616,
+          "label": "kill_something_info"
+        }
+      ]
     },
     {
       "id": "sys",
       "type": "backend",
       "label": "kill() 系统调用",
       "sublabel": "系统调用层",
-      "sources": [{ "path": "kernel/signal.c", "line": 1579, "label": "kill_something_info" }]
+      "sources": [
+        {
+          "path": "kernel/signal.c",
+          "line": 1616,
+          "label": "kill_something_info"
+        }
+      ]
     },
     {
       "id": "sig",
@@ -33,8 +45,16 @@
       "label": "内核 signal.c",
       "sublabel": "信号投递",
       "sources": [
-        { "path": "kernel/signal.c", "line": 1040, "label": "__send_signal_locked" },
-        { "path": "kernel/signal.c", "line": 963, "label": "complete_signal" }
+        {
+          "path": "kernel/signal.c",
+          "line": 1062,
+          "label": "__send_signal_locked"
+        },
+        {
+          "path": "kernel/signal.c",
+          "line": 970,
+          "label": "complete_signal"
+        }
       ]
     },
     {
@@ -42,7 +62,13 @@
       "type": "backend",
       "label": "目标进程",
       "sublabel": "TIF_SIGPENDING",
-      "sources": [{ "path": "kernel/entry/common.c", "line": 64, "label": "TIF_SIGPENDING 检查" }]
+      "sources": [
+        {
+          "path": "kernel/entry/common.c",
+          "line": 64,
+          "label": "TIF_SIGPENDING 检查"
+        }
+      ]
     },
     {
       "id": "arch",
@@ -50,8 +76,16 @@
       "label": "架构层 signal.c",
       "sublabel": "构造/恢复信号帧",
       "sources": [
-        { "path": "arch/x86/kernel/signal.c", "line": 333, "label": "arch_do_signal_or_restart" },
-        { "path": "arch/x86/kernel/signal_64.c", "line": 246, "label": "rt_sigreturn" }
+        {
+          "path": "arch/x86/kernel/signal.c",
+          "line": 333,
+          "label": "arch_do_signal_or_restart"
+        },
+        {
+          "path": "arch/x86/kernel/signal_64.c",
+          "line": 246,
+          "label": "rt_sigreturn"
+        }
       ]
     },
     {
@@ -59,7 +93,13 @@
       "type": "external",
       "label": "用户态 handler",
       "sublabel": "signal handler",
-      "sources": [{ "path": "arch/x86/kernel/signal_64.c", "line": 246, "label": "rt_sigreturn" }]
+      "sources": [
+        {
+          "path": "arch/x86/kernel/signal_64.c",
+          "line": 246,
+          "label": "rt_sigreturn"
+        }
+      ]
     }
   ],
   "messages": [
@@ -72,7 +112,14 @@
       "variant": "emphasis",
       "note": "kill_something_info()\nkill_pid_info() → group_send_sig_info()\ndo_send_sig_info() → send_signal_locked()"
     },
-    { "id": "to-signal", "from": "sys", "to": "sig", "y": 250, "label": "kill_something_info()", "variant": "default" },
+    {
+      "id": "to-signal",
+      "from": "sys",
+      "to": "sig",
+      "y": 250,
+      "label": "kill_something_info()",
+      "variant": "default"
+    },
     {
       "id": "queue-signal",
       "from": "sig",
@@ -91,7 +138,14 @@
       "variant": "default",
       "note": "在 exit_to_user_mode_loop() 中\n检查 TIF_SIGPENDING"
     },
-    { "id": "do-signal", "from": "sig", "to": "arch", "y": 450, "label": "arch_do_signal_or_restart()", "variant": "default" },
+    {
+      "id": "do-signal",
+      "from": "sig",
+      "to": "arch",
+      "y": 450,
+      "label": "arch_do_signal_or_restart()",
+      "variant": "default"
+    },
     {
       "id": "setup-frame",
       "from": "arch",
@@ -101,8 +155,22 @@
       "variant": "return",
       "note": "handle_signal() → setup_rt_frame()\n在用户栈构造 rt_sigframe"
     },
-    { "id": "enter-handler", "from": "target", "to": "user", "y": 570, "label": "进入 handler 执行", "variant": "emphasis" },
-    { "id": "sigreturn", "from": "user", "to": "arch", "y": 610, "label": "handler 返回，调用 rt_sigreturn", "variant": "default" },
+    {
+      "id": "enter-handler",
+      "from": "target",
+      "to": "user",
+      "y": 570,
+      "label": "进入 handler 执行",
+      "variant": "emphasis"
+    },
+    {
+      "id": "sigreturn",
+      "from": "user",
+      "to": "arch",
+      "y": 610,
+      "label": "handler 返回，调用 rt_sigreturn",
+      "variant": "default"
+    },
     {
       "id": "restore-ctx",
       "from": "arch",
@@ -145,16 +213,16 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "kill() — kernel/signal.c:3959",
-        "kill_something_info() — kernel/signal.c:1579",
-        "kill_pid_info() — kernel/signal.c:1478",
-        "group_send_sig_info() — kernel/signal.c:1416",
-        "do_send_sig_info() — kernel/signal.c:1260",
-        "send_signal_locked() — kernel/signal.c:1181",
-        "__send_signal_locked() — kernel/signal.c:1040",
-        "complete_signal() — kernel/signal.c:963",
+        "kill()—kernel/signal.c:4043",
+        "kill_something_info()—kernel/signal.c:1616",
+        "kill_pid_info()—kernel/signal.c:1515",
+        "group_send_sig_info()—kernel/signal.c:1453",
+        "do_send_sig_info()—kernel/signal.c:1297",
+        "send_signal_locked()—kernel/signal.c:1207",
+        "__send_signal_locked()—kernel/signal.c:1062",
+        "complete_signal()—kernel/signal.c:970",
         "exit_to_user_mode_loop() — kernel/entry/common.c:97",
-        "get_signal() — kernel/signal.c:2810",
+        "get_signal()—kernel/signal.c:2877",
         "arch_do_signal_or_restart() — arch/x86/kernel/signal.c:333",
         "handle_signal() — arch/x86/kernel/signal.c:255",
         "setup_rt_frame() — arch/x86/kernel/signal.c:236",

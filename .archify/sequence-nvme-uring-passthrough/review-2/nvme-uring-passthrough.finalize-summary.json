@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/candidate.json",
+    "sha256": "c0a9751ef22f9fb96ee5073174c6afde9b029f1ffa035717f6ccc5523870074f",
+    "bytes": 7968
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+    "sha256": "8a7abcdafa38412ce82c716eaaeb270d2c242ac03bf0050ac6271cab0395b1db",
+    "bytes": 842910
+  },
+  "gates": {
+    "validate": "not-run",
+    "deliver": "fail",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "deliver",
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/review-2/nvme-uring-passthrough.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/review-2/nvme-uring-passthrough.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 234,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

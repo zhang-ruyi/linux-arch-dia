@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "ca4b44ab-a8e2-42ba-aa00-ecbccf372d68",
+  "receiptId": "0fe89f78-7a74-40b5-9dc0-211fefa54f09",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
   "specification": {
-    "sha256": "b858c94e998bb8145f4a128c61744994f4198f00d667410a2b640826fb7d6543",
-    "bytes": 5739
+    "sha256": "eb2b64ed22528a93c7c444553cce8cbad65543c0b5d2e21fc3b6f4e81e024509",
+    "bytes": 5733
   },
   "artifact": {
-    "sha256": "aad0536b3400cfea010606f820143e56653a74f0373c4c1f86e4cd655995909f",
-    "bytes": 836610
+    "sha256": "af8e730dce5fa05820d9eb315b462889a28ee8b087f2114302dc43d5f88ef83c",
+    "bytes": 836604
   }
 }

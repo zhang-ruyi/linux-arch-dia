@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "a9488bc1-dce1-4541-ad07-538c120f03a3",
+  "receiptId": "44c95d12-5e60-4275-922d-00ca2d339063",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-identify-scan/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-identify-scan.html",
   "specification": {
-    "sha256": "e85d192972997bfc6bb2d7b79a2497c1eb57a1bde4c7340208136f7832d2d19f",
-    "bytes": 6820
+    "sha256": "dfd0aafd80d58576cc35e28aa23ca1efe074729ef219fb7a5f5877f90f70ed9d",
+    "bytes": 6800
   },
   "artifact": {
-    "sha256": "2f3835a4a14bb6dc98b90d20ac1aba71ce0e695f6336b03595659f87d5ed06e6",
-    "bytes": 842884
+    "sha256": "598d04564e2b32b7a8eee2471b9897384a7d1855ea9aa19a7841cdce8c70eab0",
+    "bytes": 842864
   }
 }

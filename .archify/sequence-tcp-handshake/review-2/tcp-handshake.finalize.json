@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T14:28:57.390Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
+    "sha256": "ccf1f390efa9317ca0bfe64bf9b8324d93c70a43ea59760540dbec63bae09e09",
+    "bytes": 5871
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+    "sha256": "6b4f1af5ace04e14315432eb21bd752932706f6759fa6cc670355e95cb22c0e0",
+    "bytes": 834842
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 158,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "bf735cc1-ab45-4d29-b9e1-a18a4620c7bf",
+        "stage": "prepare",
+        "type": "sequence",
+        "input": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+        "error": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\".",
+        "diagnostics": [
+          {
+            "code": "delivery/concurrent-attempt",
+            "severity": "error",
+            "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\".",
+            "subject": {
+              "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\"."
+            },
+            "supportedFixes": [
+              "wait for the active delivery to finish, then retry"
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/review-2/tcp-handshake.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/review-2/tcp-handshake.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-07T14:28:57.624Z",
+  "durationMs": 234,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

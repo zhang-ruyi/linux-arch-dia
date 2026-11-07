@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -18,20 +18,46 @@
       "type": "backend",
       "label": "__tasklet_schedule()",
       "sublabel": "调度 tasklet",
-      "pos": [40, 80],
-      "size": [210, 72],
-      "sources": [{ "path": "kernel/softirq.c", "line": 838, "label": "__tasklet_schedule" }]
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 895,
+          "label": "__tasklet_schedule"
+        }
+      ]
     },
     {
       "id": "t2",
       "type": "messagebus",
       "label": "挂入 tasklet_vec 链表",
       "sublabel": "每 CPU 链表",
-      "pos": [40, 190],
-      "size": [210, 72],
+      "pos": [
+        40,
+        190
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/softirq.c", "line": 819, "label": "tasklet_vec" },
-        { "path": "kernel/softirq.c", "line": 822, "label": "__tasklet_schedule_common" }
+        {
+          "path": "kernel/softirq.c",
+          "line": 876,
+          "label": "tasklet_vec"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 879,
+          "label": "__tasklet_schedule_common"
+        }
       ]
     },
     {
@@ -39,11 +65,25 @@
       "type": "backend",
       "label": "触发 TASKLET_SOFTIRQ",
       "sublabel": "或 HI_SOFTIRQ",
-      "pos": [40, 300],
-      "size": [210, 72],
+      "pos": [
+        40,
+        300
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/softirq.c", "line": 840, "label": "TASKLET_SOFTIRQ" },
-        { "path": "kernel/softirq.c", "line": 847, "label": "HI_SOFTIRQ" }
+        {
+          "path": "kernel/softirq.c",
+          "line": 897,
+          "label": "TASKLET_SOFTIRQ"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 904,
+          "label": "HI_SOFTIRQ"
+        }
       ]
     },
     {
@@ -51,20 +91,46 @@
       "type": "backend",
       "label": "tasklet_action()",
       "sublabel": "遍历执行",
-      "pos": [40, 410],
-      "size": [210, 72],
-      "sources": [{ "path": "kernel/softirq.c", "line": 963, "label": "tasklet_action" }]
+      "pos": [
+        40,
+        410
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 1020,
+          "label": "tasklet_action"
+        }
+      ]
     },
     {
       "id": "s1",
       "type": "backend",
       "label": "raise_softirq()",
       "sublabel": "raise_softirq_irqoff()",
-      "pos": [440, 80],
-      "size": [210, 72],
+      "pos": [
+        440,
+        80
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/softirq.c", "line": 790, "label": "raise_softirq" },
-        { "path": "kernel/softirq.c", "line": 773, "label": "raise_softirq_irqoff" }
+        {
+          "path": "kernel/softirq.c",
+          "line": 847,
+          "label": "raise_softirq"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 830,
+          "label": "raise_softirq_irqoff"
+        }
       ]
     },
     {
@@ -72,20 +138,46 @@
       "type": "backend",
       "label": "置 softirq 位图 pending",
       "sublabel": "标记待处理软中断",
-      "pos": [440, 190],
-      "size": [210, 72],
-      "sources": [{ "path": "kernel/softirq.c", "line": 773, "label": "raise_softirq_irqoff" }]
+      "pos": [
+        440,
+        190
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 830,
+          "label": "raise_softirq_irqoff"
+        }
+      ]
     },
     {
       "id": "s3",
       "type": "backend",
       "label": "do_softirq()",
       "sublabel": "→ __do_softirq()",
-      "pos": [440, 300],
-      "size": [210, 72],
+      "pos": [
+        440,
+        300
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/softirq.c", "line": 510, "label": "do_softirq" },
-        { "path": "kernel/softirq.c", "line": 654, "label": "__do_softirq" }
+        {
+          "path": "kernel/softirq.c",
+          "line": 556,
+          "label": "do_softirq"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 701,
+          "label": "__do_softirq"
+        }
       ]
     },
     {
@@ -93,11 +185,25 @@
       "type": "backend",
       "label": "执行 open_softirq() 注册的 action",
       "sublabel": "NET_RX_SOFTIRQ / TIMER_SOFTIRQ 等",
-      "pos": [440, 410],
-      "size": [210, 72],
+      "pos": [
+        440,
+        410
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/softirq.c", "line": 806, "label": "open_softirq" },
-        { "path": "kernel/softirq.c", "line": 654, "label": "__do_softirq" }
+        {
+          "path": "kernel/softirq.c",
+          "line": 863,
+          "label": "open_softirq"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 701,
+          "label": "__do_softirq"
+        }
       ]
     },
     {
@@ -105,56 +211,187 @@
       "type": "backend",
       "label": "queue_work()",
       "sublabel": "提交工作项",
-      "pos": [880, 80],
-      "size": [210, 72],
-      "sources": [{ "path": "include/linux/workqueue.h", "line": 696, "label": "queue_work" }]
+      "pos": [
+        880,
+        80
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "include/linux/workqueue.h",
+          "line": 697,
+          "label": "queue_work"
+        }
+      ]
     },
     {
       "id": "w2",
       "type": "messagebus",
       "label": "__queue_work()",
       "sublabel": "挂入 pool->worklist",
-      "pos": [880, 190],
-      "size": [210, 72],
-      "sources": [{ "path": "kernel/workqueue.c", "line": 2275, "label": "__queue_work" }]
+      "pos": [
+        880,
+        190
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "kernel/workqueue.c",
+          "line": 2405,
+          "label": "__queue_work"
+        }
+      ]
     },
     {
       "id": "w3",
       "type": "backend",
       "label": "唤醒 worker_thread()",
       "sublabel": "内核线程",
-      "pos": [880, 300],
-      "size": [210, 72],
-      "sources": [{ "path": "kernel/workqueue.c", "line": 3431, "label": "worker_thread" }]
+      "pos": [
+        880,
+        300
+      ],
+      "size": [
+        210,
+        72
+      ],
+      "sources": [
+        {
+          "path": "kernel/workqueue.c",
+          "line": 3604,
+          "label": "worker_thread"
+        }
+      ]
     },
     {
       "id": "w4",
       "type": "backend",
       "label": "进程上下文执行 work 函数",
       "sublabel": "create_worker() 动态创建线程",
-      "pos": [880, 410],
-      "size": [210, 72],
+      "pos": [
+        880,
+        410
+      ],
+      "size": [
+        210,
+        72
+      ],
       "sources": [
-        { "path": "kernel/workqueue.c", "line": 3431, "label": "worker_thread" },
-        { "path": "kernel/workqueue.c", "line": 2836, "label": "create_worker" }
+        {
+          "path": "kernel/workqueue.c",
+          "line": 3604,
+          "label": "worker_thread"
+        },
+        {
+          "path": "kernel/workqueue.c",
+          "line": 2983,
+          "label": "create_worker"
+        }
       ]
     }
   ],
   "boundaries": [
-    { "kind": "region", "label": "tasklet（基于 softirq）", "wraps": ["t1", "t2", "t3", "t4"] },
-    { "kind": "region", "label": "软中断 softirq", "wraps": ["s1", "s2", "s3", "s4"] },
-    { "kind": "region", "label": "工作队列 workqueue", "wraps": ["w1", "w2", "w3", "w4"] }
+    {
+      "kind": "region",
+      "label": "tasklet（基于 softirq）",
+      "wraps": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "软中断 softirq",
+      "wraps": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "工作队列 workqueue",
+      "wraps": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ]
+    }
   ],
   "connections": [
-    { "id": "t1-t2", "from": "t1", "to": "t2", "fromSide": "bottom", "toSide": "top" },
-    { "id": "t2-t3", "from": "t2", "to": "t3", "fromSide": "bottom", "toSide": "top" },
-    { "id": "t3-t4", "from": "t3", "to": "t4", "fromSide": "bottom", "toSide": "top" },
-    { "id": "s1-s2", "from": "s1", "to": "s2", "fromSide": "bottom", "toSide": "top" },
-    { "id": "s2-s3", "from": "s2", "to": "s3", "fromSide": "bottom", "toSide": "top" },
-    { "id": "s3-s4", "from": "s3", "to": "s4", "fromSide": "bottom", "toSide": "top" },
-    { "id": "w1-w2", "from": "w1", "to": "w2", "fromSide": "bottom", "toSide": "top" },
-    { "id": "w2-w3", "from": "w2", "to": "w3", "fromSide": "bottom", "toSide": "top" },
-    { "id": "w3-w4", "from": "w3", "to": "w4", "fromSide": "bottom", "toSide": "top" },
+    {
+      "id": "t1-t2",
+      "from": "t1",
+      "to": "t2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "t2-t3",
+      "from": "t2",
+      "to": "t3",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "t3-t4",
+      "from": "t3",
+      "to": "t4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "s1-s2",
+      "from": "s1",
+      "to": "s2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "s2-s3",
+      "from": "s2",
+      "to": "s3",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "s3-s4",
+      "from": "s3",
+      "to": "s4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "w1-w2",
+      "from": "w1",
+      "to": "w2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "w2-w3",
+      "from": "w2",
+      "to": "w3",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "w3-w4",
+      "from": "w3",
+      "to": "w4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
     {
       "id": "t4-s4",
       "from": "t4",
@@ -218,21 +455,21 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "__tasklet_schedule() — kernel/softirq.c:838",
-        "__tasklet_schedule_common() — kernel/softirq.c:822",
-        "raise_softirq_irqoff() — kernel/softirq.c:773",
-        "tasklet_action() — kernel/softirq.c:963",
-        "tasklet_action_common() — kernel/softirq.c:916",
-        "raise_softirq() — kernel/softirq.c:790",
-        "__raise_softirq_irqoff() — kernel/softirq.c:799",
-        "do_softirq() — kernel/softirq.c:510",
-        "__do_softirq() — kernel/softirq.c:654",
-        "net_rx_action() — net/core/dev.c:7910",
-        "open_softirq() — kernel/softirq.c:806",
-        "queue_work() — include/linux/workqueue.h:696",
-        "queue_work_on() — kernel/workqueue.c:2442",
-        "__queue_work() — kernel/workqueue.c:2275",
-        "worker_thread() — kernel/workqueue.c:3431"
+        "__tasklet_schedule()—kernel/softirq.c:895",
+        "__tasklet_schedule_common()—kernel/softirq.c:879",
+        "raise_softirq_irqoff()—kernel/softirq.c:830",
+        "tasklet_action()—kernel/softirq.c:1020",
+        "tasklet_action_common()—kernel/softirq.c:973",
+        "raise_softirq()—kernel/softirq.c:847",
+        "__raise_softirq_irqoff()—kernel/softirq.c:856",
+        "do_softirq()—kernel/softirq.c:556",
+        "__do_softirq()—kernel/softirq.c:701",
+        "net_rx_action()—net/core/dev.c:8166",
+        "open_softirq()—kernel/softirq.c:863",
+        "queue_work()—include/linux/workqueue.h:697",
+        "queue_work_on()—kernel/workqueue.c:2589",
+        "__queue_work()—kernel/workqueue.c:2405",
+        "worker_thread()—kernel/workqueue.c:3604"
       ]
     }
   ]

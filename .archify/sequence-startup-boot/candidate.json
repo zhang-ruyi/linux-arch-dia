@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     },
     "viewBox": [
@@ -51,7 +51,7 @@
       "sources": [
         {
           "path": "arch/x86/boot/main.c",
-          "line": 180,
+          "line": 178,
           "label": "go_to_protected_mode"
         }
       ]
@@ -77,7 +77,7 @@
       "sources": [
         {
           "path": "init/main.c",
-          "line": 972,
+          "line": 1044,
           "label": "start_kernel"
         }
       ]
@@ -90,7 +90,7 @@
       "sources": [
         {
           "path": "init/main.c",
-          "line": 671,
+          "line": 738,
           "label": "rest_init"
         }
       ]
@@ -103,7 +103,7 @@
       "sources": [
         {
           "path": "init/main.c",
-          "line": 1539,
+          "line": 1611,
           "label": "kernel_init"
         }
       ]
@@ -116,7 +116,7 @@
       "sources": [
         {
           "path": "init/main.c",
-          "line": 695,
+          "line": 767,
           "label": "kernel_thread(kthreadd)"
         }
       ]
@@ -129,7 +129,7 @@
       "sources": [
         {
           "path": "init/main.c",
-          "line": 1604,
+          "line": 1678,
           "label": "run_init_process(\"/sbin/init\")"
         }
       ]
@@ -245,13 +245,13 @@
       "items": [
         "startup_64 — arch/x86/kernel/head_64.S:38",
         "x86_64_start_kernel — arch/x86/kernel/head64.c:222",
-        "start_kernel — init/main.c:972",
+        "start_kernel—init/main.c:1044",
         "setup_arch — arch/x86/kernel/setup.c:884",
-        "mm_core_init — mm/mm_init.c:2699",
-        "sched_init — kernel/sched/core.c:8915",
-        "rest_init — init/main.c:671",
-        "kernel_init — init/main.c:1539",
-        "run_init_process — init/main.c:1457"
+        "mm_core_init—mm/mm_init.c:2698",
+        "sched_init—kernel/sched/core.c:8912",
+        "rest_init—init/main.c:738",
+        "kernel_init—init/main.c:1611",
+        "run_init_process—init/main.c:1529"
       ]
     }
   ]

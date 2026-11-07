@@ -8,14 +8,23 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
   "lanes": [
-    { "id": "write", "label": "写路径与脏页节流" },
-    { "id": "wb", "label": "回写内核线程" },
-    { "id": "done", "label": "完成与清理" }
+    {
+      "id": "write",
+      "label": "写路径与脏页节流"
+    },
+    {
+      "id": "wb",
+      "label": "回写内核线程"
+    },
+    {
+      "id": "done",
+      "label": "完成与清理"
+    }
   ],
   "nodes": [
     {
@@ -26,8 +35,16 @@
       "label": "write 系统调用",
       "sublabel": "写入数据",
       "sources": [
-        { "path": "fs/read_write.c", "line": 667, "label": "vfs_write" },
-        { "path": "mm/filemap.c", "line": 4330, "label": "generic_perform_write" }
+        {
+          "path": "fs/read_write.c",
+          "line": 667,
+          "label": "vfs_write"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 4364,
+          "label": "generic_perform_write"
+        }
       ]
     },
     {
@@ -38,8 +55,16 @@
       "label": "页缓存页被标记为脏页",
       "sublabel": "folio_mark_dirty",
       "sources": [
-        { "path": "mm/filemap.c", "line": 4009, "label": "folio_mark_dirty" },
-        { "path": "mm/page-writeback.c", "line": 2778, "label": "folio_mark_dirty" }
+        {
+          "path": "mm/filemap.c",
+          "line": 4043,
+          "label": "folio_mark_dirty"
+        },
+        {
+          "path": "mm/page-writeback.c",
+          "line": 2774,
+          "label": "folio_mark_dirty"
+        }
       ]
     },
     {
@@ -50,8 +75,16 @@
       "label": "balance_dirty_pages()",
       "sublabel": "脏页节流",
       "sources": [
-        { "path": "mm/page-writeback.c", "line": 1802, "label": "balance_dirty_pages" },
-        { "path": "mm/filemap.c", "line": 4351, "label": "balance_dirty_pages_ratelimited" }
+        {
+          "path": "mm/page-writeback.c",
+          "line": 1793,
+          "label": "balance_dirty_pages"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 4385,
+          "label": "balance_dirty_pages_ratelimited"
+        }
       ]
     },
     {
@@ -61,7 +94,13 @@
       "type": "backend",
       "label": "wb_workfn()",
       "sublabel": "bdi 内核线程",
-      "sources": [{ "path": "fs/fs-writeback.c", "line": 2460, "label": "wb_workfn" }]
+      "sources": [
+        {
+          "path": "fs/fs-writeback.c",
+          "line": 2501,
+          "label": "wb_workfn"
+        }
+      ]
     },
     {
       "id": "wbinodes",
@@ -70,7 +109,13 @@
       "type": "backend",
       "label": "writeback_sb_inodes()",
       "sublabel": "遍历超级块脏 inode",
-      "sources": [{ "path": "fs/fs-writeback.c", "line": 1980, "label": "writeback_sb_inodes" }]
+      "sources": [
+        {
+          "path": "fs/fs-writeback.c",
+          "line": 2021,
+          "label": "writeback_sb_inodes"
+        }
+      ]
     },
     {
       "id": "single",
@@ -79,7 +124,13 @@
       "type": "backend",
       "label": "__writeback_single_inode()",
       "sublabel": "写回单个 inode",
-      "sources": [{ "path": "fs/fs-writeback.c", "line": 1776, "label": "__writeback_single_inode" }]
+      "sources": [
+        {
+          "path": "fs/fs-writeback.c",
+          "line": 1798,
+          "label": "__writeback_single_inode"
+        }
+      ]
     },
     {
       "id": "dowritepages",
@@ -89,8 +140,16 @@
       "label": "do_writepages()",
       "sublabel": "调用 address_space 的 writepages",
       "sources": [
-        { "path": "mm/page-writeback.c", "line": 2560, "label": "do_writepages" },
-        { "path": "fs/fs-writeback.c", "line": 1787, "label": "do_writepages 调用" }
+        {
+          "path": "mm/page-writeback.c",
+          "line": 2551,
+          "label": "do_writepages"
+        },
+        {
+          "path": "fs/fs-writeback.c",
+          "line": 1809,
+          "label": "do_writepages 调用"
+        }
       ]
     },
     {
@@ -100,7 +159,13 @@
       "type": "backend",
       "label": "ext4_writepages()",
       "sublabel": "生成写请求",
-      "sources": [{ "path": "fs/ext4/inode.c", "line": 3026, "label": "ext4_writepages" }]
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 3154,
+          "label": "ext4_writepages"
+        }
+      ]
     },
     {
       "id": "submitbio",
@@ -109,7 +174,13 @@
       "type": "backend",
       "label": "提交 bio 到块设备",
       "sublabel": "ext4_io_submit",
-      "sources": [{ "path": "fs/ext4/page-io.c", "line": 397, "label": "ext4_io_submit" }]
+      "sources": [
+        {
+          "path": "fs/ext4/page-io.c",
+          "line": 392,
+          "label": "ext4_io_submit"
+        }
+      ]
     },
     {
       "id": "complete",
@@ -119,8 +190,16 @@
       "label": "bio 完成回调",
       "sublabel": "清除脏标志",
       "sources": [
-        { "path": "block/bio.c", "line": 1762, "label": "bio_endio" },
-        { "path": "mm/filemap.c", "line": 1681, "label": "folio_end_writeback" }
+        {
+          "path": "block/bio.c",
+          "line": 1863,
+          "label": "bio_endio"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 1697,
+          "label": "folio_end_writeback"
+        }
       ]
     },
     {
@@ -131,22 +210,81 @@
       "label": "页变为干净页",
       "sublabel": "writeback 结束",
       "sources": [
-        { "path": "mm/page-writeback.c", "line": 2958, "label": "__folio_end_writeback" },
-        { "path": "mm/filemap.c", "line": 1681, "label": "folio_end_writeback" }
+        {
+          "path": "mm/page-writeback.c",
+          "line": 2954,
+          "label": "__folio_end_writeback"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 1697,
+          "label": "folio_end_writeback"
+        }
       ]
     }
   ],
   "edges": [
-    { "id": "write-dirty", "from": "write", "to": "dirty", "role": "main" },
-    { "id": "dirty-throttle", "from": "dirty", "to": "throttle", "role": "main" },
-    { "id": "throttle-wb", "from": "throttle", "to": "wbthread", "label": "超过阈值", "role": "branch" },
-    { "id": "wb-inodes", "from": "wbthread", "to": "wbinodes", "role": "main" },
-    { "id": "inodes-single", "from": "wbinodes", "to": "single", "role": "main" },
-    { "id": "single-writepages", "from": "single", "to": "dowritepages", "role": "main" },
-    { "id": "writepages-ext4", "from": "dowritepages", "to": "ext4writepages", "role": "main" },
-    { "id": "ext4-submit", "from": "ext4writepages", "to": "submitbio", "role": "main" },
-    { "id": "submit-complete", "from": "submitbio", "to": "complete", "role": "main" },
-    { "id": "complete-clean", "from": "complete", "to": "clean", "role": "main" }
+    {
+      "id": "write-dirty",
+      "from": "write",
+      "to": "dirty",
+      "role": "main"
+    },
+    {
+      "id": "dirty-throttle",
+      "from": "dirty",
+      "to": "throttle",
+      "role": "main"
+    },
+    {
+      "id": "throttle-wb",
+      "from": "throttle",
+      "to": "wbthread",
+      "label": "超过阈值",
+      "role": "branch"
+    },
+    {
+      "id": "wb-inodes",
+      "from": "wbthread",
+      "to": "wbinodes",
+      "role": "main"
+    },
+    {
+      "id": "inodes-single",
+      "from": "wbinodes",
+      "to": "single",
+      "role": "main"
+    },
+    {
+      "id": "single-writepages",
+      "from": "single",
+      "to": "dowritepages",
+      "role": "main"
+    },
+    {
+      "id": "writepages-ext4",
+      "from": "dowritepages",
+      "to": "ext4writepages",
+      "role": "main"
+    },
+    {
+      "id": "ext4-submit",
+      "from": "ext4writepages",
+      "to": "submitbio",
+      "role": "main"
+    },
+    {
+      "id": "submit-complete",
+      "from": "submitbio",
+      "to": "complete",
+      "role": "main"
+    },
+    {
+      "id": "complete-clean",
+      "from": "complete",
+      "to": "clean",
+      "role": "main"
+    }
   ],
   "cards": [
     {
@@ -171,14 +309,14 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "balance_dirty_pages — mm/page-writeback.c:1802",
-        "wb_workfn — fs/fs-writeback.c:2460",
-        "writeback_sb_inodes — fs/fs-writeback.c:1980",
-        "__writeback_single_inode — fs/fs-writeback.c:1776",
-        "do_writepages — mm/page-writeback.c:2560",
-        "ext4_writepages — fs/ext4/inode.c:3026",
-        "ext4_io_submit — fs/ext4/page-io.c:397",
-        "submit_bio — block/blk-core.c:952"
+        "balance_dirty_pages—mm/page-writeback.c:1793",
+        "wb_workfn—fs/fs-writeback.c:2501",
+        "writeback_sb_inodes—fs/fs-writeback.c:2021",
+        "__writeback_single_inode—fs/fs-writeback.c:1798",
+        "do_writepages—mm/page-writeback.c:2551",
+        "ext4_writepages—fs/ext4/inode.c:3154",
+        "ext4_io_submit—fs/ext4/page-io.c:392",
+        "submit_bio—block/blk-core.c:960"
       ]
     }
   ]

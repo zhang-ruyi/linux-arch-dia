@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "fail",
+  "visualReview": "not-requested",
+  "provenance": "locked",
+  "deliveryReceiptId": "387f9d83-b01b-42e8-91f4-95fcc8aef39c",
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/deep-read.html",
+    "sha256": "c0ade290426516c8cca7101723ab8f6fa0f876a1b7484b9f42892bf30cb520f7",
+    "bytes": 875616
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "/home/zhang/.cache/archify-chrome/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/文件系统/deep-read.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/文件系统/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/文件系统/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "containment": {
+    "status": "fail",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": []
+  },
+  "themeStates": {
+    "status": "fail",
+    "viewports": []
+  },
+  "readability": {
+    "status": "fail",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": []
+  },
+  "viewerChrome": {
+    "status": "fail",
+    "viewports": []
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "directory": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/review-1",
+    "receipt": "deep-read.browser-check.json",
+    "files": []
+  },
+  "error": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact."
+}

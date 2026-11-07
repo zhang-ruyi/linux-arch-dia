@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
+    "sha256": "eb2b64ed22528a93c7c444553cce8cbad65543c0b5d2e21fc3b6f4e81e024509",
+    "bytes": 5733
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+    "sha256": "af8e730dce5fa05820d9eb315b462889a28ee8b087f2114302dc43d5f88ef83c",
+    "bytes": 836604
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-3/futex-wakeup.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-3/futex-wakeup.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-3/futex-wakeup.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3630,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

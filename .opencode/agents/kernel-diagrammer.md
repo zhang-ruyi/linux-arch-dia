@@ -25,7 +25,7 @@ permission:
    - `grep -n` 找定义,`read` 读函数主线,跳过错误分支细节
    - ops 结构(`file_operations`/`net_device_ops`)先找注册点再追实现
    - `SYSCALL_DEFINEx` 等宏展开一层
-   - **符号名与行号必须 grep 核实,禁止凭记忆**(如 v7.2 的 `do_file_open`、`send_signal_locked`、`get_signal`)
+   - **符号名与行号必须 grep 核实,禁止凭记忆**(7.4 等新版本中符号会调整,如 `do_file_open`、`send_signal_locked`、`get_signal`)
 3. **选类型**:组件/边界→`architecture`;控制流分支→`workflow`;多实体时序→`sequence`;状态迁移→`lifecycle`;树形分解→`tree`;结构体关系→`class`;管道→`dataflow`
 4. **写候选 JSON**:`.archify/<type>-<slug>/candidate.json`
    - 必读 Archify 规范:`~/.agents/skills/archify/SKILL.md`、`references/authoring-defaults.md`、`references/repository-authoring.md`、`schemas/common.schema.json`、所选 type 的 schema 与 example

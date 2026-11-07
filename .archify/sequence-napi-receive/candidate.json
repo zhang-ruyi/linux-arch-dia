@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -39,17 +39,17 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 6733,
+          "line": 6962,
           "label": "napi_schedule_prep"
         },
         {
           "path": "include/linux/netdevice.h",
-          "line": 558,
+          "line": 570,
           "label": "napi_schedule"
         },
         {
           "path": "include/linux/netdevice.h",
-          "line": 4314,
+          "line": 4371,
           "label": "napi_gro_receive"
         }
       ]
@@ -62,17 +62,17 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 7910,
+          "line": 8166,
           "label": "net_rx_action"
         },
         {
           "path": "net/core/dev.c",
-          "line": 7782,
+          "line": 8038,
           "label": "napi_poll"
         },
         {
           "path": "net/core/dev.c",
-          "line": 5976,
+          "line": 6197,
           "label": "__netif_receive_skb_core"
         }
       ]
@@ -108,17 +108,17 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 2067,
+          "line": 2075,
           "label": "tcp_v4_rcv"
         },
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 1827,
+          "line": 1835,
           "label": "tcp_v4_do_rcv"
         },
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 7122,
+          "line": 7212,
           "label": "tcp_rcv_state_process"
         }
       ]
@@ -241,22 +241,22 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "napi_schedule — include/linux/netdevice.h:558",
-        "net_rx_action — net/core/dev.c:7910",
-        "napi_poll — net/core/dev.c:7782",
-        "__napi_poll — net/core/dev.c:7715",
-        "netif_receive_skb — net/core/dev.c:6458",
-        "netif_receive_skb_internal — net/core/dev.c:6383",
-        "__netif_receive_skb_core — net/core/dev.c:5976",
+        "napi_schedule—include/linux/netdevice.h:570",
+        "net_rx_action—net/core/dev.c:8166",
+        "napi_poll—net/core/dev.c:8038",
+        "__napi_poll—net/core/dev.c:7971",
+        "netif_receive_skb—net/core/dev.c:6687",
+        "netif_receive_skb_internal—net/core/dev.c:6612",
+        "__netif_receive_skb_core—net/core/dev.c:6197",
         "ip_rcv — net/ipv4/ip_input.c:603",
         "ip_rcv_finish — net/ipv4/ip_input.c:478",
         "ip_local_deliver — net/ipv4/ip_input.c:250",
         "ip_local_deliver_finish — net/ipv4/ip_input.c:229",
-        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067",
-        "tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827",
-        "tcp_rcv_established — net/ipv4/tcp_input.c:6470",
-        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
-        "tcp_data_queue — net/ipv4/tcp_input.c:5577"
+        "tcp_v4_rcv—net/ipv4/tcp_ipv4.c:2075",
+        "tcp_v4_do_rcv—net/ipv4/tcp_ipv4.c:1835",
+        "tcp_rcv_established—net/ipv4/tcp_input.c:6556",
+        "tcp_rcv_state_process—net/ipv4/tcp_input.c:7212",
+        "tcp_data_queue—net/ipv4/tcp_input.c:5644"
       ]
     }
   ]

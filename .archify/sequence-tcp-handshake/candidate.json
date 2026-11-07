@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -21,12 +21,12 @@
       "sources": [
         {
           "path": "net/socket.c",
-          "line": 1805,
+          "line": 1833,
           "label": "SYSCALL_DEFINE3(socket)"
         },
         {
           "path": "net/socket.c",
-          "line": 2157,
+          "line": 2188,
           "label": "SYSCALL_DEFINE3(connect)"
         }
       ]
@@ -44,7 +44,7 @@
         },
         {
           "path": "net/ipv4/tcp_output.c",
-          "line": 4294,
+          "line": 4365,
           "label": "tcp_connect"
         }
       ]
@@ -57,17 +57,17 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 2067,
+          "line": 2075,
           "label": "tcp_v4_rcv"
         },
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 1827,
+          "line": 1835,
           "label": "tcp_v4_do_rcv"
         },
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 7122,
+          "line": 7212,
           "label": "tcp_rcv_state_process"
         }
       ]
@@ -80,17 +80,17 @@
       "sources": [
         {
           "path": "net/ipv4/af_inet.c",
-          "line": 237,
+          "line": 238,
           "label": "inet_listen"
         },
         {
           "path": "net/socket.c",
-          "line": 1992,
+          "line": 2019,
           "label": "SYSCALL_DEFINE2(listen)"
         },
         {
           "path": "net/socket.c",
-          "line": 2100,
+          "line": 2127,
           "label": "SYSCALL_DEFINE3(accept)"
         }
       ]
@@ -223,15 +223,15 @@
       "title": "完整调用链(源码核实)",
       "items": [
         "tcp_v4_connect — net/ipv4/tcp_ipv4.c:221",
-        "tcp_connect — net/ipv4/tcp_output.c:4294",
-        "tcp_transmit_skb — net/ipv4/tcp_output.c:1731",
-        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067",
-        "tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827",
-        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
-        "tcp_v4_conn_request — net/ipv4/tcp_ipv4.c:1652",
-        "tcp_conn_request — net/ipv4/tcp_input.c:7590",
-        "tcp_v4_send_synack — net/ipv4/tcp_ipv4.c:1159",
-        "tcp_send_synack — net/ipv4/tcp_output.c:3887"
+        "tcp_connect—net/ipv4/tcp_output.c:4365",
+        "tcp_transmit_skb—net/ipv4/tcp_output.c:1787",
+        "tcp_v4_rcv—net/ipv4/tcp_ipv4.c:2075",
+        "tcp_v4_do_rcv—net/ipv4/tcp_ipv4.c:1835",
+        "tcp_rcv_state_process—net/ipv4/tcp_input.c:7212",
+        "tcp_v4_conn_request—net/ipv4/tcp_ipv4.c:1658",
+        "tcp_conn_request—net/ipv4/tcp_input.c:7675",
+        "tcp_v4_send_synack—net/ipv4/tcp_ipv4.c:1165",
+        "tcp_send_synack—net/ipv4/tcp_output.c:3951"
       ]
     }
   ]

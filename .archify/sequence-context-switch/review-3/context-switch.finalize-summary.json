@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/candidate.json",
+    "sha256": "082d1b9a1f57c85115a9904b3adb5c11de8ba5eadda123f1ef26a14b12b53487",
+    "bytes": 5243
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/context-switch.html",
+    "sha256": "6fb9d4976693459f6a12daa94f0bdcf35b3f0e9d708ad9e9a686481dbf43f1df",
+    "bytes": 835205
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/review-3/context-switch.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/review-3/context-switch.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/review-3/context-switch.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3232,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

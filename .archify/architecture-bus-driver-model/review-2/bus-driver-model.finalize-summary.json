@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-bus-driver-model/candidate.json",
+    "sha256": "14dd32ba40b2f0e406a7a0efa74e434e27765320e7254f86e38932dcfe3d996e",
+    "bytes": 8625
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/设备驱动/bus-driver-model.html",
+    "sha256": "678f6be2bbc862028db16c8615f01682f62aed7a644d99998cfa8d33e321c055",
+    "bytes": 847286
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/architecture-bus-driver-model/review-2/bus-driver-model.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-bus-driver-model/review-2/bus-driver-model.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-bus-driver-model/review-2/bus-driver-model.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3786,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 2
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "bus-kobj",
+            "from": "bus",
+            "to": "kobj",
+            "label": "",
+            "collectionIndex": 0,
+            "artifactIndex": 1
+          },
+          "bends": 3,
+          "stretch": 1.323
+        },
+        {
+          "relationship": {
+            "id": "dev-kobj",
+            "from": "dev",
+            "to": "kobj",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 3,
+          "stretch": 1.331
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "bus → kobj needs 3 bends: move node bus or kobj so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "dev → kobj needs 3 bends: move node dev or kobj so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

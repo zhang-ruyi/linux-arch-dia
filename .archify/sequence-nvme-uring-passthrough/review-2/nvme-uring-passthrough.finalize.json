@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T14:28:49.170Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/candidate.json",
+    "sha256": "c0a9751ef22f9fb96ee5073174c6afde9b029f1ffa035717f6ccc5523870074f",
+    "bytes": 7968
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+    "sha256": "8a7abcdafa38412ce82c716eaaeb270d2c242ac03bf0050ac6271cab0395b1db",
+    "bytes": 842910
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 164,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "3feb6133-b56a-47de-acf0-53fba071dd9c",
+        "stage": "prepare",
+        "type": "sequence",
+        "input": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+        "error": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\".",
+        "diagnostics": [
+          {
+            "code": "delivery/concurrent-attempt",
+            "severity": "error",
+            "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\".",
+            "subject": {
+              "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\"."
+            },
+            "supportedFixes": [
+              "wait for the active delivery to finish, then retry"
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-uring-passthrough.html\" through lock \"/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/review-2/nvme-uring-passthrough.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-uring-passthrough/review-2/nvme-uring-passthrough.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-07T14:28:49.404Z",
+  "durationMs": 234,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

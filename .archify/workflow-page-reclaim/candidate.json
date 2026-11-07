@@ -8,7 +8,7 @@
     "output": "site/内存管理/page-reclaim.html",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -58,7 +58,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 7480
+          "line": 7729
         }
       ]
     },
@@ -72,7 +72,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 7399
+          "line": 7642
         }
       ]
     },
@@ -86,7 +86,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 7064
+          "line": 7314
         }
       ]
     },
@@ -100,7 +100,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 6146
+          "line": 6457
         }
       ]
     },
@@ -114,7 +114,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 6067
+          "line": 6378
         }
       ]
     },
@@ -128,7 +128,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 5876
+          "line": 6187
         }
       ]
     },
@@ -142,7 +142,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 2215
+          "line": 2332
         }
       ]
     },
@@ -156,7 +156,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 2068
+          "line": 2185
         }
       ]
     },
@@ -170,7 +170,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 1986
+          "line": 2103
         }
       ]
     },
@@ -184,7 +184,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 1055
+          "line": 1161
         }
       ]
     },
@@ -198,7 +198,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 1582
+          "line": 1619
         }
       ]
     },
@@ -212,11 +212,11 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 657
+          "line": 732
         },
         {
           "path": "mm/page_io.c",
-          "line": 251
+          "line": 204
         }
       ]
     },
@@ -230,7 +230,7 @@
       "sources": [
         {
           "path": "mm/shmem.c",
-          "line": 1591
+          "line": 1845
         }
       ]
     },
@@ -244,7 +244,7 @@
       "sources": [
         {
           "path": "mm/vmscan.c",
-          "line": 618
+          "line": 693
         }
       ]
     },
@@ -253,12 +253,12 @@
       "lane": "swap",
       "col": 3,
       "type": "database",
-      "label": "__swap_writepage",
+      "label": "__swap_writeout",
       "sublabel": "写入交换设备",
       "sources": [
         {
           "path": "mm/page_io.c",
-          "line": 466
+          "line": 376
         }
       ]
     }
@@ -395,7 +395,7 @@
       "title": "四种回收去向",
       "items": [
         "干净文件页直接回收并回到伙伴系统",
-        "匿名页经 pageout 与 swap_writeout 换出,最终由 __swap_writepage 写入交换设备",
+        "匿名页经 pageout 与 swap_writeout 换出,最终由 __swap_writeout 写入交换设备",
         "shmem 脏页走 shmem_writeout,文件脏页走页面 writeback"
       ]
     },
@@ -403,18 +403,18 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "kswapd — mm/vmscan.c:7399",
-        "balance_pgdat — mm/vmscan.c:7064",
-        "shrink_node — mm/vmscan.c:6146",
-        "shrink_node_memcgs — mm/vmscan.c:6067",
-        "shrink_lruvec — mm/vmscan.c:5876",
-        "shrink_list — mm/vmscan.c:2215",
+        "kswapd—mm/vmscan.c:7642",
+        "balance_pgdat—mm/vmscan.c:7314",
+        "shrink_node—mm/vmscan.c:6457",
+        "shrink_node_memcgs—mm/vmscan.c:6378",
+        "shrink_lruvec—mm/vmscan.c:6187",
+        "shrink_list—mm/vmscan.c:2332",
         "shrink_active_list — mm/vmscan.c:2068 (active LRU)",
         "shrink_inactive_list — mm/vmscan.c:1986 (inactive LRU)",
-        "shrink_folio_list — mm/vmscan.c:1055",
-        "pageout — mm/vmscan.c:618",
+        "shrink_folio_list—mm/vmscan.c:1161",
+        "pageout—mm/vmscan.c:693",
         "swap_writeout — mm/page_io.c:251 (匿名页)",
-        "__swap_writepage — mm/page_io.c:466",
+        "__swap_writeout—mm/page_io.c:376",
         "shmem_writeout — mm/shmem.c:1591 (shmem 脏页)"
       ]
     }

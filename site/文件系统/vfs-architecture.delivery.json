@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "272b9eda-6045-4acc-a8e8-fcacce2824e9",
+  "receiptId": "a9ace0b5-68cb-4de6-ab37-5b1d98ac1d45",
   "status": "current",
   "command": "deliver",
   "type": "architecture",
   "input": "/home/zhang/opencode/code_analsys/.archify/architecture-vfs-architecture/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/文件系统/vfs-architecture.html",
   "specification": {
-    "sha256": "b2c7e97c56adc38d69ef29ae643e0181066275761eba09641423d2910953d5b6",
-    "bytes": 6666
+    "sha256": "2d187ea02da0952fd4da82d00b59911f932aac2e68eb3887f05fa1fd31ceca10",
+    "bytes": 8412
   },
   "artifact": {
-    "sha256": "42cf4993409a4ea58f5fca0631e7eeb1580f8299d7ca104f8503c5b00749eb6b",
-    "bytes": 846335
+    "sha256": "1fbf42fd3f5c09794576c5e5aceac0885e36cd6447f08b36c3a86196d04a3b25",
+    "bytes": 846322
   }
 }

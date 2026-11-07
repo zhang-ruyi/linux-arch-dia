@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -18,28 +18,52 @@
       "type": "backend",
       "label": "进程A（prev）",
       "sublabel": "被换出",
-      "sources": [{ "path": "kernel/sched/core.c", "line": 5451, "label": "context_switch" }]
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 5524,
+          "label": "context_switch"
+        }
+      ]
     },
     {
       "id": "ctx",
       "type": "backend",
       "label": "context_switch()",
       "sublabel": "切换调度上下文",
-      "sources": [{ "path": "kernel/sched/core.c", "line": 5451, "label": "context_switch" }]
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 5524,
+          "label": "context_switch"
+        }
+      ]
     },
     {
       "id": "mm",
       "type": "backend",
       "label": "switch_mm_irqs_off()",
       "sublabel": "切换地址空间",
-      "sources": [{ "path": "arch/x86/mm/tlb.c", "line": 783, "label": "switch_mm_irqs_off" }]
+      "sources": [
+        {
+          "path": "arch/x86/mm/tlb.c",
+          "line": 783,
+          "label": "switch_mm_irqs_off"
+        }
+      ]
     },
     {
       "id": "macro",
       "type": "backend",
       "label": "switch_to 宏",
       "sublabel": "保存/恢复入口",
-      "sources": [{ "path": "arch/x86/include/asm/switch_to.h", "line": 49, "label": "switch_to" }]
+      "sources": [
+        {
+          "path": "arch/x86/include/asm/switch_to.h",
+          "line": 49,
+          "label": "switch_to"
+        }
+      ]
     },
     {
       "id": "asm",
@@ -47,8 +71,16 @@
       "label": "__switch_to_asm",
       "sublabel": "汇编与 C 恢复现场",
       "sources": [
-        { "path": "arch/x86/entry/entry_64.S", "line": 177, "label": "__switch_to_asm" },
-        { "path": "arch/x86/kernel/process_64.c", "line": 610, "label": "__switch_to" }
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 177,
+          "label": "__switch_to_asm"
+        },
+        {
+          "path": "arch/x86/kernel/process_64.c",
+          "line": 610,
+          "label": "__switch_to"
+        }
       ]
     },
     {
@@ -56,7 +88,13 @@
       "type": "backend",
       "label": "进程B（next）",
       "sublabel": "被换入",
-      "sources": [{ "path": "arch/x86/kernel/process_64.c", "line": 610, "label": "__switch_to" }]
+      "sources": [
+        {
+          "path": "arch/x86/kernel/process_64.c",
+          "line": 610,
+          "label": "__switch_to"
+        }
+      ]
     }
   ],
   "messages": [
@@ -78,7 +116,14 @@
       "variant": "default",
       "note": "切换页表 CR3\n切到进程B 地址空间"
     },
-    { "id": "mm-done", "from": "mm", "to": "ctx", "y": 340, "label": "地址空间已切到进程B", "variant": "return" },
+    {
+      "id": "mm-done",
+      "from": "mm",
+      "to": "ctx",
+      "y": 340,
+      "label": "地址空间已切到进程B",
+      "variant": "return"
+    },
     {
       "id": "switch-to",
       "from": "ctx",
@@ -146,14 +191,14 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "__schedule() — kernel/sched/core.c:7061",
-        "context_switch() — kernel/sched/core.c:5451",
-        "prepare_task_switch() — kernel/sched/core.c:5286",
+        "__schedule()—kernel/sched/core.c:7207",
+        "context_switch()—kernel/sched/core.c:5524",
+        "prepare_task_switch()—kernel/sched/core.c:5359",
         "switch_mm_irqs_off() — arch/x86/mm/tlb.c:783",
         "switch_to() — arch/x86/include/asm/switch_to.h:49",
         "__switch_to_asm() — arch/x86/entry/entry_64.S:177",
         "__switch_to() — arch/x86/kernel/process_64.c:610",
-        "finish_task_switch() — kernel/sched/core.c:5318"
+        "finish_task_switch()—kernel/sched/core.c:5391"
       ]
     }
   ]

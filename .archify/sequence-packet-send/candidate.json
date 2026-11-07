@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -26,7 +26,7 @@
         },
         {
           "path": "net/socket.c",
-          "line": 1222,
+          "line": 1250,
           "label": "sock_write_iter"
         }
       ]
@@ -39,17 +39,17 @@
       "sources": [
         {
           "path": "net/ipv4/tcp.c",
-          "line": 1446,
+          "line": 1457,
           "label": "tcp_sendmsg"
         },
         {
           "path": "net/ipv4/tcp_output.c",
-          "line": 2964,
+          "line": 3028,
           "label": "tcp_write_xmit"
         },
         {
           "path": "net/ipv4/tcp_output.c",
-          "line": 1536,
+          "line": 1592,
           "label": "__tcp_transmit_skb"
         }
       ]
@@ -85,12 +85,12 @@
       "sources": [
         {
           "path": "include/linux/netdevice.h",
-          "line": 3444,
+          "line": 3483,
           "label": "dev_queue_xmit"
         },
         {
           "path": "net/core/dev.c",
-          "line": 4768,
+          "line": 4977,
           "label": "__dev_queue_xmit"
         }
       ]
@@ -103,12 +103,12 @@
       "sources": [
         {
           "path": "include/linux/netdevice.h",
-          "line": 1451,
+          "line": 1472,
           "label": "ndo_start_xmit"
         },
         {
           "path": "include/linux/netdevice.h",
-          "line": 5400,
+          "line": 5457,
           "label": "netdev_start_xmit"
         }
       ]
@@ -214,9 +214,9 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "tcp_sendmsg — net/ipv4/tcp.c:1446",
-        "tcp_write_xmit — net/ipv4/tcp_output.c:2964",
-        "tcp_transmit_skb — net/ipv4/tcp_output.c:1731",
+        "tcp_sendmsg—net/ipv4/tcp.c:1457",
+        "tcp_write_xmit—net/ipv4/tcp_output.c:3028",
+        "tcp_transmit_skb—net/ipv4/tcp_output.c:1787",
         "ip_queue_xmit — net/ipv4/ip_output.c:545",
         "__ip_queue_xmit — net/ipv4/ip_output.c:462",
         "ip_local_out — net/ipv4/ip_output.c:125",
@@ -224,10 +224,10 @@
         "ip_output — net/ipv4/ip_output.c:427",
         "ip_finish_output — net/ipv4/ip_output.c:317",
         "ip_finish_output2 — net/ipv4/ip_output.c:199",
-        "dev_queue_xmit — include/linux/netdevice.h:3444",
-        "__dev_queue_xmit — net/core/dev.c:4768",
-        "netdev_start_xmit — include/linux/netdevice.h:5403",
-        "ndo_start_xmit — include/linux/netdevice.h:5400"
+        "dev_queue_xmit—include/linux/netdevice.h:3483",
+        "__dev_queue_xmit—net/core/dev.c:4977",
+        "netdev_start_xmit—include/linux/netdevice.h:5460",
+        "ndo_start_xmit—include/linux/netdevice.h:5457"
       ]
     }
   ]

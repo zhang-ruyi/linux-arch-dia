@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
+    "sha256": "eb2b64ed22528a93c7c444553cce8cbad65543c0b5d2e21fc3b6f4e81e024509",
+    "bytes": 5733
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+    "sha256": "aad0536b3400cfea010606f820143e56653a74f0373c4c1f86e4cd655995909f",
+    "bytes": 836610
+  },
+  "gates": {
+    "validate": "not-run",
+    "deliver": "fail",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "deliver",
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-2/futex-wakeup.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-2/futex-wakeup.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 247,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

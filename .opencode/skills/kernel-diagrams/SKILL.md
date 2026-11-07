@@ -54,7 +54,7 @@ Archify 已全局安装在 `~/.agents/skills/archify`,命令行入口:
 1. `grep -n "函数名" 路径` 找定义,`read` 读主线,跳过错误分支细节
 2. 遇到 ops 结构(`file_operations`/`net_device_ops`):先找注册点,再追具体实现
 3. 关键宏展开一层(`SYSCALL_DEFINEx`)
-4. **每个要写进图的函数/结构体名和行号都必须 grep 核实**,不得凭记忆(v7.2 已有多处改名,如 `do_file_open`、`send_signal_locked`、`get_signal`)
+4. **每个要写进图的函数/结构体名和行号都必须 grep 核实**,不得凭记忆(7.4 等新版本中符号与行号仍在变化,如 `do_file_open`、`send_signal_locked`、`get_signal`)
 
 ### 3. 选 Archify 类型
 

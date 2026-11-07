@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "95916d04-0b84-4ce8-82ff-e81f2ebbc67e",
+  "receiptId": "07dedd6d-83bb-47db-8d2b-8f8eb0a5e5c3",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-tcp-recv/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/deep-tcp-recv.html",
   "specification": {
-    "sha256": "c3b6054817a994ba621cd9d8bf196207ff9d18b6ecc3a35efa1d57690ac909cc",
-    "bytes": 15656
+    "sha256": "165ae3ca5f58060fed8ffc18e79bd9e9286956ac974e317622ce00d14c4e38a3",
+    "bytes": 15645
   },
   "artifact": {
-    "sha256": "8f99911f283f62bf82eb30704ada1cb36d7806f0ec79c38116f04cb921c44059",
-    "bytes": 873239
+    "sha256": "cb445f5cd97ca58129c43242e48904e8a08559c9ea3fb80493d26bfe5897371d",
+    "bytes": 873229
   }
 }

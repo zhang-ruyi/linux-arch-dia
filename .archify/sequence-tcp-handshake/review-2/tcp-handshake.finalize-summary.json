@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
+    "sha256": "ccf1f390efa9317ca0bfe64bf9b8324d93c70a43ea59760540dbec63bae09e09",
+    "bytes": 5871
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+    "sha256": "6b4f1af5ace04e14315432eb21bd752932706f6759fa6cc670355e95cb22c0e0",
+    "bytes": 834842
+  },
+  "gates": {
+    "validate": "not-run",
+    "deliver": "fail",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "deliver",
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html\" through lock \"/home/zhang/opencode/code_analsys/site/网络协议栈/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/review-2/tcp-handshake.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/review-2/tcp-handshake.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 234,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -99,7 +99,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 7910,
+          "line": 8166,
           "label": "NET_RX_SOFTIRQ 处理函数"
         }
       ]
@@ -114,7 +114,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 7782,
+          "line": 8038,
           "label": "napi_poll"
         }
       ]
@@ -129,7 +129,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 7715,
+          "line": 7971,
           "label": "调用 n->poll"
         }
       ]
@@ -144,7 +144,7 @@
       "sources": [
         {
           "path": "include/linux/netdevice.h",
-          "line": 4314,
+          "line": 4371,
           "label": "GRO 收包入口"
         }
       ]
@@ -159,7 +159,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 6458,
+          "line": 6687,
           "label": "netif_receive_skb"
         }
       ]
@@ -174,7 +174,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 6383,
+          "line": 6612,
           "label": "RPS 后再分发"
         }
       ]
@@ -189,7 +189,7 @@
       "sources": [
         {
           "path": "net/core/dev.c",
-          "line": 5976,
+          "line": 6197,
           "label": "按 ptype 分发"
         }
       ]
@@ -309,7 +309,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 2067,
+          "line": 2075,
           "label": "TCP 收包入口"
         }
       ]
@@ -324,7 +324,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 1827,
+          "line": 1835,
           "label": "快慢路径分流"
         }
       ]
@@ -339,7 +339,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 6470,
+          "line": 6556,
           "label": "ESTABLISHED 快路径"
         }
       ]
@@ -354,7 +354,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 7122,
+          "line": 7212,
           "label": "状态机慢路径"
         }
       ]
@@ -369,7 +369,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 5577,
+          "line": 5644,
           "label": "数据排队入口"
         }
       ]
@@ -384,7 +384,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 5502,
+          "line": 5567,
           "label": "挂入接收队列"
         }
       ]
@@ -399,7 +399,7 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 5571,
+          "line": 5638,
           "label": "触发可读回调"
         }
       ]
@@ -414,7 +414,7 @@
       "sources": [
         {
           "path": "net/core/sock.c",
-          "line": 3647,
+          "line": 3728,
           "label": "默认 sk_data_ready"
         }
       ]
@@ -445,7 +445,7 @@
       "sources": [
         {
           "path": "kernel/sched/wait.c",
-          "line": 186,
+          "line": 182,
           "label": "__wake_up_sync_key"
         }
       ]
@@ -490,7 +490,7 @@
       "sources": [
         {
           "path": "fs/eventpoll.c",
-          "line": 1475,
+          "line": 1491,
           "label": "epoll 就绪回调"
         }
       ]
@@ -645,9 +645,9 @@
       "dot": "cyan",
       "title": "收包主链(源码核实)",
       "items": [
-        "net_rx_action — net/core/dev.c:7910 → napi_poll — net/core/dev.c:7782 → __napi_poll — net/core/dev.c:7715",
+        "net_rx_action — net/core/dev.c:7910 → napi_poll — net/core/dev.c:7782 → __napi_poll—net/core/dev.c:7971",
         "__napi_poll 调用驱动 poll,经 napi_gro_receive — include/linux/netdevice.h:4314 进入协议栈",
-        "netif_receive_skb — net/core/dev.c:6458 → netif_receive_skb_internal — net/core/dev.c:6383 → __netif_receive_skb_core — net/core/dev.c:5976"
+        "netif_receive_skb — net/core/dev.c:6458 → netif_receive_skb_internal — net/core/dev.c:6383 → __netif_receive_skb_core—net/core/dev.c:6197"
       ]
     },
     {
@@ -657,7 +657,7 @@
         "ip_rcv — net/ipv4/ip_input.c:603 → ip_rcv_core — net/ipv4/ip_input.c:499 校验首部",
         "ip_rcv_finish — net/ipv4/ip_input.c:478 → ip_rcv_finish_core — net/ipv4/ip_input.c:361 查路由",
         "ip_local_deliver — net/ipv4/ip_input.c:250 → ip_local_deliver_finish — net/ipv4/ip_input.c:229 → ip_protocol_deliver_rcu — net/ipv4/ip_input.c:189",
-        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067 → tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827;快路径 tcp_rcv_established — net/ipv4/tcp_input.c:6470,慢路径 tcp_rcv_state_process — net/ipv4/tcp_input.c:7122"
+        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067 → tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827;快路径 tcp_rcv_established — net/ipv4/tcp_input.c:6470,慢路径 tcp_rcv_state_process—net/ipv4/tcp_input.c:7212"
       ]
     },
     {
@@ -666,8 +666,8 @@
       "items": [
         "tcp_rcv_established 与 tcp_rcv_state_process 均在 net/ipv4/tcp_input.c:6659 / :7371 调用 tcp_data_queue",
         "tcp_data_queue — net/ipv4/tcp_input.c:5577 → tcp_queue_rcv — net/ipv4/tcp_input.c:5502 挂入接收队列",
-        "乱序分支:tcp_data_queue → tcp_data_queue_ofo — net/ipv4/tcp_input.c:5351 → tcp_ofo_queue — net/ipv4/tcp_input.c:5276",
-        "tcp_data_ready — net/ipv4/tcp_input.c:5571 → sock_def_readable — net/core/sock.c:3647 → wake_up_interruptible_sync_poll — include/linux/wait.h:246 → __wake_up_common — kernel/sched/wait.c:92 → ep_poll_callback — fs/eventpoll.c:1475"
+        "乱序分支:tcp_data_queue → tcp_data_queue_ofo — net/ipv4/tcp_input.c:5351 → tcp_ofo_queue—net/ipv4/tcp_input.c:5339",
+        "tcp_data_ready — net/ipv4/tcp_input.c:5571 → sock_def_readable — net/core/sock.c:3647 → wake_up_interruptible_sync_poll — include/linux/wait.h:246 → __wake_up_common — kernel/sched/wait.c:92 → ep_poll_callback—fs/eventpoll.c:1491"
       ]
     }
   ]

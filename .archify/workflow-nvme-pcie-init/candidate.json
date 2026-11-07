@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -81,17 +81,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 4309,
+          "line": 4564,
           "label": "nvme_init"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 4316,
+          "line": 4571,
           "label": "pci_register_driver"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3747,
+          "line": 3994,
           "label": "nvme_probe"
         }
       ]
@@ -106,17 +106,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3673,
+          "line": 3919,
           "label": "nvme_pci_alloc_dev"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 5244,
+          "line": 5329,
           "label": "nvme_add_ctrl"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3568,
+          "line": 3814,
           "label": "nvme_dev_map"
         }
       ]
@@ -131,12 +131,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3193,
+          "line": 3430,
           "label": "nvme_pci_enable"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3223,
+          "line": 3460,
           "label": "q_depth 计算"
         }
       ]
@@ -151,17 +151,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2332,
+          "line": 2568,
           "label": "nvme_pci_configure_admin_queue"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 2744,
+          "line": 2795,
           "label": "nvme_enable_ctrl"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 3736,
+          "line": 3802,
           "label": "nvme_init_ctrl_finish"
         }
       ]
@@ -176,17 +176,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2944,
+          "line": 3181,
           "label": "nvme_setup_io_queues"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2893,
+          "line": 3130,
           "label": "nvme_setup_irqs"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2410,
+          "line": 2647,
           "label": "nvme_create_io_queues"
         }
       ]
@@ -201,12 +201,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 5064,
+          "line": 5164,
           "label": "nvme_start_ctrl"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4578,
+          "line": 4679,
           "label": "nvme_scan_work"
         }
       ]
@@ -221,17 +221,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3239,
+          "line": 3476,
           "label": "QDEPTH_ONE"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3243,
+          "line": 3480,
           "label": "PM1725"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3254,
+          "line": 3491,
           "label": "SHARED_TAGS"
         }
       ]
@@ -246,7 +246,7 @@
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2367,
+          "line": 2603,
           "label": "pcie_reset_flr"
         }
       ]
@@ -329,17 +329,17 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "nvme_init — drivers/nvme/host/pci.c:4309",
-        "pci_register_driver — drivers/nvme/host/pci.c:4316",
-        "nvme_probe — drivers/nvme/host/pci.c:3747",
-        "nvme_pci_enable — drivers/nvme/host/pci.c:3193",
-        "nvme_pci_configure_admin_queue — drivers/nvme/host/pci.c:2332",
-        "nvme_enable_ctrl — drivers/nvme/host/core.c:2744",
-        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
-        "nvme_init_identify — drivers/nvme/host/core.c:3589",
-        "nvme_setup_io_queues — drivers/nvme/host/pci.c:2944",
-        "nvme_create_io_queues — drivers/nvme/host/pci.c:2410",
-        "nvme_start_ctrl — drivers/nvme/host/core.c:5064"
+        "nvme_init—drivers/nvme/host/pci.c:4564",
+        "pci_register_driver—drivers/nvme/host/pci.c:4571",
+        "nvme_probe—drivers/nvme/host/pci.c:3994",
+        "nvme_pci_enable—drivers/nvme/host/pci.c:3430",
+        "nvme_pci_configure_admin_queue—drivers/nvme/host/pci.c:2568",
+        "nvme_enable_ctrl—drivers/nvme/host/core.c:2795",
+        "nvme_init_ctrl_finish—drivers/nvme/host/core.c:3802",
+        "nvme_init_identify—drivers/nvme/host/core.c:3655",
+        "nvme_setup_io_queues—drivers/nvme/host/pci.c:3181",
+        "nvme_create_io_queues—drivers/nvme/host/pci.c:2647",
+        "nvme_start_ctrl—drivers/nvme/host/core.c:5164"
       ]
     }
   ]

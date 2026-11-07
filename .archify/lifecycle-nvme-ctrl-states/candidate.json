@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -28,7 +28,7 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 306,
+          "line": 321,
           "label": "NVME_CTRL_NEW"
         }
       ]
@@ -42,17 +42,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 309,
+          "line": 324,
           "label": "NVME_CTRL_CONNECTING"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3783,
+          "line": 3655,
           "label": "probe 置 CONNECTING"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3418,
+          "line": 3655,
           "label": "reset_work 置 CONNECTING"
         }
       ]
@@ -66,17 +66,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 307,
+          "line": 322,
           "label": "NVME_CTRL_LIVE"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3820,
+          "line": 3707,
           "label": "probe 置 LIVE"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3470,
+          "line": 3707,
           "label": "reset_work 置 LIVE"
         }
       ]
@@ -90,17 +90,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 308,
+          "line": 323,
           "label": "NVME_CTRL_RESETTING"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 215,
+          "line": 220,
           "label": "nvme_reset_ctrl"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 2003,
+          "line": 2235,
           "label": "timeout disable 置 RESETTING"
         }
       ]
@@ -114,17 +114,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 310,
+          "line": 325,
           "label": "NVME_CTRL_DELETING"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 259,
+          "line": 264,
           "label": "nvme_delete_ctrl"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3890,
+          "line": 3726,
           "label": "nvme_remove 置 DELETING"
         }
       ]
@@ -138,12 +138,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 311,
+          "line": 326,
           "label": "NVME_CTRL_DELETING_NOIO"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4668,
+          "line": 4769,
           "label": "nvme_remove_namespaces"
         }
       ]
@@ -157,12 +157,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/nvme.h",
-          "line": 312,
+          "line": 327,
           "label": "NVME_CTRL_DEAD"
         },
         {
           "path": "drivers/nvme/host/pci.c",
-          "line": 3894,
+          "line": 3731,
           "label": "设备移除时置 DEAD"
         }
       ]
@@ -277,15 +277,15 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "nvme_reset_ctrl — drivers/nvme/host/core.c:215",
-        "nvme_reset_work — drivers/nvme/host/pci.c:3385",
-        "nvme_pci_enable — drivers/nvme/host/pci.c:3193",
-        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
-        "nvme_start_ctrl — drivers/nvme/host/core.c:5064",
-        "nvme_timeout — drivers/nvme/host/pci.c:1875",
-        "nvme_dev_disable — drivers/nvme/host/pci.c:3297",
-        "nvme_try_sched_reset — drivers/nvme/host/core.c:173",
-        "nvme_change_ctrl_state — drivers/nvme/host/core.c:574"
+        "nvme_reset_ctrl—drivers/nvme/host/core.c:220",
+        "nvme_reset_work—drivers/nvme/host/pci.c:3622",
+        "nvme_pci_enable—drivers/nvme/host/pci.c:3430",
+        "nvme_init_ctrl_finish—drivers/nvme/host/core.c:3802",
+        "nvme_start_ctrl—drivers/nvme/host/core.c:5164",
+        "nvme_timeout—drivers/nvme/host/pci.c:2107",
+        "nvme_dev_disable—drivers/nvme/host/pci.c:3534",
+        "nvme_try_sched_reset—drivers/nvme/host/core.c:178",
+        "nvme_change_ctrl_state—drivers/nvme/host/core.c:579"
       ]
     }
   ]

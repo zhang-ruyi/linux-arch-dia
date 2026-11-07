@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "f5bfb689-f58d-4bc6-b74a-271cebb7c8a2",
+  "receiptId": "28c59e02-2a43-4ad9-a7e6-15e03671a3b2",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-page-reclaim/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/内存管理/page-reclaim.html",
   "specification": {
-    "sha256": "c3ec4cede0c761984850fa87b61ffffad5bef79b5818d65a07b85909451312b0",
-    "bytes": 8644
+    "sha256": "ac960af38951da9f12b136767d5e5d5bdebbdbeb59489fb4e5b807880065f888",
+    "bytes": 8623
   },
   "artifact": {
-    "sha256": "8e6bf00ac50c2a877bd11cd1b17da728cd93274de15859dd1646ae10f06b43e7",
-    "bytes": 852320
+    "sha256": "fa9c18b099c70bb89e168e35b5edcfc100f64a6a5ef1c2f0abc2bc1348be988b",
+    "bytes": 852297
   }
 }

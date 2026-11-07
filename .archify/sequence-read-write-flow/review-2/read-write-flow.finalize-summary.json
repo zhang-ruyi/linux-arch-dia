@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-read-write-flow/candidate.json",
+    "sha256": "dc76250dda61979246be7df6a58d2f2add187be3585334971ac8f94bb326b7fa",
+    "bytes": 5930
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/read-write-flow.html",
+    "sha256": "286d298effb748ccd5af318b8631ce30954b7f92d2dda4e7b4b719dd55e6a501",
+    "bytes": 837669
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-read-write-flow/review-2/read-write-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-read-write-flow/review-2/read-write-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-read-write-flow/review-2/read-write-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3588,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

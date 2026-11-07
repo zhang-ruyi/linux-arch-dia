@@ -5,7 +5,7 @@
 - 所有图都是独立、可离线打开的 HTML(自带明暗主题、动效、缩放与导出)
 - 每张图的主元素都标注了已核实的源码 `path:line`
 - 图源是可编辑的 JSON-IR(`.archify/*/candidate.json`),不是渲染后的死图
-- 当前图集:**44 张**(37 张概览 + 7 张函数级深度调用链),源码基线 Linux `3b029c0`(v7.2-rc3)
+- 当前图集:**44 张**(37 张概览 + 7 张函数级深度调用链),源码基线 Linux `d487237`(v7.4.0-rc1)
 
 ## 图集一览
 
@@ -174,7 +174,7 @@ grep -rn "handle_mm_fault(" --include="*.c" | grep -v "handle_mm_fault(struct"
 git -C ~/workspace/Git/git.kernel.org/linux rev-parse HEAD
 ```
 
-规则:写进图的每个函数名、结构体名、行号都必须在源码树中 `grep` 核实,不要凭记忆(例如 v7.2 中 `do_filp_open` 已改名为 `do_file_open`,`send_signal` 为 `send_signal_locked`)。
+规则:写进图的每个函数名、结构体名、行号都必须在源码树中 `grep` 核实,不要凭记忆(例如 `do_filp_open` 自 7.2 起改名为 `do_file_open`,`send_signal` 为 `send_signal_locked`)。
 
 ### 2. 选择图表类型
 
@@ -309,7 +309,7 @@ Copyright © 2026 zhang-ruyi (Ruyi.zhang). All rights reserved.
 
 ## 说明
 
-- 源码基线:Linux `3b029c035b34bbc693405ddf759f0e9b920c27f1`(v7.2-rc3);图的 `meta.repository` 使用 `link_mode: "local-only"`,便于在任意机器上复现
+- 源码基线:Linux `d48723711bae9b8cdc56719c448ba42fef28cbee`(v7.4.0-rc1);图的 `meta.repository` 使用 `link_mode: "local-only"`,便于在任意机器上复现
 - “四门禁通过”是自动化校验(结构、交付、可复现性、真实浏览器视图),不等同于人工视觉审查;需要视觉复核时可对单图运行 Archify 的 `visual-check`
 - `diagrams/` 中的 `.mmd` 是早期 Mermaid 版本,保留仅作溯源;仓库的正式产物是 `site/` 与 `.archify/`
 - Archify 为第三方开源工具(Apache-2.0),该许可仅适用于 Archify 本身;本仓库原创图表与文档的版权与使用限制以上一节为准

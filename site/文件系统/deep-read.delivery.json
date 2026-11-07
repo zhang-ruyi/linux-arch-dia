@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "0312e3c3-aaa3-4a44-b51d-37786f90bcaa",
+  "receiptId": "9060501d-17d6-4896-9ffe-5bf765cd4341",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-read/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/文件系统/deep-read.html",
   "specification": {
-    "sha256": "6801f4f255d2c6ce463dc9701f4e4af2d1a0fc9f63d9dc88c5aefa738633e972",
-    "bytes": 15023
+    "sha256": "3749844788d81e52501705b0355ab85f9e8147cda753a81e09b618545e245b24",
+    "bytes": 15007
   },
   "artifact": {
-    "sha256": "fe826c342c1b931648a30faa680ca1e6ef591d371207096528e3ae36fa5c587c",
-    "bytes": 875632
+    "sha256": "c0ade290426516c8cca7101723ab8f6fa0f876a1b7484b9f42892bf30cb520f7",
+    "bytes": 875616
   }
 }

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-identify-scan/candidate.json",
+    "sha256": "dfd0aafd80d58576cc35e28aa23ca1efe074729ef219fb7a5f5877f90f70ed9d",
+    "bytes": 6800
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-identify-scan.html",
+    "sha256": "598d04564e2b32b7a8eee2471b9897384a7d1855ea9aa19a7841cdce8c70eab0",
+    "bytes": 842864
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-identify-scan/review-2/nvme-identify-scan.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-identify-scan/review-2/nvme-identify-scan.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-identify-scan/review-2/nvme-identify-scan.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3981,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "673e4c9b-bedf-4775-a612-c0b414bbf066",
+  "receiptId": "ac31ba89-d941-4e90-bafe-045c9b06ffa7",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-napi-receive/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/napi-receive.html",
   "specification": {
-    "sha256": "309088875e5cd892eafee591febcad95b929d13cd026bf4677809a7c654ae99d",
-    "bytes": 6548
+    "sha256": "59773601f6191a697c629037a6969dc63f02714379266ef464ed116215133557",
+    "bytes": 6523
   },
   "artifact": {
-    "sha256": "6cb68ac347253edb65a33499917a7a0036c006134f35c246f099befd8bd497ce",
-    "bytes": 834185
+    "sha256": "bd3ad2b92f63b60b2e6553fd8b095fc02f54eeba63150033d6269eb5ba5e8c63",
+    "bytes": 834161
   }
 }

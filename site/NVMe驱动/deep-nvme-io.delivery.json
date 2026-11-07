@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "8a54adf6-b196-4256-89ba-8a08762aed34",
+  "receiptId": "6637d75a-c5a6-4681-be91-d8e95e83aa95",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.html",
   "specification": {
-    "sha256": "9479a4e9de5f5dacdcf386f196818477b942ed66cb3c1fb7cc7fa8c9ecbb1403",
-    "bytes": 14472
+    "sha256": "074f60adb2f64a3cb7884617e0b57e0753d6d4f8bca373f788d6c1d3c2785e24",
+    "bytes": 16821
   },
   "artifact": {
-    "sha256": "7576bcff691a6809377d8bc2fc4763a7eefd2ee097aaae2c64cb94e80d69d364",
+    "sha256": "24f4ca3640bba5662bdb85613234b59be4a40b4c954a1cc6ce3fee742aa205e0",
     "bytes": 887259
   }
 }

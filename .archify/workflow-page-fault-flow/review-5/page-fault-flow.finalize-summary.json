@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+    "sha256": "f1adeba8565d4b367911bb6959dcf10b1c0981543a2d82999d57475e86204063",
+    "bytes": 10861
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+    "sha256": "f8ecc369201ed021216e416bb6a4e6822fd5b7a7346d37342946c70f6113dc48",
+    "bytes": 862785
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "fail",
+    "browser-check": "not-run"
+  },
+  "failedStage": "check",
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/review-5/page-fault-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/review-5/page-fault-flow.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2486,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -59,7 +59,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 7316,
+          "line": 7464,
           "label": "schedule"
         }
       ]
@@ -74,12 +74,12 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 7316,
+          "line": 7464,
           "label": "schedule"
         },
         {
           "path": "kernel/sched/core.c",
-          "line": 7061,
+          "line": 7207,
           "label": "__schedule"
         }
       ]
@@ -94,12 +94,12 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 6216,
+          "line": 6295,
           "label": "pick_next_task"
         },
         {
           "path": "kernel/sched/core.c",
-          "line": 6124,
+          "line": 6203,
           "label": "__pick_next_task"
         }
       ]
@@ -115,12 +115,12 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 9912,
+          "line": 10275,
           "label": "pick_task_fair"
         },
         {
           "path": "kernel/sched/fair.c",
-          "line": 6376,
+          "line": 6688,
           "label": "pick_next_entity"
         }
       ]
@@ -135,12 +135,12 @@
       "sources": [
         {
           "path": "kernel/sched/fair.c",
-          "line": 1136,
+          "line": 1130,
           "label": "pick_eevdf"
         },
         {
           "path": "kernel/sched/fair.c",
-          "line": 939,
+          "line": 961,
           "label": "entity_eligible"
         }
       ]
@@ -155,17 +155,17 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 5451,
+          "line": 5524,
           "label": "context_switch"
         },
         {
           "path": "kernel/sched/core.c",
-          "line": 5318,
+          "line": 5391,
           "label": "finish_task_switch"
         },
         {
           "path": "kernel/sched/sched.h",
-          "line": 1708,
+          "line": 1754,
           "label": "task_of"
         }
       ]
@@ -241,16 +241,16 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "schedule() — kernel/sched/core.c:7316",
-        "__schedule() — kernel/sched/core.c:7061",
-        "pick_next_task() — kernel/sched/core.c:6216",
-        "__pick_next_task() — kernel/sched/core.c:6124",
-        "pick_task_fair() — kernel/sched/fair.c:9912",
-        "pick_next_entity() — kernel/sched/fair.c:6376",
-        "pick_eevdf() — kernel/sched/fair.c:1136",
-        "entity_eligible() — kernel/sched/fair.c:939",
-        "context_switch() — kernel/sched/core.c:5451",
-        "finish_task_switch() — kernel/sched/core.c:5318"
+        "schedule()—kernel/sched/core.c:7464",
+        "__schedule()—kernel/sched/core.c:7207",
+        "pick_next_task()—kernel/sched/core.c:6295",
+        "__pick_next_task()—kernel/sched/core.c:6203",
+        "pick_task_fair()—kernel/sched/fair.c:10275",
+        "pick_next_entity() — kernel/sched/fair.c:6688",
+        "pick_eevdf()—kernel/sched/fair.c:1130",
+        "entity_eligible()—kernel/sched/fair.c:961",
+        "context_switch()—kernel/sched/core.c:5524",
+        "finish_task_switch()—kernel/sched/core.c:5391"
       ]
     }
   ]

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -160,7 +160,7 @@
       "sources": [
         {
           "path": "fs/ext4/file.c",
-          "line": 130,
+          "line": 132,
           "label": "ext4_file_read_iter"
         }
       ]
@@ -175,7 +175,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2965,
+          "line": 3004,
           "label": "generic_file_read_iter"
         }
       ]
@@ -190,7 +190,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2777,
+          "line": 2816,
           "label": "filemap_read"
         }
       ]
@@ -205,7 +205,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2676,
+          "line": 2715,
           "label": "filemap_get_pages"
         }
       ]
@@ -220,7 +220,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2464,
+          "line": 2498,
           "label": "filemap_get_read_batch"
         }
       ]
@@ -235,7 +235,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2662,
+          "line": 2701,
           "label": "filemap_readahead"
         }
       ]
@@ -250,7 +250,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2500,
+          "line": 2539,
           "label": "filemap_read_folio"
         }
       ]
@@ -265,7 +265,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2597,
+          "line": 2636,
           "label": "mapping->a_ops->read_folio"
         }
       ]
@@ -280,7 +280,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 394,
+          "line": 321,
           "label": "ext4_read_folio"
         }
       ]
@@ -295,7 +295,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 210,
+          "line": 137,
           "label": "ext4_mpage_readpages"
         }
       ]
@@ -310,7 +310,7 @@
       "sources": [
         {
           "path": "fs/ext4/inode.c",
-          "line": 701,
+          "line": 673,
           "label": "ext4_map_blocks"
         }
       ]
@@ -325,7 +325,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 355,
+          "line": 282,
           "label": "bio_alloc"
         }
       ]
@@ -340,7 +340,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 366,
+          "line": 293,
           "label": "bio_add_folio"
         }
       ]
@@ -355,7 +355,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 390,
+          "line": 317,
           "label": "blk_crypto_submit_bio"
         }
       ]
@@ -370,7 +370,7 @@
       "sources": [
         {
           "path": "block/blk-core.c",
-          "line": 952,
+          "line": 960,
           "label": "submit_bio"
         }
       ]
@@ -385,7 +385,7 @@
       "sources": [
         {
           "path": "block/blk-core.c",
-          "line": 817,
+          "line": 818,
           "label": "submit_bio_noacct"
         }
       ]
@@ -400,7 +400,7 @@
       "sources": [
         {
           "path": "block/blk-mq.c",
-          "line": 3093,
+          "line": 3115,
           "label": "blk_mq_submit_bio"
         }
       ]
@@ -415,7 +415,7 @@
       "sources": [
         {
           "path": "fs/ext4/readpage.c",
-          "line": 166,
+          "line": 103,
           "label": "mpage_end_io"
         }
       ]
@@ -430,7 +430,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 1529,
+          "line": 1545,
           "label": "folio_end_read"
         }
       ]
@@ -445,7 +445,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 1504,
+          "line": 1520,
           "label": "folio_unlock"
         }
       ]
@@ -460,7 +460,7 @@
       "sources": [
         {
           "path": "mm/filemap.c",
-          "line": 2865,
+          "line": 2904,
           "label": "copy_folio_to_iter"
         }
       ]
@@ -663,14 +663,14 @@
         "ksys_read — fs/read_write.c:705",
         "vfs_read — fs/read_write.c:554",
         "f_op->read_iter — fs/read_write.c:493",
-        "ext4_file_read_iter — fs/ext4/file.c:130",
-        "generic_file_read_iter — mm/filemap.c:2965",
-        "filemap_read — mm/filemap.c:2777",
-        "filemap_get_pages — mm/filemap.c:2676",
-        "filemap_read_folio — mm/filemap.c:2500",
-        "ext4_read_folio — fs/ext4/readpage.c:394",
-        "ext4_mpage_readpages — fs/ext4/readpage.c:210",
-        "submit_bio — block/blk-core.c:952"
+        "ext4_file_read_iter—fs/ext4/file.c:132",
+        "generic_file_read_iter—mm/filemap.c:3004",
+        "filemap_read—mm/filemap.c:2816",
+        "filemap_get_pages—mm/filemap.c:2715",
+        "filemap_read_folio—mm/filemap.c:2539",
+        "ext4_read_folio—fs/ext4/readpage.c:321",
+        "ext4_mpage_readpages—fs/ext4/readpage.c:137",
+        "submit_bio—block/blk-core.c:960"
       ]
     },
     {

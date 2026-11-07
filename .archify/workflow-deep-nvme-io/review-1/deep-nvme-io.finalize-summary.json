@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/candidate.json",
+    "sha256": "074f60adb2f64a3cb7884617e0b57e0753d6d4f8bca373f788d6c1d3c2785e24",
+    "bytes": 16821
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.html",
+    "sha256": "24f4ca3640bba5662bdb85613234b59be4a40b4c954a1cc6ce3fee742aa205e0",
+    "bytes": 887259
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/review-1/deep-nvme-io.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/review-1/deep-nvme-io.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/review-1/deep-nvme-io.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5322,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -21,7 +21,7 @@
       "sources": [
         {
           "path": "net/socket.c",
-          "line": 1805,
+          "line": 1833,
           "label": "SYSCALL_DEFINE3(socket)"
         }
       ]
@@ -34,7 +34,7 @@
       "sources": [
         {
           "path": "net/socket.c",
-          "line": 1788,
+          "line": 1816,
           "label": "__sys_socket"
         }
       ]
@@ -47,17 +47,17 @@
       "sources": [
         {
           "path": "net/socket.c",
-          "line": 1580,
+          "line": 1608,
           "label": "__sock_create"
         },
         {
           "path": "net/socket.c",
-          "line": 1707,
+          "line": 1735,
           "label": "sock_create"
         },
         {
           "path": "net/socket.c",
-          "line": 680,
+          "line": 705,
           "label": "sock_alloc"
         }
       ]
@@ -70,12 +70,12 @@
       "sources": [
         {
           "path": "net/ipv4/af_inet.c",
-          "line": 259,
+          "line": 260,
           "label": "inet_create"
         },
         {
           "path": "net/ipv4/af_inet.c",
-          "line": 333,
+          "line": 334,
           "label": "sk_alloc"
         }
       ]
@@ -88,7 +88,7 @@
       "sources": [
         {
           "path": "net/core/sock.c",
-          "line": 2303,
+          "line": 2332,
           "label": "sk_alloc"
         }
       ]
@@ -212,13 +212,13 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "__sys_socket — net/socket.c:1788",
-        "__sys_socket_create — net/socket.c:1731",
-        "sock_create — net/socket.c:1707",
-        "__sock_create — net/socket.c:1580",
-        "inet_create — net/ipv4/af_inet.c:259",
-        "sk_alloc — net/core/sock.c:2303",
-        "tcp_prot — net/ipv4/tcp_ipv4.c:3335"
+        "__sys_socket—net/socket.c:1816",
+        "__sys_socket_create—net/socket.c:1759",
+        "sock_create—net/socket.c:1735",
+        "__sock_create—net/socket.c:1608",
+        "inet_create—net/ipv4/af_inet.c:260",
+        "sk_alloc—net/core/sock.c:2332",
+        "tcp_prot—net/ipv4/tcp_ipv4.c:3352"
       ]
     }
   ]

@@ -9,7 +9,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -19,40 +19,335 @@
     "gapY": 44
   },
   "nodes": [
-    { "id": "kernel", "label": "Linux 内核 v7.2-rc3", "sublabel": "源码树 git.kernel.org/torvalds/linux" },
-
-    { "id": "process", "label": "进程管理", "parent": "kernel", "sublabel": "调度 / 创建 / 信号 / 退出", "sources": [{ "path": "kernel/sched/core.c", "line": 7061 }] },
-    { "id": "sched", "label": "调度器 EEVDF", "parent": "process", "sublabel": "kernel/sched/fair.c", "sources": [{ "path": "kernel/sched/fair.c", "line": 1136 }] },
-    { "id": "fork", "label": "进程创建 fork/clone", "parent": "process", "sublabel": "kernel/fork.c", "sources": [{ "path": "kernel/fork.c", "line": 2694 }] },
-    { "id": "signal", "label": "信号处理", "parent": "process", "sublabel": "kernel/signal.c", "sources": [{ "path": "kernel/signal.c", "line": 1040 }] },
-    { "id": "exit", "label": "退出与回收", "parent": "process", "sublabel": "kernel/exit.c", "sources": [{ "path": "kernel/exit.c", "line": 929 }] },
-
-    { "id": "memory", "label": "内存管理", "parent": "kernel", "sublabel": "分配 / 映射 / 回收", "sources": [{ "path": "mm/page_alloc.c", "line": 5333 }] },
-    { "id": "buddy", "label": "伙伴系统", "parent": "memory", "sublabel": "mm/page_alloc.c", "sources": [{ "path": "mm/page_alloc.c", "line": 1889 }] },
-    { "id": "slub", "label": "SLUB 分配器", "parent": "memory", "sublabel": "mm/slub.c", "sources": [{ "path": "mm/slub.c", "line": 4920 }] },
-    { "id": "fault", "label": "缺页异常", "parent": "memory", "sublabel": "mm/memory.c", "sources": [{ "path": "mm/memory.c", "line": 6417 }] },
-    { "id": "reclaim", "label": "页回收", "parent": "memory", "sublabel": "mm/vmscan.c", "sources": [{ "path": "mm/vmscan.c", "line": 7399 }] },
-
-    { "id": "fs", "label": "文件系统", "parent": "kernel", "sublabel": "VFS / 页缓存 / ext4", "sources": [{ "path": "fs/namei.c", "line": 4843 }] },
-    { "id": "vfs", "label": "VFS 抽象层", "parent": "fs", "sublabel": "fs/open.c", "sources": [{ "path": "fs/open.c", "line": 1047 }] },
-    { "id": "pagecache", "label": "页缓存与写回", "parent": "fs", "sublabel": "mm/filemap.c", "sources": [{ "path": "mm/filemap.c", "line": 2777 }] },
-    { "id": "ext4", "label": "ext4 文件系统", "parent": "fs", "sublabel": "fs/ext4/file.c", "sources": [{ "path": "fs/ext4/file.c", "line": 130 }] },
-
-    { "id": "net", "label": "网络协议栈", "parent": "kernel", "sublabel": "TCP/IP / NAPI / epoll", "sources": [{ "path": "net/core/dev.c", "line": 7910 }] },
-    { "id": "tcp", "label": "TCP 协议", "parent": "net", "sublabel": "net/ipv4/tcp_ipv4.c", "sources": [{ "path": "net/ipv4/tcp_ipv4.c", "line": 2067 }] },
-    { "id": "napi", "label": "NAPI 收包", "parent": "net", "sublabel": "net/core/dev.c", "sources": [{ "path": "net/core/dev.c", "line": 7782 }] },
-    { "id": "xmit", "label": "发包路径", "parent": "net", "sublabel": "net/core/dev.c", "sources": [{ "path": "net/core/dev.c", "line": 4768 }] },
-    { "id": "epoll", "label": "epoll 事件", "parent": "net", "sublabel": "fs/eventpoll.c", "sources": [{ "path": "fs/eventpoll.c", "line": 1475 }] },
-
-    { "id": "drivers", "label": "设备驱动", "parent": "kernel", "sublabel": "总线模型 / 块 IO / 下半部", "sources": [{ "path": "drivers/base/dd.c", "line": 652 }] },
-    { "id": "busdev", "label": "总线-设备-驱动模型", "parent": "drivers", "sublabel": "drivers/base/bus.c", "sources": [{ "path": "drivers/base/bus.c", "line": 732 }] },
-    { "id": "block", "label": "块 IO 路径", "parent": "drivers", "sublabel": "block/blk-mq.c", "sources": [{ "path": "block/blk-mq.c", "line": 3093 }] },
-    { "id": "softirq", "label": "中断下半部", "parent": "drivers", "sublabel": "kernel/softirq.c", "sources": [{ "path": "kernel/softirq.c", "line": 654 }] },
-
-    { "id": "boot", "label": "启动与初始化", "parent": "kernel", "sublabel": "引导 / start_kernel / init", "sources": [{ "path": "init/main.c", "line": 972 }] },
-    { "id": "startup", "label": "x86 入口 startup_64", "parent": "boot", "sublabel": "arch/x86/kernel/head_64.S", "sources": [{ "path": "arch/x86/kernel/head_64.S", "line": 38 }] },
-    { "id": "startkernel", "label": "start_kernel", "parent": "boot", "sublabel": "init/main.c", "sources": [{ "path": "init/main.c", "line": 972 }] },
-    { "id": "initproc", "label": "init 进程", "parent": "boot", "sublabel": "init/main.c", "sources": [{ "path": "init/main.c", "line": 1539 }] }
+    {
+      "id": "kernel",
+      "label": "Linux 内核 v7.2-rc3",
+      "sublabel": "源码树 git.kernel.org/torvalds/linux"
+    },
+    {
+      "id": "process",
+      "label": "进程管理",
+      "parent": "kernel",
+      "sublabel": "调度 / 创建 / 信号 / 退出",
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 7207
+        }
+      ]
+    },
+    {
+      "id": "sched",
+      "label": "调度器 EEVDF",
+      "parent": "process",
+      "sublabel": "kernel/sched/fair.c",
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 1130
+        }
+      ]
+    },
+    {
+      "id": "fork",
+      "label": "进程创建 fork/clone",
+      "parent": "process",
+      "sublabel": "kernel/fork.c",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2744
+        }
+      ]
+    },
+    {
+      "id": "signal",
+      "label": "信号处理",
+      "parent": "process",
+      "sublabel": "kernel/signal.c",
+      "sources": [
+        {
+          "path": "kernel/signal.c",
+          "line": 1062
+        }
+      ]
+    },
+    {
+      "id": "exit",
+      "label": "退出与回收",
+      "parent": "process",
+      "sublabel": "kernel/exit.c",
+      "sources": [
+        {
+          "path": "kernel/exit.c",
+          "line": 900
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "内存管理",
+      "parent": "kernel",
+      "sublabel": "分配 / 映射 / 回收",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5494
+        }
+      ]
+    },
+    {
+      "id": "buddy",
+      "label": "伙伴系统",
+      "parent": "memory",
+      "sublabel": "mm/page_alloc.c",
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1889
+        }
+      ]
+    },
+    {
+      "id": "slub",
+      "label": "SLUB 分配器",
+      "parent": "memory",
+      "sublabel": "mm/slub.c",
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5006
+        }
+      ]
+    },
+    {
+      "id": "fault",
+      "label": "缺页异常",
+      "parent": "memory",
+      "sublabel": "mm/memory.c",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6714
+        }
+      ]
+    },
+    {
+      "id": "reclaim",
+      "label": "页回收",
+      "parent": "memory",
+      "sublabel": "mm/vmscan.c",
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 7642
+        }
+      ]
+    },
+    {
+      "id": "fs",
+      "label": "文件系统",
+      "parent": "kernel",
+      "sublabel": "VFS / 页缓存 / ext4",
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 4996
+        }
+      ]
+    },
+    {
+      "id": "vfs",
+      "label": "VFS 抽象层",
+      "parent": "fs",
+      "sublabel": "fs/open.c",
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1101
+        }
+      ]
+    },
+    {
+      "id": "pagecache",
+      "label": "页缓存与写回",
+      "parent": "fs",
+      "sublabel": "mm/filemap.c",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2816
+        }
+      ]
+    },
+    {
+      "id": "ext4",
+      "label": "ext4 文件系统",
+      "parent": "fs",
+      "sublabel": "fs/ext4/file.c",
+      "sources": [
+        {
+          "path": "fs/ext4/file.c",
+          "line": 132
+        }
+      ]
+    },
+    {
+      "id": "net",
+      "label": "网络协议栈",
+      "parent": "kernel",
+      "sublabel": "TCP/IP / NAPI / epoll",
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 8166
+        }
+      ]
+    },
+    {
+      "id": "tcp",
+      "label": "TCP 协议",
+      "parent": "net",
+      "sublabel": "net/ipv4/tcp_ipv4.c",
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 2075
+        }
+      ]
+    },
+    {
+      "id": "napi",
+      "label": "NAPI 收包",
+      "parent": "net",
+      "sublabel": "net/core/dev.c",
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 8038
+        }
+      ]
+    },
+    {
+      "id": "xmit",
+      "label": "发包路径",
+      "parent": "net",
+      "sublabel": "net/core/dev.c",
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 4977
+        }
+      ]
+    },
+    {
+      "id": "epoll",
+      "label": "epoll 事件",
+      "parent": "net",
+      "sublabel": "fs/eventpoll.c",
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 1491
+        }
+      ]
+    },
+    {
+      "id": "drivers",
+      "label": "设备驱动",
+      "parent": "kernel",
+      "sublabel": "总线模型 / 块 IO / 下半部",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 653
+        }
+      ]
+    },
+    {
+      "id": "busdev",
+      "label": "总线-设备-驱动模型",
+      "parent": "drivers",
+      "sublabel": "drivers/base/bus.c",
+      "sources": [
+        {
+          "path": "drivers/base/bus.c",
+          "line": 746
+        }
+      ]
+    },
+    {
+      "id": "block",
+      "label": "块 IO 路径",
+      "parent": "drivers",
+      "sublabel": "block/blk-mq.c",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3115
+        }
+      ]
+    },
+    {
+      "id": "softirq",
+      "label": "中断下半部",
+      "parent": "drivers",
+      "sublabel": "kernel/softirq.c",
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 701
+        }
+      ]
+    },
+    {
+      "id": "boot",
+      "label": "启动与初始化",
+      "parent": "kernel",
+      "sublabel": "引导 / start_kernel / init",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 1044
+        }
+      ]
+    },
+    {
+      "id": "startup",
+      "label": "x86 入口 startup_64",
+      "parent": "boot",
+      "sublabel": "arch/x86/kernel/head_64.S",
+      "sources": [
+        {
+          "path": "arch/x86/kernel/head_64.S",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "id": "startkernel",
+      "label": "start_kernel",
+      "parent": "boot",
+      "sublabel": "init/main.c",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 1044
+        }
+      ]
+    },
+    {
+      "id": "initproc",
+      "label": "init 进程",
+      "parent": "boot",
+      "sublabel": "init/main.c",
+      "sources": [
+        {
+          "path": "init/main.c",
+          "line": 1611
+        }
+      ]
+    }
   ],
   "cards": [
     {

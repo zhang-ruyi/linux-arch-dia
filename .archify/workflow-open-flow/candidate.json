@@ -8,14 +8,23 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
   "lanes": [
-    { "id": "entry", "label": "系统调用入口" },
-    { "id": "vfs", "label": "VFS 打开与参数解析" },
-    { "id": "walk", "label": "路径解析与打开" }
+    {
+      "id": "entry",
+      "label": "系统调用入口"
+    },
+    {
+      "id": "vfs",
+      "label": "VFS 打开与参数解析"
+    },
+    {
+      "id": "walk",
+      "label": "路径解析与打开"
+    }
   ],
   "nodes": [
     {
@@ -25,7 +34,13 @@
       "type": "external",
       "label": "用户进程",
       "sublabel": "调用 open 系统调用",
-      "sources": [{ "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1453,
+          "label": "SYSCALL_DEFINE3(open)"
+        }
+      ]
     },
     {
       "id": "sysopen",
@@ -34,7 +49,13 @@
       "type": "backend",
       "label": "SYSCALL_DEFINE3(open)",
       "sublabel": "open 系统调用入口",
-      "sources": [{ "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1453,
+          "label": "SYSCALL_DEFINE3(open)"
+        }
+      ]
     },
     {
       "id": "dosysopen",
@@ -43,7 +64,13 @@
       "type": "backend",
       "label": "do_sys_open()",
       "sublabel": "构造 open_how",
-      "sources": [{ "path": "fs/open.c", "line": 1371, "label": "do_sys_open" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1446,
+          "label": "do_sys_open"
+        }
+      ]
     },
     {
       "id": "dosysopenat2",
@@ -52,7 +79,13 @@
       "type": "backend",
       "label": "do_sys_openat2()",
       "sublabel": "解析 open_how 参数",
-      "sources": [{ "path": "fs/open.c", "line": 1359, "label": "do_sys_openat2" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1434,
+          "label": "do_sys_openat2"
+        }
+      ]
     },
     {
       "id": "dofileopen",
@@ -61,7 +94,13 @@
       "type": "backend",
       "label": "do_file_open()",
       "sublabel": "构造 nameidata",
-      "sources": [{ "path": "fs/namei.c", "line": 4882, "label": "do_file_open" }]
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 5035,
+          "label": "do_file_open"
+        }
+      ]
     },
     {
       "id": "pathopenat",
@@ -70,7 +109,13 @@
       "type": "backend",
       "label": "path_openat()",
       "sublabel": "分配空 file 结构体",
-      "sources": [{ "path": "fs/namei.c", "line": 4843, "label": "path_openat" }]
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 4996,
+          "label": "path_openat"
+        }
+      ]
     },
     {
       "id": "linkpathwalk",
@@ -79,7 +124,13 @@
       "type": "backend",
       "label": "link_path_walk()",
       "sublabel": "逐级解析路径分量",
-      "sources": [{ "path": "fs/namei.c", "line": 2578, "label": "link_path_walk" }]
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 2584,
+          "label": "link_path_walk"
+        }
+      ]
     },
     {
       "id": "openlast",
@@ -88,7 +139,13 @@
       "type": "backend",
       "label": "open_last_lookups()",
       "sublabel": "处理末级分量",
-      "sources": [{ "path": "fs/namei.c", "line": 4560, "label": "open_last_lookups" }]
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 4741,
+          "label": "open_last_lookups"
+        }
+      ]
     },
     {
       "id": "doopen",
@@ -97,7 +154,13 @@
       "type": "backend",
       "label": "do_open()",
       "sublabel": "权限检查与截断处理",
-      "sources": [{ "path": "fs/namei.c", "line": 4652, "label": "do_open" }]
+      "sources": [
+        {
+          "path": "fs/namei.c",
+          "line": 4796,
+          "label": "do_open"
+        }
+      ]
     },
     {
       "id": "vfsopen",
@@ -106,7 +169,13 @@
       "type": "backend",
       "label": "vfs_open()",
       "sublabel": "调用 f_op->open",
-      "sources": [{ "path": "fs/open.c", "line": 1047, "label": "vfs_open" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1101,
+          "label": "vfs_open"
+        }
+      ]
     },
     {
       "id": "fopopen",
@@ -115,7 +184,13 @@
       "type": "backend",
       "label": "f_op->open",
       "sublabel": "具体文件系统打开实现",
-      "sources": [{ "path": "fs/open.c", "line": 945, "label": "f->f_op->open" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 998,
+          "label": "f->f_op->open"
+        }
+      ]
     },
     {
       "id": "done",
@@ -124,21 +199,83 @@
       "type": "backend",
       "label": "返回 fd",
       "sublabel": "返回用户进程",
-      "sources": [{ "path": "fs/open.c", "line": 1047, "label": "vfs_open 返回 file" }]
+      "sources": [
+        {
+          "path": "fs/open.c",
+          "line": 1101,
+          "label": "vfs_open 返回 file"
+        }
+      ]
     }
   ],
   "edges": [
-    { "id": "app-sysopen", "from": "app", "to": "sysopen", "role": "main" },
-    { "id": "sysopen-dosysopen", "from": "sysopen", "to": "dosysopen", "role": "main" },
-    { "id": "dosysopen-openat2", "from": "dosysopen", "to": "dosysopenat2", "role": "main" },
-    { "id": "openat2-fileopen", "from": "dosysopenat2", "to": "dofileopen", "role": "main" },
-    { "id": "fileopen-pathopenat", "from": "dofileopen", "to": "pathopenat", "role": "main" },
-    { "id": "pathopenat-linkwalk", "from": "pathopenat", "to": "linkpathwalk", "role": "main" },
-    { "id": "linkwalk-openlast", "from": "linkpathwalk", "to": "openlast", "label": "解析到末级分量", "role": "main" },
-    { "id": "openlast-doopen", "from": "openlast", "to": "doopen", "role": "main" },
-    { "id": "doopen-vfsopen", "from": "doopen", "to": "vfsopen", "role": "main" },
-    { "id": "vfsopen-fopopen", "from": "vfsopen", "to": "fopopen", "role": "main" },
-    { "id": "fopopen-done", "from": "fopopen", "to": "done", "role": "main" }
+    {
+      "id": "app-sysopen",
+      "from": "app",
+      "to": "sysopen",
+      "role": "main"
+    },
+    {
+      "id": "sysopen-dosysopen",
+      "from": "sysopen",
+      "to": "dosysopen",
+      "role": "main"
+    },
+    {
+      "id": "dosysopen-openat2",
+      "from": "dosysopen",
+      "to": "dosysopenat2",
+      "role": "main"
+    },
+    {
+      "id": "openat2-fileopen",
+      "from": "dosysopenat2",
+      "to": "dofileopen",
+      "role": "main"
+    },
+    {
+      "id": "fileopen-pathopenat",
+      "from": "dofileopen",
+      "to": "pathopenat",
+      "role": "main"
+    },
+    {
+      "id": "pathopenat-linkwalk",
+      "from": "pathopenat",
+      "to": "linkpathwalk",
+      "role": "main"
+    },
+    {
+      "id": "linkwalk-openlast",
+      "from": "linkpathwalk",
+      "to": "openlast",
+      "label": "解析到末级分量",
+      "role": "main"
+    },
+    {
+      "id": "openlast-doopen",
+      "from": "openlast",
+      "to": "doopen",
+      "role": "main"
+    },
+    {
+      "id": "doopen-vfsopen",
+      "from": "doopen",
+      "to": "vfsopen",
+      "role": "main"
+    },
+    {
+      "id": "vfsopen-fopopen",
+      "from": "vfsopen",
+      "to": "fopopen",
+      "role": "main"
+    },
+    {
+      "id": "fopopen-done",
+      "from": "fopopen",
+      "to": "done",
+      "role": "main"
+    }
   ],
   "cards": [
     {
@@ -164,18 +301,18 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "do_sys_open — fs/open.c:1371",
-        "do_sys_openat2 — fs/open.c:1359",
-        "do_file_open — fs/namei.c:4882",
-        "path_openat — fs/namei.c:4843",
-        "link_path_walk — fs/namei.c:2578",
-        "walk_component — fs/namei.c:2265",
-        "lookup_fast — fs/namei.c:1843",
-        "__lookup_slow — fs/namei.c:1893",
-        "open_last_lookups — fs/namei.c:4560",
-        "do_open — fs/namei.c:4652",
-        "vfs_open — fs/open.c:1047",
-        "f_op->open — fs/open.c:945"
+        "do_sys_open—fs/open.c:1446",
+        "do_sys_openat2—fs/open.c:1434",
+        "do_file_open—fs/namei.c:5035",
+        "path_openat—fs/namei.c:4996",
+        "link_path_walk—fs/namei.c:2584",
+        "walk_component—fs/namei.c:2271",
+        "lookup_fast—fs/namei.c:1849",
+        "__lookup_slow—fs/namei.c:1899",
+        "open_last_lookups—fs/namei.c:4741",
+        "do_open—fs/namei.c:4796",
+        "vfs_open—fs/open.c:1101",
+        "f_op->open—fs/open.c:998"
       ]
     }
   ]

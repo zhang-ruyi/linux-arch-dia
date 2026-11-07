@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -81,7 +81,7 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 3736,
+          "line": 3802,
           "label": "nvme_init_ctrl_finish"
         }
       ]
@@ -96,12 +96,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 1479,
+          "line": 1491,
           "label": "nvme_identify_ctrl"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 3589,
+          "line": 3655,
           "label": "nvme_init_identify"
         }
       ]
@@ -116,12 +116,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 3766,
+          "line": 3832,
           "label": "configure APST"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 3795,
+          "line": 3861,
           "label": "identified = true"
         }
       ]
@@ -136,12 +136,12 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4578,
+          "line": 4679,
           "label": "nvme_scan_work"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4608,
+          "line": 4709,
           "label": "扫描方式选择"
         }
       ]
@@ -156,7 +156,7 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4486,
+          "line": 4586,
           "label": "nvme_scan_ns_list"
         }
       ]
@@ -171,7 +171,7 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4537,
+          "line": 4638,
           "label": "nvme_scan_ns_sequential"
         }
       ]
@@ -186,17 +186,17 @@
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4391,
+          "line": 4490,
           "label": "nvme_scan_ns"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4191,
+          "line": 4287,
           "label": "nvme_alloc_ns"
         },
         {
           "path": "drivers/nvme/host/core.c",
-          "line": 4178,
+          "line": 4274,
           "label": "nvme_ns_add_to_ctrl_list"
         }
       ]
@@ -278,16 +278,16 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
-        "nvme_init_identify — drivers/nvme/host/core.c:3589",
-        "nvme_identify_ctrl — drivers/nvme/host/core.c:1479",
-        "nvme_start_ctrl — drivers/nvme/host/core.c:5064",
-        "nvme_queue_scan — drivers/nvme/host/core.c:158",
-        "nvme_scan_work — drivers/nvme/host/core.c:4578",
-        "nvme_scan_ns_list — drivers/nvme/host/core.c:4486",
-        "nvme_scan_ns_sequential — drivers/nvme/host/core.c:4537",
-        "nvme_scan_ns — drivers/nvme/host/core.c:4391",
-        "nvme_alloc_ns — drivers/nvme/host/core.c:4191"
+        "nvme_init_ctrl_finish—drivers/nvme/host/core.c:3802",
+        "nvme_init_identify—drivers/nvme/host/core.c:3655",
+        "nvme_identify_ctrl—drivers/nvme/host/core.c:1491",
+        "nvme_start_ctrl—drivers/nvme/host/core.c:5164",
+        "nvme_queue_scan—drivers/nvme/host/core.c:163",
+        "nvme_scan_work—drivers/nvme/host/core.c:4679",
+        "nvme_scan_ns_list—drivers/nvme/host/core.c:4586",
+        "nvme_scan_ns_sequential—drivers/nvme/host/core.c:4638",
+        "nvme_scan_ns—drivers/nvme/host/core.c:4490",
+        "nvme_alloc_ns—drivers/nvme/host/core.c:4287"
       ]
     }
   ]

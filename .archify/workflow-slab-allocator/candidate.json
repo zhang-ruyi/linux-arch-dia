@@ -8,17 +8,36 @@
     "output": "site/内存管理/slab-allocator.html",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
   "lanes": [
-    { "id": "alloc_main", "label": "分配 · 主路径与返回" },
-    { "id": "alloc_large", "label": "分配 · 大对象" },
-    { "id": "alloc_slow", "label": "分配 · slab 慢路径" },
-    { "id": "free_main", "label": "释放 · 回收路径" }
+    {
+      "id": "alloc_main",
+      "label": "分配 · 主路径与返回"
+    },
+    {
+      "id": "alloc_large",
+      "label": "分配 · 大对象"
+    },
+    {
+      "id": "alloc_slow",
+      "label": "分配 · slab 慢路径"
+    },
+    {
+      "id": "free_main",
+      "label": "释放 · 回收路径"
+    }
   ],
-  "mainPath": ["a", "b", "c", "e", "f", "g"],
+  "mainPath": [
+    "a",
+    "b",
+    "c",
+    "e",
+    "f",
+    "g"
+  ],
   "nodes": [
     {
       "id": "a",
@@ -27,7 +46,12 @@
       "type": "backend",
       "label": "kmalloc",
       "sublabel": "include/linux/slab.h 宏",
-      "sources": [{ "path": "include/linux/slab.h", "line": 1034 }]
+      "sources": [
+        {
+          "path": "include/linux/slab.h",
+          "line": 1054
+        }
+      ]
     },
     {
       "id": "b",
@@ -35,7 +59,12 @@
       "col": 1,
       "type": "backend",
       "label": "__kmalloc_noprof",
-      "sources": [{ "path": "mm/slub.c", "line": 5379 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5548
+        }
+      ]
     },
     {
       "id": "c",
@@ -43,7 +72,12 @@
       "col": 2,
       "type": "backend",
       "label": "__do_kmalloc_node",
-      "sources": [{ "path": "mm/slub.c", "line": 5342 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5511
+        }
+      ]
     },
     {
       "id": "e",
@@ -52,7 +86,12 @@
       "type": "backend",
       "label": "kmalloc_slab",
       "sublabel": "按 size 选定 slab 缓存",
-      "sources": [{ "path": "mm/slab.h", "line": 389 }]
+      "sources": [
+        {
+          "path": "mm/slab.h",
+          "line": 418
+        }
+      ]
     },
     {
       "id": "f",
@@ -61,7 +100,12 @@
       "type": "backend",
       "label": "slab_alloc_node",
       "sublabel": "分配快路径",
-      "sources": [{ "path": "mm/slub.c", "line": 4920 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5006
+        }
+      ]
     },
     {
       "id": "g",
@@ -71,7 +115,12 @@
       "label": "从 freelist 取对象",
       "sublabel": "返回内存指针",
       "icon": "success",
-      "sources": [{ "path": "mm/slub.c", "line": 4933 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5021
+        }
+      ]
     },
     {
       "id": "d",
@@ -80,16 +129,26 @@
       "type": "backend",
       "label": "__kmalloc_large_node_noprof",
       "sublabel": "超过 KMALLOC_MAX_CACHE_SIZE",
-      "sources": [{ "path": "mm/slub.c", "line": 5331 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5500
+        }
+      ]
     },
     {
       "id": "h",
       "lane": "alloc_slow",
       "col": 4,
       "type": "backend",
-      "label": "__slab_alloc_node",
+      "label": "slab_alloc_node",
       "sublabel": "分配慢路径",
-      "sources": [{ "path": "mm/slub.c", "line": 4529 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5006
+        }
+      ]
     },
     {
       "id": "i",
@@ -98,7 +157,12 @@
       "type": "backend",
       "label": "allocate_slab",
       "sublabel": "向伙伴系统申请新 slab",
-      "sources": [{ "path": "mm/slub.c", "line": 3387 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 3478
+        }
+      ]
     },
     {
       "id": "j",
@@ -106,7 +170,12 @@
       "col": 0,
       "type": "backend",
       "label": "kfree",
-      "sources": [{ "path": "include/linux/slab.h", "line": 579 }]
+      "sources": [
+        {
+          "path": "include/linux/slab.h",
+          "line": 595
+        }
+      ]
     },
     {
       "id": "k",
@@ -115,7 +184,12 @@
       "type": "backend",
       "label": "slab_free",
       "sublabel": "对象回收到 freelist",
-      "sources": [{ "path": "mm/slub.c", "line": 6399 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 6624
+        }
+      ]
     },
     {
       "id": "l",
@@ -124,7 +198,12 @@
       "type": "backend",
       "label": "__slab_free",
       "sublabel": "slab 空闲后归还页块",
-      "sources": [{ "path": "mm/slub.c", "line": 5664 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5837
+        }
+      ]
     },
     {
       "id": "m",
@@ -133,22 +212,100 @@
       "type": "database",
       "label": "伙伴系统回收页块",
       "sublabel": "free_slab 归还伙伴",
-      "sources": [{ "path": "mm/slub.c", "line": 3490 }]
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 3586
+        }
+      ]
     }
   ],
   "edges": [
-    { "id": "a-b", "from": "a", "to": "b", "role": "main" },
-    { "id": "b-c", "from": "b", "to": "c", "role": "main" },
-    { "id": "c-d", "from": "c", "to": "d", "label": "size 超限", "variant": "dashed", "role": "branch", "fromSide": "bottom", "toSide": "top" },
-    { "id": "c-e", "from": "c", "to": "e", "role": "main" },
-    { "id": "e-f", "from": "e", "to": "f", "role": "main" },
-    { "id": "f-g", "from": "f", "to": "g", "role": "main", "fromSide": "right", "toSide": "left" },
-    { "id": "f-h", "from": "f", "to": "h", "label": "无空闲对象", "variant": "dashed", "role": "branch", "fromSide": "bottom", "toSide": "top" },
-    { "id": "h-i", "from": "h", "to": "i", "role": "main" },
-    { "id": "i-g", "from": "i", "to": "g", "role": "return", "fromSide": "right", "toSide": "right", "route": "outside-right" },
-    { "id": "j-k", "from": "j", "to": "k", "role": "main" },
-    { "id": "k-l", "from": "k", "to": "l", "role": "main" },
-    { "id": "l-m", "from": "l", "to": "m", "role": "main" }
+    {
+      "id": "a-b",
+      "from": "a",
+      "to": "b",
+      "role": "main"
+    },
+    {
+      "id": "b-c",
+      "from": "b",
+      "to": "c",
+      "role": "main"
+    },
+    {
+      "id": "c-d",
+      "from": "c",
+      "to": "d",
+      "label": "size 超限",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "c-e",
+      "from": "c",
+      "to": "e",
+      "role": "main"
+    },
+    {
+      "id": "e-f",
+      "from": "e",
+      "to": "f",
+      "role": "main"
+    },
+    {
+      "id": "f-g",
+      "from": "f",
+      "to": "g",
+      "role": "main",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "f-h",
+      "from": "f",
+      "to": "h",
+      "label": "无空闲对象",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "h-i",
+      "from": "h",
+      "to": "i",
+      "role": "main"
+    },
+    {
+      "id": "i-g",
+      "from": "i",
+      "to": "g",
+      "role": "return",
+      "fromSide": "right",
+      "toSide": "right",
+      "route": "outside-right"
+    },
+    {
+      "id": "j-k",
+      "from": "j",
+      "to": "k",
+      "role": "main"
+    },
+    {
+      "id": "k-l",
+      "from": "k",
+      "to": "l",
+      "role": "main"
+    },
+    {
+      "id": "l-m",
+      "from": "l",
+      "to": "m",
+      "role": "main"
+    }
   ],
   "cards": [
     {
@@ -164,7 +321,7 @@
       "dot": "emerald",
       "title": "慢路径与释放",
       "items": [
-        "freelist 无对象时进入 __slab_alloc_node,由 allocate_slab 向伙伴系统申请新 slab",
+        "freelist 无对象时进入 slab_alloc_node,由 allocate_slab 向伙伴系统申请新 slab",
         "kfree 经 slab_free 把对象回收到 freelist",
         "__slab_free 在 slab 空闲后通过 free_slab 把页块归还伙伴系统"
       ]
@@ -173,18 +330,18 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "kmalloc — include/linux/slab.h:1034",
+        "kmalloc—include/linux/slab.h:1054",
         "_kmalloc_noprof — include/linux/slab.h:960 (常量 size 快路径)",
-        "__kmalloc_noprof — mm/slub.c:5379",
-        "__do_kmalloc_node — mm/slub.c:5342",
-        "kmalloc_slab — mm/slab.h:389",
-        "slab_alloc_node — mm/slub.c:4920",
-        "__slab_alloc_node — mm/slub.c:4529 (慢路径)",
-        "allocate_slab — mm/slub.c:3387",
-        "kfree — mm/slub.c:6699",
-        "slab_free — mm/slub.c:6399",
-        "__slab_free — mm/slub.c:5664",
-        "free_slab — mm/slub.c:3490"
+        "__kmalloc_noprof—mm/slub.c:5548",
+        "__do_kmalloc_node—mm/slub.c:5511",
+        "kmalloc_slab — mm/slab.h:418",
+        "slab_alloc_node—mm/slub.c:5006",
+        "slab_alloc_node — mm/slub.c:4529 (慢路径)",
+        "allocate_slab—mm/slub.c:3478",
+        "kfree—mm/slub.c:6902",
+        "slab_free—mm/slub.c:6624",
+        "__slab_free—mm/slub.c:5837",
+        "free_slab—mm/slub.c:3586"
       ]
     }
   ]

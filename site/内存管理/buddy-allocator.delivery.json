@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "af0d0b2a-d6a1-4402-b272-79d69c8f4d2c",
+  "receiptId": "b8eddc64-1784-4a8f-8cac-1ba890e2ce63",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-buddy-allocator/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/内存管理/buddy-allocator.html",
   "specification": {
-    "sha256": "ebc01aa0009ebb28604740decd580672b2645f8ff8ba2e2e02549a378a990ee2",
-    "bytes": 9364
+    "sha256": "668332e55bc9c1dd82c24814df56473c6b62ef2ea401433951edb9c7fae3d82a",
+    "bytes": 9342
   },
   "artifact": {
-    "sha256": "f018ee90f415930b9e2276e9403d85565cffa8d91b5c4ef3e443af8e353f8988",
-    "bytes": 850924
+    "sha256": "073a03dec781e4735a2aa43ac125c058464544d4cefdee3e1f9ec8705345c3c1",
+    "bytes": 850902
   }
 }

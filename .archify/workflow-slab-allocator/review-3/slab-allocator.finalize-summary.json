@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/candidate.json",
+    "sha256": "b94256229e2a9f0fd4d054049d79b7fa3dfb8c1459d069916e2abc1e7c0335d9",
+    "bytes": 7213
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/slab-allocator.html",
+    "sha256": "275be7705b9f4c7a1847f3365b8aa663ce7dfbe092bdb103c3fb907a98dd94ed",
+    "bytes": 845358
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/review-3/slab-allocator.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/review-3/slab-allocator.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-slab-allocator/review-3/slab-allocator.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3923,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

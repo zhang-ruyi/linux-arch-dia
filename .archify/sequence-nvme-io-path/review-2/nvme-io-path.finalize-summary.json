@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/candidate.json",
+    "sha256": "a9db62ee6d76d9fd90303c0d522c2fca4afe3d19553015bb72b9840ad28c0707",
+    "bytes": 8943
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-io-path.html",
+    "sha256": "b895c7baf1f05d7431eb93a45bae73fe66745a810f947330ea32c1e4d67c6d4f",
+    "bytes": 844272
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "fail",
+    "browser-check": "not-run"
+  },
+  "failedStage": "check",
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-io-path.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/NVMe驱动/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/review-2/nvme-io-path.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/review-2/nvme-io-path.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 961,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

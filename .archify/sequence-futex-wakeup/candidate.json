@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -52,12 +52,12 @@
       "sources": [
         {
           "path": "kernel/futex/core.c",
-          "line": 260,
+          "line": 266,
           "label": "futex_hash"
         },
         {
           "path": "kernel/futex/core.c",
-          "line": 844,
+          "line": 856,
           "label": "__futex_queue"
         }
       ]
@@ -96,12 +96,12 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 1150,
+          "line": 1160,
           "label": "wake_q_add_safe"
         },
         {
           "path": "kernel/sched/core.c",
-          "line": 1156,
+          "line": 1166,
           "label": "wake_up_q"
         }
       ]
@@ -218,12 +218,12 @@
         "futex_wait() — kernel/futex/waitwake.c:741",
         "__futex_wait() — kernel/futex/waitwake.c:701",
         "futex_wait_setup() — kernel/futex/waitwake.c:622",
-        "get_futex_key() — kernel/futex/core.c:502",
+        "get_futex_key()—kernel/futex/core.c:514",
         "futex_do_wait() — kernel/futex/waitwake.c:370",
         "futex_wake() — kernel/futex/waitwake.c:178",
         "futex_wake_mark() — kernel/futex/waitwake.c:134",
-        "wake_q_add_safe() — kernel/sched/core.c:1150",
-        "wake_up_q() — kernel/sched/core.c:1156"
+        "wake_q_add_safe()—kernel/sched/core.c:1160",
+        "wake_up_q()—kernel/sched/core.c:1166"
       ]
     }
   ]

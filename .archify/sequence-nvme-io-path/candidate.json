@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -19,8 +19,16 @@
       "label": "应用进程",
       "sublabel": "read() / write()",
       "sources": [
-        { "path": "fs/read_write.c", "line": 705, "label": "ksys_read" },
-        { "path": "fs/read_write.c", "line": 728, "label": "ksys_write" }
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read"
+        },
+        {
+          "path": "fs/read_write.c",
+          "line": 728,
+          "label": "ksys_write"
+        }
       ]
     },
     {
@@ -29,7 +37,11 @@
       "label": "VFS",
       "sublabel": "系统调用入口",
       "sources": [
-        { "path": "fs/read_write.c", "line": 554, "label": "vfs_read" }
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
       ]
     },
     {
@@ -38,9 +50,21 @@
       "label": "文件系统 / 块设备",
       "sublabel": "read_iter / write_iter",
       "sources": [
-        { "path": "fs/ext4/file.c", "line": 130, "label": "ext4_file_read_iter" },
-        { "path": "block/fops.c", "line": 786, "label": "blkdev_read_iter" },
-        { "path": "block/fops.c", "line": 721, "label": "blkdev_write_iter" }
+        {
+          "path": "fs/ext4/file.c",
+          "line": 132,
+          "label": "ext4_file_read_iter"
+        },
+        {
+          "path": "block/fops.c",
+          "line": 839,
+          "label": "blkdev_read_iter"
+        },
+        {
+          "path": "block/fops.c",
+          "line": 752,
+          "label": "blkdev_write_iter"
+        }
       ]
     },
     {
@@ -49,9 +73,21 @@
       "label": "块层 blk-mq",
       "sublabel": "submit_bio → queue_rq",
       "sources": [
-        { "path": "block/blk-core.c", "line": 817, "label": "submit_bio_noacct" },
-        { "path": "block/blk-mq.c", "line": 3093, "label": "blk_mq_submit_bio" },
-        { "path": "block/blk-mq.c", "line": 3015, "label": "blk_mq_get_new_requests" }
+        {
+          "path": "block/blk-core.c",
+          "line": 818,
+          "label": "submit_bio_noacct"
+        },
+        {
+          "path": "block/blk-mq.c",
+          "line": 3115,
+          "label": "blk_mq_submit_bio"
+        },
+        {
+          "path": "block/blk-mq.c",
+          "line": 3039,
+          "label": "blk_mq_get_new_requests"
+        }
       ]
     },
     {
@@ -60,9 +96,21 @@
       "label": "NVMe 驱动",
       "sublabel": "nvme_queue_rq",
       "sources": [
-        { "path": "drivers/nvme/host/pci.c", "line": 1436, "label": "nvme_queue_rq" },
-        { "path": "drivers/nvme/host/pci.c", "line": 1399, "label": "nvme_prep_rq" },
-        { "path": "drivers/nvme/host/core.c", "line": 1097, "label": "nvme_setup_cmd" }
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1663,
+          "label": "nvme_queue_rq"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1626,
+          "label": "nvme_prep_rq"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 1107,
+          "label": "nvme_setup_cmd"
+        }
       ]
     },
     {
@@ -71,8 +119,16 @@
       "label": "NVMe 控制器/设备",
       "sublabel": "DMA 执行命令",
       "sources": [
-        { "path": "drivers/nvme/host/pci.c", "line": 718, "label": "nvme_write_sq_db" },
-        { "path": "drivers/nvme/host/pci.c", "line": 731, "label": "writel sq_tail" }
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 724,
+          "label": "nvme_write_sq_db"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 738,
+          "label": "writel sq_tail"
+        }
       ]
     },
     {
@@ -81,8 +137,16 @@
       "label": "MSI-X 中断",
       "sublabel": "nvme_irq",
       "sources": [
-        { "path": "drivers/nvme/host/pci.c", "line": 1630, "label": "nvme_irq" },
-        { "path": "drivers/nvme/host/pci.c", "line": 1562, "label": "nvme_handle_cqe" }
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1862,
+          "label": "nvme_irq"
+        },
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1789,
+          "label": "nvme_handle_cqe"
+        }
       ]
     },
     {
@@ -91,37 +155,175 @@
       "label": "完成与回收",
       "sublabel": "blk_mq_end_request",
       "sources": [
-        { "path": "drivers/nvme/host/core.c", "line": 508, "label": "nvme_complete_rq" },
-        { "path": "drivers/nvme/host/core.c", "line": 461, "label": "nvme_end_req" },
-        { "path": "block/bio.c", "line": 1762, "label": "bio_endio" }
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 513,
+          "label": "nvme_complete_rq"
+        },
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 466,
+          "label": "nvme_end_req"
+        },
+        {
+          "path": "block/bio.c",
+          "line": 1863,
+          "label": "bio_endio"
+        }
       ]
     }
   ],
   "segments": [
-    { "from": 145, "to": 390, "label": "提交 I/O 请求" },
-    { "from": 395, "to": 675, "label": "设备执行与完成" }
+    {
+      "from": 145,
+      "to": 390,
+      "label": "提交 I/O 请求"
+    },
+    {
+      "from": 395,
+      "to": 675,
+      "label": "设备执行与完成"
+    }
   ],
   "messages": [
-    { "id": "syscall", "from": "app", "to": "vfs", "y": 160, "label": "read() / write()", "variant": "default", "note": "ksys_read / ksys_write → vfs_read" },
-    { "id": "read-iter", "from": "vfs", "to": "fs", "y": 220, "label": "read_iter / write_iter", "variant": "default", "note": "ext4_file_read_iter / blkdev_*_iter" },
-    { "id": "submit-bio", "from": "fs", "to": "block", "y": 280, "label": "submit_bio", "variant": "emphasis" },
-    { "id": "queue-rq", "from": "block", "to": "driver", "y": 315, "label": "queue_rq", "variant": "emphasis", "note": "blk_mq_submit_bio 分配 request" },
-    { "id": "submit-sqe", "from": "driver", "to": "ctrl", "y": 375, "label": "提交 SQE + SQ 门铃", "variant": "default", "note": "nvme_sq_copy_cmd 拷贝；writel(sq_tail)" },
-    { "id": "msix", "from": "ctrl", "to": "irq", "y": 435, "label": "MSI-X 中断", "variant": "dashed", "note": "DMA 取 SQE 执行，回写 CQE" },
-    { "id": "handle-cqe", "from": "irq", "to": "complete", "y": 495, "label": "nvme_handle_cqe", "variant": "default", "note": "→ nvme_complete_rq；AEN 特判" },
-    { "id": "end-request", "from": "complete", "to": "block", "y": 555, "label": "blk_mq_end_request", "variant": "return" },
-    { "id": "bio-endio", "from": "block", "to": "fs", "y": 585, "label": "bio_endio", "variant": "return" },
-    { "id": "bytes", "from": "fs", "to": "vfs", "y": 615, "label": "返回字节数", "variant": "return" },
-    { "id": "return-app", "from": "vfs", "to": "app", "y": 645, "label": "read()/write() 返回", "variant": "return" }
+    {
+      "id": "syscall",
+      "from": "app",
+      "to": "vfs",
+      "y": 160,
+      "label": "read() / write()",
+      "variant": "default",
+      "note": "ksys_read / ksys_write → vfs_read"
+    },
+    {
+      "id": "read-iter",
+      "from": "vfs",
+      "to": "fs",
+      "y": 220,
+      "label": "read_iter / write_iter",
+      "variant": "default",
+      "note": "ext4_file_read_iter / blkdev_*_iter"
+    },
+    {
+      "id": "submit-bio",
+      "from": "fs",
+      "to": "block",
+      "y": 280,
+      "label": "submit_bio",
+      "variant": "emphasis"
+    },
+    {
+      "id": "queue-rq",
+      "from": "block",
+      "to": "driver",
+      "y": 315,
+      "label": "queue_rq",
+      "variant": "emphasis",
+      "note": "blk_mq_submit_bio 分配 request"
+    },
+    {
+      "id": "submit-sqe",
+      "from": "driver",
+      "to": "ctrl",
+      "y": 375,
+      "label": "提交 SQE + SQ 门铃",
+      "variant": "default",
+      "note": "nvme_sq_copy_cmd 拷贝；writel(sq_tail)"
+    },
+    {
+      "id": "msix",
+      "from": "ctrl",
+      "to": "irq",
+      "y": 435,
+      "label": "MSI-X 中断",
+      "variant": "dashed",
+      "note": "DMA 取 SQE 执行，回写 CQE"
+    },
+    {
+      "id": "handle-cqe",
+      "from": "irq",
+      "to": "complete",
+      "y": 495,
+      "label": "nvme_handle_cqe",
+      "variant": "default",
+      "note": "→ nvme_complete_rq；AEN 特判"
+    },
+    {
+      "id": "end-request",
+      "from": "complete",
+      "to": "block",
+      "y": 555,
+      "label": "blk_mq_end_request",
+      "variant": "return"
+    },
+    {
+      "id": "bio-endio",
+      "from": "block",
+      "to": "fs",
+      "y": 585,
+      "label": "bio_endio",
+      "variant": "return"
+    },
+    {
+      "id": "bytes",
+      "from": "fs",
+      "to": "vfs",
+      "y": 615,
+      "label": "返回字节数",
+      "variant": "return"
+    },
+    {
+      "id": "return-app",
+      "from": "vfs",
+      "to": "app",
+      "y": 645,
+      "label": "read()/write() 返回",
+      "variant": "return"
+    }
   ],
   "activations": [
-    { "participant": "vfs", "from": 160, "to": 650, "type": "backend" },
-    { "participant": "fs", "from": 220, "to": 620, "type": "backend" },
-    { "participant": "block", "from": 280, "to": 590, "type": "messagebus" },
-    { "participant": "driver", "from": 315, "to": 380, "type": "backend" },
-    { "participant": "ctrl", "from": 375, "to": 440, "type": "external" },
-    { "participant": "irq", "from": 435, "to": 500, "type": "backend" },
-    { "participant": "complete", "from": 495, "to": 560, "type": "backend" }
+    {
+      "participant": "vfs",
+      "from": 160,
+      "to": 650,
+      "type": "backend"
+    },
+    {
+      "participant": "fs",
+      "from": 220,
+      "to": 620,
+      "type": "backend"
+    },
+    {
+      "participant": "block",
+      "from": 280,
+      "to": 590,
+      "type": "messagebus"
+    },
+    {
+      "participant": "driver",
+      "from": 315,
+      "to": 380,
+      "type": "backend"
+    },
+    {
+      "participant": "ctrl",
+      "from": 375,
+      "to": 440,
+      "type": "external"
+    },
+    {
+      "participant": "irq",
+      "from": 435,
+      "to": 500,
+      "type": "backend"
+    },
+    {
+      "participant": "complete",
+      "from": 495,
+      "to": 560,
+      "type": "backend"
+    }
   ],
   "cards": [
     {
@@ -157,19 +359,19 @@
       "items": [
         "ksys_read — fs/read_write.c:705",
         "vfs_read — fs/read_write.c:554",
-        "submit_bio_noacct — block/blk-core.c:817",
-        "blk_mq_submit_bio — block/blk-mq.c:3093",
-        "nvme_queue_rq — drivers/nvme/host/pci.c:1436",
-        "nvme_setup_cmd — drivers/nvme/host/core.c:1097",
-        "nvme_sq_copy_cmd — drivers/nvme/host/pci.c:735",
-        "nvme_write_sq_db — drivers/nvme/host/pci.c:718",
-        "nvme_irq — drivers/nvme/host/pci.c:1630",
-        "nvme_poll_cq — drivers/nvme/host/pci.c:1609",
-        "nvme_handle_cqe — drivers/nvme/host/pci.c:1562",
-        "nvme_pci_complete_rq — drivers/nvme/host/pci.c:1527",
-        "nvme_complete_rq — drivers/nvme/host/core.c:508",
-        "blk_mq_end_request — block/blk-mq.c:1145",
-        "bio_endio — block/bio.c:1762"
+        "submit_bio_noacct—block/blk-core.c:818",
+        "blk_mq_submit_bio—block/blk-mq.c:3115",
+        "nvme_queue_rq—drivers/nvme/host/pci.c:1663",
+        "nvme_setup_cmd—drivers/nvme/host/core.c:1107",
+        "nvme_sq_copy_cmd—drivers/nvme/host/pci.c:742",
+        "nvme_write_sq_db—drivers/nvme/host/pci.c:724",
+        "nvme_irq—drivers/nvme/host/pci.c:1862",
+        "nvme_poll_cq—drivers/nvme/host/pci.c:1841",
+        "nvme_handle_cqe—drivers/nvme/host/pci.c:1789",
+        "nvme_pci_complete_rq—drivers/nvme/host/pci.c:1754",
+        "nvme_complete_rq—drivers/nvme/host/core.c:513",
+        "blk_mq_end_request—block/blk-mq.c:1165",
+        "bio_endio—block/bio.c:1863"
       ]
     }
   ]

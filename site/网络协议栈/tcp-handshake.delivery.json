@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "a5b54b70-c05b-46ee-890c-512d4fd6bfbb",
+  "receiptId": "08b4ba55-c2ce-4fa0-8fbf-11da17990f2c",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-tcp-handshake/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-handshake.html",
   "specification": {
-    "sha256": "aa62c95ecac9159fe8a7cf8341c91259f238db18db056933852483feb24305e6",
-    "bytes": 5890
+    "sha256": "ccf1f390efa9317ca0bfe64bf9b8324d93c70a43ea59760540dbec63bae09e09",
+    "bytes": 5871
   },
   "artifact": {
-    "sha256": "6b4f1af5ace04e14315432eb21bd752932706f6759fa6cc670355e95cb22c0e0",
-    "bytes": 834842
+    "sha256": "b0b4fe46f728f2767823611cea758d4bcb58155456412816fae7652acc6d2e1a",
+    "bytes": 834824
   }
 }

@@ -8,15 +8,27 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
   "lanes": [
-    { "id": "prep", "label": "提交准备 · core" },
-    { "id": "map", "label": "映射与门铃 · pci" },
-    { "id": "irq", "label": "完成中断 · pci" },
-    { "id": "reclaim", "label": "收尾 · core/blk" }
+    {
+      "id": "prep",
+      "label": "提交准备 · core"
+    },
+    {
+      "id": "map",
+      "label": "映射与门铃 · pci"
+    },
+    {
+      "id": "irq",
+      "label": "完成中断 · pci"
+    },
+    {
+      "id": "reclaim",
+      "label": "收尾 · core/blk"
+    }
   ],
   "groups": [
     {
@@ -87,7 +99,12 @@
       "label": "nvme_queue_rq",
       "sublabel": "块层 queue_rq 入口",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1436 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1663
+        }
+      ]
     },
     {
       "id": "check_ready",
@@ -97,7 +114,12 @@
       "label": "nvme_check_ready",
       "sublabel": "控制器/队列就绪检查",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/nvme.h", "line": 933 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 960
+        }
+      ]
     },
     {
       "id": "prep_rq",
@@ -107,7 +129,12 @@
       "label": "nvme_prep_rq",
       "sublabel": "命令构造与 DMA 映射",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1399 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1626
+        }
+      ]
     },
     {
       "id": "setup_cmd",
@@ -117,7 +144,12 @@
       "label": "nvme_setup_cmd",
       "sublabel": "按 req_op 分派",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 1097 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 1107
+        }
+      ]
     },
     {
       "id": "setup_rw",
@@ -127,7 +159,12 @@
       "label": "nvme_setup_rw",
       "sublabel": "读写 SQE 字段",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 1006 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 1016
+        }
+      ]
     },
     {
       "id": "map_data",
@@ -137,7 +174,12 @@
       "label": "nvme_map_data",
       "sublabel": "构建 PRP/SGL",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1245 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1469
+        }
+      ]
     },
     {
       "id": "map_metadata",
@@ -147,7 +189,12 @@
       "label": "nvme_map_metadata",
       "sublabel": "完整性元数据映射",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1389 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1616
+        }
+      ]
     },
     {
       "id": "sq_copy_cmd",
@@ -157,7 +204,12 @@
       "label": "nvme_sq_copy_cmd",
       "sublabel": "拷贝 64B SQE",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 735 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 742
+        }
+      ]
     },
     {
       "id": "write_sq_db",
@@ -167,7 +219,12 @@
       "label": "nvme_write_sq_db",
       "sublabel": "写 SQ tail 门铃",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 718 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 724
+        }
+      ]
     },
     {
       "id": "submit_cmds",
@@ -177,7 +234,12 @@
       "label": "nvme_submit_cmds",
       "sublabel": "批量提交合并门铃",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1465 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1692
+        }
+      ]
     },
     {
       "id": "irq",
@@ -187,7 +249,12 @@
       "label": "nvme_irq",
       "sublabel": "MSI-X 中断处理",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1630 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1862
+        }
+      ]
     },
     {
       "id": "poll_cq",
@@ -197,7 +264,12 @@
       "label": "nvme_poll_cq",
       "sublabel": "遍历完成队列",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1609 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1841
+        }
+      ]
     },
     {
       "id": "cqe_pending",
@@ -207,7 +279,12 @@
       "label": "nvme_cqe_pending",
       "sublabel": "phase 位判断",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1539 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1766
+        }
+      ]
     },
     {
       "id": "handle_cqe",
@@ -217,7 +294,12 @@
       "label": "nvme_handle_cqe",
       "sublabel": "解析 CQE",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1562 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1789
+        }
+      ]
     },
     {
       "id": "find_rq",
@@ -227,7 +309,12 @@
       "label": "nvme_find_rq",
       "sublabel": "command_id 找回请求",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/nvme.h", "line": 673 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 700
+        }
+      ]
     },
     {
       "id": "try_complete_req",
@@ -237,7 +324,12 @@
       "label": "nvme_try_complete_req",
       "sublabel": "回填状态/结果",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/nvme.h", "line": 808 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/nvme.h",
+          "line": 835
+        }
+      ]
     },
     {
       "id": "complete_async_event",
@@ -247,7 +339,12 @@
       "label": "nvme_complete_async_event",
       "sublabel": "AEN 异步事件",
       "yOffset": -90,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 4884 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 4984
+        }
+      ]
     },
     {
       "id": "update_cq_head",
@@ -257,7 +354,12 @@
       "label": "nvme_update_cq_head",
       "sublabel": "推进 cq_head",
       "yOffset": 0,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1597 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1829
+        }
+      ]
     },
     {
       "id": "ring_cq_doorbell",
@@ -267,7 +369,12 @@
       "label": "nvme_ring_cq_doorbell",
       "sublabel": "归还 CQ 槽位",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1546 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1773
+        }
+      ]
     },
     {
       "id": "pci_complete_batch",
@@ -277,7 +384,12 @@
       "label": "nvme_pci_complete_batch",
       "sublabel": "批量完成回收",
       "yOffset": 10,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1533 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1760
+        }
+      ]
     },
     {
       "id": "pci_complete_rq",
@@ -287,7 +399,12 @@
       "label": "nvme_pci_complete_rq",
       "sublabel": "PCIe 完成回调",
       "yOffset": 90,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1527 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1754
+        }
+      ]
     },
     {
       "id": "pci_unmap_rq",
@@ -297,7 +414,12 @@
       "label": "nvme_pci_unmap_rq",
       "sublabel": "解除 DMA 映射",
       "yOffset": 170,
-      "sources": [{ "path": "drivers/nvme/host/pci.c", "line": 1519 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1746
+        }
+      ]
     },
     {
       "id": "complete_rq",
@@ -307,7 +429,12 @@
       "label": "nvme_complete_rq",
       "sublabel": "通用完成入口",
       "yOffset": 250,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 508 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 513
+        }
+      ]
     },
     {
       "id": "complete_rq_core",
@@ -317,7 +444,12 @@
       "label": "__nvme_complete_rq",
       "sublabel": "清理并判定去向",
       "yOffset": 250,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 469 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 474
+        }
+      ]
     },
     {
       "id": "nvme_cleanup_cmd",
@@ -327,7 +459,12 @@
       "label": "nvme_cleanup_cmd",
       "sublabel": "释放命令资源",
       "yOffset": 330,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 1083 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 1093
+        }
+      ]
     },
     {
       "id": "decide",
@@ -337,7 +474,12 @@
       "label": "nvme_decide_disposition",
       "sublabel": "COMPLETE/RETRY/FAILOVER",
       "yOffset": 410,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 403 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 408
+        }
+      ]
     },
     {
       "id": "end_req",
@@ -347,7 +489,12 @@
       "label": "nvme_end_req",
       "sublabel": "状态翻译与收尾",
       "yOffset": 490,
-      "sources": [{ "path": "drivers/nvme/host/core.c", "line": 461 }]
+      "sources": [
+        {
+          "path": "drivers/nvme/host/core.c",
+          "line": 466
+        }
+      ]
     },
     {
       "id": "blk_end",
@@ -357,7 +504,12 @@
       "label": "blk_mq_end_request",
       "sublabel": "结束块层请求",
       "yOffset": 570,
-      "sources": [{ "path": "block/blk-mq.c", "line": 1145 }]
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1165
+        }
+      ]
     },
     {
       "id": "bio_endio",
@@ -367,39 +519,222 @@
       "label": "bio_endio",
       "sublabel": "结束 bio 返回上层",
       "yOffset": 650,
-      "sources": [{ "path": "block/bio.c", "line": 1762 }]
+      "sources": [
+        {
+          "path": "block/bio.c",
+          "line": 1863
+        }
+      ]
     }
   ],
   "edges": [
-    { "id": "e-queue-check", "from": "queue_rq", "to": "check_ready", "label": "队列就绪?", "role": "main" },
-    { "id": "e-check-prep", "from": "check_ready", "to": "prep_rq", "label": "LIVE", "role": "main" },
-    { "id": "e-prep-setup", "from": "prep_rq", "to": "setup_cmd", "label": "构造命令", "role": "main" },
-    { "id": "e-setup-rw", "from": "setup_cmd", "to": "setup_rw", "label": "READ/WRITE", "role": "main" },
-    { "id": "e-rw-map", "from": "setup_rw", "to": "map_data", "label": "映射物理段", "role": "main" },
-    { "id": "e-map-meta", "from": "map_data", "to": "map_metadata", "label": "完整性元数据", "role": "main" },
-    { "id": "e-meta-copy", "from": "map_metadata", "to": "sq_copy_cmd", "label": "64B SQE", "role": "main" },
-    { "id": "e-copy-db", "from": "sq_copy_cmd", "to": "write_sq_db", "label": "SQ tail", "role": "main" },
-    { "id": "e-copy-batch", "from": "sq_copy_cmd", "to": "submit_cmds", "label": "批量提交", "variant": "dashed", "role": "branch" },
-    { "id": "e-batch-db", "from": "submit_cmds", "to": "write_sq_db", "label": "一次门铃", "variant": "dashed", "role": "branch" },
-    { "id": "e-db-irq", "from": "write_sq_db", "to": "irq", "label": "设备执行 → MSI-X", "role": "async" },
-    { "id": "e-irq-poll", "from": "irq", "to": "poll_cq", "label": "轮询 CQ", "role": "main" },
-    { "id": "e-poll-pending", "from": "poll_cq", "to": "cqe_pending", "label": "phase 匹配?", "role": "main" },
-    { "id": "e-pending-handle", "from": "cqe_pending", "to": "handle_cqe", "label": "有 CQE", "role": "main" },
-    { "id": "e-handle-find", "from": "handle_cqe", "to": "find_rq", "label": "command_id", "role": "main" },
-    { "id": "e-handle-aen", "from": "handle_cqe", "to": "complete_async_event", "label": "AEN 特判", "variant": "dashed", "role": "branch" },
-    { "id": "e-handle-head", "from": "handle_cqe", "to": "update_cq_head", "label": "推进 cq_head", "role": "branch" },
-    { "id": "e-head-db", "from": "update_cq_head", "to": "ring_cq_doorbell", "label": "CQ 门铃", "role": "branch" },
-    { "id": "e-find-try", "from": "find_rq", "to": "try_complete_req", "label": "找回 req", "role": "main" },
-    { "id": "e-try-pci", "from": "try_complete_req", "to": "pci_complete_rq", "label": "未批量", "role": "main" },
-    { "id": "e-try-batch", "from": "try_complete_req", "to": "pci_complete_batch", "label": "io_comp_batch", "variant": "dashed", "role": "branch" },
-    { "id": "e-pci-unmap", "from": "pci_complete_rq", "to": "pci_unmap_rq", "label": "解除映射", "role": "main" },
-    { "id": "e-unmap-complete", "from": "pci_unmap_rq", "to": "complete_rq", "label": "通用完成", "role": "main" },
-    { "id": "e-complete-core", "from": "complete_rq", "to": "complete_rq_core", "label": "trace + 清理", "role": "main" },
-    { "id": "e-core-cleanup", "from": "complete_rq_core", "to": "nvme_cleanup_cmd", "label": "释放资源", "role": "main" },
-    { "id": "e-cleanup-decide", "from": "nvme_cleanup_cmd", "to": "decide", "label": "判定去向", "role": "main" },
-    { "id": "e-decide-end", "from": "decide", "to": "end_req", "label": "COMPLETE", "role": "main" },
-    { "id": "e-end-blk", "from": "end_req", "to": "blk_end", "label": "blk_status", "role": "main" },
-    { "id": "e-blk-bio", "from": "blk_end", "to": "bio_endio", "label": "结束 bio", "role": "main" }
+    {
+      "id": "e-queue-check",
+      "from": "queue_rq",
+      "to": "check_ready",
+      "label": "队列就绪?",
+      "role": "main"
+    },
+    {
+      "id": "e-check-prep",
+      "from": "check_ready",
+      "to": "prep_rq",
+      "label": "LIVE",
+      "role": "main"
+    },
+    {
+      "id": "e-prep-setup",
+      "from": "prep_rq",
+      "to": "setup_cmd",
+      "label": "构造命令",
+      "role": "main"
+    },
+    {
+      "id": "e-setup-rw",
+      "from": "setup_cmd",
+      "to": "setup_rw",
+      "label": "READ/WRITE",
+      "role": "main"
+    },
+    {
+      "id": "e-rw-map",
+      "from": "setup_rw",
+      "to": "map_data",
+      "label": "映射物理段",
+      "role": "main"
+    },
+    {
+      "id": "e-map-meta",
+      "from": "map_data",
+      "to": "map_metadata",
+      "label": "完整性元数据",
+      "role": "main"
+    },
+    {
+      "id": "e-meta-copy",
+      "from": "map_metadata",
+      "to": "sq_copy_cmd",
+      "label": "64B SQE",
+      "role": "main"
+    },
+    {
+      "id": "e-copy-db",
+      "from": "sq_copy_cmd",
+      "to": "write_sq_db",
+      "label": "SQ tail",
+      "role": "main"
+    },
+    {
+      "id": "e-copy-batch",
+      "from": "sq_copy_cmd",
+      "to": "submit_cmds",
+      "label": "批量提交",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-batch-db",
+      "from": "submit_cmds",
+      "to": "write_sq_db",
+      "label": "一次门铃",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-db-irq",
+      "from": "write_sq_db",
+      "to": "irq",
+      "label": "设备执行 → MSI-X",
+      "role": "async"
+    },
+    {
+      "id": "e-irq-poll",
+      "from": "irq",
+      "to": "poll_cq",
+      "label": "轮询 CQ",
+      "role": "main"
+    },
+    {
+      "id": "e-poll-pending",
+      "from": "poll_cq",
+      "to": "cqe_pending",
+      "label": "phase 匹配?",
+      "role": "main"
+    },
+    {
+      "id": "e-pending-handle",
+      "from": "cqe_pending",
+      "to": "handle_cqe",
+      "label": "有 CQE",
+      "role": "main"
+    },
+    {
+      "id": "e-handle-find",
+      "from": "handle_cqe",
+      "to": "find_rq",
+      "label": "command_id",
+      "role": "main"
+    },
+    {
+      "id": "e-handle-aen",
+      "from": "handle_cqe",
+      "to": "complete_async_event",
+      "label": "AEN 特判",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-handle-head",
+      "from": "handle_cqe",
+      "to": "update_cq_head",
+      "label": "推进 cq_head",
+      "role": "branch"
+    },
+    {
+      "id": "e-head-db",
+      "from": "update_cq_head",
+      "to": "ring_cq_doorbell",
+      "label": "CQ 门铃",
+      "role": "branch"
+    },
+    {
+      "id": "e-find-try",
+      "from": "find_rq",
+      "to": "try_complete_req",
+      "label": "找回 req",
+      "role": "main"
+    },
+    {
+      "id": "e-try-pci",
+      "from": "try_complete_req",
+      "to": "pci_complete_rq",
+      "label": "未批量",
+      "role": "main"
+    },
+    {
+      "id": "e-try-batch",
+      "from": "try_complete_req",
+      "to": "pci_complete_batch",
+      "label": "io_comp_batch",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-pci-unmap",
+      "from": "pci_complete_rq",
+      "to": "pci_unmap_rq",
+      "label": "解除映射",
+      "role": "main"
+    },
+    {
+      "id": "e-unmap-complete",
+      "from": "pci_unmap_rq",
+      "to": "complete_rq",
+      "label": "通用完成",
+      "role": "main"
+    },
+    {
+      "id": "e-complete-core",
+      "from": "complete_rq",
+      "to": "complete_rq_core",
+      "label": "trace + 清理",
+      "role": "main"
+    },
+    {
+      "id": "e-core-cleanup",
+      "from": "complete_rq_core",
+      "to": "nvme_cleanup_cmd",
+      "label": "释放资源",
+      "role": "main"
+    },
+    {
+      "id": "e-cleanup-decide",
+      "from": "nvme_cleanup_cmd",
+      "to": "decide",
+      "label": "判定去向",
+      "role": "main"
+    },
+    {
+      "id": "e-decide-end",
+      "from": "decide",
+      "to": "end_req",
+      "label": "COMPLETE",
+      "role": "main"
+    },
+    {
+      "id": "e-end-blk",
+      "from": "end_req",
+      "to": "blk_end",
+      "label": "blk_status",
+      "role": "main"
+    },
+    {
+      "id": "e-blk-bio",
+      "from": "blk_end",
+      "to": "bio_endio",
+      "label": "结束 bio",
+      "role": "main"
+    }
   ],
   "cards": [
     {

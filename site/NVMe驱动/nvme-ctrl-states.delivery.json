@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "e74dbe96-9497-4076-9d7d-13f3bc33fe41",
+  "receiptId": "d6353549-fffa-4da1-8485-56c4b98a57d7",
   "status": "current",
   "command": "deliver",
   "type": "lifecycle",
   "input": "/home/zhang/opencode/code_analsys/.archify/lifecycle-nvme-ctrl-states/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-ctrl-states.html",
   "specification": {
-    "sha256": "6d705a579b7703fca37a32b3d74527f2c25e85b2be696f1249591dd77e201638",
-    "bytes": 7799
+    "sha256": "08e889be1cc25a31b1db6b7d94d9eb8c25f34a47ed4bc8697f3c39582e60d8e9",
+    "bytes": 7781
   },
   "artifact": {
-    "sha256": "9784f3a6a65f97c5f70187a4ac6512560bf1657f12b08e14f9a2397cf222895a",
-    "bytes": 846732
+    "sha256": "456e7e99078be8ff58c96c452fac9d081754ee9875e1317312843012718c626b",
+    "bytes": 846714
   }
 }

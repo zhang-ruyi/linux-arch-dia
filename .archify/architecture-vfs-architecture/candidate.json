@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -18,11 +18,25 @@
       "type": "external",
       "label": "应用程序",
       "sublabel": "read / write / open",
-      "pos": [360, 40],
-      "size": [180, 60],
+      "pos": [
+        360,
+        40
+      ],
+      "size": [
+        180,
+        60
+      ],
       "sources": [
-        { "path": "fs/read_write.c", "line": 705, "label": "ksys_read" },
-        { "path": "fs/open.c", "line": 1378, "label": "SYSCALL_DEFINE3(open)" }
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read"
+        },
+        {
+          "path": "fs/open.c",
+          "line": 1453,
+          "label": "SYSCALL_DEFINE3(open)"
+        }
       ]
     },
     {
@@ -30,11 +44,25 @@
       "type": "backend",
       "label": "系统调用",
       "sublabel": "do_sys_open / vfs_read",
-      "pos": [360, 150],
-      "size": [180, 64],
+      "pos": [
+        360,
+        150
+      ],
+      "size": [
+        180,
+        64
+      ],
       "sources": [
-        { "path": "fs/open.c", "line": 1371, "label": "do_sys_open" },
-        { "path": "fs/read_write.c", "line": 554, "label": "vfs_read" }
+        {
+          "path": "fs/open.c",
+          "line": 1446,
+          "label": "do_sys_open"
+        },
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
       ]
     },
     {
@@ -43,11 +71,25 @@
       "label": "file 结构体",
       "sublabel": "+ file_operations",
       "tag": "read_iter / write_iter",
-      "pos": [360, 260],
-      "size": [180, 64],
+      "pos": [
+        360,
+        260
+      ],
+      "size": [
+        180,
+        64
+      ],
       "sources": [
-        { "path": "include/linux/fs.h", "line": 1255, "label": "struct file" },
-        { "path": "include/linux/fs.h", "line": 1921, "label": "struct file_operations" }
+        {
+          "path": "include/linux/fs.h",
+          "line": 1257,
+          "label": "struct file"
+        },
+        {
+          "path": "include/linux/fs.h",
+          "line": 1922,
+          "label": "struct file_operations"
+        }
       ]
     },
     {
@@ -55,10 +97,20 @@
       "type": "backend",
       "label": "dentry 目录项",
       "sublabel": "路径 → inode 缓存",
-      "pos": [360, 370],
-      "size": [180, 64],
+      "pos": [
+        360,
+        370
+      ],
+      "size": [
+        180,
+        64
+      ],
       "sources": [
-        { "path": "include/linux/dcache.h", "line": 93, "label": "struct dentry" }
+        {
+          "path": "include/linux/dcache.h",
+          "line": 93,
+          "label": "struct dentry"
+        }
       ]
     },
     {
@@ -66,11 +118,25 @@
       "type": "backend",
       "label": "inode 索引节点",
       "sublabel": "+ inode_operations",
-      "pos": [360, 480],
-      "size": [180, 64],
+      "pos": [
+        360,
+        480
+      ],
+      "size": [
+        180,
+        64
+      ],
       "sources": [
-        { "path": "include/linux/fs.h", "line": 762, "label": "struct inode" },
-        { "path": "include/linux/fs.h", "line": 1996, "label": "struct inode_operations" }
+        {
+          "path": "include/linux/fs.h",
+          "line": 762,
+          "label": "struct inode"
+        },
+        {
+          "path": "include/linux/fs.h",
+          "line": 2000,
+          "label": "struct inode_operations"
+        }
       ]
     },
     {
@@ -78,11 +144,25 @@
       "type": "backend",
       "label": "super_block 超级块",
       "sublabel": "+ super_operations",
-      "pos": [360, 590],
-      "size": [180, 64],
+      "pos": [
+        360,
+        590
+      ],
+      "size": [
+        180,
+        64
+      ],
       "sources": [
-        { "path": "include/linux/fs/super_types.h", "line": 132, "label": "struct super_block" },
-        { "path": "include/linux/fs/super_types.h", "line": 83, "label": "struct super_operations" }
+        {
+          "path": "include/linux/fs/super_types.h",
+          "line": 137,
+          "label": "struct super_block"
+        },
+        {
+          "path": "include/linux/fs/super_types.h",
+          "line": 83,
+          "label": "struct super_operations"
+        }
       ]
     },
     {
@@ -90,11 +170,25 @@
       "type": "backend",
       "label": "ext4 / xfs / btrfs",
       "sublabel": "具体文件系统实现",
-      "pos": [350, 710],
-      "size": [200, 64],
+      "pos": [
+        350,
+        710
+      ],
+      "size": [
+        200,
+        64
+      ],
       "sources": [
-        { "path": "fs/ext4/file.c", "line": 974, "label": "ext4_file_operations" },
-        { "path": "fs/ext4/namei.c", "line": 4224, "label": ".lookup = ext4_lookup" }
+        {
+          "path": "fs/ext4/file.c",
+          "line": 1053,
+          "label": "ext4_file_operations"
+        },
+        {
+          "path": "fs/ext4/namei.c",
+          "line": 4227,
+          "label": ".lookup = ext4_lookup"
+        }
       ]
     },
     {
@@ -102,10 +196,20 @@
       "type": "backend",
       "label": "块设备驱动",
       "sublabel": "submit_bio",
-      "pos": [620, 710],
-      "size": [200, 64],
+      "pos": [
+        620,
+        710
+      ],
+      "size": [
+        200,
+        64
+      ],
       "sources": [
-        { "path": "block/blk-core.c", "line": 952, "label": "submit_bio" }
+        {
+          "path": "block/blk-core.c",
+          "line": 960,
+          "label": "submit_bio"
+        }
       ]
     },
     {
@@ -114,26 +218,93 @@
       "label": "页缓存 page cache",
       "sublabel": "address_space",
       "tag": "脏页回写",
-      "pos": [620, 360],
-      "size": [200, 80],
+      "pos": [
+        620,
+        360
+      ],
+      "size": [
+        200,
+        80
+      ],
       "sources": [
-        { "path": "include/linux/fs.h", "line": 472, "label": "struct address_space" },
-        { "path": "mm/filemap.c", "line": 2777, "label": "filemap_read" }
+        {
+          "path": "include/linux/fs.h",
+          "line": 471,
+          "label": "struct address_space"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 2816,
+          "label": "filemap_read"
+        }
       ]
     }
   ],
   "boundaries": [
-    { "kind": "region", "label": "用户层", "wraps": ["app"], "pad": 18 },
-    { "kind": "region", "label": "VFS 虚拟文件系统（公共接口层）", "wraps": ["syscall", "file", "dentry", "inode", "super"], "pad": 18 },
-    { "kind": "region", "label": "性能层 · 页缓存", "wraps": ["pagecache"], "pad": 18 },
-    { "kind": "region", "label": "底层文件系统与块设备", "wraps": ["ext4", "block"], "pad": 18 }
+    {
+      "kind": "region",
+      "label": "用户层",
+      "wraps": [
+        "app"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "VFS 虚拟文件系统（公共接口层）",
+      "wraps": [
+        "syscall",
+        "file",
+        "dentry",
+        "inode",
+        "super"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "性能层 · 页缓存",
+      "wraps": [
+        "pagecache"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "底层文件系统与块设备",
+      "wraps": [
+        "ext4",
+        "block"
+      ],
+      "pad": 18
+    }
   ],
   "connections": [
-    { "id": "app-syscall", "from": "app", "to": "syscall" },
-    { "id": "syscall-file", "from": "syscall", "to": "file" },
-    { "id": "file-dentry", "from": "file", "to": "dentry" },
-    { "id": "dentry-inode", "from": "dentry", "to": "inode" },
-    { "id": "inode-super", "from": "inode", "to": "super" },
+    {
+      "id": "app-syscall",
+      "from": "app",
+      "to": "syscall"
+    },
+    {
+      "id": "syscall-file",
+      "from": "syscall",
+      "to": "file"
+    },
+    {
+      "id": "file-dentry",
+      "from": "file",
+      "to": "dentry"
+    },
+    {
+      "id": "dentry-inode",
+      "from": "dentry",
+      "to": "inode"
+    },
+    {
+      "id": "inode-super",
+      "from": "inode",
+      "to": "super"
+    },
     {
       "id": "file-pagecache",
       "from": "file",
@@ -141,7 +312,20 @@
       "variant": "dashed",
       "fromSide": "right",
       "toSide": "top",
-      "via": [[580, 292], [580, 330], [720, 330]]
+      "via": [
+        [
+          580,
+          292
+        ],
+        [
+          580,
+          330
+        ],
+        [
+          720,
+          330
+        ]
+      ]
     },
     {
       "id": "inode-pagecache",
@@ -150,19 +334,53 @@
       "variant": "dashed",
       "fromSide": "right",
       "toSide": "left",
-      "via": [[580, 512], [580, 400]]
+      "via": [
+        [
+          580,
+          512
+        ],
+        [
+          580,
+          400
+        ]
+      ]
     },
-    { "id": "super-ext4", "from": "super", "to": "ext4" },
+    {
+      "id": "super-ext4",
+      "from": "super",
+      "to": "ext4"
+    },
     {
       "id": "inode-ext4",
       "from": "inode",
       "to": "ext4",
       "fromSide": "right",
       "toSide": "bottom",
-      "via": [[585, 512], [585, 800], [450, 800]]
+      "via": [
+        [
+          585,
+          512
+        ],
+        [
+          585,
+          800
+        ],
+        [
+          450,
+          800
+        ]
+      ]
     },
-    { "id": "pagecache-block", "from": "pagecache", "to": "block" },
-    { "id": "ext4-block", "from": "ext4", "to": "block" }
+    {
+      "id": "pagecache-block",
+      "from": "pagecache",
+      "to": "block"
+    },
+    {
+      "id": "ext4-block",
+      "from": "ext4",
+      "to": "block"
+    }
   ],
   "cards": [
     {
@@ -188,15 +406,15 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "do_file_open — fs/namei.c:4882",
-        "path_openat — fs/namei.c:4843",
-        "vfs_open — fs/open.c:1047",
-        "f_op->open — fs/open.c:945",
+        "do_file_open—fs/namei.c:5035",
+        "path_openat—fs/namei.c:4996",
+        "vfs_open—fs/open.c:1101",
+        "f_op->open—fs/open.c:998",
         "vfs_read — fs/read_write.c:554",
         "f_op->read_iter — fs/read_write.c:493",
-        "filemap_read — mm/filemap.c:2777",
-        "generic_file_write_iter — mm/filemap.c:4492",
-        "filemap_write_and_wait — include/linux/pagemap.h:63"
+        "filemap_read—mm/filemap.c:2816",
+        "generic_file_write_iter—mm/filemap.c:4526",
+        "filemap_write_and_wait—include/linux/pagemap.h:62"
       ]
     }
   ]

@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -59,12 +59,12 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 929,
+          "line": 900,
           "label": "do_exit"
         },
         {
           "path": "kernel/signal.c",
-          "line": 3128,
+          "line": 3199,
           "label": "exit_signals"
         }
       ]
@@ -79,12 +79,12 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 581,
+          "line": 552,
           "label": "exit_mm"
         },
         {
           "path": "fs/file.c",
-          "line": 518,
+          "line": 601,
           "label": "exit_files"
         }
       ]
@@ -99,12 +99,12 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 771,
+          "line": 742,
           "label": "exit_notify"
         },
         {
           "path": "kernel/signal.c",
-          "line": 2175,
+          "line": 2242,
           "label": "do_notify_parent"
         }
       ]
@@ -119,7 +119,7 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 783,
+          "line": 754,
           "label": "exit_state = EXIT_ZOMBIE"
         },
         {
@@ -139,17 +139,17 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 1939,
+          "line": 1910,
           "label": "wait4"
         },
         {
           "path": "kernel/exit.c",
-          "line": 1487,
+          "line": 1458,
           "label": "wait_consider_task"
         },
         {
           "path": "kernel/exit.c",
-          "line": 1207,
+          "line": 1178,
           "label": "wait_task_zombie"
         }
       ]
@@ -164,7 +164,7 @@
       "sources": [
         {
           "path": "kernel/exit.c",
-          "line": 249,
+          "line": 243,
           "label": "release_task"
         }
       ]
@@ -231,16 +231,16 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "do_exit() — kernel/exit.c:929",
-        "exit_signals() — kernel/signal.c:3128",
-        "exit_mm() — kernel/exit.c:581",
-        "exit_files() — fs/file.c:518",
-        "exit_notify() — kernel/exit.c:771",
-        "do_notify_parent() — kernel/signal.c:2175",
-        "do_wait() — kernel/exit.c:1744",
-        "wait_consider_task() — kernel/exit.c:1487",
-        "wait_task_zombie() — kernel/exit.c:1207",
-        "release_task() — kernel/exit.c:249"
+        "do_exit()—kernel/exit.c:900",
+        "exit_signals()—kernel/signal.c:3199",
+        "exit_mm()—kernel/exit.c:552",
+        "exit_files()—fs/file.c:601",
+        "exit_notify()—kernel/exit.c:742",
+        "do_notify_parent()—kernel/signal.c:2242",
+        "do_wait()—kernel/exit.c:1715",
+        "wait_consider_task()—kernel/exit.c:1458",
+        "wait_task_zombie()—kernel/exit.c:1178",
+        "release_task()—kernel/exit.c:243"
       ]
     }
   ]

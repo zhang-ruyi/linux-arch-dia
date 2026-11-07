@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -21,7 +21,7 @@
       "sources": [
         {
           "path": "fs/open.c",
-          "line": 1496,
+          "line": 1584,
           "label": "SYSCALL_DEFINE1(close)"
         }
       ]
@@ -34,12 +34,12 @@
       "sources": [
         {
           "path": "net/ipv4/tcp.c",
-          "line": 3308,
+          "line": 3315,
           "label": "tcp_close"
         },
         {
           "path": "net/ipv4/tcp_output.c",
-          "line": 3801,
+          "line": 3865,
           "label": "tcp_send_fin"
         },
         {
@@ -57,12 +57,12 @@
       "sources": [
         {
           "path": "net/ipv4/tcp_ipv4.c",
-          "line": 2067,
+          "line": 2075,
           "label": "tcp_v4_rcv"
         },
         {
           "path": "net/ipv4/tcp_input.c",
-          "line": 7122,
+          "line": 7212,
           "label": "tcp_rcv_state_process"
         }
       ]
@@ -75,12 +75,12 @@
       "sources": [
         {
           "path": "net/ipv4/tcp.c",
-          "line": 3308,
+          "line": 3315,
           "label": "tcp_close"
         },
         {
           "path": "fs/open.c",
-          "line": 1496,
+          "line": 1584,
           "label": "SYSCALL_DEFINE1(close)"
         }
       ]
@@ -196,13 +196,13 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "tcp_close — net/ipv4/tcp.c:3308",
-        "tcp_close_state — net/ipv4/tcp.c:3054",
-        "tcp_send_fin — net/ipv4/tcp_output.c:3801",
-        "tcp_transmit_skb — net/ipv4/tcp_output.c:1731",
-        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067",
-        "tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827",
-        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
+        "tcp_close—net/ipv4/tcp.c:3315",
+        "tcp_close_state—net/ipv4/tcp.c:3062",
+        "tcp_send_fin—net/ipv4/tcp_output.c:3865",
+        "tcp_transmit_skb—net/ipv4/tcp_output.c:1787",
+        "tcp_v4_rcv—net/ipv4/tcp_ipv4.c:2075",
+        "tcp_v4_do_rcv—net/ipv4/tcp_ipv4.c:1835",
+        "tcp_rcv_state_process—net/ipv4/tcp_input.c:7212",
         "tcp_time_wait — net/ipv4/tcp_minisocks.c:326"
       ]
     }

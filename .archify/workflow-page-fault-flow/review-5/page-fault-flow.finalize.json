@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T14:29:24.644Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+    "sha256": "f1adeba8565d4b367911bb6959dcf10b1c0981543a2d82999d57475e86204063",
+    "bytes": 10861
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+    "sha256": "f8ecc369201ed021216e416bb6a4e6822fd5b7a7346d37342946c70f6113dc48",
+    "bytes": 862785
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "f1adeba8565d4b367911bb6959dcf10b1c0981543a2d82999d57475e86204063",
+          "bytes": 10861
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 1926,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "fc272e0f-3611-4e19-a4ac-c24e430a8afc",
+        "ok": true,
+        "command": "deliver",
+        "type": "workflow",
+        "input": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "specification": {
+          "sha256": "f1adeba8565d4b367911bb6959dcf10b1c0981543a2d82999d57475e86204063",
+          "bytes": 10861
+        },
+        "artifact": {
+          "sha256": "f8ecc369201ed021216e416bb6a4e6822fd5b7a7346d37342946c70f6113dc48",
+          "bytes": 862785
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+          "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+          "references": 18,
+          "linkMode": "local-only"
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 438,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "check",
+        "provenance": "locked",
+        "artifact": {
+          "path": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html"
+        },
+        "error": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+        "file": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "diagnostic": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+        "diagnostics": [
+          {
+            "code": "delivery/provenance-locked",
+            "severity": "error",
+            "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+            "subject": {
+              "artifact": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "deliveryLock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json",
+              "found": true
+            },
+            "supportedFixes": [
+              "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/provenance-locked",
+      "severity": "error",
+      "message": "Delivery ownership is unresolved while the output lock remains; complete or recover delivery before trusting this artifact.",
+      "subject": {
+        "artifact": "/home/zhang/opencode/code_analsys/site/内存管理/page-fault-flow.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "deliveryLock": "/home/zhang/opencode/code_analsys/site/内存管理/.archify-delivery-lock.json",
+        "found": true
+      },
+      "supportedFixes": [
+        "finish the active delivery or inspect and recover the preserved lock, then rerun deliver successfully"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/review-5/page-fault-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-page-fault-flow/review-5/page-fault-flow.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "check",
+  "finishedAt": "2026-11-07T14:29:27.131Z",
+  "durationMs": 2486,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

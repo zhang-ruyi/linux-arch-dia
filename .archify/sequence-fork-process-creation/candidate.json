@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -21,7 +21,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2828,
+          "line": 2879,
           "label": "SYSCALL_DEFINE0(fork)"
         }
       ]
@@ -34,7 +34,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2857,
+          "line": 2908,
           "label": "clone 系统调用"
         }
       ]
@@ -47,7 +47,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2828,
+          "line": 2879,
           "label": "fork syscall"
         }
       ]
@@ -60,7 +60,7 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 2694,
+          "line": 2744,
           "label": "kernel_clone"
         }
       ]
@@ -73,12 +73,12 @@
       "sources": [
         {
           "path": "kernel/fork.c",
-          "line": 1994,
+          "line": 2029,
           "label": "copy_process"
         },
         {
           "path": "kernel/fork.c",
-          "line": 2277,
+          "line": 2314,
           "label": "copy_* 资源复制"
         }
       ]
@@ -91,7 +91,7 @@
       "sources": [
         {
           "path": "kernel/sched/core.c",
-          "line": 4941,
+          "line": 5014,
           "label": "wake_up_new_task"
         }
       ]
@@ -109,7 +109,7 @@
         },
         {
           "path": "kernel/fork.c",
-          "line": 2779,
+          "line": 2829,
           "label": "wake_up_new_task 调用"
         }
       ]
@@ -214,18 +214,18 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "SYSCALL_DEFINE0(fork)() — kernel/fork.c:2828",
-        "kernel_clone() — kernel/fork.c:2694",
-        "copy_process() — kernel/fork.c:1994",
-        "dup_task_struct() — kernel/fork.c:914",
-        "sched_fork() — kernel/sched/core.c:4803",
-        "copy_files() — kernel/fork.c:1642",
-        "copy_fs() — kernel/fork.c:1621",
-        "copy_sighand() — kernel/fork.c:1672",
-        "copy_signal() — kernel/fork.c:1721",
-        "copy_mm() — kernel/fork.c:1568",
+        "SYSCALL_DEFINE0(fork)()—kernel/fork.c:2879",
+        "kernel_clone()—kernel/fork.c:2744",
+        "copy_process()—kernel/fork.c:2029",
+        "dup_task_struct()—kernel/fork.c:916",
+        "sched_fork()—kernel/sched/core.c:4876",
+        "copy_files()—kernel/fork.c:1676",
+        "copy_fs()—kernel/fork.c:1634",
+        "copy_sighand()—kernel/fork.c:1707",
+        "copy_signal()—kernel/fork.c:1756",
+        "copy_mm()—kernel/fork.c:1575",
         "copy_thread() — arch/x86/kernel/process.c:170",
-        "wake_up_new_task() — kernel/sched/core.c:4941"
+        "wake_up_new_task()—kernel/sched/core.c:5014"
       ]
     }
   ]

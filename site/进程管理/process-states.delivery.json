@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "d9d246e9-31a8-4a2b-a22c-c96cbad1cee1",
+  "receiptId": "541ed196-6ed8-45b2-9b3a-7b47641cc1c1",
   "status": "current",
   "command": "deliver",
   "type": "lifecycle",
   "input": "/home/zhang/opencode/code_analsys/.archify/lifecycle-process-states/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/process-states.html",
   "specification": {
-    "sha256": "20e4e97d20228ca9f0fe5c1a882829e3e957baad351c4203514937a4953327b7",
-    "bytes": 6120
+    "sha256": "a45edb20f86ac5876d90100f0ae57c73f46d315aef8ce42546650f2815211be4",
+    "bytes": 6102
   },
   "artifact": {
-    "sha256": "5ee61ef7d1f255bfa8e0dc0f1b5a1b5ec0031ec77b82c88dd2d2db513cb371ac",
-    "bytes": 844265
+    "sha256": "dc76ce19c09e88d2f1b6b1c08a8e122104fdbe7c349c4302fbffa381f4bd94a0",
+    "bytes": 844247
   }
 }

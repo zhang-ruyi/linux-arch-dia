@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "4b65eb59-463f-4241-83ac-4af06f7d5957",
+  "receiptId": "2b049752-ad3f-4bd7-972a-2124b60a2c04",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-fork-process-creation/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/fork-process-creation.html",
   "specification": {
-    "sha256": "a19310f85bc54a6e735b55193b3036eb05bb1526ebced87f4a58b395f887af31",
-    "bytes": 5601
+    "sha256": "05cf1a0a13181976732fb516ac5c3892bf32c798ad6d8a1f3f9af95cd476780b",
+    "bytes": 5579
   },
   "artifact": {
-    "sha256": "735ac9a91e623516fac292a1cea1ae0ff09a37cb00b9a2a00dd3f1184ec62c66",
-    "bytes": 837655
+    "sha256": "f1636e4f0b21ff72ea2c44b526a6ce30a6b2a214389ff984db8fb72f78bda4d1",
+    "bytes": 837633
   }
 }

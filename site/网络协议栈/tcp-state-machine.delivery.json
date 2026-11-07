@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "cce3ed2d-9739-49fa-81b7-b97024ce109f",
+  "receiptId": "f5a97031-72ea-4c20-8b5b-d575d359c3c6",
   "status": "current",
   "command": "deliver",
   "type": "lifecycle",
   "input": "/home/zhang/opencode/code_analsys/.archify/lifecycle-tcp-state-machine/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-state-machine.html",
   "specification": {
-    "sha256": "e3184ffb33b9c0601e844a95c38b9b664438ef6a816315b697ab144290279985",
-    "bytes": 9155
+    "sha256": "5111eaef24c37dba87468857455506e2c08d48b0aa71f7b1f0bb02088a900d03",
+    "bytes": 9144
   },
   "artifact": {
-    "sha256": "5f52a7371030c449f864be4ffbcc4b9582f7f2671364e0f1fb62ba67b0ac25b5",
-    "bytes": 855891
+    "sha256": "a5994e973b2e16a20cde290f3cdbbffa182b0e9138d36dceae67f94637df8227",
+    "bytes": 855881
   }
 }

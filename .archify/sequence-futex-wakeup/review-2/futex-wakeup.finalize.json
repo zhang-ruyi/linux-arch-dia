@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T14:28:44.877Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
+    "sha256": "eb2b64ed22528a93c7c444553cce8cbad65543c0b5d2e21fc3b6f4e81e024509",
+    "bytes": 5733
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+    "sha256": "aad0536b3400cfea010606f820143e56653a74f0373c4c1f86e4cd655995909f",
+    "bytes": 836610
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 175,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "9365afbd-2558-43ae-93bf-d90d7683017d",
+        "stage": "prepare",
+        "type": "sequence",
+        "input": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+        "error": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\".",
+        "diagnostics": [
+          {
+            "code": "delivery/concurrent-attempt",
+            "severity": "error",
+            "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\".",
+            "subject": {
+              "output": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\"."
+            },
+            "supportedFixes": [
+              "wait for the active delivery to finish, then retry"
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/进程管理/futex-wakeup.html\" through lock \"/home/zhang/opencode/code_analsys/site/进程管理/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-2/futex-wakeup.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-futex-wakeup/review-2/futex-wakeup.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-07T14:28:45.124Z",
+  "durationMs": 247,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

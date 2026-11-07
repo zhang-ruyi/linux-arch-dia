@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-signal-handling/candidate.json",
+    "sha256": "3e7959400303dde4e404591272cb34e1eadc1c861f83546589cb303c35237ee5",
+    "bytes": 6132
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/signal-handling.html",
+    "sha256": "70847ea8f4f9db2e154399e325193275522cb8bd3b375f084c6738d5f24a905a",
+    "bytes": 837777
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-signal-handling/review-2/signal-handling.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-signal-handling/review-2/signal-handling.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-signal-handling/review-2/signal-handling.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3662,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

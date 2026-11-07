@@ -8,7 +8,7 @@
     "output": "site/内存管理/mmap-flow.html",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -22,7 +22,7 @@
       "sources": [
         {
           "path": "mm/mmap.c",
-          "line": 613,
+          "line": 626,
           "label": "syscall entry"
         }
       ]
@@ -35,7 +35,7 @@
       "sources": [
         {
           "path": "mm/mmap.c",
-          "line": 613
+          "line": 626
         }
       ]
     },
@@ -47,7 +47,7 @@
       "sources": [
         {
           "path": "mm/mmap.c",
-          "line": 568
+          "line": 581
         }
       ]
     },
@@ -71,7 +71,7 @@
       "sources": [
         {
           "path": "mm/mmap.c",
-          "line": 336
+          "line": 338
         }
       ]
     },
@@ -83,7 +83,7 @@
       "sources": [
         {
           "path": "mm/vma.c",
-          "line": 2833
+          "line": 3147
         }
       ]
     },
@@ -95,7 +95,7 @@
       "sources": [
         {
           "path": "mm/vma.c",
-          "line": 2535
+          "line": 2724
         }
       ]
     },
@@ -107,11 +107,11 @@
       "sources": [
         {
           "path": "mm/vma.c",
-          "line": 2496
+          "line": 2660
         },
         {
           "path": "include/linux/fs.h",
-          "line": 2061
+          "line": 2065
         }
       ]
     }
@@ -283,16 +283,16 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "ksys_mmap_pgoff — mm/mmap.c:568",
+        "ksys_mmap_pgoff—mm/mmap.c:581",
         "vm_mmap_pgoff — mm/util.c:565",
-        "do_mmap — mm/mmap.c:336",
-        "mmap_region — mm/vma.c:2833",
-        "__mmap_region — mm/vma.c:2734",
-        "__mmap_new_vma — mm/vma.c:2535",
-        "分支:文件映射 __mmap_new_file_vma — mm/vma.c:2483",
-        "mmap_file — mm/internal.h:165",
-        "vfs_mmap — include/linux/fs.h:2061",
-        "file->f_op->mmap — include/linux/fs.h:2066"
+        "do_mmap—mm/mmap.c:338",
+        "mmap_region—mm/vma.c:3147",
+        "__mmap_region—mm/vma.c:3048",
+        "__mmap_new_vma—mm/vma.c:2724",
+        "分支:文件映射 __mmap_new_file_vma—mm/vma.c:2642",
+        "mmap_file—mm/internal.h:249",
+        "vfs_mmap—include/linux/fs.h:2065",
+        "file->f_op->mmap—include/linux/fs.h:2070"
       ]
     }
   ]

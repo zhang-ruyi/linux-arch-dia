@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "f7b6d2a7-cf9c-41a1-8ec7-a450e99751f1",
+  "receiptId": "304a2d03-5cd2-4bab-b7bc-6a58c4e189dc",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-startup-boot/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/设备驱动/startup-boot.html",
   "specification": {
-    "sha256": "926f69175d72ea900134764db50a9b65d5e88d996b16dcb5882b0352bdbd62cc",
-    "bytes": 6037
+    "sha256": "5b522ab48fd686898dcba558ef37c7c60e2174562622c260e524327a9f18cd78",
+    "bytes": 6027
   },
   "artifact": {
-    "sha256": "79df8bd49a2ec8a84211e0e1302878149010726f5acace6101cecc0712f28156",
-    "bytes": 840011
+    "sha256": "4334d10533ade7b6f1368ece4bbe68c969c72afbadef739223c10fa7ca887abd",
+    "bytes": 840001
   }
 }

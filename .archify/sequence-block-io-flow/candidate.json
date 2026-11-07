@@ -8,7 +8,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -18,28 +18,52 @@
       "type": "backend",
       "label": "文件系统层",
       "sublabel": "提交 bio 读请求",
-      "sources": [{ "path": "fs/ext4/page-io.c", "line": 397, "label": "ext4_io_submit" }]
+      "sources": [
+        {
+          "path": "fs/ext4/page-io.c",
+          "line": 392,
+          "label": "ext4_io_submit"
+        }
+      ]
     },
     {
       "id": "submitbio",
       "type": "backend",
       "label": "submit_bio",
       "sublabel": "块层入口",
-      "sources": [{ "path": "block/blk-core.c", "line": 952, "label": "submit_bio" }]
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 960,
+          "label": "submit_bio"
+        }
+      ]
     },
     {
       "id": "noacct",
       "type": "backend",
       "label": "submit_bio_noacct",
       "sublabel": "递归转迭代",
-      "sources": [{ "path": "block/blk-core.c", "line": 817, "label": "submit_bio_noacct" }]
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 818,
+          "label": "submit_bio_noacct"
+        }
+      ]
     },
     {
       "id": "blkmq",
       "type": "backend",
       "label": "blk_mq_submit_bio",
       "sublabel": "进入多队列",
-      "sources": [{ "path": "block/blk-mq.c", "line": 3093, "label": "blk_mq_submit_bio" }]
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3115,
+          "label": "blk_mq_submit_bio"
+        }
+      ]
     },
     {
       "id": "sched",
@@ -47,8 +71,16 @@
       "label": "软件队列与调度器",
       "sublabel": "rq_qos + 电梯调度",
       "sources": [
-        { "path": "block/blk-mq.c", "line": 1430, "label": "blk_mq_run_hw_queue" },
-        { "path": "block/blk-rq-qos.c", "line": 62, "label": "__rq_qos_throttle" }
+        {
+          "path": "block/blk-mq.c",
+          "line": 1451,
+          "label": "blk_mq_run_hw_queue"
+        },
+        {
+          "path": "block/blk-rq-qos.c",
+          "line": 62,
+          "label": "__rq_qos_throttle"
+        }
       ]
     },
     {
@@ -57,8 +89,16 @@
       "label": "硬件队列",
       "sublabel": "blk_mq_dispatch_rq_list",
       "sources": [
-        { "path": "block/blk-mq.c", "line": 2321, "label": "blk_mq_run_hw_queue" },
-        { "path": "block/blk-mq.c", "line": 2085, "label": "blk_mq_dispatch_rq_list" }
+        {
+          "path": "block/blk-mq.c",
+          "line": 2345,
+          "label": "blk_mq_run_hw_queue"
+        },
+        {
+          "path": "block/blk-mq.c",
+          "line": 2109,
+          "label": "blk_mq_dispatch_rq_list"
+        }
       ]
     },
     {
@@ -66,12 +106,26 @@
       "type": "external",
       "label": "块设备",
       "sublabel": "硬件执行 IO",
-      "sources": [{ "path": "block/blk-mq.c", "line": 1322, "label": "blk_mq_complete_request" }]
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1342,
+          "label": "blk_mq_complete_request"
+        }
+      ]
     }
   ],
   "segments": [
-    { "from": 145, "to": 305, "label": "提交与入队" },
-    { "from": 310, "to": 500, "label": "派发与完成" }
+    {
+      "from": 145,
+      "to": 305,
+      "label": "提交与入队"
+    },
+    {
+      "from": 310,
+      "to": 500,
+      "label": "派发与完成"
+    }
   ],
   "messages": [
     {
@@ -180,15 +234,15 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "submit_bio — block/blk-core.c:952",
-        "submit_bio_noacct — block/blk-core.c:817",
-        "blk_mq_submit_bio — block/blk-mq.c:3093",
-        "blk_mq_get_new_requests — block/blk-mq.c:3015",
-        "blk_mq_dispatch_rq_list — block/blk-mq.c:2085",
-        "queue_rq — block/blk-mq.c:2117",
-        "blk_mq_complete_request — block/blk-mq.c:1322",
-        "blk_mq_end_request — block/blk-mq.c:1145",
-        "bio_endio — block/bio.c:1762"
+        "submit_bio—block/blk-core.c:960",
+        "submit_bio_noacct—block/blk-core.c:818",
+        "blk_mq_submit_bio—block/blk-mq.c:3115",
+        "blk_mq_get_new_requests—block/blk-mq.c:3039",
+        "blk_mq_dispatch_rq_list—block/blk-mq.c:2109",
+        "queue_rq—block/blk-mq.c:2141",
+        "blk_mq_complete_request—block/blk-mq.c:1342",
+        "blk_mq_end_request—block/blk-mq.c:1165",
+        "bio_endio—block/bio.c:1863"
       ]
     }
   ]

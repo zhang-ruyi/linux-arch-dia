@@ -8,7 +8,7 @@
     "output": "site/内存管理/buddy-allocator.html",
     "repository": {
       "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
-      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
       "link_mode": "local-only"
     }
   },
@@ -59,7 +59,7 @@
       "sources": [
         {
           "path": "include/linux/gfp.h",
-          "line": 351
+          "line": 298
         }
       ]
     },
@@ -72,7 +72,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 5333
+          "line": 5494
         }
       ]
     },
@@ -85,7 +85,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 5268
+          "line": 5411
         }
       ]
     },
@@ -99,7 +99,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 3792
+          "line": 3797
         }
       ]
     },
@@ -113,7 +113,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 3401
+          "line": 3410
         }
       ]
     },
@@ -127,7 +127,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 3359
+          "line": 3368
         }
       ]
     },
@@ -142,7 +142,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 2454
+          "line": 2461
         }
       ]
     },
@@ -186,7 +186,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 5421
+          "line": 5593
         }
       ]
     },
@@ -200,7 +200,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 5376
+          "line": 5548
         }
       ]
     },
@@ -213,7 +213,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 2937
+          "line": 2944
         }
       ]
     },
@@ -227,7 +227,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 2832
+          "line": 2839
         }
       ]
     },
@@ -241,7 +241,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 1578
+          "line": 1575
         }
       ]
     },
@@ -255,7 +255,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 1542
+          "line": 1539
         }
       ]
     },
@@ -270,7 +270,7 @@
       "sources": [
         {
           "path": "mm/page_alloc.c",
-          "line": 936
+          "line": 923
         }
       ]
     }
@@ -418,22 +418,22 @@
       "dot": "slate",
       "title": "完整调用链(源码核实)",
       "items": [
-        "alloc_pages — include/linux/gfp.h:351",
-        "__alloc_pages_noprof — mm/page_alloc.c:5333",
-        "__alloc_frozen_pages_noprof — mm/page_alloc.c:5268",
-        "get_page_from_freelist — mm/page_alloc.c:3792",
-        "rmqueue — mm/page_alloc.c:3401",
+        "alloc_pages—include/linux/gfp.h:298",
+        "__alloc_pages_noprof—mm/page_alloc.c:5494",
+        "__alloc_frozen_pages_noprof—mm/page_alloc.c:5411",
+        "get_page_from_freelist—mm/page_alloc.c:3797",
+        "rmqueue—mm/page_alloc.c:3410",
         "rmqueue_pcplist — mm/page_alloc.c:3359 (PCP 快路径)",
         "rmqueue_buddy — mm/page_alloc.c:3210 (伙伴慢路径)",
-        "__rmqueue — mm/page_alloc.c:2454",
+        "__rmqueue—mm/page_alloc.c:2461",
         "__rmqueue_smallest — mm/page_alloc.c:1889",
         "expand — mm/page_alloc.c:1702",
-        "__free_pages — mm/page_alloc.c:5421",
-        "___free_pages — mm/page_alloc.c:5376",
-        "__free_frozen_pages — mm/page_alloc.c:2937",
+        "__free_pages—mm/page_alloc.c:5593",
+        "___free_pages—mm/page_alloc.c:5548",
+        "__free_frozen_pages—mm/page_alloc.c:2944",
         "free_frozen_page_commit — mm/page_alloc.c:2832 (PCP 回填)",
-        "free_one_page — mm/page_alloc.c:1542",
-        "__free_one_page — mm/page_alloc.c:936"
+        "free_one_page—mm/page_alloc.c:1539",
+        "__free_one_page—mm/page_alloc.c:923"
       ]
     }
   ]

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "9d9add62-42a5-4e6d-9ec0-2ff77c61e1e7",
+  "receiptId": "0f7d03f9-d0c1-4848-8005-4ebb3c1c9fcd",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-block-io/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/设备驱动/deep-block-io.html",
   "specification": {
-    "sha256": "509b559852b7e0921705d93f8062e1ae7aaa2957563c7def1a43d31c3031ac9c",
+    "sha256": "aa803be7a78f8f085b9275d82f6f443c915762e1f63d920fc0c7b8c3cef25b7f",
     "bytes": 15106
   },
   "artifact": {
-    "sha256": "dc67bf5c13f5496bde72a2f3ae95ab9089036fa4e836f6c80851ca1cc9f03a66",
+    "sha256": "b4eda74e575ac44fe83da66ebe95d63b49e92f08effb7208f5ab1bb743cd39cb",
     "bytes": 886366
   }
 }

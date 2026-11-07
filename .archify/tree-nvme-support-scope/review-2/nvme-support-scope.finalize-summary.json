@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/tree-nvme-support-scope/candidate.json",
+    "sha256": "9ce54f3e5cf8becf199184fd90c46ca91aae4fdbaca6c194f656c31018fbee1e",
+    "bytes": 10469
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-support-scope.html",
+    "sha256": "158dd9c6c06c2b5c80436db4ef4ea511c2d5656f27ba6daddb54954de77637f9",
+    "bytes": 880666
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/tree-nvme-support-scope/review-2/nvme-support-scope.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/tree-nvme-support-scope/review-2/nvme-support-scope.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/tree-nvme-support-scope/review-2/nvme-support-scope.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4137,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

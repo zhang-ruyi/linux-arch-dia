@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "ab26f328-37f3-4ebf-ae53-103dd2e6ce39",
+  "receiptId": "991289f9-9224-4deb-8280-1104fc09038f",
   "status": "current",
   "command": "deliver",
   "type": "architecture",
   "input": "/home/zhang/opencode/code_analsys/.archify/architecture-bottom-half/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/bottom-half.html",
   "specification": {
-    "sha256": "c065f3fd16f7758d6dc56d9b4cd82fee5d206ca320e570a2a9ce732980fd9d40",
-    "bytes": 8047
+    "sha256": "ef12fae2bf93c35c9a75673b348f22087ae704eef120d02bdf509e82475dfd87",
+    "bytes": 9866
   },
   "artifact": {
-    "sha256": "bd89ec8ea18564b1901be3133e06d03c8abd382dd331ab3e9110522760d69d03",
-    "bytes": 851884
+    "sha256": "75c5dab91812ec040e3de400381180b2bb8f8daf19ac51357766e1b137512f56",
+    "bytes": 851856
   }
 }

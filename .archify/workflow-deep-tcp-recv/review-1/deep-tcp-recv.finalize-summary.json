@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-tcp-recv/candidate.json",
+    "sha256": "165ae3ca5f58060fed8ffc18e79bd9e9286956ac974e317622ce00d14c4e38a3",
+    "bytes": 15645
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/deep-tcp-recv.html",
+    "sha256": "cb445f5cd97ca58129c43242e48904e8a08559c9ea3fb80493d26bfe5897371d",
+    "bytes": 873229
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-tcp-recv/review-1/deep-tcp-recv.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-tcp-recv/review-1/deep-tcp-recv.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-tcp-recv/review-1/deep-tcp-recv.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4947,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
