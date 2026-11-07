@@ -59,7 +59,7 @@
       "id": "g_reclaim",
       "label": "收尾",
       "lane": "reclaim",
-      "fromCol": 4,
+      "fromCol": 3,
       "toCol": 5,
       "variant": "default"
     }
@@ -379,11 +379,11 @@
     {
       "id": "pci_complete_batch",
       "lane": "reclaim",
-      "col": 4,
+      "col": 3,
       "type": "backend",
       "label": "nvme_pci_complete_batch",
       "sublabel": "批量完成回收",
-      "yOffset": 10,
+      "yOffset": -135,
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
@@ -394,11 +394,11 @@
     {
       "id": "pci_complete_rq",
       "lane": "reclaim",
-      "col": 4,
+      "col": 3,
       "type": "backend",
       "label": "nvme_pci_complete_rq",
       "sublabel": "PCIe 完成回调",
-      "yOffset": 90,
+      "yOffset": -45,
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
@@ -409,11 +409,11 @@
     {
       "id": "pci_unmap_rq",
       "lane": "reclaim",
-      "col": 4,
+      "col": 3,
       "type": "backend",
       "label": "nvme_pci_unmap_rq",
       "sublabel": "解除 DMA 映射",
-      "yOffset": 170,
+      "yOffset": 45,
       "sources": [
         {
           "path": "drivers/nvme/host/pci.c",
@@ -428,7 +428,7 @@
       "type": "backend",
       "label": "nvme_complete_rq",
       "sublabel": "通用完成入口",
-      "yOffset": 250,
+      "yOffset": -135,
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
@@ -439,11 +439,11 @@
     {
       "id": "complete_rq_core",
       "lane": "reclaim",
-      "col": 5,
+      "col": 4,
       "type": "backend",
       "label": "__nvme_complete_rq",
       "sublabel": "清理并判定去向",
-      "yOffset": 250,
+      "yOffset": -45,
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
@@ -454,11 +454,11 @@
     {
       "id": "nvme_cleanup_cmd",
       "lane": "reclaim",
-      "col": 5,
+      "col": 4,
       "type": "backend",
       "label": "nvme_cleanup_cmd",
       "sublabel": "释放命令资源",
-      "yOffset": 330,
+      "yOffset": 45,
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
@@ -473,7 +473,7 @@
       "type": "backend",
       "label": "nvme_decide_disposition",
       "sublabel": "COMPLETE/RETRY/FAILOVER",
-      "yOffset": 410,
+      "yOffset": -135,
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
@@ -488,7 +488,7 @@
       "type": "backend",
       "label": "nvme_end_req",
       "sublabel": "状态翻译与收尾",
-      "yOffset": 490,
+      "yOffset": -45,
       "sources": [
         {
           "path": "drivers/nvme/host/core.c",
@@ -503,7 +503,7 @@
       "type": "backend",
       "label": "blk_mq_end_request",
       "sublabel": "结束块层请求",
-      "yOffset": 570,
+      "yOffset": 45,
       "sources": [
         {
           "path": "block/blk-mq.c",
@@ -518,7 +518,7 @@
       "type": "backend",
       "label": "bio_endio",
       "sublabel": "结束 bio 返回上层",
-      "yOffset": 650,
+      "yOffset": 135,
       "sources": [
         {
           "path": "block/bio.c",
