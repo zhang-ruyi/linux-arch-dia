@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-memblock-to-folio/candidate.json",
+    "sha256": "1ff0c0f803961825b67fb56cb5ce429a5c0a70c71c577009f3455bc719473592",
+    "bytes": 7174
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/memblock-to-folio.html",
+    "sha256": "93774422b4649c980490770694b76d2bcfc4cadeefe36e021818dffd52df0e04",
+    "bytes": 847290
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内存管理/memblock-to-folio.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内存管理/memblock-to-folio.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内存管理/memblock-to-folio.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3526,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

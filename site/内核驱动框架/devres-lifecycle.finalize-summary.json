@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-devres-lifecycle/candidate.json",
+    "sha256": "901bb5d7f3e4d9e5004c84228438f35dff8682fda57a72d24e3c7e34e0581e1b",
+    "bytes": 6677
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核驱动框架/devres-lifecycle.html",
+    "sha256": "26ada402331f72fcdf2b1a1871c6c1b8f807e5cfa47ea2478cdf9c2f0bf6d55e",
+    "bytes": 848249
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/devres-lifecycle.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/devres-lifecycle.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/devres-lifecycle.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4575,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

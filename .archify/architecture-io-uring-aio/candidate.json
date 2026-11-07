@@ -1,0 +1,777 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "io_uring / libaio / POSIX AIO 三种异步 IO",
+    "locale": "zh-CN",
+    "output": "site/存储技术/io-uring-aio.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "app_io",
+      "type": "external",
+      "label": "应用程序",
+      "sublabel": "提交异步 I/O",
+      "pos": [
+        45,
+        90
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "setup",
+      "type": "frontend",
+      "label": "io_uring_setup()",
+      "sublabel": "创建 ring, 返回 fd",
+      "pos": [
+        285,
+        90
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "io_uring/io_uring.c",
+          "line": 3365,
+          "label": "io_uring_setup"
+        },
+        {
+          "path": "io_uring/io_uring.c",
+          "line": 3404,
+          "label": "SYSCALL_DEFINE2"
+        }
+      ]
+    },
+    {
+      "id": "ring",
+      "type": "backend",
+      "label": "SQ / CQ ring",
+      "sublabel": "mmap 共享内存",
+      "tag": "无锁环形队列",
+      "pos": [
+        525,
+        90
+      ],
+      "size": [
+        160,
+        64
+      ],
+      "sources": [
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 552,
+          "label": "IORING_OFF_SQ_RING"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 615,
+          "label": "struct io_uring_params"
+        }
+      ]
+    },
+    {
+      "id": "sqe",
+      "type": "backend",
+      "label": "SQE / CQE",
+      "sublabel": "提交 / 完成条目",
+      "pos": [
+        765,
+        90
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 32,
+          "label": "struct io_uring_sqe"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 501,
+          "label": "struct io_uring_cqe"
+        }
+      ]
+    },
+    {
+      "id": "enter",
+      "type": "frontend",
+      "label": "io_uring_enter()",
+      "sublabel": "提交并等待完成",
+      "pos": [
+        1005,
+        90
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "io_uring/io_uring.c",
+          "line": 2852,
+          "label": "SYSCALL_DEFINE6(io_uring_enter)"
+        }
+      ]
+    },
+    {
+      "id": "reg",
+      "type": "backend",
+      "label": "registered files/buffers",
+      "sublabel": "预注册, 免重复映射",
+      "pos": [
+        285,
+        190
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "io_uring/rsrc.c",
+          "line": 676,
+          "label": "io_sqe_files_register"
+        },
+        {
+          "path": "io_uring/rsrc.c",
+          "line": 1053,
+          "label": "io_sqe_buffers_register"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 655,
+          "label": "IORING_REGISTER_*"
+        }
+      ]
+    },
+    {
+      "id": "sqpoll",
+      "type": "backend",
+      "label": "SQPOLL 内核线程",
+      "sublabel": "轮询 SQ, 免 enter",
+      "pos": [
+        525,
+        190
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "io_uring/sqpoll.c",
+          "line": 485,
+          "label": "io_sq_offload_create"
+        },
+        {
+          "path": "io_uring/io_uring.c",
+          "line": 3313,
+          "label": "创建 poll offload"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 176,
+          "label": "IORING_SETUP_SQPOLL"
+        }
+      ]
+    },
+    {
+      "id": "cmd",
+      "type": "backend",
+      "label": "IORING_OP_URING_CMD",
+      "sublabel": "透传到设备 ->uring_cmd()",
+      "pos": [
+        765,
+        190
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "io_uring/uring_cmd.c",
+          "line": 226,
+          "label": "io_uring_cmd"
+        },
+        {
+          "path": "include/uapi/linux/io_uring.h",
+          "line": 303,
+          "label": "IORING_OP_URING_CMD"
+        }
+      ]
+    },
+    {
+      "id": "fs",
+      "type": "backend",
+      "label": "VFS / 文件系统",
+      "sublabel": "read_iter / write_iter",
+      "pos": [
+        1005,
+        190
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "database",
+      "label": "块设备 / 驱动",
+      "sublabel": "完成中断 -> CQE",
+      "pos": [
+        1245,
+        190
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "app_aio",
+      "type": "external",
+      "label": "应用程序",
+      "sublabel": "libaio 调用",
+      "pos": [
+        45,
+        340
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "aio_setup",
+      "type": "frontend",
+      "label": "io_setup()",
+      "sublabel": "创建 kioctx",
+      "pos": [
+        285,
+        340
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/aio.c",
+          "line": 1445,
+          "label": "SYSCALL_DEFINE2(io_setup)"
+        }
+      ]
+    },
+    {
+      "id": "aio_submit",
+      "type": "frontend",
+      "label": "io_submit()",
+      "sublabel": "提交 iocb 数组",
+      "pos": [
+        525,
+        340
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/aio.c",
+          "line": 2150,
+          "label": "SYSCALL_DEFINE3(io_submit)"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 2037,
+          "label": "__io_submit_one"
+        }
+      ]
+    },
+    {
+      "id": "aio_events",
+      "type": "frontend",
+      "label": "io_getevents()",
+      "sublabel": "收割完成事件",
+      "pos": [
+        765,
+        340
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/aio.c",
+          "line": 2319,
+          "label": "SYSCALL_DEFINE5(io_getevents)"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 1281,
+          "label": "aio_read_events_ring"
+        }
+      ]
+    },
+    {
+      "id": "kioctx",
+      "type": "backend",
+      "label": "kioctx",
+      "sublabel": "每个 AIO 上下文",
+      "pos": [
+        285,
+        440
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/aio.c",
+          "line": 855,
+          "label": "aio_setup_ring 调用点"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 547,
+          "label": "aio_setup_ring"
+        }
+      ]
+    },
+    {
+      "id": "aio_ring",
+      "type": "backend",
+      "label": "aio ring",
+      "sublabel": "aio_ring / io_event",
+      "pos": [
+        525,
+        440
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "include/uapi/linux/aio_abi.h",
+          "line": 60,
+          "label": "struct io_event"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 547,
+          "label": "aio_setup_ring"
+        }
+      ]
+    },
+    {
+      "id": "iocb",
+      "type": "backend",
+      "label": "iocb / aio_kiocb",
+      "sublabel": "一次异步请求",
+      "pos": [
+        765,
+        440
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "include/uapi/linux/aio_abi.h",
+          "line": 73,
+          "label": "struct iocb"
+        },
+        {
+          "path": "include/uapi/linux/aio_abi.h",
+          "line": 37,
+          "label": "IOCB_CMD_*"
+        }
+      ]
+    },
+    {
+      "id": "rw",
+      "type": "backend",
+      "label": "read_iter / write_iter",
+      "sublabel": "提交块 I/O",
+      "pos": [
+        1005,
+        440
+      ],
+      "size": [
+        160,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/aio.c",
+          "line": 1666,
+          "label": "file->f_op->read_iter"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 1697,
+          "label": "file->f_op->write_iter"
+        },
+        {
+          "path": "fs/aio.c",
+          "line": 1184,
+          "label": "aio_complete"
+        }
+      ]
+    },
+    {
+      "id": "blk",
+      "type": "database",
+      "label": "块设备 / 驱动",
+      "sublabel": "bio 提交与完成",
+      "pos": [
+        1245,
+        440
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "app_posix",
+      "type": "external",
+      "label": "应用程序",
+      "sublabel": "aio_read / aio_write",
+      "pos": [
+        45,
+        560
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "glibc",
+      "type": "backend",
+      "label": "POSIX AIO (glibc)",
+      "sublabel": "用户态线程池",
+      "tag": "非内核 AIO",
+      "pos": [
+        285,
+        560
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "pool",
+      "type": "backend",
+      "label": "worker 线程",
+      "sublabel": "每个请求一个线程",
+      "pos": [
+        525,
+        560
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "pread",
+      "type": "frontend",
+      "label": "pread / pwrite",
+      "sublabel": "同步系统调用",
+      "pos": [
+        765,
+        560
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "VFS(同步路径)",
+      "sublabel": "阻塞直到完成",
+      "pos": [
+        1005,
+        560
+      ],
+      "size": [
+        160,
+        56
+      ]
+    },
+    {
+      "id": "blk2",
+      "type": "database",
+      "label": "块设备 / 驱动",
+      "sublabel": "同步 I/O",
+      "pos": [
+        1245,
+        560
+      ],
+      "size": [
+        160,
+        56
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "io_uring:内核原生异步 I/O",
+      "wraps": [
+        "app_io",
+        "setup",
+        "ring",
+        "sqe",
+        "enter",
+        "reg",
+        "sqpoll",
+        "cmd",
+        "fs",
+        "dev"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "libaio:内核 AIO 系统调用",
+      "wraps": [
+        "app_aio",
+        "aio_setup",
+        "aio_submit",
+        "aio_events",
+        "kioctx",
+        "aio_ring",
+        "iocb",
+        "rw",
+        "blk"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "POSIX AIO:glibc 用户态线程池",
+      "wraps": [
+        "app_posix",
+        "glibc",
+        "pool",
+        "pread",
+        "vfs",
+        "blk2"
+      ],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    {
+      "id": "app-setup",
+      "from": "app_io",
+      "to": "setup"
+    },
+    {
+      "id": "app-reg",
+      "from": "app_io",
+      "to": "reg",
+      "variant": "dashed"
+    },
+    {
+      "id": "setup-ring",
+      "from": "setup",
+      "to": "ring",
+      "label": "创建 + mmap"
+    },
+    {
+      "id": "ring-sqe",
+      "from": "ring",
+      "to": "sqe"
+    },
+    {
+      "id": "sqe-enter",
+      "from": "sqe",
+      "to": "enter",
+      "label": "提交"
+    },
+    {
+      "id": "reg-ring",
+      "from": "reg",
+      "to": "ring"
+    },
+    {
+      "id": "sqpoll-ring",
+      "from": "sqpoll",
+      "to": "ring"
+    },
+    {
+      "id": "sqe-cmd",
+      "from": "sqe",
+      "to": "cmd"
+    },
+    {
+      "id": "cmd-fs",
+      "from": "cmd",
+      "to": "fs",
+      "label": "VFS 请求"
+    },
+    {
+      "id": "fs-dev",
+      "from": "fs",
+      "to": "dev",
+      "label": "块层"
+    },
+    {
+      "id": "app-aio-setup",
+      "from": "app_aio",
+      "to": "aio_setup"
+    },
+    {
+      "id": "aio-setup-submit",
+      "from": "aio_setup",
+      "to": "aio_submit",
+      "label": "ctx"
+    },
+    {
+      "id": "aio-submit-events",
+      "from": "aio_submit",
+      "to": "aio_events",
+      "label": "提交"
+    },
+    {
+      "id": "aio-setup-kioctx",
+      "from": "aio_setup",
+      "to": "kioctx"
+    },
+    {
+      "id": "aio-submit-ring",
+      "from": "aio_submit",
+      "to": "aio_ring"
+    },
+    {
+      "id": "kioctx-ring",
+      "from": "kioctx",
+      "to": "aio_ring",
+      "label": "aio_setup_ring"
+    },
+    {
+      "id": "aio-events-iocb",
+      "from": "aio_events",
+      "to": "iocb"
+    },
+    {
+      "id": "aio-ring-iocb",
+      "from": "aio_ring",
+      "to": "iocb",
+      "label": "环形缓冲"
+    },
+    {
+      "id": "iocb-rw",
+      "from": "iocb",
+      "to": "rw",
+      "label": "kiocb"
+    },
+    {
+      "id": "rw-blk",
+      "from": "rw",
+      "to": "blk",
+      "label": "bio"
+    },
+    {
+      "id": "app-glibc",
+      "from": "app_posix",
+      "to": "glibc"
+    },
+    {
+      "id": "glibc-pool",
+      "from": "glibc",
+      "to": "pool",
+      "label": "分发请求"
+    },
+    {
+      "id": "pool-pread",
+      "from": "pool",
+      "to": "pread",
+      "label": "worker"
+    },
+    {
+      "id": "pread-vfs",
+      "from": "pread",
+      "to": "vfs",
+      "label": "syscall"
+    },
+    {
+      "id": "vfs-blk2",
+      "from": "vfs",
+      "to": "blk2",
+      "label": "同步 I/O"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "io_uring",
+      "items": [
+        "io_uring_setup 创建 SQ/CQ ring,应用 mmap 共享内存",
+        "用户写 SQE,io_uring_enter 提交并收割 CQE",
+        "IORING_SETUP_SQPOLL 由内核线程轮询 SQ,减少系统调用",
+        "registered files/buffers 预注册资源,avoid 重复映射",
+        "IORING_OP_URING_CMD 把命令透传给设备 ->uring_cmd()"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "libaio",
+      "items": [
+        "io_setup 创建 kioctx 与 aio ring",
+        "io_submit 提交 iocb,经 read_iter/write_iter 进入块层",
+        "io_getevents 从完成环读取 io_event",
+        "全部由 fs/aio.c 在内核实现,支持 preadv/pwritev 等命令"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "POSIX AIO",
+      "items": [
+        "glibc 在用户态维护线程池实现 POSIX 异步接口",
+        "worker 线程执行阻塞的 pread/pwrite 系统调用",
+        "内核不创建 AIO 上下文,也不使用 SQ/CQ 环",
+        "该实现位于 glibc,不在本内核源码树内"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "源码索引",
+      "items": [
+        "io_uring_setup—io_uring/io_uring.c:3365",
+        "io_uring_enter—io_uring/io_uring.c:2852",
+        "io_uring_cmd—io_uring/uring_cmd.c:226",
+        "SQ/CQ ABI—include/uapi/linux/io_uring.h:32,501",
+        "io_setup/io_submit/io_getevents—fs/aio.c:1445,2150,2319",
+        "iocb/io_event—include/uapi/linux/aio_abi.h:60,73"
+      ]
+    }
+  ]
+}

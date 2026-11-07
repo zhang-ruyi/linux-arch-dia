@@ -1,0 +1,363 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "devres 资源生命周期与回滚",
+    "locale": "zh-CN",
+    "output": "site/内核驱动框架/devres-lifecycle.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "probe",
+      "label": "probe 资源申请"
+    },
+    {
+      "id": "devres",
+      "label": "devres 登记与分组"
+    },
+    {
+      "id": "teardown",
+      "label": "失败回滚 / 驱动移除",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "acquire",
+      "label": "申请并登记",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "probe-run",
+      "label": "probe 执行",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "rollback",
+      "label": "回滚与释放",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "alloc",
+    "add",
+    "success",
+    "remove",
+    "cleanup",
+    "rall",
+    "lifo"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "alloc"
+    ],
+    "allowedTerminals": [
+      "lifo"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "alloc",
+      "lane": "probe",
+      "col": 0,
+      "type": "backend",
+      "label": "devm_* 申请",
+      "sublabel": "kmalloc / ioremap / irq",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 943,
+          "label": "devm_kmalloc()"
+        },
+        {
+          "path": "lib/devres.c",
+          "line": 72,
+          "label": "devm_ioremap()"
+        },
+        {
+          "path": "include/linux/interrupt.h",
+          "line": 220,
+          "label": "devm_request_irq()"
+        }
+      ]
+    },
+    {
+      "id": "add",
+      "lane": "devres",
+      "col": 1,
+      "type": "backend",
+      "label": "devres_add()",
+      "sublabel": "挂入 dev->devres_head",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 277,
+          "label": "devres_add()"
+        }
+      ]
+    },
+    {
+      "id": "group",
+      "lane": "devres",
+      "col": 2,
+      "type": "backend",
+      "label": "devres_open_group()",
+      "sublabel": "可选分组标记",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 600,
+          "label": "devres_open_group()"
+        }
+      ]
+    },
+    {
+      "id": "failure",
+      "lane": "teardown",
+      "col": 2,
+      "type": "security",
+      "label": "probe 失败",
+      "sublabel": "call_driver_probe() 非 0",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 622,
+          "label": "call_driver_probe()"
+        },
+        {
+          "path": "drivers/base/dd.c",
+          "line": 708,
+          "label": "probe 失败分支"
+        }
+      ]
+    },
+    {
+      "id": "success",
+      "lane": "probe",
+      "col": 3,
+      "type": "backend",
+      "label": "probe 成功",
+      "sublabel": "资源在运行期持有",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 757,
+          "label": "driver_bound()"
+        }
+      ]
+    },
+    {
+      "id": "remove",
+      "lane": "teardown",
+      "col": 3,
+      "type": "security",
+      "label": "驱动 remove()",
+      "sublabel": "解绑或卸载",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 611,
+          "label": "device_remove()"
+        },
+        {
+          "path": "drivers/base/dd.c",
+          "line": 1326,
+          "label": "__device_release_driver()"
+        }
+      ]
+    },
+    {
+      "id": "rgroup",
+      "lane": "devres",
+      "col": 4,
+      "type": "backend",
+      "label": "devres_release_group()",
+      "sublabel": "按组回滚",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 711,
+          "label": "devres_release_group()"
+        }
+      ]
+    },
+    {
+      "id": "cleanup",
+      "lane": "teardown",
+      "col": 4,
+      "type": "security",
+      "label": "device_unbind_cleanup()",
+      "sublabel": "remove 回调之后",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 594,
+          "label": "device_unbind_cleanup()"
+        }
+      ]
+    },
+    {
+      "id": "rall",
+      "lane": "devres",
+      "col": 5,
+      "type": "backend",
+      "label": "devres_release_all()",
+      "sublabel": "释放全部资源",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 558,
+          "label": "devres_release_all()"
+        }
+      ]
+    },
+    {
+      "id": "lifo",
+      "lane": "teardown",
+      "col": 5,
+      "type": "database",
+      "label": "release_nodes() 逆序释放",
+      "sublabel": "LIFO",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 540,
+          "label": "release_nodes()"
+        },
+        {
+          "path": "drivers/base/devres.c",
+          "line": 544,
+          "label": "list_for_each_entry_safe_reverse"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "alloc-add",
+      "from": "alloc",
+      "to": "add",
+      "label": "登记",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "add-success",
+      "from": "add",
+      "to": "success",
+      "label": "probe 继续",
+      "role": "main"
+    },
+    {
+      "id": "success-remove",
+      "from": "success",
+      "to": "remove",
+      "label": "解绑 / 卸载",
+      "role": "main"
+    },
+    {
+      "id": "remove-cleanup",
+      "from": "remove",
+      "to": "cleanup",
+      "role": "main"
+    },
+    {
+      "id": "cleanup-rall",
+      "from": "cleanup",
+      "to": "rall",
+      "label": "释放全部",
+      "role": "main"
+    },
+    {
+      "id": "rall-lifo",
+      "from": "rall",
+      "to": "lifo",
+      "role": "main"
+    },
+    {
+      "id": "add-group",
+      "from": "add",
+      "to": "group",
+      "label": "显式开组",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "group-rgroup",
+      "from": "group",
+      "to": "rgroup",
+      "label": "按组回滚",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "add-failure",
+      "from": "add",
+      "to": "failure",
+      "label": "probe 失败",
+      "role": "error",
+      "variant": "security"
+    },
+    {
+      "id": "failure-cleanup",
+      "from": "failure",
+      "to": "cleanup",
+      "role": "error"
+    },
+    {
+      "id": "cleanup-rgroup",
+      "from": "cleanup",
+      "to": "rgroup",
+      "label": "未关闭组",
+      "role": "branch",
+      "variant": "dashed"
+    },
+    {
+      "id": "rgroup-lifo",
+      "from": "rgroup",
+      "to": "lifo",
+      "role": "branch",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "登记",
+      "items": [
+        "devm_* 先分配 devres 节点，再调用 devres_add()",
+        "节点挂到 dev->devres_head，随设备生命周期管理",
+        "资源类型由各自的 release 回调决定"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "回滚",
+      "items": [
+        "probe 失败进入 device_unbind_cleanup()",
+        "驱动 remove() 之后同样执行 device_unbind_cleanup()",
+        "devres_release_group() 释放指定组，devres_release_all() 释放全部"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "LIFO",
+      "items": [
+        "release_nodes() 用 list_for_each_entry_safe_reverse() 遍历",
+        "后申请的资源先释放，符合嵌套依赖",
+        "每组释放前先取出节点，避免回调中修改链表"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-driver-bind-probe/candidate.json",
+    "sha256": "99d07e57ea79d0e416194f93ccc3f9653a5225b87b7e287aa659067bef7b1088",
+    "bytes": 7472
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-bind-probe.html",
+    "sha256": "eb68b23bfaa59e33f77a92f3ed11b554c215f984a8e0773e4b7121444cc7200b",
+    "bytes": 843888
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-bind-probe.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-bind-probe.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-bind-probe.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3501,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

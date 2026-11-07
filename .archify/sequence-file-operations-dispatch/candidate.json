@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "file_operations 分发：从 VFS 到驱动",
+    "locale": "zh-CN",
+    "output": "site/内核驱动框架/file-operations-dispatch.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "系统调用"
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "VFS",
+      "sublabel": "open / read / ioctl",
+      "sources": [
+        { "path": "fs/open.c", "line": 1101, "label": "vfs_open()" },
+        { "path": "fs/read_write.c", "line": 554, "label": "vfs_read()" },
+        { "path": "fs/ioctl.c", "line": 492, "label": "do_vfs_ioctl()" }
+      ]
+    },
+    {
+      "id": "fops",
+      "type": "backend",
+      "label": "file_operations",
+      "sublabel": "函数指针分发",
+      "sources": [
+        { "path": "include/linux/fs.h", "line": 1922, "label": "struct file_operations" }
+      ]
+    },
+    {
+      "id": "drv",
+      "type": "backend",
+      "label": "ppdev 驱动",
+      "sublabel": "pp_fops",
+      "sources": [
+        { "path": "drivers/char/ppdev.c", "line": 789, "label": "pp_fops" },
+        { "path": "drivers/char/ppdev.c", "line": 686, "label": "pp_open()" },
+        { "path": "drivers/char/ppdev.c", "line": 676, "label": "pp_ioctl()" }
+      ]
+    },
+    {
+      "id": "fput",
+      "type": "backend",
+      "label": "fs/file_table.c",
+      "sublabel": "__fput 释放",
+      "sources": [
+        { "path": "fs/file_table.c", "line": 486, "label": "__fput()" },
+        { "path": "fs/file_table.c", "line": 511, "label": "f_op->release" }
+      ]
+    }
+  ],
+  "segments": [
+    { "from": 150, "to": 315, "label": "open 分发" },
+    { "from": 325, "to": 505, "label": "read 分发" },
+    { "from": 515, "to": 685, "label": "ioctl 分发" },
+    { "from": 695, "to": 850, "label": "release 释放" }
+  ],
+  "messages": [
+    { "id": "open-syscall", "from": "app", "to": "vfs", "y": 170, "label": "openat()", "variant": "default" },
+    { "id": "dentry-open", "from": "vfs", "to": "fops", "y": 210, "label": "do_dentry_open()", "note": "取 f_op，调用 f_op->open" },
+    { "id": "driver-open", "from": "fops", "to": "drv", "y": 255, "label": "pp_open()", "variant": "emphasis" },
+    { "id": "open-return", "from": "drv", "to": "vfs", "y": 295, "label": "返回 0", "variant": "return" },
+    { "id": "read-syscall", "from": "app", "to": "vfs", "y": 350, "label": "read(fd, buf, count)", "variant": "default" },
+    { "id": "vfs-read", "from": "vfs", "to": "fops", "y": 390, "label": "vfs_read()", "note": "优先 f_op->read；否则 new_sync_read → read_iter" },
+    { "id": "driver-read", "from": "fops", "to": "drv", "y": 450, "label": "pp_read()", "variant": "emphasis" },
+    { "id": "read-return", "from": "drv", "to": "vfs", "y": 490, "label": "返回字节数", "variant": "return" },
+    { "id": "ioctl-syscall", "from": "app", "to": "vfs", "y": 535, "label": "ioctl(fd, cmd, arg)", "variant": "default" },
+    { "id": "vfs-ioctl", "from": "vfs", "to": "fops", "y": 575, "label": "do_vfs_ioctl()", "note": "未命中命令 → vfs_ioctl → unlocked_ioctl" },
+    { "id": "driver-ioctl", "from": "fops", "to": "drv", "y": 635, "label": "pp_ioctl()", "variant": "emphasis" },
+    { "id": "ioctl-return", "from": "drv", "to": "vfs", "y": 675, "label": "0 / -errno", "variant": "return" },
+    { "id": "close-syscall", "from": "app", "to": "vfs", "y": 710, "label": "close(fd)", "variant": "default" },
+    { "id": "filp-close", "from": "vfs", "to": "fput", "y": 750, "label": "filp_close() → fput()" },
+    { "id": "fput-release", "from": "fput", "to": "fops", "y": 790, "label": "f_op->release (__fput)" },
+    { "id": "driver-release", "from": "fops", "to": "drv", "y": 830, "label": "pp_release()", "variant": "emphasis" }
+  ],
+  "activations": [
+    { "participant": "vfs", "from": 170, "to": 310, "type": "backend" },
+    { "participant": "fops", "from": 205, "to": 305, "type": "backend" },
+    { "participant": "drv", "from": 250, "to": 305, "type": "backend" },
+    { "participant": "vfs", "from": 350, "to": 500, "type": "backend" },
+    { "participant": "fops", "from": 385, "to": 500, "type": "backend" },
+    { "participant": "drv", "from": 445, "to": 500, "type": "backend" },
+    { "participant": "vfs", "from": 535, "to": 685, "type": "backend" },
+    { "participant": "fops", "from": 570, "to": 685, "type": "backend" },
+    { "participant": "drv", "from": 630, "to": 685, "type": "backend" },
+    { "participant": "vfs", "from": 710, "to": 760, "type": "backend" },
+    { "participant": "fput", "from": 745, "to": 800, "type": "backend" },
+    { "participant": "fops", "from": 785, "to": 845, "type": "backend" },
+    { "participant": "drv", "from": 825, "to": 845, "type": "backend" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "分发点",
+      "items": [
+        "do_dentry_open() 在打开时调用 f_op->open()",
+        "vfs_read() 优先 f_op->read()，否则 new_sync_read() → read_iter()",
+        "do_vfs_ioctl() 未命中命令再走 vfs_ioctl() → unlocked_ioctl()",
+        "__fput() 在最后一次引用释放时调用 f_op->release()"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "示例驱动",
+      "items": [
+        "本图用 ppdev 的 pp_fops，open/read/unlocked_ioctl/release 齐全",
+        "只提供 read_iter() 的驱动走 new_sync_read()（fs/read_write.c:483）",
+        "/dev/urandom 的 random_fops 提供 read_iter()（drivers/char/random.c:1555）"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "返回值",
+      "items": [
+        "open 返回 0 或负 errno",
+        "read 返回读取字节数，ioctl 返回 0 或 -errno",
+        "release 在文件最后一次关闭后触发，不直接面向系统调用返回"
+      ]
+    }
+  ]
+}

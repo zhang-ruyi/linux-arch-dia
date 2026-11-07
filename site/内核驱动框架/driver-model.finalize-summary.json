@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-driver-model/candidate.json",
+    "sha256": "87fb3e513aac82cb03b775049c5d3037567990359780cbf81cae9c098d88af98",
+    "bytes": 5280
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-model.html",
+    "sha256": "52cdccdfc98a26313552dc7a4d21fbd4f87c6f94f0272c5a374a1bec3f82b106",
+    "bytes": 848090
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-model.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-model.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/driver-model.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3658,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

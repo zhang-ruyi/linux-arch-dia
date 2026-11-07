@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b866a2a1-51e6-4518-95db-ae6dc58fb7db",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-file-operations-dispatch/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核驱动框架/file-operations-dispatch.html",
+  "specification": {
+    "sha256": "6a20e5f5f13fb0d5fef5f53ac0d3bca3512731008c38e7379a9d4616e7a5aa65",
+    "bytes": 6106
+  },
+  "artifact": {
+    "sha256": "72ebc1423d64b993fc19b22772c2a09239ba070e4d49b8c22ed182cfcb2dc57d",
+    "bytes": 842937
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-io-uring-aio/candidate.json",
+    "sha256": "56acf3f80cba81d392f1e3e94c6411ca3ff6e8160c128a96cee4da019fb16241",
+    "bytes": 15228
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/存储技术/io-uring-aio.html",
+    "sha256": "e3da891008ae87a1a3ab1f218975b033d0883894d9719486ad9a45794d17ddf2",
+    "bytes": 883056
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/存储技术/io-uring-aio.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/存储技术/io-uring-aio.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/存储技术/io-uring-aio.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4025,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ext4 磁盘布局与设备级空间管理",
+    "locale": "zh-CN",
+    "output": "site/文件系统/ext4-layout.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "sb",
+      "type": "database",
+      "label": "superblock",
+      "sublabel": "struct ext4_super_block",
+      "tag": "全局元数据",
+      "pos": [
+        45,
+        75
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 1372,
+          "label": "struct ext4_super_block"
+        },
+        {
+          "path": "fs/ext4/super.c",
+          "line": 5400,
+          "label": "__ext4_fill_super"
+        }
+      ]
+    },
+    {
+      "id": "gdt",
+      "type": "database",
+      "label": "group descriptors",
+      "sublabel": "struct ext4_group_desc",
+      "tag": "块组索引",
+      "pos": [
+        225,
+        75
+      ],
+      "size": [
+        160,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 402,
+          "label": "struct ext4_group_desc"
+        },
+        {
+          "path": "fs/ext4/balloc.c",
+          "line": 265,
+          "label": "ext4_get_group_desc"
+        }
+      ]
+    },
+    {
+      "id": "bbitmap",
+      "type": "database",
+      "label": "block bitmap",
+      "sublabel": "bg_block_bitmap",
+      "pos": [
+        415,
+        45
+      ],
+      "size": [
+        150,
+        50
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 404,
+          "label": "bg_block_bitmap_lo"
+        }
+      ]
+    },
+    {
+      "id": "ibitmap",
+      "type": "database",
+      "label": "inode bitmap",
+      "sublabel": "bg_inode_bitmap",
+      "pos": [
+        415,
+        125
+      ],
+      "size": [
+        150,
+        50
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 405,
+          "label": "bg_inode_bitmap_lo"
+        }
+      ]
+    },
+    {
+      "id": "itable",
+      "type": "database",
+      "label": "inode table",
+      "sublabel": "bg_inode_table",
+      "pos": [
+        595,
+        75
+      ],
+      "size": [
+        160,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 406,
+          "label": "bg_inode_table_lo"
+        }
+      ]
+    },
+    {
+      "id": "inode",
+      "type": "backend",
+      "label": "ext4_inode",
+      "sublabel": "i_block[15] 为 extent 根",
+      "pos": [
+        785,
+        75
+      ],
+      "size": [
+        170,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 794,
+          "label": "struct ext4_inode"
+        },
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 503,
+          "label": "EXT4_EXTENTS_FL"
+        }
+      ]
+    },
+    {
+      "id": "extents",
+      "type": "backend",
+      "label": "extent tree",
+      "sublabel": "ext4_extent_header / ext4_extent",
+      "tag": "逻辑块 → 物理块",
+      "pos": [
+        985,
+        75
+      ],
+      "size": [
+        180,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/ext4_extents.h",
+          "line": 56,
+          "label": "struct ext4_extent"
+        },
+        {
+          "path": "fs/ext4/ext4_extents.h",
+          "line": 78,
+          "label": "struct ext4_extent_header"
+        },
+        {
+          "path": "fs/ext4/extents.c",
+          "line": 4275,
+          "label": "ext4_ext_map_blocks"
+        }
+      ]
+    },
+    {
+      "id": "pagecache",
+      "type": "backend",
+      "label": "page cache",
+      "sublabel": "ext4_writepages",
+      "pos": [
+        45,
+        270
+      ],
+      "size": [
+        170,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 3154,
+          "label": "ext4_writepages"
+        }
+      ]
+    },
+    {
+      "id": "delayed",
+      "type": "backend",
+      "label": "延迟分配",
+      "sublabel": "EXT4_MAP_DELAYED",
+      "tag": "写时再分配",
+      "pos": [
+        235,
+        270
+      ],
+      "size": [
+        170,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 2033,
+          "label": "ext4_da_map_blocks"
+        },
+        {
+          "path": "fs/ext4/ext4.h",
+          "line": 242,
+          "label": "EXT4_MAP_DELAYED"
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "type": "backend",
+      "label": "ext4_map_blocks()",
+      "sublabel": "逻辑块映射入口",
+      "pos": [
+        425,
+        270
+      ],
+      "size": [
+        170,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 772,
+          "label": "ext4_map_blocks"
+        }
+      ]
+    },
+    {
+      "id": "extmap",
+      "type": "backend",
+      "label": "ext4_ext_map_blocks()",
+      "sublabel": "遍历 extent 树",
+      "pos": [
+        615,
+        270
+      ],
+      "size": [
+        170,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/extents.c",
+          "line": 4275,
+          "label": "ext4_ext_map_blocks"
+        }
+      ]
+    },
+    {
+      "id": "mballoc",
+      "type": "backend",
+      "label": "mballoc",
+      "sublabel": "ext4_mb_new_blocks",
+      "tag": "块组分配器",
+      "pos": [
+        805,
+        270
+      ],
+      "size": [
+        170,
+        56
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/mballoc.c",
+          "line": 6228,
+          "label": "ext4_mb_new_blocks"
+        },
+        {
+          "path": "fs/ext4/mballoc.c",
+          "line": 6309,
+          "label": "ext4_mb_regular_allocator"
+        }
+      ]
+    },
+    {
+      "id": "journal",
+      "type": "backend",
+      "label": "JBD2 journal",
+      "sublabel": "事务提交与恢复",
+      "tag": "元数据一致性",
+      "pos": [
+        995,
+        270
+      ],
+      "size": [
+        170,
+        64
+      ],
+      "sources": [
+        {
+          "path": "fs/jbd2/commit.c",
+          "line": 376,
+          "label": "jbd2_journal_commit_transaction"
+        },
+        {
+          "path": "fs/jbd2/transaction.c",
+          "line": 539,
+          "label": "jbd2_journal_start"
+        },
+        {
+          "path": "fs/jbd2/transaction.c",
+          "line": 1233,
+          "label": "jbd2_journal_get_write_access"
+        }
+      ]
+    },
+    {
+      "id": "bdev",
+      "type": "database",
+      "label": "block device / buffer_head",
+      "sublabel": "ext4_getblk → submit_bh",
+      "tag": "设备级 I/O",
+      "pos": [
+        515,
+        430
+      ],
+      "size": [
+        200,
+        70
+      ],
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 1102,
+          "label": "ext4_getblk"
+        },
+        {
+          "path": "fs/ext4/super.c",
+          "line": 262,
+          "label": "ext4_sb_bread"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "块组磁盘布局",
+      "wraps": [
+        "sb",
+        "gdt",
+        "bbitmap",
+        "ibitmap",
+        "itable",
+        "inode",
+        "extents"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "ext4 运行时:映射、分配与日志",
+      "wraps": [
+        "pagecache",
+        "delayed",
+        "map",
+        "extmap",
+        "mballoc",
+        "journal"
+      ],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    {
+      "id": "sb-gdt",
+      "from": "sb",
+      "to": "gdt",
+      "label": "定位 GDT"
+    },
+    {
+      "id": "gdt-bbitmap",
+      "from": "gdt",
+      "to": "bbitmap",
+      "label": "块位图"
+    },
+    {
+      "id": "gdt-ibitmap",
+      "from": "gdt",
+      "to": "ibitmap",
+      "label": "inode 位图"
+    },
+    {
+      "id": "gdt-itable",
+      "from": "gdt",
+      "to": "itable"
+    },
+    {
+      "id": "itable-inode",
+      "from": "itable",
+      "to": "inode",
+      "label": "inode 记录"
+    },
+    {
+      "id": "inode-extents",
+      "from": "inode",
+      "to": "extents",
+      "label": "i_block 根"
+    },
+    {
+      "id": "pagecache-delayed",
+      "from": "pagecache",
+      "to": "delayed",
+      "label": "回写"
+    },
+    {
+      "id": "delayed-map",
+      "from": "delayed",
+      "to": "map",
+      "label": "延迟分配预留"
+    },
+    {
+      "id": "map-extmap",
+      "from": "map",
+      "to": "extmap",
+      "label": "查 extent"
+    },
+    {
+      "id": "extmap-mballoc",
+      "from": "extmap",
+      "to": "mballoc",
+      "label": "未映射则分配"
+    },
+    {
+      "id": "mballoc-bbitmap",
+      "from": "mballoc",
+      "to": "bbitmap",
+      "label": "搜索空闲块"
+    },
+    {
+      "id": "extmap-extents",
+      "from": "extmap",
+      "to": "extents",
+      "label": "遍历 extent 树"
+    },
+    {
+      "id": "inode-journal",
+      "from": "inode",
+      "to": "journal",
+      "label": "元数据变更"
+    },
+    {
+      "id": "journal-bdev",
+      "from": "journal",
+      "to": "bdev",
+      "label": "JBD2 提交"
+    },
+    {
+      "id": "map-bdev",
+      "from": "map",
+      "to": "bdev",
+      "label": "提交物理块 I/O"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "磁盘布局",
+      "items": [
+        "superblock 记录块大小、块组数量、inode 数量与特性",
+        "group descriptors 为每个块组给出块位图、inode 位图、inode 表位置",
+        "inode table 存放 ext4_inode,i_block[15] 是 extent 树的根"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "空间分配",
+      "items": [
+        "写路径先进入 page cache,延迟分配在回写时才真正分配块",
+        "ext4_map_blocks 经 ext4_ext_map_blocks 查询 extent 树",
+        "未映射区间由 mballoc 搜索块位图并分配物理块"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "JBD2 日志",
+      "items": [
+        "元数据修改先 jbd2_journal_get_write_access 取得写权限",
+        "jbd2_journal_start 开启事务,commit 时统一写入日志",
+        "ext4_getblk 把逻辑块映射为 buffer_head 后提交块设备"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "源码索引",
+      "items": [
+        "ext4_super_block—fs/ext4/ext4.h:1372",
+        "ext4_group_desc—fs/ext4/ext4.h:402",
+        "ext4_inode—fs/ext4/ext4.h:794",
+        "ext4_extent / header—fs/ext4/ext4_extents.h:56,78",
+        "ext4_map_blocks—fs/ext4/inode.c:772",
+        "ext4_da_map_blocks—fs/ext4/inode.c:2033",
+        "ext4_ext_map_blocks—fs/ext4/extents.c:4275",
+        "ext4_mb_new_blocks—fs/ext4/mballoc.c:6228",
+        "jbd2_journal_commit_transaction—fs/jbd2/commit.c:376"
+      ]
+    }
+  ]
+}

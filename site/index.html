@@ -69,7 +69,7 @@ main { flex:1; padding:24px 28px; }
 <body>
 <aside>
   <h1>Linux 内核原理图解</h1>
-  <div class="sub">Archify 交互式内核原理图 · 共 44 张</div>
+  <div class="sub">Archify 交互式内核原理图 · 共 51 张</div>
   <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
 
       <div class="toc-cat">
@@ -87,6 +87,13 @@ main { flex:1; padding:24px 28px; }
       </div>
 
       <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('内核驱动框架')">
+          内核驱动框架 <span class="count">4</span>
+        </button>
+        <ul class="toc-items"><li><a href="#driver-model">Linux 设备驱动模型</a></li><li><a href="#driver-bind-probe">设备与驱动绑定与 probe 时序</a></li><li><a href="#file-operations-dispatch">file_operations 分发：从 VFS 到驱动</a></li><li><a href="#devres-lifecycle">devres 资源生命周期与回滚</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('网络协议栈')">
           网络协议栈 <span class="count">8</span>
         </button>
@@ -95,9 +102,16 @@ main { flex:1; padding:24px 28px; }
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('文件系统')">
-          文件系统 <span class="count">7</span>
+          文件系统 <span class="count">8</span>
         </button>
-        <ul class="toc-items"><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#deep-open">open 路径解析与打开深度调用链</a></li><li><a href="#deep-read">read 从系统调用到块层深度调用链</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#ext4-layout">ext4 磁盘布局与设备级空间管理</a></li><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#deep-open">open 路径解析与打开深度调用链</a></li><li><a href="#deep-read">read 从系统调用到块层深度调用链</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('存储技术')">
+          存储技术 <span class="count">1</span>
+        </button>
+        <ul class="toc-items"><li><a href="#io-uring-aio">io_uring / libaio / POSIX AIO 三种异步 IO</a></li></ul>
       </div>
 
       <div class="toc-cat">
@@ -109,9 +123,9 @@ main { flex:1; padding:24px 28px; }
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('内存管理')">
-          内存管理 <span class="count">7</span>
+          内存管理 <span class="count">8</span>
         </button>
-        <ul class="toc-items"><li><a href="#mmap-flow">mmap() 建立映射时序图</a></li><li><a href="#page-cache-read">文件读路径经 page cache 时序图</a></li><li><a href="#buddy-allocator">伙伴系统分配与释放流程</a></li><li><a href="#deep-page-fault">缺页异常深度调用链</a></li><li><a href="#page-fault-flow">x86 缺页异常处理流程</a></li><li><a href="#page-reclaim">内存回收流程</a></li><li><a href="#slab-allocator">SLUB 分配器分配与释放流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#mmap-flow">mmap() 建立映射时序图</a></li><li><a href="#page-cache-read">文件读路径经 page cache 时序图</a></li><li><a href="#buddy-allocator">伙伴系统分配与释放流程</a></li><li><a href="#deep-page-fault">缺页异常深度调用链</a></li><li><a href="#memblock-to-folio">内存管理:memblock → buddy → slab → folio</a></li><li><a href="#page-fault-flow">x86 缺页异常处理流程</a></li><li><a href="#page-reclaim">内存回收流程</a></li><li><a href="#slab-allocator">SLUB 分配器分配与释放流程</a></li></ul>
       </div>
 
       <div class="toc-cat">
@@ -165,6 +179,23 @@ main { flex:1; padding:24px 28px; }
       </article>
 
       <article class="card" data-type="architecture"
+               data-category="内核驱动框架"
+               data-search="linux 设备驱动模型  内核驱动框架 architecture">
+        <header class="card-head">
+          <h3>Linux 设备驱动模型</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内核驱动框架/driver-model.html" loading="lazy" title="Linux 设备驱动模型"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内核驱动框架</span>
+          <a class="open" href="内核驱动框架/driver-model.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
                data-category="网络协议栈"
                data-search="epoll 三大数据结构与回调原理 eventpoll 内部红黑树 rbr 与就绪链表 rdllist 的协作,以及 ep_poll_callback 回调机制 网络协议栈 architecture">
         <header class="card-head">
@@ -178,6 +209,40 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">网络协议栈</span>
           <a class="open" href="网络协议栈/epoll-principle.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
+               data-category="文件系统"
+               data-search="ext4 磁盘布局与设备级空间管理  文件系统 architecture">
+        <header class="card-head">
+          <h3>ext4 磁盘布局与设备级空间管理</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="文件系统/ext4-layout.html" loading="lazy" title="ext4 磁盘布局与设备级空间管理"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/ext4-layout.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="architecture"
+               data-category="存储技术"
+               data-search="io_uring / libaio / posix aio 三种异步 io  存储技术 architecture">
+        <header class="card-head">
+          <h3>io_uring / libaio / POSIX AIO 三种异步 IO</h3>
+          <span class="badge badge-architecture">架构图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="存储技术/io-uring-aio.html" loading="lazy" title="io_uring / libaio / POSIX AIO 三种异步 IO"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">存储技术</span>
+          <a class="open" href="存储技术/io-uring-aio.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -280,6 +345,40 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">进程管理</span>
           <a class="open" href="进程管理/context-switch.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="内核驱动框架"
+               data-search="设备与驱动绑定与 probe 时序  内核驱动框架 sequence">
+        <header class="card-head">
+          <h3>设备与驱动绑定与 probe 时序</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内核驱动框架/driver-bind-probe.html" loading="lazy" title="设备与驱动绑定与 probe 时序"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内核驱动框架</span>
+          <a class="open" href="内核驱动框架/driver-bind-probe.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="sequence"
+               data-category="内核驱动框架"
+               data-search="file_operations 分发：从 vfs 到驱动  内核驱动框架 sequence">
+        <header class="card-head">
+          <h3>file_operations 分发：从 VFS 到驱动</h3>
+          <span class="badge badge-sequence">时序图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内核驱动框架/file-operations-dispatch.html" loading="lazy" title="file_operations 分发：从 VFS 到驱动"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内核驱动框架</span>
+          <a class="open" href="内核驱动框架/file-operations-dispatch.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -739,6 +838,40 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">文件系统</span>
           <a class="open" href="文件系统/dentry-lookup.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内核驱动框架"
+               data-search="devres 资源生命周期与回滚  内核驱动框架 workflow">
+        <header class="card-head">
+          <h3>devres 资源生命周期与回滚</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内核驱动框架/devres-lifecycle.html" loading="lazy" title="devres 资源生命周期与回滚"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内核驱动框架</span>
+          <a class="open" href="内核驱动框架/devres-lifecycle.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="内存管理:memblock → buddy → slab → folio  内存管理 workflow">
+        <header class="card-head">
+          <h3>内存管理:memblock → buddy → slab → folio</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内存管理/memblock-to-folio.html" loading="lazy" title="内存管理:memblock → buddy → slab → folio"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/memblock-to-folio.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 

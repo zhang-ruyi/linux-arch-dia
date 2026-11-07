@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-file-operations-dispatch/candidate.json",
+    "sha256": "6a20e5f5f13fb0d5fef5f53ac0d3bca3512731008c38e7379a9d4616e7a5aa65",
+    "bytes": 6106
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核驱动框架/file-operations-dispatch.html",
+    "sha256": "72ebc1423d64b993fc19b22772c2a09239ba070e4d49b8c22ed182cfcb2dc57d",
+    "bytes": 842937
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/file-operations-dispatch.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/file-operations-dispatch.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核驱动框架/file-operations-dispatch.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3405,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

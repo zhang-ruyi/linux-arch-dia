@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "1b7ea0f4-9507-4586-97b4-44a025c8252e",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/home/zhang/opencode/code_analsys/.archify/workflow-devres-lifecycle/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核驱动框架/devres-lifecycle.html",
+  "specification": {
+    "sha256": "385c83962e3daf6f33b16763817e5a4c6d755ad0e53a776a823a239de5a06df2",
+    "bytes": 7872
+  },
+  "artifact": {
+    "sha256": "18b3928087c4b917c6dfed2e083bf412c185a17196d977d2f87043fabd879656",
+    "bytes": 848249
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "8da42805-276c-4b0b-bce5-f86bd8687290",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/home/zhang/opencode/code_analsys/.archify/workflow-memblock-to-folio/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内存管理/memblock-to-folio.html",
+  "specification": {
+    "sha256": "1ff0c0f803961825b67fb56cb5ce429a5c0a70c71c577009f3455bc719473592",
+    "bytes": 7174
+  },
+  "artifact": {
+    "sha256": "93774422b4649c980490770694b76d2bcfc4cadeefe36e021818dffd52df0e04",
+    "bytes": 847290
+  }
+}

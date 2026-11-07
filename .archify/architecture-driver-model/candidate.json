@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Linux 设备驱动模型",
+    "locale": "zh-CN",
+    "output": "site/内核驱动框架/driver-model.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "mod",
+      "type": "external",
+      "label": "struct module",
+      "sublabel": "驱动归属模块 owner",
+      "pos": [60, 30],
+      "size": [170, 64],
+      "sources": [
+        { "path": "include/linux/module.h", "line": 397, "label": "struct module" }
+      ]
+    },
+    {
+      "id": "bus",
+      "type": "messagebus",
+      "label": "struct bus_type",
+      "sublabel": "match / probe / remove 回调",
+      "pos": [320, 30],
+      "size": [200, 70],
+      "sources": [
+        { "path": "include/linux/device/bus.h", "line": 81, "label": "struct bus_type" },
+        { "path": "include/linux/device/bus.h", "line": 88, "label": "match()" }
+      ]
+    },
+    {
+      "id": "cls",
+      "type": "backend",
+      "label": "struct class",
+      "sublabel": "按功能归类设备",
+      "pos": [640, 30],
+      "size": [180, 64],
+      "sources": [
+        { "path": "include/linux/device/class.h", "line": 50, "label": "struct class" }
+      ]
+    },
+    {
+      "id": "drv",
+      "type": "backend",
+      "label": "struct device_driver",
+      "sublabel": "driver_private 持有 kobject",
+      "pos": [60, 230],
+      "size": [210, 72],
+      "sources": [
+        { "path": "include/linux/device/driver.h", "line": 100, "label": "struct device_driver" },
+        { "path": "drivers/base/base.h", "line": 82, "label": "struct driver_private" }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "backend",
+      "label": "struct device",
+      "sublabel": "内嵌 struct kobject",
+      "pos": [320, 230],
+      "size": [190, 72],
+      "sources": [
+        { "path": "include/linux/device.h", "line": 708, "label": "struct device" }
+      ]
+    },
+    {
+      "id": "sp",
+      "type": "backend",
+      "label": "subsys_private",
+      "sublabel": "bus / class 的内部 kset 载体",
+      "pos": [640, 230],
+      "size": [220, 72],
+      "sources": [
+        { "path": "drivers/base/base.h", "line": 44, "label": "struct subsys_private" }
+      ]
+    },
+    {
+      "id": "kobj",
+      "type": "backend",
+      "label": "kobject",
+      "sublabel": "引用计数 / sysfs / uevent",
+      "pos": [320, 440],
+      "size": [190, 68],
+      "sources": [
+        { "path": "include/linux/kobject.h", "line": 64, "label": "struct kobject" }
+      ]
+    },
+    {
+      "id": "kset",
+      "type": "backend",
+      "label": "kset",
+      "sublabel": "同类 kobject 集合",
+      "pos": [640, 440],
+      "size": [180, 68],
+      "sources": [
+        { "path": "include/linux/kobject.h", "line": 235, "label": "struct kset" }
+      ]
+    },
+    {
+      "id": "sysfs",
+      "type": "database",
+      "label": "sysfs / kernfs",
+      "sublabel": "create_dir() 建立目录",
+      "pos": [320, 620],
+      "size": [200, 68],
+      "sources": [
+        { "path": "lib/kobject.c", "line": 67, "label": "create_dir()" },
+        { "path": "lib/kobject.c", "line": 410, "label": "kobject_add()" }
+      ]
+    }
+  ],
+  "connections": [
+    { "id": "owner-of-driver", "from": "mod", "to": "drv", "label": "owner" },
+    { "id": "driver-register", "from": "drv", "to": "bus", "label": "driver_register()" },
+    { "id": "bus-match", "from": "bus", "to": "drv", "label": "match(dev, drv)", "variant": "emphasis" },
+    { "id": "device-register", "from": "dev", "to": "bus", "label": "device_register()" },
+    { "id": "class-subsys", "from": "cls", "to": "sp", "label": "class_to_subsys()" },
+    { "id": "bus-subsys", "from": "bus", "to": "sp", "label": "bus_register()" },
+    { "id": "subsys-kset", "from": "sp", "to": "kset", "label": "持有 kset" },
+    { "id": "kset-kobj", "from": "kset", "to": "kobj", "label": "内嵌 kobject" },
+    { "id": "device-kobj", "from": "dev", "to": "kobj", "label": "内嵌 kobj" },
+    { "id": "driver-kobj", "from": "drv", "to": "kobj", "label": "driver_private.kobj" },
+    { "id": "kobj-sysfs", "from": "kobj", "to": "sysfs", "label": "kobject_add()" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "对象模型",
+      "items": [
+        "kobject 提供引用计数、sysfs 目录与 uevent",
+        "kset 是同类 kobject 的集合，自身也内嵌一个 kobject",
+        "kobject_add() 通过 create_dir() 在 sysfs 建立目录"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "注册",
+      "items": [
+        "device_register() = device_initialize() + device_add()",
+        "device_add() 依次调用 bus_add_device() 与 bus_probe_device()",
+        "driver_register() 把驱动交给 bus_add_driver()"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "匹配",
+      "items": [
+        "bus_type.match(dev, drv) 返回正数才视为匹配",
+        "driver_match_device() 在总线未提供 match 时默认返回 1",
+        "匹配成功后进入 really_probe() 调用驱动 probe()"
+      ]
+    }
+  ]
+}

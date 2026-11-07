@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b3ae5708-b91d-4fc9-9c6b-9678f5346ca5",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/zhang/opencode/code_analsys/.archify/architecture-ext4-layout/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/文件系统/ext4-layout.html",
+  "specification": {
+    "sha256": "32130e53a13bdcb68c2846eaf919d59a6e9a1bdf752405b56cb3f8edf9acddfb",
+    "bytes": 11075
+  },
+  "artifact": {
+    "sha256": "9595da1e79bd91880db7e5c6a987c99da498b7bd808ca218dfc63e97309ce3ef",
+    "bytes": 863182
+  }
+}

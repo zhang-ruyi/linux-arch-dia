@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-ext4-layout/candidate.json",
+    "sha256": "32130e53a13bdcb68c2846eaf919d59a6e9a1bdf752405b56cb3f8edf9acddfb",
+    "bytes": 11075
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/ext4-layout.html",
+    "sha256": "9595da1e79bd91880db7e5c6a987c99da498b7bd808ca218dfc63e97309ce3ef",
+    "bytes": 863182
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/architecture-ext4-layout/review-3/ext4-layout.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-ext4-layout/review-3/ext4-layout.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-ext4-layout/review-3/ext4-layout.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3482,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 3,
+      "routesOverSuggestedBends": 5,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "gdt-itable",
+            "from": "gdt",
+            "to": "itable",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "mballoc-bbitmap",
+            "from": "mballoc",
+            "to": "bbitmap",
+            "label": "搜索空闲块",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            589,
+            107
+          ]
+        },
+        {
+          "left": {
+            "id": "mballoc-bbitmap",
+            "from": "mballoc",
+            "to": "bbitmap",
+            "label": "搜索空闲块",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "right": {
+            "id": "extmap-extents",
+            "from": "extmap",
+            "to": "extents",
+            "label": "遍历 extent 树",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "point": [
+            886.6,
+            163
+          ]
+        },
+        {
+          "left": {
+            "id": "extmap-extents",
+            "from": "extmap",
+            "to": "extents",
+            "label": "遍历 extent 树",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "inode-journal",
+            "from": "inode",
+            "to": "journal",
+            "label": "元数据变更",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "point": [
+            979,
+            163
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "sb-gdt",
+            "from": "sb",
+            "to": "gdt",
+            "label": "定位 GDT",
+            "collectionIndex": 0,
+            "artifactIndex": 1
+          },
+          "bends": 3,
+          "stretch": 1.35
+        },
+        {
+          "relationship": {
+            "id": "itable-inode",
+            "from": "itable",
+            "to": "inode",
+            "label": "inode 记录",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1.338
+        },
+        {
+          "relationship": {
+            "id": "inode-extents",
+            "from": "inode",
+            "to": "extents",
+            "label": "i_block 根",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "bends": 3,
+          "stretch": 1.343
+        },
+        {
+          "relationship": {
+            "id": "mballoc-bbitmap",
+            "from": "mballoc",
+            "to": "bbitmap",
+            "label": "搜索空闲块",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "bends": 3,
+          "stretch": 1
+        },
+        {
+          "relationship": {
+            "id": "inode-journal",
+            "from": "inode",
+            "to": "journal",
+            "label": "元数据变更",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "gdt → itable crosses mballoc → bbitmap: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "mballoc → bbitmap crosses extmap → extents: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "extmap → extents crosses inode → journal: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "sb → gdt needs 3 bends: move node sb or gdt so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "itable → inode needs 3 bends: move node itable or inode so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "inode → extents needs 3 bends: move node inode or extents so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "mballoc → bbitmap needs 3 bends: move node mballoc or bbitmap so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "inode → journal needs 3 bends: move node inode or journal so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

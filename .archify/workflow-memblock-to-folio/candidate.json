@@ -1,0 +1,196 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "内存管理:memblock → buddy → slab → folio",
+    "locale": "zh-CN",
+    "output": "site/内存管理/memblock-to-folio.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "boot", "label": "memblock(启动早期)" },
+    { "id": "buddy", "label": "伙伴系统 + PCP" },
+    { "id": "slab", "label": "slab 对象缓存" },
+    { "id": "file", "label": "文件页 folio" },
+    { "id": "anon", "label": "匿名页 folio / THP" }
+  ],
+  "phases": [
+    { "id": "early", "label": "启动期登记与分配", "fromCol": 0, "toCol": 2 },
+    { "id": "handoff", "label": "移交伙伴系统", "fromCol": 3, "toCol": 4, "variant": "emphasis" },
+    { "id": "runtime", "label": "运行时分配", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["mem_add", "mem_res", "mem_alloc", "mem_free", "zone", "pcp", "slab"],
+  "nodes": [
+    {
+      "id": "mem_add",
+      "lane": "boot",
+      "col": 0,
+      "type": "backend",
+      "label": "memblock_add()",
+      "sublabel": "登记可用物理内存",
+      "sources": [
+        { "path": "mm/memblock.c", "line": 769, "label": "memblock_add" }
+      ]
+    },
+    {
+      "id": "mem_res",
+      "lane": "boot",
+      "col": 1,
+      "type": "backend",
+      "label": "memblock_reserve()",
+      "sublabel": "保留内核 / 固件区域",
+      "sources": [
+        { "path": "include/linux/memblock.h", "line": 135, "label": "memblock_reserve" },
+        { "path": "mm/memblock.c", "line": 1024, "label": "__memblock_reserve" }
+      ]
+    },
+    {
+      "id": "mem_alloc",
+      "lane": "boot",
+      "col": 2,
+      "type": "backend",
+      "label": "memblock_alloc()",
+      "sublabel": "启动期物理分配",
+      "sources": [
+        { "path": "include/linux/memblock.h", "line": 423, "label": "memblock_alloc" },
+        { "path": "mm/memblock.c", "line": 1576, "label": "memblock_alloc_range_nid" }
+      ]
+    },
+    {
+      "id": "mem_free",
+      "lane": "boot",
+      "col": 3,
+      "type": "backend",
+      "label": "memblock_free_all()",
+      "sublabel": "空闲页交给伙伴系统",
+      "sources": [
+        { "path": "mm/memblock.c", "line": 2461, "label": "memblock_free_all" },
+        { "path": "mm/memblock.c", "line": 2420, "label": "free_low_memory_core_early" }
+      ]
+    },
+    {
+      "id": "zone",
+      "lane": "buddy",
+      "col": 4,
+      "type": "backend",
+      "label": "free_area_init / mem_init",
+      "sublabel": "建立 zone 与迁移类型",
+      "sources": [
+        { "path": "mm/mm_init.c", "line": 1838, "label": "free_area_init" },
+        { "path": "mm/mm_init.c", "line": 2677, "label": "mem_init" },
+        { "path": "mm/mm_init.c", "line": 2725, "label": "mm_core_init 调用顺序" }
+      ]
+    },
+    {
+      "id": "pcp",
+      "lane": "buddy",
+      "col": 5,
+      "type": "database",
+      "label": "PCP per_cpu_pages",
+      "sublabel": "每 CPU 页缓存",
+      "sources": [
+        { "path": "mm/page_alloc.c", "line": 3368, "label": "rmqueue_pcplist" },
+        { "path": "include/linux/mmzone.h", "line": 820, "label": "struct per_cpu_pages" }
+      ]
+    },
+    {
+      "id": "slab",
+      "lane": "slab",
+      "col": 5,
+      "type": "backend",
+      "label": "slab / SLUB",
+      "sublabel": "kmem_cache_alloc",
+      "sources": [
+        { "path": "mm/slub.c", "line": 5038, "label": "kmem_cache_alloc_noprof" },
+        { "path": "mm/slub.c", "line": 5006, "label": "slab_alloc_node" }
+      ]
+    },
+    {
+      "id": "file",
+      "lane": "file",
+      "col": 5,
+      "type": "database",
+      "label": "page cache folio",
+      "sublabel": "filemap_add_folio",
+      "sources": [
+        { "path": "mm/filemap.c", "line": 953, "label": "filemap_add_folio" },
+        { "path": "mm/filemap.c", "line": 1976, "label": "__filemap_get_folio_mpol" },
+        { "path": "include/linux/mm_types.h", "line": 404, "label": "struct folio" }
+      ]
+    },
+    {
+      "id": "anon",
+      "lane": "anon",
+      "col": 5,
+      "type": "database",
+      "label": "anon folio / THP",
+      "sublabel": "缺页与透明大页",
+      "sources": [
+        { "path": "mm/huge_memory.c", "line": 1344, "label": "vma_alloc_anon_folio_pmd" },
+        { "path": "mm/memory.c", "line": 5413, "label": "alloc_anon_folio" },
+        { "path": "include/linux/mm_types.h", "line": 404, "label": "struct folio" }
+      ]
+    }
+  ],
+  "edges": [
+    { "id": "add-res", "from": "mem_add", "to": "mem_res", "label": "可用区间", "role": "main" },
+    { "id": "res-alloc", "from": "mem_res", "to": "mem_alloc", "label": "预留后分配", "role": "main" },
+    { "id": "alloc-free", "from": "mem_alloc", "to": "mem_free", "label": "剩余内存", "role": "main" },
+    { "id": "free-zone", "from": "mem_free", "to": "zone", "label": "空闲页 → buddy", "role": "main", "variant": "emphasis" },
+    { "id": "zone-pcp", "from": "zone", "to": "pcp", "label": "分配入口", "role": "main" },
+    { "id": "pcp-slab", "from": "pcp", "to": "slab", "label": "取新 slab 页", "role": "main" },
+    { "id": "pcp-file", "from": "pcp", "to": "file", "label": "文件页缓存", "role": "branch", "variant": "dashed" },
+    { "id": "pcp-anon", "from": "pcp", "to": "anon", "label": "缺页分配", "role": "branch", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "启动期 memblock",
+      "items": [
+        "memblock_add 登记架构探测到的可用物理内存区间",
+        "memblock_reserve 保留内核、固件、设备等不可用区域",
+        "memblock_alloc 在伙伴系统就绪前提供启动期物理分配"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "移交伙伴系统",
+      "items": [
+        "memblock_free_all 把未保留的 memblock 区间释放给伙伴系统",
+        "free_area_init 建立 zone、迁移类型与空闲链表",
+        "mem_init 完成页表与内存统计初始化"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "运行时分配",
+      "items": [
+        "PCP 以 per_cpu_pages 缓存页块,减少 zone 锁竞争",
+        "SLUB 从伙伴系统取页作为 slab,再切分为对象",
+        "page cache 与匿名页都以 struct folio 管理,THP 使用更高 order"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "源码索引",
+      "items": [
+        "memblock_add—mm/memblock.c:769",
+        "memblock_reserve—include/linux/memblock.h:135",
+        "memblock_alloc—include/linux/memblock.h:423",
+        "memblock_free_all—mm/memblock.c:2461",
+        "free_area_init—mm/mm_init.c:1838",
+        "mem_init—mm/mm_init.c:2677",
+        "rmqueue_pcplist—mm/page_alloc.c:3368",
+        "kmem_cache_alloc_noprof—mm/slub.c:5038",
+        "filemap_add_folio—mm/filemap.c:953",
+        "vma_alloc_anon_folio_pmd—mm/huge_memory.c:1344",
+        "struct folio—include/linux/mm_types.h:404"
+      ]
+    }
+  ]
+}

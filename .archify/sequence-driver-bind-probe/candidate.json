@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "设备与驱动绑定与 probe 时序",
+    "locale": "zh-CN",
+    "output": "site/内核驱动框架/driver-bind-probe.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "core",
+      "type": "backend",
+      "label": "core.c",
+      "sublabel": "device_add / device_register",
+      "sources": [
+        {
+          "path": "drivers/base/core.c",
+          "line": 3645,
+          "label": "device_add()"
+        },
+        {
+          "path": "drivers/base/core.c",
+          "line": 3857,
+          "label": "device_register()"
+        }
+      ]
+    },
+    {
+      "id": "bus",
+      "type": "messagebus",
+      "label": "bus.c",
+      "sublabel": "bus_add / bus_probe",
+      "sources": [
+        {
+          "path": "drivers/base/bus.c",
+          "line": 545,
+          "label": "bus_add_device()"
+        },
+        {
+          "path": "drivers/base/bus.c",
+          "line": 630,
+          "label": "bus_probe_device()"
+        }
+      ]
+    },
+    {
+      "id": "dd",
+      "type": "backend",
+      "label": "dd.c",
+      "sublabel": "initial_probe / attach",
+      "sources": [
+        {
+          "path": "drivers/base/dd.c",
+          "line": 1181,
+          "label": "device_initial_probe()"
+        },
+        {
+          "path": "drivers/base/dd.c",
+          "line": 1101,
+          "label": "__device_attach()"
+        },
+        {
+          "path": "drivers/base/dd.c",
+          "line": 653,
+          "label": "really_probe()"
+        }
+      ]
+    },
+    {
+      "id": "cb",
+      "type": "backend",
+      "label": "总线 / 驱动回调",
+      "sublabel": "match / probe / remove",
+      "sources": [
+        {
+          "path": "include/linux/device/bus.h",
+          "line": 88,
+          "label": "bus_type.match"
+        },
+        {
+          "path": "include/linux/device/driver.h",
+          "line": 113,
+          "label": "device_driver.probe"
+        }
+      ]
+    },
+    {
+      "id": "devres",
+      "type": "backend",
+      "label": "devres.c",
+      "sublabel": "devres_release_all",
+      "sources": [
+        {
+          "path": "drivers/base/devres.c",
+          "line": 558,
+          "label": "devres_release_all()"
+        }
+      ]
+    },
+    {
+      "id": "kobj",
+      "type": "messagebus",
+      "label": "kobject uevent",
+      "sublabel": "KOBJ_BIND / KOBJ_UNBIND",
+      "sources": [
+        {
+          "path": "include/linux/kobject.h",
+          "line": 281,
+          "label": "kobject_uevent()"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 290,
+      "label": "注册与触发探测"
+    },
+    {
+      "from": 296,
+      "to": 565,
+      "label": "匹配与 probe"
+    },
+    {
+      "from": 575,
+      "to": 770,
+      "label": "解绑与回收"
+    }
+  ],
+  "messages": [
+    {
+      "id": "add-device",
+      "from": "core",
+      "to": "bus",
+      "y": 170,
+      "label": "device_add() → bus_add_device()",
+      "variant": "emphasis"
+    },
+    {
+      "id": "probe-device",
+      "from": "core",
+      "to": "bus",
+      "y": 205,
+      "label": "bus_probe_device()"
+    },
+    {
+      "id": "initial-probe",
+      "from": "bus",
+      "to": "dd",
+      "y": 240,
+      "label": "device_initial_probe()",
+      "note": "__device_attach(dev, true)"
+    },
+    {
+      "id": "for-each-driver",
+      "from": "dd",
+      "to": "bus",
+      "y": 300,
+      "label": "bus_for_each_drv()"
+    },
+    {
+      "id": "attach-callback",
+      "from": "bus",
+      "to": "dd",
+      "y": 335,
+      "label": "回调 __device_attach_driver()"
+    },
+    {
+      "id": "match",
+      "from": "dd",
+      "to": "cb",
+      "y": 370,
+      "label": "driver_match_device() → bus->match()"
+    },
+    {
+      "id": "match-result",
+      "from": "cb",
+      "to": "dd",
+      "y": 405,
+      "label": "match > 0",
+      "variant": "return"
+    },
+    {
+      "id": "really-probe",
+      "from": "dd",
+      "to": "cb",
+      "y": 440,
+      "label": "really_probe() → call_driver_probe()",
+      "note": "probe 失败 → device_unbind_cleanup() → devres_release_all()"
+    },
+    {
+      "id": "probe-result",
+      "from": "cb",
+      "to": "dd",
+      "y": 512,
+      "label": "probe 返回 0",
+      "variant": "return"
+    },
+    {
+      "id": "bound",
+      "from": "dd",
+      "to": "kobj",
+      "y": 547,
+      "label": "driver_bound() → KOBJ_BIND"
+    },
+    {
+      "id": "release-driver",
+      "from": "core",
+      "to": "dd",
+      "y": 600,
+      "label": "device_release_driver()"
+    },
+    {
+      "id": "remove",
+      "from": "dd",
+      "to": "cb",
+      "y": 635,
+      "label": "device_remove() → bus->remove() / drv->remove()"
+    },
+    {
+      "id": "remove-result",
+      "from": "cb",
+      "to": "dd",
+      "y": 670,
+      "label": "remove 返回",
+      "variant": "return"
+    },
+    {
+      "id": "unbind-cleanup",
+      "from": "dd",
+      "to": "devres",
+      "y": 705,
+      "label": "device_unbind_cleanup() → devres_release_all()",
+      "note": "在 remove 回调之后执行"
+    },
+    {
+      "id": "unbound",
+      "from": "dd",
+      "to": "kobj",
+      "y": 750,
+      "label": "KOBJ_UNBIND"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "core",
+      "from": 165,
+      "to": 215,
+      "type": "backend"
+    },
+    {
+      "participant": "bus",
+      "from": 165,
+      "to": 345,
+      "type": "messagebus"
+    },
+    {
+      "participant": "dd",
+      "from": 235,
+      "to": 555,
+      "type": "backend"
+    },
+    {
+      "participant": "cb",
+      "from": 365,
+      "to": 420,
+      "type": "backend"
+    },
+    {
+      "participant": "cb",
+      "from": 435,
+      "to": 520,
+      "type": "backend"
+    },
+    {
+      "participant": "kobj",
+      "from": 542,
+      "to": 552,
+      "type": "messagebus"
+    },
+    {
+      "participant": "dd",
+      "from": 595,
+      "to": 760,
+      "type": "backend"
+    },
+    {
+      "participant": "cb",
+      "from": 630,
+      "to": 680,
+      "type": "backend"
+    },
+    {
+      "participant": "devres",
+      "from": 700,
+      "to": 718,
+      "type": "backend"
+    },
+    {
+      "participant": "kobj",
+      "from": 745,
+      "to": 755,
+      "type": "messagebus"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "关键路径",
+      "items": [
+        "device_add() → bus_add_device() → bus_probe_device()",
+        "device_initial_probe() → __device_attach() → bus_for_each_drv()",
+        "driver_probe_device() → really_probe() → call_driver_probe()"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "匹配规则",
+      "items": [
+        "bus_type.match() 返回正数才继续绑定",
+        "driver_match_device() 在总线没有 match 时默认返回 1",
+        "match 返回 -EPROBE_DEFER 时设备进入延迟探测队列"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "devres 说明",
+      "items": [
+        "本版本的 really_probe() 不调用 devres_open_group()",
+        "probe 失败与解绑都经 device_unbind_cleanup() → devres_release_all()",
+        "devres group 由 component 等调用者显式打开 (drivers/base/component.c)"
+      ]
+    }
+  ]
+}
