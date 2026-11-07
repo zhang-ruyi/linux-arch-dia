@@ -14,7 +14,9 @@
     }
   },
   "layout": {
-    "direction": "right"
+    "direction": "down",
+    "gapX": 28,
+    "gapY": 44
   },
   "nodes": [
     { "id": "kernel", "label": "Linux 内核 v7.2-rc3", "sublabel": "源码树 git.kernel.org/torvalds/linux" },
