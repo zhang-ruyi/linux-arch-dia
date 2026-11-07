@@ -1,0 +1,162 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "并发原语选择",
+    "locale": "zh-CN",
+    "output": "site/并发与同步/concurrency-primitives.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "choose",
+      "label": "按访问模式选择"
+    }
+  ],
+  "mainPath": [
+    "q0",
+    "q1",
+    "q2",
+    "a2"
+  ],
+  "nodes": [
+    {
+      "id": "q0",
+      "lane": "choose",
+      "col": 0,
+      "type": "security",
+      "label": "读多写少?",
+      "sublabel": "先看访问模式"
+    },
+    {
+      "id": "q1",
+      "lane": "choose",
+      "col": 1,
+      "type": "security",
+      "label": "替换指针 / 发布新版本?",
+      "sublabel": "无多字段一致性要求",
+      "yOffset": -135
+    },
+    {
+      "id": "a4",
+      "lane": "choose",
+      "col": 1,
+      "type": "backend",
+      "label": "seqlock",
+      "sublabel": "一致的多字段快照",
+      "yOffset": -45
+    },
+    {
+      "id": "a5",
+      "lane": "choose",
+      "col": 1,
+      "type": "backend",
+      "label": "per-CPU + 汇总",
+      "sublabel": "只是统计计数",
+      "yOffset": 45
+    },
+    {
+      "id": "a6",
+      "lane": "choose",
+      "col": 1,
+      "type": "backend",
+      "label": "自旋锁 / mutex",
+      "sublabel": "读写频繁 / 临界区长",
+      "yOffset": 135
+    },
+    {
+      "id": "q2",
+      "lane": "choose",
+      "col": 2,
+      "type": "security",
+      "label": "需要强引用防释放?",
+      "sublabel": "对象生命周期",
+      "yOffset": -45
+    },
+    {
+      "id": "a1",
+      "lane": "choose",
+      "col": 2,
+      "type": "backend",
+      "label": "RCU",
+      "sublabel": "读侧几乎零开销",
+      "yOffset": 45
+    },
+    {
+      "id": "a2",
+      "lane": "choose",
+      "col": 3,
+      "type": "backend",
+      "label": "RCU + refcount",
+      "sublabel": "强引用保证不释放",
+      "yOffset": -45
+    },
+    {
+      "id": "a3",
+      "lane": "choose",
+      "col": 3,
+      "type": "backend",
+      "label": "call_rcu / kfree_rcu",
+      "sublabel": "异步延迟回收",
+      "yOffset": 45
+    }
+  ],
+  "edges": [
+    {
+      "id": "q0-q1",
+      "from": "q0",
+      "to": "q1",
+      "label": "替换指针",
+      "role": "main"
+    },
+    {
+      "id": "q0-a4",
+      "from": "q0",
+      "to": "a4",
+      "label": "一致快照",
+      "role": "branch"
+    },
+    {
+      "id": "q0-a5",
+      "from": "q0",
+      "to": "a5",
+      "label": "统计计数",
+      "role": "branch"
+    },
+    {
+      "id": "q0-a6",
+      "from": "q0",
+      "to": "a6",
+      "label": "读写频繁",
+      "role": "branch"
+    },
+    {
+      "id": "q1-a1",
+      "from": "q1",
+      "to": "a1",
+      "label": "直接发布",
+      "role": "branch"
+    },
+    {
+      "id": "q1-q2",
+      "from": "q1",
+      "to": "q2",
+      "label": "需要防释放",
+      "role": "main"
+    },
+    {
+      "id": "q2-a2",
+      "from": "q2",
+      "to": "a2",
+      "label": "强引用",
+      "role": "main"
+    },
+    {
+      "id": "q2-a3",
+      "from": "q2",
+      "to": "a3",
+      "label": "异步回收",
+      "role": "branch"
+    }
+  ]
+}

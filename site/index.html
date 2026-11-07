@@ -69,7 +69,7 @@ main { flex:1; padding:24px 28px; }
 <body>
 <aside>
   <h1>Linux 内核原理图解</h1>
-  <div class="sub">Archify 交互式内核原理图 · 共 51 张</div>
+  <div class="sub">Archify 交互式内核原理图 · 共 52 张</div>
   <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
 
       <div class="toc-cat">
@@ -133,6 +133,13 @@ main { flex:1; padding:24px 28px; }
           内核总览 <span class="count">1</span>
         </button>
         <ul class="toc-items"><li><a href="#kernel-subsystems">Linux 内核核心子系统总览</a></li></ul>
+      </div>
+
+      <div class="toc-cat">
+        <button class="toc-cat-head" onclick="setCategory('并发与同步')">
+          并发与同步 <span class="count">1</span>
+        </button>
+        <ul class="toc-items"><li><a href="#concurrency-primitives">并发原语选择</a></li></ul>
       </div>
 </aside>
 <main>
@@ -702,6 +709,23 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">进程管理</span>
           <a class="open" href="进程管理/cfs-scheduling.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="并发与同步"
+               data-search="并发原语选择  并发与同步 workflow">
+        <header class="card-head">
+          <h3>并发原语选择</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="并发与同步/concurrency-primitives.html" loading="lazy" title="并发原语选择"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">并发与同步</span>
+          <a class="open" href="并发与同步/concurrency-primitives.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
