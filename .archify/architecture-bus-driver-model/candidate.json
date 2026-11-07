@@ -426,6 +426,20 @@
         "__driver_attach() 对每个设备尝试匹配",
         "driver_probe_device() → really_probe() → drv->probe 完成绑定"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "driver_register — drivers/base/driver.c:150",
+        "bus_add_driver — drivers/base/bus.c:732",
+        "driver_attach — drivers/base/dd.c:1307",
+        "__driver_attach — drivers/base/dd.c:1232",
+        "driver_probe_device — drivers/base/dd.c:892",
+        "really_probe — drivers/base/dd.c:652",
+        "call_driver_probe — drivers/base/dd.c:621",
+        "drv->probe — drivers/base/dd.c:628"
+      ]
     }
   ]
 }

@@ -5618,6 +5618,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>无竞争时不进入内核，零系统调用开销</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>futex_wait() — kernel/futex/waitwake.c:741</li>
+          <li>__futex_wait() — kernel/futex/waitwake.c:701</li>
+          <li>futex_wait_setup() — kernel/futex/waitwake.c:622</li>
+          <li>get_futex_key() — kernel/futex/core.c:502</li>
+          <li>futex_do_wait() — kernel/futex/waitwake.c:370</li>
+          <li>futex_wake() — kernel/futex/waitwake.c:178</li>
+          <li>futex_wake_mark() — kernel/futex/waitwake.c:134</li>
+          <li>wake_q_add_safe() — kernel/sched/core.c:1150</li>
+          <li>wake_up_q() — kernel/sched/core.c:1156</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

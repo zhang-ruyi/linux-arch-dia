@@ -168,6 +168,24 @@
         "kfree 经 slab_free 把对象回收到 freelist",
         "__slab_free 在 slab 空闲后通过 free_slab 把页块归还伙伴系统"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "kmalloc — include/linux/slab.h:1034",
+        "_kmalloc_noprof — include/linux/slab.h:960 (常量 size 快路径)",
+        "__kmalloc_noprof — mm/slub.c:5379",
+        "__do_kmalloc_node — mm/slub.c:5342",
+        "kmalloc_slab — mm/slab.h:389",
+        "slab_alloc_node — mm/slub.c:4920",
+        "__slab_alloc_node — mm/slub.c:4529 (慢路径)",
+        "allocate_slab — mm/slub.c:3387",
+        "kfree — mm/slub.c:6699",
+        "slab_free — mm/slub.c:6399",
+        "__slab_free — mm/slub.c:5664",
+        "free_slab — mm/slub.c:3490"
+      ]
     }
   ]
 }

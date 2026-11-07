@@ -5566,6 +5566,25 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>release_task() 释放 task_struct，进程彻底消亡</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>do_exit() — kernel/exit.c:929</li>
+          <li>exit_signals() — kernel/signal.c:3128</li>
+          <li>exit_mm() — kernel/exit.c:581</li>
+          <li>exit_files() — fs/file.c:518</li>
+          <li>exit_notify() — kernel/exit.c:771</li>
+          <li>do_notify_parent() — kernel/signal.c:2175</li>
+          <li>do_wait() — kernel/exit.c:1744</li>
+          <li>wait_consider_task() — kernel/exit.c:1487</li>
+          <li>wait_task_zombie() — kernel/exit.c:1207</li>
+          <li>release_task() — kernel/exit.c:249</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

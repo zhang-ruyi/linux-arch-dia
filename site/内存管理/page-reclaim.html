@@ -5724,6 +5724,28 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>shmem 脏页走 shmem_writeout,文件脏页走页面 writeback</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>kswapd — mm/vmscan.c:7399</li>
+          <li>balance_pgdat — mm/vmscan.c:7064</li>
+          <li>shrink_node — mm/vmscan.c:6146</li>
+          <li>shrink_node_memcgs — mm/vmscan.c:6067</li>
+          <li>shrink_lruvec — mm/vmscan.c:5876</li>
+          <li>shrink_list — mm/vmscan.c:2215</li>
+          <li>shrink_active_list — mm/vmscan.c:2068 (active LRU)</li>
+          <li>shrink_inactive_list — mm/vmscan.c:1986 (inactive LRU)</li>
+          <li>shrink_folio_list — mm/vmscan.c:1055</li>
+          <li>pageout — mm/vmscan.c:618</li>
+          <li>swap_writeout — mm/page_io.c:251 (匿名页)</li>
+          <li>__swap_writepage — mm/page_io.c:466</li>
+          <li>shmem_writeout — mm/shmem.c:1591 (shmem 脏页)</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

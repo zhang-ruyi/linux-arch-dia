@@ -159,6 +159,24 @@
         "末级分量由 open_last_lookups() 与 do_open() 处理",
         "vfs_open() 最终调用具体文件系统的 f_op->open"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "do_sys_open — fs/open.c:1371",
+        "do_sys_openat2 — fs/open.c:1359",
+        "do_file_open — fs/namei.c:4882",
+        "path_openat — fs/namei.c:4843",
+        "link_path_walk — fs/namei.c:2578",
+        "walk_component — fs/namei.c:2265",
+        "lookup_fast — fs/namei.c:1843",
+        "__lookup_slow — fs/namei.c:1893",
+        "open_last_lookups — fs/namei.c:4560",
+        "do_open — fs/namei.c:4652",
+        "vfs_open — fs/open.c:1047",
+        "f_op->open — fs/open.c:945"
+      ]
     }
   ]
 }

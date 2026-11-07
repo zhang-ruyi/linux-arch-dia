@@ -1,0 +1,649 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "fork() 创建进程深度调用链",
+    "locale": "zh-CN",
+    "output": "site/进程管理/deep-process-create.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "user",
+      "label": "用户态与系统调用"
+    },
+    {
+      "id": "clone",
+      "label": "kernel_clone 入口"
+    },
+    {
+      "id": "copy",
+      "label": "copy_process 资源复制"
+    },
+    {
+      "id": "sched",
+      "label": "调度唤醒",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "entry",
+      "label": "① 用户态 / 系统调用",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "clone_phase",
+      "label": "② kernel_clone",
+      "fromCol": 1,
+      "toCol": 2
+    },
+    {
+      "id": "copy_phase",
+      "label": "③ copy_process 资源复制",
+      "fromCol": 3,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_user",
+      "label": "① 用户态 / 系统调用",
+      "lane": "user",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "g_clone",
+      "label": "② kernel_clone",
+      "lane": "clone",
+      "fromCol": 1,
+      "toCol": 2
+    },
+    {
+      "id": "g_copy",
+      "label": "③ copy_process 资源复制",
+      "lane": "copy",
+      "fromCol": 3,
+      "toCol": 5
+    },
+    {
+      "id": "g_sched",
+      "label": "④ 调度唤醒",
+      "lane": "sched",
+      "fromCol": 5,
+      "toCol": 5
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a_fork",
+      "lane": "user",
+      "col": 0,
+      "type": "external",
+      "label": "fork()",
+      "sublabel": "vfork/clone/clone3 同走 kernel_clone",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2828,
+          "label": "SYSCALL_DEFINE0(fork)"
+        }
+      ]
+    },
+    {
+      "id": "b_kernel",
+      "lane": "clone",
+      "col": 1,
+      "type": "backend",
+      "label": "kernel_clone()",
+      "sublabel": "kernel/fork.c · 校验 flags 并创建",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 2694,
+          "label": "kernel_clone"
+        }
+      ]
+    },
+    {
+      "id": "b_copy",
+      "lane": "clone",
+      "col": 2,
+      "type": "backend",
+      "label": "copy_process()",
+      "sublabel": "kernel/fork.c · 复制子任务",
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1994,
+          "label": "copy_process"
+        }
+      ]
+    },
+    {
+      "id": "c_dup",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "dup_task_struct()",
+      "sublabel": "复制 task_struct 与内核栈",
+      "yOffset": -225,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 914,
+          "label": "dup_task_struct"
+        }
+      ]
+    },
+    {
+      "id": "c_files",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "copy_files()",
+      "sublabel": "kernel/fork.c · 文件描述符表",
+      "yOffset": -135,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1642,
+          "label": "copy_files"
+        }
+      ]
+    },
+    {
+      "id": "c_mm",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "copy_mm()",
+      "sublabel": "kernel/fork.c · COW 地址空间",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1568,
+          "label": "copy_mm"
+        }
+      ]
+    },
+    {
+      "id": "c_thread",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "copy_thread()",
+      "sublabel": "arch/x86/kernel/process.c · 子进程返回点",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "arch/x86/kernel/process.c",
+          "line": 170,
+          "label": "copy_thread"
+        }
+      ]
+    },
+    {
+      "id": "c_schedfork",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "sched_fork()",
+      "sublabel": "kernel/sched/core.c · 初始化调度实体",
+      "yOffset": 135,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4803,
+          "label": "sched_fork"
+        }
+      ]
+    },
+    {
+      "id": "c_cgsch",
+      "lane": "copy",
+      "col": 3,
+      "type": "backend",
+      "label": "sched_cgroup_fork()",
+      "sublabel": "kernel/sched/core.c · 调度组与 CPU",
+      "yOffset": 225,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4874,
+          "label": "sched_cgroup_fork"
+        }
+      ]
+    },
+    {
+      "id": "c_arch",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "arch_dup_task_struct()",
+      "sublabel": "kernel/fork.c · 复制架构字段",
+      "yOffset": -225,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 899,
+          "label": "arch_dup_task_struct"
+        }
+      ]
+    },
+    {
+      "id": "c_dupfd",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "dup_fd()",
+      "sublabel": "fs/file.c · 复制 fd 表",
+      "yOffset": -135,
+      "sources": [
+        {
+          "path": "fs/file.c",
+          "line": 383,
+          "label": "dup_fd"
+        }
+      ]
+    },
+    {
+      "id": "c_dupfm",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "dup_mm()",
+      "sublabel": "kernel/fork.c · 复制 mm_struct",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1527,
+          "label": "dup_mm"
+        }
+      ]
+    },
+    {
+      "id": "c_fpu",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "fpu_clone()",
+      "sublabel": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "arch/x86/kernel/fpu/core.c",
+          "line": 656,
+          "label": "fpu_clone"
+        }
+      ]
+    },
+    {
+      "id": "c_sf",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "__sched_fork()",
+      "sublabel": "kernel/sched/core.c · 基础调度初始化",
+      "yOffset": 135,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4563,
+          "label": "__sched_fork"
+        }
+      ]
+    },
+    {
+      "id": "c_uclamp",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "uclamp_fork()",
+      "sublabel": "kernel/sched/core.c · 复制利用率限制",
+      "yOffset": 225,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 2076,
+          "label": "uclamp_fork"
+        }
+      ]
+    },
+    {
+      "id": "c_taskfork",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "task_fork_fair()",
+      "sublabel": "kernel/sched/fair.c · CFS 初始化",
+      "yOffset": 315,
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 14880,
+          "label": "task_fork_fair"
+        }
+      ]
+    },
+    {
+      "id": "c_scx",
+      "lane": "copy",
+      "col": 4,
+      "type": "backend",
+      "label": "scx_fork()",
+      "sublabel": "kernel/sched/ext/ext.c · 扩展调度类",
+      "yOffset": 405,
+      "sources": [
+        {
+          "path": "kernel/sched/ext/ext.c",
+          "line": 3819,
+          "label": "scx_fork"
+        }
+      ]
+    },
+    {
+      "id": "c_mm_init",
+      "lane": "copy",
+      "col": 5,
+      "type": "backend",
+      "label": "mm_init()",
+      "sublabel": "kernel/fork.c · 初始化 mm 结构",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "kernel/fork.c",
+          "line": 1085,
+          "label": "mm_init"
+        }
+      ]
+    },
+    {
+      "id": "c_dupmmap",
+      "lane": "copy",
+      "col": 5,
+      "type": "backend",
+      "label": "dup_mmap()",
+      "sublabel": "mm/mmap.c · 复制 VMA 树",
+      "yOffset": 135,
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 1731,
+          "label": "dup_mmap"
+        }
+      ]
+    },
+    {
+      "id": "c_copyrange",
+      "lane": "copy",
+      "col": 5,
+      "type": "backend",
+      "label": "copy_page_range()",
+      "sublabel": "mm/memory.c · 复制页表项",
+      "yOffset": 225,
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 1507,
+          "label": "copy_page_range"
+        }
+      ]
+    },
+    {
+      "id": "f_wake",
+      "lane": "sched",
+      "col": 5,
+      "type": "messagebus",
+      "label": "wake_up_new_task()",
+      "sublabel": "kernel/sched/core.c · 置 TASK_RUNNING",
+      "yOffset": -180,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 4941,
+          "label": "wake_up_new_task"
+        }
+      ]
+    },
+    {
+      "id": "f_sel",
+      "lane": "sched",
+      "col": 5,
+      "type": "messagebus",
+      "label": "select_task_rq_fair()",
+      "sublabel": "kernel/sched/fair.c · 选择目标 CPU",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 9544,
+          "label": "select_task_rq_fair"
+        }
+      ]
+    },
+    {
+      "id": "f_act",
+      "lane": "sched",
+      "col": 5,
+      "type": "messagebus",
+      "label": "activate_task()",
+      "sublabel": "kernel/sched/core.c · 唤醒并入队",
+      "yOffset": 0,
+      "sources": [
+        {
+          "path": "kernel/sched/core.c",
+          "line": 2219,
+          "label": "activate_task"
+        }
+      ]
+    },
+    {
+      "id": "f_enq",
+      "lane": "sched",
+      "col": 5,
+      "type": "messagebus",
+      "label": "enqueue_task_fair()",
+      "sublabel": "kernel/sched/fair.c · 挂入 cfs_rq",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 7802,
+          "label": "enqueue_task_fair"
+        }
+      ]
+    },
+    {
+      "id": "f_place",
+      "lane": "sched",
+      "col": 5,
+      "type": "messagebus",
+      "label": "place_entity()",
+      "sublabel": "kernel/sched/fair.c · 设定虚拟截止时间",
+      "yOffset": 180,
+      "sources": [
+        {
+          "path": "kernel/sched/fair.c",
+          "line": 5968,
+          "label": "place_entity"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "fork-kernel",
+      "from": "a_fork",
+      "to": "b_kernel",
+      "label": "fork 系统调用",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "kernel-copy",
+      "from": "b_kernel",
+      "to": "b_copy",
+      "label": "创建子任务",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "copy-dup",
+      "from": "b_copy",
+      "to": "c_dup",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "copy-files",
+      "from": "b_copy",
+      "to": "c_files",
+      "route": "bottom-channel"
+    },
+    {
+      "id": "copy-mm",
+      "from": "b_copy",
+      "to": "c_mm"
+    },
+    {
+      "id": "copy-thread",
+      "from": "b_copy",
+      "to": "c_thread"
+    },
+    {
+      "id": "copy-schedfork",
+      "from": "b_copy",
+      "to": "c_schedfork"
+    },
+    {
+      "id": "copy-cgsch",
+      "from": "b_copy",
+      "to": "c_cgsch"
+    },
+    {
+      "id": "dup-arch",
+      "from": "c_dup",
+      "to": "c_arch"
+    },
+    {
+      "id": "files-dupfd",
+      "from": "c_files",
+      "to": "c_dupfd"
+    },
+    {
+      "id": "mm-dupfm",
+      "from": "c_mm",
+      "to": "c_dupfm"
+    },
+    {
+      "id": "dupfm-mm_init",
+      "from": "c_dupfm",
+      "to": "c_mm_init"
+    },
+    {
+      "id": "dupfm-dupmmap",
+      "from": "c_dupfm",
+      "to": "c_dupmmap"
+    },
+    {
+      "id": "dupmmap-copyrange",
+      "from": "c_dupmmap",
+      "to": "c_copyrange"
+    },
+    {
+      "id": "thread-fpu",
+      "from": "c_thread",
+      "to": "c_fpu"
+    },
+    {
+      "id": "schedfork-sf",
+      "from": "c_schedfork",
+      "to": "c_sf"
+    },
+    {
+      "id": "schedfork-uclamp",
+      "from": "c_schedfork",
+      "to": "c_uclamp"
+    },
+    {
+      "id": "cgsch-taskfork",
+      "from": "c_cgsch",
+      "to": "c_taskfork"
+    },
+    {
+      "id": "cgsch-scx",
+      "from": "c_cgsch",
+      "to": "c_scx"
+    },
+    {
+      "id": "kernel-wake",
+      "from": "b_kernel",
+      "to": "f_wake",
+      "label": "唤醒",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "wake-sel",
+      "from": "f_wake",
+      "to": "f_sel",
+      "label": "选 CPU"
+    },
+    {
+      "id": "sel-act",
+      "from": "f_sel",
+      "to": "f_act"
+    },
+    {
+      "id": "act-enq",
+      "from": "f_act",
+      "to": "f_enq"
+    },
+    {
+      "id": "enq-place",
+      "from": "f_enq",
+      "to": "f_place",
+      "label": "设定 deadline"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "函数级调用链",
+      "items": [
+        "fork() → kernel_clone() → copy_process()",
+        "copy_process() → dup_task_struct() / copy_files() / copy_mm() / copy_thread()",
+        "copy_mm() → dup_mm() → mm_init() / dup_mmap() → copy_page_range()",
+        "kernel_clone() 在 copy_process() 返回后调用 wake_up_new_task()"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "唤醒与入队",
+      "items": [
+        "wake_up_new_task() 将子进程状态置为 TASK_RUNNING",
+        "select_task_rq_fair() 选择目标 CPU 后 activate_task() 入队",
+        "enqueue_task_fair() → place_entity() 计算虚拟截止时间"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "未展开的同级复制",
+      "items": [
+        "copy_fs()、copy_sighand()、copy_signal()、copy_namespaces()、copy_io() 同属 copy_process() 直接调用",
+        "这些分支为可读性省略，调用顺序见 copy_process() 源码 2277-2298 行"
+      ]
+    }
+  ]
+}

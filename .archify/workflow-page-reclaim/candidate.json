@@ -398,6 +398,25 @@
         "匿名页经 pageout 与 swap_writeout 换出,最终由 __swap_writepage 写入交换设备",
         "shmem 脏页走 shmem_writeout,文件脏页走页面 writeback"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "kswapd — mm/vmscan.c:7399",
+        "balance_pgdat — mm/vmscan.c:7064",
+        "shrink_node — mm/vmscan.c:6146",
+        "shrink_node_memcgs — mm/vmscan.c:6067",
+        "shrink_lruvec — mm/vmscan.c:5876",
+        "shrink_list — mm/vmscan.c:2215",
+        "shrink_active_list — mm/vmscan.c:2068 (active LRU)",
+        "shrink_inactive_list — mm/vmscan.c:1986 (inactive LRU)",
+        "shrink_folio_list — mm/vmscan.c:1055",
+        "pageout — mm/vmscan.c:618",
+        "swap_writeout — mm/page_io.c:251 (匿名页)",
+        "__swap_writepage — mm/page_io.c:466",
+        "shmem_writeout — mm/shmem.c:1591 (shmem 脏页)"
+      ]
     }
   ]
 }

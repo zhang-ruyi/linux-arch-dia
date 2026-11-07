@@ -213,6 +213,27 @@
         "运行于进程上下文，可以睡眠",
         "create_worker() 按需动态创建 worker 线程"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "__tasklet_schedule() — kernel/softirq.c:838",
+        "__tasklet_schedule_common() — kernel/softirq.c:822",
+        "raise_softirq_irqoff() — kernel/softirq.c:773",
+        "tasklet_action() — kernel/softirq.c:963",
+        "tasklet_action_common() — kernel/softirq.c:916",
+        "raise_softirq() — kernel/softirq.c:790",
+        "__raise_softirq_irqoff() — kernel/softirq.c:799",
+        "do_softirq() — kernel/softirq.c:510",
+        "__do_softirq() — kernel/softirq.c:654",
+        "net_rx_action() — net/core/dev.c:7910",
+        "open_softirq() — kernel/softirq.c:806",
+        "queue_work() — include/linux/workqueue.h:696",
+        "queue_work_on() — kernel/workqueue.c:2442",
+        "__queue_work() — kernel/workqueue.c:2275",
+        "worker_thread() — kernel/workqueue.c:3431"
+      ]
     }
   ]
 }

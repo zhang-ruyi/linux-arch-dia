@@ -278,6 +278,22 @@
         "共享匿名 MAP_SHARED 调用 shmem_zero_setup",
         "文件映射经 mmap_file 与 vfs_mmap 调用 file->f_op->mmap"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "ksys_mmap_pgoff — mm/mmap.c:568",
+        "vm_mmap_pgoff — mm/util.c:565",
+        "do_mmap — mm/mmap.c:336",
+        "mmap_region — mm/vma.c:2833",
+        "__mmap_region — mm/vma.c:2734",
+        "__mmap_new_vma — mm/vma.c:2535",
+        "分支:文件映射 __mmap_new_file_vma — mm/vma.c:2483",
+        "mmap_file — mm/internal.h:165",
+        "vfs_mmap — include/linux/fs.h:2061",
+        "file->f_op->mmap — include/linux/fs.h:2066"
+      ]
     }
   ]
 }

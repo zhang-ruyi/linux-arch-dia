@@ -1,0 +1,1549 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "pass",
+  "visualReview": "not-requested",
+  "provenance": "current",
+  "deliveryReceiptId": "95916d04-0b84-4ce8-82ff-e81f2ebbc67e",
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/deep-tcp-recv.html",
+    "sha256": "8f99911f283f62bf82eb30704ada1cb36d7806f0ec79c38116f04cb921c44059",
+    "bytes": 873239
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "/home/zhang/.cache/archify-chrome/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "diagnostics": [],
+  "containment": {
+    "status": "pass",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2123,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1980,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 560,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 506,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 452,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 449,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 231,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 174,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2425,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2216,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 626,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 566,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 505,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 502,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 258,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 195,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2629,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2647,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "themeStates": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      }
+    ]
+  },
+  "readability": {
+    "status": "pass",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2123,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1980,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 560,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 506,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 452,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 449,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 231,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 174,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2425,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2216,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 626,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 566,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 505,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 502,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 258,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 195,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2629,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2647,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "viewerChrome": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2123,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 1980,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 560,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 506,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 452,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 449,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 395,
+            "spaceAboveNodesPx": 48,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 231,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 174,
+            "spaceAboveNodesPx": 50,
+            "spaceBelowNodesPx": 6
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2425,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2216,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 626,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 566,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 505,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 502,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 442,
+            "spaceAboveNodesPx": 54,
+            "spaceBelowNodesPx": 7
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 258,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 195,
+            "spaceAboveNodesPx": 56,
+            "spaceBelowNodesPx": 7
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2629,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2647,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1645.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2421,
+          "cardsPx": 0,
+          "viewBoxHeight": 1614
+        },
+        "viewBoxWidth": 1097,
+        "workflowLanes": [
+          {
+            "frameId": "lane-1",
+            "heightPx": 684,
+            "nodeCount": 7,
+            "nodeIds": [
+              "ip_rcv",
+              "ip_rcv_core",
+              "ip_local_deliver",
+              "ip_local_deliver_finish",
+              "ip_protocol_deliver_rcu",
+              "ip_rcv_finish",
+              "ip_rcv_finish_core"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 552,
+            "nodeCount": 7,
+            "nodeIds": [
+              "napi_gro_receive",
+              "napi_poll",
+              "napi_poll_inner",
+              "net_rx_action",
+              "netif_receive_skb",
+              "netif_receive_skb_core",
+              "netif_receive_skb_internal"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 549,
+            "nodeCount": 9,
+            "nodeIds": [
+              "tcp_data_queue",
+              "tcp_queue_rcv",
+              "sock_def_readable",
+              "tcp_data_ready",
+              "wake_up_interruptible_sync_poll",
+              "ep_poll_callback",
+              "wake_up_common",
+              "wake_up_common_lock",
+              "wake_up_sync_key"
+            ],
+            "nodeSpanPx": 483,
+            "spaceAboveNodesPx": 59,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-2",
+            "heightPx": 282,
+            "nodeCount": 4,
+            "nodeIds": [
+              "tcp_v4_do_rcv",
+              "tcp_v4_rcv",
+              "tcp_rcv_established",
+              "tcp_rcv_state_process"
+            ],
+            "nodeSpanPx": 213,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          }
+        ],
+        "minimumProjectedNodeTextPx": 8,
+        "minimumProjectedNonEdgeTextPx": 10,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "回调唤醒",
+        "minimumProjectedNodeTextDetail": "edge",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "edge",
+          "id": "e-common-epoll",
+          "from": "wake_up_common",
+          "to": "ep_poll_callback"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "receipt": "deep-tcp-recv.browser-check.json",
+    "files": []
+  }
+}

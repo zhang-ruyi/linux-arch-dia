@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/candidate.json",
+    "sha256": "659c7969fb9d4b615b8a13920071212691c69f9a0c2714d7c3d2f5ad00759342",
+    "bytes": 8087
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.html",
+    "sha256": "153fe37d5d1035cd5e2cf998eaa3443ef15a8d05226308ef831681cbedd83e9f",
+    "bytes": 844663
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/review-1/nvme-pcie-init.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/review-1/nvme-pcie-init.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/review-1/nvme-pcie-init.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3795,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

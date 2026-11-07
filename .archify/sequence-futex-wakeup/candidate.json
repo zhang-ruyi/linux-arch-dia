@@ -210,6 +210,21 @@
         "pthread_mutex 在用户态只做原子 CAS 增减",
         "无竞争时不进入内核，零系统调用开销"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "futex_wait() — kernel/futex/waitwake.c:741",
+        "__futex_wait() — kernel/futex/waitwake.c:701",
+        "futex_wait_setup() — kernel/futex/waitwake.c:622",
+        "get_futex_key() — kernel/futex/core.c:502",
+        "futex_do_wait() — kernel/futex/waitwake.c:370",
+        "futex_wake() — kernel/futex/waitwake.c:178",
+        "futex_wake_mark() — kernel/futex/waitwake.c:134",
+        "wake_q_add_safe() — kernel/sched/core.c:1150",
+        "wake_up_q() — kernel/sched/core.c:1156"
+      ]
     }
   ]
 }

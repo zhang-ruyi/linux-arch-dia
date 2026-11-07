@@ -142,6 +142,24 @@
         "nvme_complete_rq → nvme_end_req → blk_mq_end_request 完成回收",
         "处理完 CQE 后 nvme_update_cq_head，再写 CQ head doorbell 归还槽位"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "nvme_queue_rq — drivers/nvme/host/pci.c:1436",
+        "nvme_prep_rq — drivers/nvme/host/pci.c:1399",
+        "nvme_setup_cmd — drivers/nvme/host/core.c:1097",
+        "nvme_sq_copy_cmd — drivers/nvme/host/pci.c:735",
+        "nvme_write_sq_db — drivers/nvme/host/pci.c:718",
+        "nvme_irq — drivers/nvme/host/pci.c:1630",
+        "nvme_poll_cq — drivers/nvme/host/pci.c:1609",
+        "nvme_handle_cqe — drivers/nvme/host/pci.c:1562",
+        "nvme_update_cq_head — drivers/nvme/host/pci.c:1597",
+        "nvme_ring_cq_doorbell — drivers/nvme/host/pci.c:1546",
+        "nvme_pci_complete_rq — drivers/nvme/host/pci.c:1527",
+        "nvme_complete_rq — drivers/nvme/host/core.c:508"
+      ]
     }
   ]
 }

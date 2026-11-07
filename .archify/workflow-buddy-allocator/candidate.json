@@ -413,6 +413,28 @@
         "大 order 走 __free_pages_ok → free_one_page → __free_one_page",
         "PCP 满后批量释放最终也进入 __free_one_page 向上合并伙伴"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "alloc_pages — include/linux/gfp.h:351",
+        "__alloc_pages_noprof — mm/page_alloc.c:5333",
+        "__alloc_frozen_pages_noprof — mm/page_alloc.c:5268",
+        "get_page_from_freelist — mm/page_alloc.c:3792",
+        "rmqueue — mm/page_alloc.c:3401",
+        "rmqueue_pcplist — mm/page_alloc.c:3359 (PCP 快路径)",
+        "rmqueue_buddy — mm/page_alloc.c:3210 (伙伴慢路径)",
+        "__rmqueue — mm/page_alloc.c:2454",
+        "__rmqueue_smallest — mm/page_alloc.c:1889",
+        "expand — mm/page_alloc.c:1702",
+        "__free_pages — mm/page_alloc.c:5421",
+        "___free_pages — mm/page_alloc.c:5376",
+        "__free_frozen_pages — mm/page_alloc.c:2937",
+        "free_frozen_page_commit — mm/page_alloc.c:2832 (PCP 回填)",
+        "free_one_page — mm/page_alloc.c:1542",
+        "__free_one_page — mm/page_alloc.c:936"
+      ]
     }
   ]
 }

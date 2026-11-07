@@ -141,6 +141,20 @@
         "finish_task_switch() 释放 prev 的 rq 锁",
         "必要时执行 mmdrop() 释放旧地址空间引用"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "__schedule() — kernel/sched/core.c:7061",
+        "context_switch() — kernel/sched/core.c:5451",
+        "prepare_task_switch() — kernel/sched/core.c:5286",
+        "switch_mm_irqs_off() — arch/x86/mm/tlb.c:783",
+        "switch_to() — arch/x86/include/asm/switch_to.h:49",
+        "__switch_to_asm() — arch/x86/entry/entry_64.S:177",
+        "__switch_to() — arch/x86/kernel/process_64.c:610",
+        "finish_task_switch() — kernel/sched/core.c:5318"
+      ]
     }
   ]
 }

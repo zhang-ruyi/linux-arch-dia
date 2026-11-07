@@ -229,6 +229,23 @@
         "TASK_ZOMBIE 已释放大部分资源，仅保留 task_struct",
         "父进程 wait()/waitpid() 后由 release_task() 彻底回收"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "kernel_clone() — kernel/fork.c:2694",
+        "wake_up_new_task() — kernel/sched/core.c:4941",
+        "schedule() — kernel/sched/core.c:7316",
+        "__schedule() — kernel/sched/core.c:7061",
+        "wait_event_interruptible() — include/linux/wait.h:501",
+        "wait_event() — include/linux/wait.h:345",
+        "try_to_wake_up() — kernel/sched/core.c:4251",
+        "wake_up_process() — kernel/sched/core.c:4545",
+        "do_exit() — kernel/exit.c:929",
+        "exit_signals() — kernel/signal.c:3128",
+        "release_task() — kernel/exit.c:249"
+      ]
     }
   ]
 }

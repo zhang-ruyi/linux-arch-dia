@@ -5620,6 +5620,29 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>目标进程继续执行原用户态指令</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>kill() — kernel/signal.c:3959</li>
+          <li>kill_something_info() — kernel/signal.c:1579</li>
+          <li>kill_pid_info() — kernel/signal.c:1478</li>
+          <li>group_send_sig_info() — kernel/signal.c:1416</li>
+          <li>do_send_sig_info() — kernel/signal.c:1260</li>
+          <li>send_signal_locked() — kernel/signal.c:1181</li>
+          <li>__send_signal_locked() — kernel/signal.c:1040</li>
+          <li>complete_signal() — kernel/signal.c:963</li>
+          <li>exit_to_user_mode_loop() — kernel/entry/common.c:97</li>
+          <li>get_signal() — kernel/signal.c:2810</li>
+          <li>arch_do_signal_or_restart() — arch/x86/kernel/signal.c:333</li>
+          <li>handle_signal() — arch/x86/kernel/signal.c:255</li>
+          <li>setup_rt_frame() — arch/x86/kernel/signal.c:236</li>
+          <li>rt_sigreturn() — arch/x86/kernel/signal_64.c:246</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

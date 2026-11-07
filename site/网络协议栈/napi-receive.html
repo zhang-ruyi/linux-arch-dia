@@ -5586,6 +5586,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>tcp_v4_do_rcv() 进入 TCP 状态机处理</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>napi_schedule — include/linux/netdevice.h:558</li>
+          <li>net_rx_action — net/core/dev.c:7910</li>
+          <li>napi_poll — net/core/dev.c:7782</li>
+          <li>__napi_poll — net/core/dev.c:7715</li>
+          <li>netif_receive_skb — net/core/dev.c:6458</li>
+          <li>netif_receive_skb_internal — net/core/dev.c:6383</li>
+          <li>__netif_receive_skb_core — net/core/dev.c:5976</li>
+          <li>ip_rcv — net/ipv4/ip_input.c:603</li>
+          <li>ip_rcv_finish — net/ipv4/ip_input.c:478</li>
+          <li>ip_local_deliver — net/ipv4/ip_input.c:250</li>
+          <li>ip_local_deliver_finish — net/ipv4/ip_input.c:229</li>
+          <li>tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067</li>
+          <li>tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827</li>
+          <li>tcp_rcv_established — net/ipv4/tcp_input.c:6470</li>
+          <li>tcp_rcv_state_process — net/ipv4/tcp_input.c:7122</li>
+          <li>tcp_data_queue — net/ipv4/tcp_input.c:5577</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

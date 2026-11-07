@@ -5593,6 +5593,25 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>客户端 SYN_SENT → ESTABLISHED</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>tcp_v4_connect — net/ipv4/tcp_ipv4.c:221</li>
+          <li>tcp_connect — net/ipv4/tcp_output.c:4294</li>
+          <li>tcp_transmit_skb — net/ipv4/tcp_output.c:1731</li>
+          <li>tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067</li>
+          <li>tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827</li>
+          <li>tcp_rcv_state_process — net/ipv4/tcp_input.c:7122</li>
+          <li>tcp_v4_conn_request — net/ipv4/tcp_ipv4.c:1652</li>
+          <li>tcp_conn_request — net/ipv4/tcp_input.c:7590</li>
+          <li>tcp_v4_send_synack — net/ipv4/tcp_ipv4.c:1159</li>
+          <li>tcp_send_synack — net/ipv4/tcp_output.c:3887</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

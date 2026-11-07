@@ -140,6 +140,26 @@
         "restore_sigcontext() 恢复被中断的现场",
         "目标进程继续执行原用户态指令"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "kill() — kernel/signal.c:3959",
+        "kill_something_info() — kernel/signal.c:1579",
+        "kill_pid_info() — kernel/signal.c:1478",
+        "group_send_sig_info() — kernel/signal.c:1416",
+        "do_send_sig_info() — kernel/signal.c:1260",
+        "send_signal_locked() — kernel/signal.c:1181",
+        "__send_signal_locked() — kernel/signal.c:1040",
+        "complete_signal() — kernel/signal.c:963",
+        "exit_to_user_mode_loop() — kernel/entry/common.c:97",
+        "get_signal() — kernel/signal.c:2810",
+        "arch_do_signal_or_restart() — arch/x86/kernel/signal.c:333",
+        "handle_signal() — arch/x86/kernel/signal.c:255",
+        "setup_rt_frame() — arch/x86/kernel/signal.c:236",
+        "rt_sigreturn() — arch/x86/kernel/signal_64.c:246"
+      ]
     }
   ]
 }

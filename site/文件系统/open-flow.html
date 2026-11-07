@@ -5641,6 +5641,27 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>vfs_open() 最终调用具体文件系统的 f_op-&gt;open</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>do_sys_open — fs/open.c:1371</li>
+          <li>do_sys_openat2 — fs/open.c:1359</li>
+          <li>do_file_open — fs/namei.c:4882</li>
+          <li>path_openat — fs/namei.c:4843</li>
+          <li>link_path_walk — fs/namei.c:2578</li>
+          <li>walk_component — fs/namei.c:2265</li>
+          <li>lookup_fast — fs/namei.c:1843</li>
+          <li>__lookup_slow — fs/namei.c:1893</li>
+          <li>open_last_lookups — fs/namei.c:4560</li>
+          <li>do_open — fs/namei.c:4652</li>
+          <li>vfs_open — fs/open.c:1047</li>
+          <li>f_op-&gt;open — fs/open.c:945</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

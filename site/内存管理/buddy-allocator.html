@@ -5703,6 +5703,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>PCP 满后批量释放最终也进入 __free_one_page 向上合并伙伴</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>alloc_pages — include/linux/gfp.h:351</li>
+          <li>__alloc_pages_noprof — mm/page_alloc.c:5333</li>
+          <li>__alloc_frozen_pages_noprof — mm/page_alloc.c:5268</li>
+          <li>get_page_from_freelist — mm/page_alloc.c:3792</li>
+          <li>rmqueue — mm/page_alloc.c:3401</li>
+          <li>rmqueue_pcplist — mm/page_alloc.c:3359 (PCP 快路径)</li>
+          <li>rmqueue_buddy — mm/page_alloc.c:3210 (伙伴慢路径)</li>
+          <li>__rmqueue — mm/page_alloc.c:2454</li>
+          <li>__rmqueue_smallest — mm/page_alloc.c:1889</li>
+          <li>expand — mm/page_alloc.c:1702</li>
+          <li>__free_pages — mm/page_alloc.c:5421</li>
+          <li>___free_pages — mm/page_alloc.c:5376</li>
+          <li>__free_frozen_pages — mm/page_alloc.c:2937</li>
+          <li>free_frozen_page_commit — mm/page_alloc.c:2832 (PCP 回填)</li>
+          <li>free_one_page — mm/page_alloc.c:1542</li>
+          <li>__free_one_page — mm/page_alloc.c:936</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

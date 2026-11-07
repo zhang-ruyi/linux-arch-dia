@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-cfs-scheduling/candidate.json",
+    "sha256": "3730915b9613eac5de9ff4442285b1bed73dd380331a9e17c04bc4adf1fb172e",
+    "bytes": 6026
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/cfs-scheduling.html",
+    "sha256": "19b8e19591f40cb09248df31dd2b47dc13b3e1ced986e20d2d4e044519c2b933",
+    "bytes": 837794
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-cfs-scheduling/review-1/cfs-scheduling.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-cfs-scheduling/review-1/cfs-scheduling.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-cfs-scheduling/review-1/cfs-scheduling.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3609,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

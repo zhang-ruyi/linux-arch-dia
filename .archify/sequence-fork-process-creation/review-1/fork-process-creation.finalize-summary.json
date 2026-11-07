@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-fork-process-creation/candidate.json",
+    "sha256": "a19310f85bc54a6e735b55193b3036eb05bb1526ebced87f4a58b395f887af31",
+    "bytes": 5601
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/fork-process-creation.html",
+    "sha256": "735ac9a91e623516fac292a1cea1ae0ff09a37cb00b9a2a00dd3f1184ec62c66",
+    "bytes": 837655
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-fork-process-creation/review-1/fork-process-creation.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-fork-process-creation/review-1/fork-process-creation.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-fork-process-creation/review-1/fork-process-creation.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3312,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

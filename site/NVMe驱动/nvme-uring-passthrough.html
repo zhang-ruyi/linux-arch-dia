@@ -5665,6 +5665,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>返回 -EIOCBQUEUED 表示请求已异步排队</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>io_uring_cmd — io_uring/uring_cmd.c:239</li>
+          <li>nvme_ns_chr_uring_cmd — drivers/nvme/host/ioctl.c:672</li>
+          <li>nvme_ns_uring_cmd — drivers/nvme/host/ioctl.c:648</li>
+          <li>nvme_uring_cmd_io — drivers/nvme/host/ioctl.c:445</li>
+          <li>nvme_alloc_user_request — drivers/nvme/host/ioctl.c:101</li>
+          <li>nvme_map_user_request — drivers/nvme/host/ioctl.c:124</li>
+          <li>blk_execute_rq_nowait — block/blk-mq.c:1415</li>
+          <li>nvme_queue_rq — drivers/nvme/host/pci.c:1436</li>
+          <li>nvme_uring_cmd_end_io — drivers/nvme/host/ioctl.c:411</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

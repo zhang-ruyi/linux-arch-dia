@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/lifecycle-tcp-state-machine/candidate.json",
+    "sha256": "e3184ffb33b9c0601e844a95c38b9b664438ef6a816315b697ab144290279985",
+    "bytes": 9155
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/tcp-state-machine.html",
+    "sha256": "5f52a7371030c449f864be4ffbcc4b9582f7f2671364e0f1fb62ba67b0ac25b5",
+    "bytes": 855891
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-tcp-state-machine/review-1/tcp-state-machine.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-tcp-state-machine/review-1/tcp-state-machine.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-tcp-state-machine/review-1/tcp-state-machine.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3365,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 3
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "fin-wait-1-fin-wait-2",
+            "from": "fin_wait_1",
+            "to": "fin_wait_2",
+            "label": "收到 ACK",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "fin-wait-1-closing",
+            "from": "fin_wait_1",
+            "to": "closing",
+            "label": "同时关闭,收到 FIN,回 ACK",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            792.5,
+            384.00000000000006
+          ],
+          "sharedNode": "fin_wait_1"
+        },
+        {
+          "left": {
+            "id": "fin-wait-1-fin-wait-2",
+            "from": "fin_wait_1",
+            "to": "fin_wait_2",
+            "label": "收到 ACK",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "closing-time-wait",
+            "from": "closing",
+            "to": "time_wait",
+            "label": "收到 ACK",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            391.2999999999997,
+            420
+          ]
+        },
+        {
+          "left": {
+            "id": "fin-wait-2-time-wait",
+            "from": "fin_wait_2",
+            "to": "time_wait",
+            "label": "收到 FIN,回 ACK",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "right": {
+            "id": "closing-time-wait",
+            "from": "closing",
+            "to": "time_wait",
+            "label": "收到 ACK",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            365.2999999999997,
+            420
+          ],
+          "sharedNode": "time_wait"
+        }
+      ],
+      "detours": [],
+      "truncated": false
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

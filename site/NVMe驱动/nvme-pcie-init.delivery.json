@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "1624c21a-ccf5-40d5-89f3-904db10cd7ee",
+  "receiptId": "5fd8d9d2-f55c-418f-8468-f8fc23ae8636",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/home/zhang/opencode/code_analsys/.archify/workflow-nvme-pcie-init/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-pcie-init.html",
   "specification": {
-    "sha256": "39dc6cf5f98f953c75fdbe2cff1b6525a29e83c6c4b9e3dbb9549a96c123c864",
-    "bytes": 7287
+    "sha256": "659c7969fb9d4b615b8a13920071212691c69f9a0c2714d7c3d2f5ad00759342",
+    "bytes": 8087
   },
   "artifact": {
-    "sha256": "2f563446b0903fbe60b0b61fc52d894db1fd02ff252a47ef1c9c77fa4f881053",
-    "bytes": 843673
+    "sha256": "153fe37d5d1035cd5e2cf998eaa3443ef15a8d05226308ef831681cbedd83e9f",
+    "bytes": 844663
   }
 }

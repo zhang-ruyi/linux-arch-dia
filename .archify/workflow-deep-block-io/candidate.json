@@ -1,0 +1,716 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "块层 IO 深度调用链",
+    "locale": "zh-CN",
+    "output": "site/设备驱动/deep-block-io.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "bio",
+      "label": "阶段一 · bio 提交"
+    },
+    {
+      "id": "mq",
+      "label": "阶段二 · blk-mq 入队"
+    },
+    {
+      "id": "dispatch",
+      "label": "阶段三 · 派发到驱动"
+    },
+    {
+      "id": "completion",
+      "label": "阶段四 · 完成回收"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_bio",
+      "label": "bio 提交 (block/blk-core.c)",
+      "lane": "bio",
+      "fromCol": 0,
+      "toCol": 4,
+      "variant": "default"
+    },
+    {
+      "id": "g_mq",
+      "label": "blk-mq 入队 (block/blk-mq.c)",
+      "lane": "mq",
+      "fromCol": 0,
+      "toCol": 4,
+      "variant": "emphasis"
+    },
+    {
+      "id": "g_dispatch",
+      "label": "派发到驱动",
+      "lane": "dispatch",
+      "fromCol": 0,
+      "toCol": 4,
+      "variant": "emphasis"
+    },
+    {
+      "id": "g_completion",
+      "label": "完成回收",
+      "lane": "completion",
+      "fromCol": 0,
+      "toCol": 4,
+      "variant": "default"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "ext4io",
+      "lane": "bio",
+      "col": 0,
+      "type": "backend",
+      "label": "ext4_io_submit",
+      "sublabel": "文件系统提交 bio",
+      "sources": [
+        {
+          "path": "fs/ext4/page-io.c",
+          "line": 397
+        }
+      ]
+    },
+    {
+      "id": "submitbio",
+      "lane": "bio",
+      "col": 1,
+      "type": "backend",
+      "label": "submit_bio",
+      "sublabel": "块层公共入口",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 952
+        }
+      ]
+    },
+    {
+      "id": "noctl",
+      "lane": "bio",
+      "col": 2,
+      "type": "backend",
+      "label": "submit_bio_noacct",
+      "sublabel": "校验与限流",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 817
+        }
+      ]
+    },
+    {
+      "id": "throtl",
+      "lane": "bio",
+      "col": 2,
+      "type": "security",
+      "label": "blk_throtl_bio",
+      "sublabel": "cgroup 限流",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 919
+        },
+        {
+          "path": "block/blk-throttle.c",
+          "line": 1792
+        }
+      ]
+    },
+    {
+      "id": "nocheck",
+      "lane": "bio",
+      "col": 3,
+      "type": "backend",
+      "label": "submit_bio_noacct_nocheck",
+      "sublabel": "收集/派发 bio",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 762
+        }
+      ]
+    },
+    {
+      "id": "mq_mq",
+      "lane": "bio",
+      "col": 4,
+      "type": "backend",
+      "label": "__submit_bio_noacct_mq",
+      "sublabel": "多队列提交",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 749
+        }
+      ]
+    },
+    {
+      "id": "sib_noacct",
+      "lane": "bio",
+      "col": 4,
+      "type": "backend",
+      "label": "__submit_bio_noacct",
+      "sublabel": "驱动自带 submit_bio",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 705
+        }
+      ]
+    },
+    {
+      "id": "mq_submit",
+      "lane": "mq",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_submit_bio",
+      "sublabel": "进入 blk-mq",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3093
+        }
+      ]
+    },
+    {
+      "id": "mq_cached",
+      "lane": "mq",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_get_cached_request",
+      "sublabel": "plug 缓存命中",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3049
+        }
+      ]
+    },
+    {
+      "id": "mq_new",
+      "lane": "mq",
+      "col": 3,
+      "type": "backend",
+      "label": "blk_mq_get_new_requests",
+      "sublabel": "分配 request",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3015
+        }
+      ]
+    },
+    {
+      "id": "mq_merge",
+      "lane": "mq",
+      "col": 2,
+      "type": "backend",
+      "label": "blk_mq_attempt_bio_merge",
+      "sublabel": "尝试合并 bio",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3003
+        }
+      ]
+    },
+    {
+      "id": "mq_bioreq",
+      "lane": "mq",
+      "col": 1,
+      "type": "backend",
+      "label": "blk_mq_bio_to_request",
+      "sublabel": "bio 转 request",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2654
+        }
+      ]
+    },
+    {
+      "id": "mq_insert",
+      "lane": "mq",
+      "col": 0,
+      "type": "messagebus",
+      "label": "blk_mq_insert_request",
+      "sublabel": "插入软件队列",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2592
+        }
+      ]
+    },
+    {
+      "id": "dq_run",
+      "lane": "dispatch",
+      "col": 0,
+      "type": "backend",
+      "label": "blk_mq_run_hw_queue",
+      "sublabel": "触发硬件队列",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2321
+        }
+      ]
+    },
+    {
+      "id": "dq_sched",
+      "lane": "dispatch",
+      "col": 1,
+      "type": "backend",
+      "label": "blk_mq_sched_dispatch_requests",
+      "sublabel": "调度器入口",
+      "sources": [
+        {
+          "path": "block/blk-mq-sched.c",
+          "line": 317
+        }
+      ]
+    },
+    {
+      "id": "dq_sched2",
+      "lane": "dispatch",
+      "col": 2,
+      "type": "backend",
+      "label": "__blk_mq_sched_dispatch_requests",
+      "sublabel": "取出待派发请求",
+      "sources": [
+        {
+          "path": "block/blk-mq-sched.c",
+          "line": 268
+        }
+      ],
+      "width": 240
+    },
+    {
+      "id": "dq_list",
+      "lane": "dispatch",
+      "col": 3,
+      "type": "backend",
+      "label": "blk_mq_dispatch_rq_list",
+      "sublabel": "逐个派发",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2085
+        }
+      ]
+    },
+    {
+      "id": "dq_prep",
+      "lane": "dispatch",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_prep_dispatch_rq",
+      "sublabel": "预算与准备",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2014
+        }
+      ]
+    },
+    {
+      "id": "queue_rq",
+      "lane": "dispatch",
+      "col": 4,
+      "type": "external",
+      "label": "q->mq_ops->queue_rq",
+      "sublabel": "驱动回调",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 2117
+        }
+      ],
+      "yOffset": 90
+    },
+    {
+      "id": "start_req",
+      "lane": "dispatch",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_start_request",
+      "sublabel": "启动计时",
+      "yOffset": 180,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1337
+        }
+      ]
+    },
+    {
+      "id": "comp",
+      "lane": "completion",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_complete_request",
+      "sublabel": "完成入口",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1322
+        }
+      ]
+    },
+    {
+      "id": "comp_remote",
+      "lane": "completion",
+      "col": 4,
+      "type": "backend",
+      "label": "blk_mq_complete_request_remote",
+      "sublabel": "远程完成判定",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1288
+        }
+      ],
+      "yOffset": 90
+    },
+    {
+      "id": "comp_ipi",
+      "lane": "completion",
+      "col": 3,
+      "type": "messagebus",
+      "label": "blk_mq_complete_send_ipi",
+      "sublabel": "跨 CPU IPI",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1268
+        }
+      ]
+    },
+    {
+      "id": "comp_softirq",
+      "lane": "completion",
+      "col": 3,
+      "type": "messagebus",
+      "label": "blk_mq_raise_softirq",
+      "sublabel": "BLOCK_SOFTIRQ",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1277
+        }
+      ]
+    },
+    {
+      "id": "end_req",
+      "lane": "completion",
+      "col": 2,
+      "type": "backend",
+      "label": "blk_mq_end_request",
+      "sublabel": "结束 request",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1145
+        }
+      ]
+    },
+    {
+      "id": "mq_end_final",
+      "lane": "completion",
+      "col": 2,
+      "type": "backend",
+      "label": "__blk_mq_end_request",
+      "sublabel": "收尾与 end_io",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 1128
+        }
+      ]
+    },
+    {
+      "id": "update_req",
+      "lane": "completion",
+      "col": 1,
+      "type": "backend",
+      "label": "blk_update_request",
+      "sublabel": "更新剩余字节",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 954
+        }
+      ]
+    },
+    {
+      "id": "free_req",
+      "lane": "completion",
+      "col": 1,
+      "type": "backend",
+      "label": "blk_mq_free_request",
+      "sublabel": "释放请求",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 820
+        }
+      ]
+    },
+    {
+      "id": "bio_endio",
+      "lane": "completion",
+      "col": 0,
+      "type": "backend",
+      "label": "bio_endio",
+      "sublabel": "回调上层完成",
+      "sources": [
+        {
+          "path": "block/bio.c",
+          "line": 1762
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_ext4_submit",
+      "from": "ext4io",
+      "to": "submitbio",
+      "label": "提交 bio",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_submit_noctl",
+      "from": "submitbio",
+      "to": "noctl",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_noctl_throtl",
+      "from": "noctl",
+      "to": "throtl",
+      "label": "限流检查",
+      "variant": "security",
+      "role": "branch"
+    },
+    {
+      "id": "e_noctl_nocheck",
+      "from": "noctl",
+      "to": "nocheck",
+      "label": "校验通过",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_nocheck_mq",
+      "from": "nocheck",
+      "to": "mq_mq",
+      "label": "多队列设备",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_nocheck_driver",
+      "from": "nocheck",
+      "to": "sib_noacct",
+      "label": "有 ->submit_bio",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_mq_submit",
+      "from": "mq_mq",
+      "to": "mq_submit",
+      "label": "进入 blk-mq",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_mq_cached",
+      "from": "mq_submit",
+      "to": "mq_cached",
+      "label": "plug 命中",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_mq_new",
+      "from": "mq_submit",
+      "to": "mq_new",
+      "label": "分配新请求",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_mq_merge",
+      "from": "mq_new",
+      "to": "mq_merge",
+      "variant": "default"
+    },
+    {
+      "id": "e_mq_bioreq",
+      "from": "mq_merge",
+      "to": "mq_bioreq",
+      "variant": "default"
+    },
+    {
+      "id": "e_mq_insert",
+      "from": "mq_bioreq",
+      "to": "mq_insert",
+      "label": "插入队列",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_insert_run",
+      "from": "mq_insert",
+      "to": "dq_run",
+      "label": "唤醒硬件队列",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_run_sched",
+      "from": "dq_run",
+      "to": "dq_sched",
+      "variant": "default"
+    },
+    {
+      "id": "e_sched_sched2",
+      "from": "dq_sched",
+      "to": "dq_sched2",
+      "variant": "default"
+    },
+    {
+      "id": "e_sched2_list",
+      "from": "dq_sched2",
+      "to": "dq_list",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_list_prep",
+      "from": "dq_list",
+      "to": "dq_prep",
+      "variant": "default"
+    },
+    {
+      "id": "e_prep_queue",
+      "from": "dq_prep",
+      "to": "queue_rq",
+      "label": "调用驱动",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_queue_start",
+      "from": "queue_rq",
+      "to": "start_req",
+      "label": "驱动启动请求",
+      "variant": "default"
+    },
+    {
+      "id": "e_queue_comp",
+      "from": "queue_rq",
+      "to": "comp",
+      "label": "硬件完成中断",
+      "variant": "default",
+      "role": "async"
+    },
+    {
+      "id": "e_comp_remote",
+      "from": "comp",
+      "to": "comp_remote",
+      "variant": "default"
+    },
+    {
+      "id": "e_remote_ipi",
+      "from": "comp_remote",
+      "to": "comp_ipi",
+      "label": "跨 CPU",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_remote_softirq",
+      "from": "comp_remote",
+      "to": "comp_softirq",
+      "label": "单队列",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_remote_local",
+      "from": "comp_remote",
+      "to": "end_req",
+      "label": "本地直接完成",
+      "variant": "default",
+      "role": "branch"
+    },
+    {
+      "id": "e_ipi_end",
+      "from": "comp_ipi",
+      "to": "end_req",
+      "label": "软中断回收",
+      "variant": "default",
+      "role": "branch"
+    },
+    {
+      "id": "e_softirq_end",
+      "from": "comp_softirq",
+      "to": "end_req",
+      "label": "软中断回收",
+      "variant": "default",
+      "role": "branch"
+    },
+    {
+      "id": "e_end_update",
+      "from": "end_req",
+      "to": "update_req",
+      "label": "更新字节",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_update_bio",
+      "from": "update_req",
+      "to": "bio_endio",
+      "label": "完成 bio",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_end_final",
+      "from": "end_req",
+      "to": "mq_end_final",
+      "label": "收尾",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_final_free",
+      "from": "mq_end_final",
+      "to": "free_req",
+      "label": "释放请求",
+      "variant": "dashed",
+      "role": "branch"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "读图要点",
+      "items": [
+        "节点是内核函数，按 bio 提交 → blk-mq 入队 → 派发到驱动 → 完成回收四阶段分组",
+        "blk_mq_submit_bio 在 plug 缓存未命中时分配新请求，插入软件队列后由 blk_mq_run_hw_queue 触发派发",
+        "完成侧经 blk_mq_complete_request 的远端/软中断重定向，最终由 blk_update_request 调用 bio_endio"
+      ]
+    }
+  ]
+}

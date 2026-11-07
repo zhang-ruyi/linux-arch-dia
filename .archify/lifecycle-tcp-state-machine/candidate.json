@@ -374,6 +374,18 @@
         "TIME_WAIT 等待 2MSL 后回到 CLOSED",
         "SYN_RECV 收到 RST 可退回 LISTEN"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "tcp_set_state — net/ipv4/tcp.c:2960",
+        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
+        "tcp_rcv_established — net/ipv4/tcp_input.c:6470",
+        "tcp_time_wait — net/ipv4/tcp_minisocks.c:326",
+        "tcp_close — net/ipv4/tcp.c:3308",
+        "tcp_close_state — net/ipv4/tcp.c:3054"
+      ]
     }
   ]
 }

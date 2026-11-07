@@ -5626,6 +5626,26 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>scan_work 仅在 LIVE 且 tagset 存在时扫描命名空间</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>nvme_init — drivers/nvme/host/pci.c:4309</li>
+          <li>pci_register_driver — drivers/nvme/host/pci.c:4316</li>
+          <li>nvme_probe — drivers/nvme/host/pci.c:3747</li>
+          <li>nvme_pci_enable — drivers/nvme/host/pci.c:3193</li>
+          <li>nvme_pci_configure_admin_queue — drivers/nvme/host/pci.c:2332</li>
+          <li>nvme_enable_ctrl — drivers/nvme/host/core.c:2744</li>
+          <li>nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736</li>
+          <li>nvme_init_identify — drivers/nvme/host/core.c:3589</li>
+          <li>nvme_setup_io_queues — drivers/nvme/host/pci.c:2944</li>
+          <li>nvme_create_io_queues — drivers/nvme/host/pci.c:2410</li>
+          <li>nvme_start_ctrl — drivers/nvme/host/core.c:5064</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

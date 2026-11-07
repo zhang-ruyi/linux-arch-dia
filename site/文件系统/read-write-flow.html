@@ -5622,6 +5622,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>块设备返回后填充 folio，再完成用户缓冲区拷贝</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>读:ksys_read — fs/read_write.c:705</li>
+          <li>读:vfs_read — fs/read_write.c:554</li>
+          <li>读:ext4_file_read_iter — fs/ext4/file.c:130</li>
+          <li>读:generic_file_read_iter — mm/filemap.c:2965</li>
+          <li>读:filemap_read — mm/filemap.c:2777</li>
+          <li>读:filemap_get_pages — mm/filemap.c:2676</li>
+          <li>读:filemap_read_folio — mm/filemap.c:2500</li>
+          <li>读:ext4_read_folio — fs/ext4/readpage.c:394</li>
+          <li>读:submit_bio — block/blk-core.c:952</li>
+          <li>写:ksys_write — fs/read_write.c:728</li>
+          <li>写:vfs_write — fs/read_write.c:667</li>
+          <li>写:ext4_file_write_iter — fs/ext4/file.c:706</li>
+          <li>写:generic_perform_write — mm/filemap.c:4330</li>
+          <li>写:ext4_write_begin — fs/ext4/inode.c:1288</li>
+          <li>写:ext4_write_end — fs/ext4/inode.c:1439</li>
+          <li>写:balance_dirty_pages — mm/page-writeback.c:1802</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

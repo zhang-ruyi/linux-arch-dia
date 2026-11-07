@@ -236,6 +236,22 @@
         "pick_next_entity() → pick_eevdf() → entity_eligible()",
         "context_switch() → finish_task_switch()，随后 next 进程运行"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "schedule() — kernel/sched/core.c:7316",
+        "__schedule() — kernel/sched/core.c:7061",
+        "pick_next_task() — kernel/sched/core.c:6216",
+        "__pick_next_task() — kernel/sched/core.c:6124",
+        "pick_task_fair() — kernel/sched/fair.c:9912",
+        "pick_next_entity() — kernel/sched/fair.c:6376",
+        "pick_eevdf() — kernel/sched/fair.c:1136",
+        "entity_eligible() — kernel/sched/fair.c:939",
+        "context_switch() — kernel/sched/core.c:5451",
+        "finish_task_switch() — kernel/sched/core.c:5318"
+      ]
     }
   ]
 }

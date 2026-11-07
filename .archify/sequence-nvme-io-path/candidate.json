@@ -150,6 +150,27 @@
         "nvme_complete_rq → nvme_end_req → blk_mq_end_request 逐层回收",
         "bio_endio 结束 bio，read()/write() 将字节数返回用户态"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "ksys_read — fs/read_write.c:705",
+        "vfs_read — fs/read_write.c:554",
+        "submit_bio_noacct — block/blk-core.c:817",
+        "blk_mq_submit_bio — block/blk-mq.c:3093",
+        "nvme_queue_rq — drivers/nvme/host/pci.c:1436",
+        "nvme_setup_cmd — drivers/nvme/host/core.c:1097",
+        "nvme_sq_copy_cmd — drivers/nvme/host/pci.c:735",
+        "nvme_write_sq_db — drivers/nvme/host/pci.c:718",
+        "nvme_irq — drivers/nvme/host/pci.c:1630",
+        "nvme_poll_cq — drivers/nvme/host/pci.c:1609",
+        "nvme_handle_cqe — drivers/nvme/host/pci.c:1562",
+        "nvme_pci_complete_rq — drivers/nvme/host/pci.c:1527",
+        "nvme_complete_rq — drivers/nvme/host/core.c:508",
+        "blk_mq_end_request — block/blk-mq.c:1145",
+        "bio_endio — block/bio.c:1762"
+      ]
     }
   ]
 }

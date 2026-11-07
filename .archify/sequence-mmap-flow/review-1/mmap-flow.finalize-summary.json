@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-mmap-flow/candidate.json",
+    "sha256": "51ebbaa5bd8c76a00834890f73048d1745b8df2a67ca61f638424e7159f82828",
+    "bytes": 6442
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/mmap-flow.html",
+    "sha256": "3ff2c38cd167fd2d89fef565fedaebe77acd3c553a574d03d24c896634f9756a",
+    "bytes": 842751
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-mmap-flow/review-1/mmap-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-mmap-flow/review-1/mmap-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-mmap-flow/review-1/mmap-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3569,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

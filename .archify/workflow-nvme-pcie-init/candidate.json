@@ -324,6 +324,23 @@
         "LIVE 状态下 unquiesce I/O 队列并更新多路径",
         "scan_work 仅在 LIVE 且 tagset 存在时扫描命名空间"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "nvme_init — drivers/nvme/host/pci.c:4309",
+        "pci_register_driver — drivers/nvme/host/pci.c:4316",
+        "nvme_probe — drivers/nvme/host/pci.c:3747",
+        "nvme_pci_enable — drivers/nvme/host/pci.c:3193",
+        "nvme_pci_configure_admin_queue — drivers/nvme/host/pci.c:2332",
+        "nvme_enable_ctrl — drivers/nvme/host/core.c:2744",
+        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
+        "nvme_init_identify — drivers/nvme/host/core.c:3589",
+        "nvme_setup_io_queues — drivers/nvme/host/pci.c:2944",
+        "nvme_create_io_queues — drivers/nvme/host/pci.c:2410",
+        "nvme_start_ctrl — drivers/nvme/host/core.c:5064"
+      ]
     }
   ]
 }

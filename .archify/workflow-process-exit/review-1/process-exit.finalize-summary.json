@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-process-exit/candidate.json",
+    "sha256": "edb42b11caf9061ffa12b828d25ca72aec2ee9da4516361db1f2866fec9dcefe",
+    "bytes": 5584
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/process-exit.html",
+    "sha256": "5f950036ec51af7608877436bbf6ae382488eb8b8e2403a08c041bb366a30fa7",
+    "bytes": 836353
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-process-exit/review-1/process-exit.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-process-exit/review-1/process-exit.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-process-exit/review-1/process-exit.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3483,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -183,6 +183,21 @@
         "页缓存最终把脏页或缺失页通过块设备层提交 I/O",
         "ext4 等具体文件系统通过 file_operations / inode_operations 落地实现"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "do_file_open — fs/namei.c:4882",
+        "path_openat — fs/namei.c:4843",
+        "vfs_open — fs/open.c:1047",
+        "f_op->open — fs/open.c:945",
+        "vfs_read — fs/read_write.c:554",
+        "f_op->read_iter — fs/read_write.c:493",
+        "filemap_read — mm/filemap.c:2777",
+        "generic_file_write_iter — mm/filemap.c:4492",
+        "filemap_write_and_wait — include/linux/pagemap.h:63"
+      ]
     }
   ]
 }

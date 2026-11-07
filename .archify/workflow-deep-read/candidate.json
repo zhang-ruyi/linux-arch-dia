@@ -1,0 +1,688 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "read 从系统调用到块层深度调用链",
+    "locale": "zh-CN",
+    "output": "site/文件系统/deep-read.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "vfs",
+      "label": "① VFS 读入口"
+    },
+    {
+      "id": "cache",
+      "label": "② 页缓存查找"
+    },
+    {
+      "id": "aops",
+      "label": "③ 回读 · address_space / ext4"
+    },
+    {
+      "id": "bio",
+      "label": "④ 块层 · bio 提交"
+    },
+    {
+      "id": "ret",
+      "label": "④ 完成与返回"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_cache",
+      "label": "缓存命中/回读分支",
+      "lane": "cache",
+      "fromCol": 3,
+      "toCol": 4
+    },
+    {
+      "id": "g_ext4",
+      "label": "ext4 回读与映射",
+      "lane": "aops",
+      "fromCol": 3,
+      "toCol": 5,
+      "variant": "emphasis"
+    },
+    {
+      "id": "g_bio",
+      "label": "bio 组装",
+      "lane": "bio",
+      "fromCol": 0,
+      "toCol": 2,
+      "variant": "dashed"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "v_sys_read",
+      "lane": "vfs",
+      "col": 0,
+      "type": "backend",
+      "label": "SYSCALL_DEFINE3(read)",
+      "sublabel": "read_write.c · 系统调用入口",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 723,
+          "label": "SYSCALL_DEFINE3(read)"
+        }
+      ]
+    },
+    {
+      "id": "v_ksys_read",
+      "lane": "vfs",
+      "col": 1,
+      "type": "backend",
+      "label": "ksys_read",
+      "sublabel": "read_write.c · 按 fd 取 file",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read"
+        }
+      ]
+    },
+    {
+      "id": "v_vfs_read",
+      "lane": "vfs",
+      "col": 2,
+      "type": "backend",
+      "label": "vfs_read",
+      "sublabel": "read_write.c · 读权限检查",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
+      ]
+    },
+    {
+      "id": "v_rw_verify",
+      "lane": "vfs",
+      "col": 3,
+      "type": "security",
+      "label": "rw_verify_area",
+      "sublabel": "read_write.c · 范围校验",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 453,
+          "label": "rw_verify_area"
+        }
+      ]
+    },
+    {
+      "id": "v_new_sync_read",
+      "lane": "vfs",
+      "col": 4,
+      "type": "backend",
+      "label": "new_sync_read",
+      "sublabel": "read_write.c · 同步 kiocb",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 483,
+          "label": "new_sync_read"
+        }
+      ]
+    },
+    {
+      "id": "v_read_iter",
+      "lane": "vfs",
+      "col": 5,
+      "type": "backend",
+      "label": "f_op->read_iter",
+      "sublabel": "read_write.c · 分派 read_iter",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 493,
+          "label": "filp->f_op->read_iter"
+        }
+      ]
+    },
+    {
+      "id": "c_ext4_read",
+      "lane": "cache",
+      "col": 0,
+      "type": "backend",
+      "label": "ext4_file_read_iter",
+      "sublabel": "ext4/file.c · read_iter 实现",
+      "sources": [
+        {
+          "path": "fs/ext4/file.c",
+          "line": 130,
+          "label": "ext4_file_read_iter"
+        }
+      ]
+    },
+    {
+      "id": "c_generic_read",
+      "lane": "cache",
+      "col": 1,
+      "type": "backend",
+      "label": "generic_file_read_iter",
+      "sublabel": "filemap.c · 通用读例程",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2965,
+          "label": "generic_file_read_iter"
+        }
+      ]
+    },
+    {
+      "id": "c_filemap_read",
+      "lane": "cache",
+      "col": 2,
+      "type": "database",
+      "label": "filemap_read",
+      "sublabel": "filemap.c · 页缓存读循环",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2777,
+          "label": "filemap_read"
+        }
+      ]
+    },
+    {
+      "id": "c_get_pages",
+      "lane": "cache",
+      "col": 3,
+      "type": "database",
+      "label": "filemap_get_pages",
+      "sublabel": "filemap.c · 批量取 folio",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2676,
+          "label": "filemap_get_pages"
+        }
+      ]
+    },
+    {
+      "id": "c_get_batch",
+      "lane": "cache",
+      "col": 4,
+      "type": "database",
+      "label": "filemap_get_read_batch",
+      "sublabel": "filemap.c · 批量查缓存",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2464,
+          "label": "filemap_get_read_batch"
+        }
+      ]
+    },
+    {
+      "id": "a_readahead",
+      "lane": "aops",
+      "col": 0,
+      "type": "backend",
+      "label": "filemap_readahead",
+      "sublabel": "filemap.c · 预读读回",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2662,
+          "label": "filemap_readahead"
+        }
+      ]
+    },
+    {
+      "id": "a_read_folio",
+      "lane": "aops",
+      "col": 1,
+      "type": "database",
+      "label": "filemap_read_folio",
+      "sublabel": "filemap.c · 回读 folio",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2500,
+          "label": "filemap_read_folio"
+        }
+      ]
+    },
+    {
+      "id": "a_aops_read",
+      "lane": "aops",
+      "col": 2,
+      "type": "backend",
+      "label": "a_ops->read_folio",
+      "sublabel": "filemap.c · a_ops 回调",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2597,
+          "label": "mapping->a_ops->read_folio"
+        }
+      ]
+    },
+    {
+      "id": "a_ext4_read_folio",
+      "lane": "aops",
+      "col": 3,
+      "type": "backend",
+      "label": "ext4_read_folio",
+      "sublabel": "ext4/readpage.c · 回读 folio",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 394,
+          "label": "ext4_read_folio"
+        }
+      ]
+    },
+    {
+      "id": "a_mpage",
+      "lane": "aops",
+      "col": 4,
+      "type": "backend",
+      "label": "ext4_mpage_readpages",
+      "sublabel": "ext4/readpage.c · 组装多页读",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 210,
+          "label": "ext4_mpage_readpages"
+        }
+      ]
+    },
+    {
+      "id": "a_map_blocks",
+      "lane": "aops",
+      "col": 5,
+      "type": "backend",
+      "label": "ext4_map_blocks",
+      "sublabel": "ext4/inode.c · 块映射",
+      "sources": [
+        {
+          "path": "fs/ext4/inode.c",
+          "line": 701,
+          "label": "ext4_map_blocks"
+        }
+      ]
+    },
+    {
+      "id": "b_bio_alloc",
+      "lane": "bio",
+      "col": 0,
+      "type": "backend",
+      "label": "bio_alloc",
+      "sublabel": "readpage.c · 分配 bio",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 355,
+          "label": "bio_alloc"
+        }
+      ]
+    },
+    {
+      "id": "b_add_folio",
+      "lane": "bio",
+      "col": 1,
+      "type": "backend",
+      "label": "bio_add_folio",
+      "sublabel": "readpage.c · 加入 folio",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 366,
+          "label": "bio_add_folio"
+        }
+      ]
+    },
+    {
+      "id": "b_crypto",
+      "lane": "bio",
+      "col": 2,
+      "type": "backend",
+      "label": "blk_crypto_submit_bio",
+      "sublabel": "readpage.c · 加密提交",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 390,
+          "label": "blk_crypto_submit_bio"
+        }
+      ]
+    },
+    {
+      "id": "b_submit",
+      "lane": "bio",
+      "col": 3,
+      "type": "backend",
+      "label": "submit_bio",
+      "sublabel": "blk-core.c · 提交 bio",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 952,
+          "label": "submit_bio"
+        }
+      ]
+    },
+    {
+      "id": "b_submit_noacct",
+      "lane": "bio",
+      "col": 4,
+      "type": "backend",
+      "label": "submit_bio_noacct",
+      "sublabel": "blk-core.c · 块层分发",
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 817,
+          "label": "submit_bio_noacct"
+        }
+      ]
+    },
+    {
+      "id": "b_mq_submit",
+      "lane": "bio",
+      "col": 5,
+      "type": "backend",
+      "label": "blk_mq_submit_bio",
+      "sublabel": "blk-mq.c · 生成请求",
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3093,
+          "label": "blk_mq_submit_bio"
+        }
+      ]
+    },
+    {
+      "id": "r_end_io",
+      "lane": "ret",
+      "col": 0,
+      "type": "backend",
+      "label": "mpage_end_io",
+      "sublabel": "readpage.c · bio 完成",
+      "sources": [
+        {
+          "path": "fs/ext4/readpage.c",
+          "line": 166,
+          "label": "mpage_end_io"
+        }
+      ]
+    },
+    {
+      "id": "r_end_read",
+      "lane": "ret",
+      "col": 1,
+      "type": "backend",
+      "label": "folio_end_read",
+      "sublabel": "filemap.c · 标记可读唤醒",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 1529,
+          "label": "folio_end_read"
+        }
+      ]
+    },
+    {
+      "id": "r_unlock",
+      "lane": "ret",
+      "col": 2,
+      "type": "backend",
+      "label": "folio_unlock",
+      "sublabel": "filemap.c · 解锁 folio",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 1504,
+          "label": "folio_unlock"
+        }
+      ]
+    },
+    {
+      "id": "r_copy",
+      "lane": "ret",
+      "col": 3,
+      "type": "backend",
+      "label": "copy_folio_to_iter",
+      "sublabel": "filemap.c · 拷贝到用户",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2865,
+          "label": "copy_folio_to_iter"
+        }
+      ]
+    },
+    {
+      "id": "r_return",
+      "lane": "ret",
+      "col": 4,
+      "type": "backend",
+      "label": "返回用户缓冲区",
+      "sublabel": "read_write.c · 返回字节数",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 582,
+          "label": "vfs_read 返回"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "v_sys_read",
+      "to": "v_ksys_read",
+      "role": "main"
+    },
+    {
+      "id": "e2",
+      "from": "v_ksys_read",
+      "to": "v_vfs_read",
+      "role": "main"
+    },
+    {
+      "id": "e3",
+      "from": "v_vfs_read",
+      "to": "v_rw_verify",
+      "role": "main"
+    },
+    {
+      "id": "e4",
+      "from": "v_vfs_read",
+      "to": "v_new_sync_read",
+      "role": "main"
+    },
+    {
+      "id": "e5",
+      "from": "v_new_sync_read",
+      "to": "v_read_iter",
+      "role": "main"
+    },
+    {
+      "id": "e6",
+      "from": "v_read_iter",
+      "to": "c_ext4_read",
+      "role": "main"
+    },
+    {
+      "id": "e7",
+      "from": "c_ext4_read",
+      "to": "c_generic_read",
+      "role": "main"
+    },
+    {
+      "id": "e8",
+      "from": "c_generic_read",
+      "to": "c_filemap_read",
+      "role": "main"
+    },
+    {
+      "id": "e9",
+      "from": "c_filemap_read",
+      "to": "c_get_pages",
+      "role": "main"
+    },
+    {
+      "id": "e10",
+      "from": "c_get_pages",
+      "to": "c_get_batch",
+      "role": "main"
+    },
+    {
+      "id": "e11",
+      "from": "c_get_pages",
+      "to": "a_readahead",
+      "label": "未命中",
+      "role": "branch"
+    },
+    {
+      "id": "e12",
+      "from": "c_get_batch",
+      "to": "r_copy",
+      "label": "命中",
+      "role": "return"
+    },
+    {
+      "id": "e13",
+      "from": "a_readahead",
+      "to": "a_read_folio",
+      "role": "main"
+    },
+    {
+      "id": "e14",
+      "from": "a_read_folio",
+      "to": "a_aops_read",
+      "role": "main"
+    },
+    {
+      "id": "e15",
+      "from": "a_aops_read",
+      "to": "a_ext4_read_folio",
+      "role": "main"
+    },
+    {
+      "id": "e16",
+      "from": "a_ext4_read_folio",
+      "to": "a_mpage",
+      "role": "main"
+    },
+    {
+      "id": "e17",
+      "from": "a_mpage",
+      "to": "a_map_blocks",
+      "role": "main"
+    },
+    {
+      "id": "e18",
+      "from": "a_mpage",
+      "to": "b_bio_alloc",
+      "role": "main"
+    },
+    {
+      "id": "e19",
+      "from": "b_bio_alloc",
+      "to": "b_add_folio",
+      "role": "main"
+    },
+    {
+      "id": "e20",
+      "from": "b_add_folio",
+      "to": "b_crypto",
+      "role": "main"
+    },
+    {
+      "id": "e21",
+      "from": "b_crypto",
+      "to": "b_submit",
+      "role": "main"
+    },
+    {
+      "id": "e22",
+      "from": "b_submit",
+      "to": "b_submit_noacct",
+      "role": "main"
+    },
+    {
+      "id": "e23",
+      "from": "b_submit_noacct",
+      "to": "b_mq_submit",
+      "role": "main"
+    },
+    {
+      "id": "e24",
+      "from": "b_mq_submit",
+      "to": "r_end_io",
+      "label": "完成",
+      "role": "return"
+    },
+    {
+      "id": "e25",
+      "from": "r_end_io",
+      "to": "r_end_read",
+      "role": "main"
+    },
+    {
+      "id": "e26",
+      "from": "r_end_read",
+      "to": "r_unlock",
+      "role": "main"
+    },
+    {
+      "id": "e27",
+      "from": "r_unlock",
+      "to": "r_copy",
+      "role": "main"
+    },
+    {
+      "id": "e28",
+      "from": "r_copy",
+      "to": "r_return",
+      "role": "main"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "SYSCALL_DEFINE3(read) — fs/read_write.c:723",
+        "ksys_read — fs/read_write.c:705",
+        "vfs_read — fs/read_write.c:554",
+        "f_op->read_iter — fs/read_write.c:493",
+        "ext4_file_read_iter — fs/ext4/file.c:130",
+        "generic_file_read_iter — mm/filemap.c:2965",
+        "filemap_read — mm/filemap.c:2777",
+        "filemap_get_pages — mm/filemap.c:2676",
+        "filemap_read_folio — mm/filemap.c:2500",
+        "ext4_read_folio — fs/ext4/readpage.c:394",
+        "ext4_mpage_readpages — fs/ext4/readpage.c:210",
+        "submit_bio — block/blk-core.c:952"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "深读要点",
+      "items": [
+        "VFS 只做权限/边界校验，实际读由 file->f_op->read_iter 分派到 ext4",
+        "页缓存命中时 filemap_get_read_batch 直接取 folio 并拷贝到用户缓冲区",
+        "未命中时经 a_ops->read_folio 回调 ext4，ext4_mpage_readpages 组装 bio",
+        "bio 经 submit_bio → submit_bio_noacct → blk_mq_submit_bio 进入块层",
+        "完成回调 mpage_end_io → folio_end_read 唤醒等待者后拷贝返回"
+      ]
+    }
+  ]
+}

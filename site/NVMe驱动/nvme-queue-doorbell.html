@@ -5673,6 +5673,27 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>处理完 CQE 后 nvme_update_cq_head，再写 CQ head doorbell 归还槽位</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>nvme_queue_rq — drivers/nvme/host/pci.c:1436</li>
+          <li>nvme_prep_rq — drivers/nvme/host/pci.c:1399</li>
+          <li>nvme_setup_cmd — drivers/nvme/host/core.c:1097</li>
+          <li>nvme_sq_copy_cmd — drivers/nvme/host/pci.c:735</li>
+          <li>nvme_write_sq_db — drivers/nvme/host/pci.c:718</li>
+          <li>nvme_irq — drivers/nvme/host/pci.c:1630</li>
+          <li>nvme_poll_cq — drivers/nvme/host/pci.c:1609</li>
+          <li>nvme_handle_cqe — drivers/nvme/host/pci.c:1562</li>
+          <li>nvme_update_cq_head — drivers/nvme/host/pci.c:1597</li>
+          <li>nvme_ring_cq_doorbell — drivers/nvme/host/pci.c:1546</li>
+          <li>nvme_pci_complete_rq — drivers/nvme/host/pci.c:1527</li>
+          <li>nvme_complete_rq — drivers/nvme/host/core.c:508</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

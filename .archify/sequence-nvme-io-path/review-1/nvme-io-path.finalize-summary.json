@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/candidate.json",
+    "sha256": "7c38d76e725087a7bac5b7cb4b6736a00a6520d2477f5a253d4d7fb8398fa8c8",
+    "bytes": 7532
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-io-path.html",
+    "sha256": "7bf91eff1f88f5c26e2c6f6b562ea4ca253b2cb166698e2adb17fa0594ee1f33",
+    "bytes": 844298
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/review-1/nvme-io-path.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/review-1/nvme-io-path.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-nvme-io-path/review-1/nvme-io-path.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3669,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

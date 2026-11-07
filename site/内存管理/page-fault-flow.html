@@ -5790,6 +5790,33 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>filemap_fault 负责从磁盘读入文件页</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>exc_page_fault — arch/x86/mm/fault.c:1492</li>
+          <li>handle_page_fault — arch/x86/mm/fault.c:1471</li>
+          <li>do_user_addr_fault — arch/x86/mm/fault.c:1216 (用户态分支)</li>
+          <li>lock_mm_and_find_vma — mm/mmap_lock.c:496</li>
+          <li>handle_mm_fault — mm/memory.c:6651</li>
+          <li>__handle_mm_fault — mm/memory.c:6417</li>
+          <li>handle_pte_fault — mm/memory.c:6335</li>
+          <li>do_pte_missing — mm/memory.c:4561 (PTE 为空)</li>
+          <li>do_anonymous_page — mm/memory.c:5287 (匿名映射)</li>
+          <li>do_fault — mm/memory.c:5964 (文件映射)</li>
+          <li>do_swap_page — mm/memory.c:4747 (swap 项)</li>
+          <li>do_numa_page — mm/memory.c:6109 (NUMA 保护页)</li>
+          <li>do_wp_page — mm/memory.c:4244 (写只读页/COW)</li>
+          <li>do_read_fault — mm/memory.c:5840</li>
+          <li>do_cow_fault — mm/memory.c:5872</li>
+          <li>do_shared_fault — mm/memory.c:5914</li>
+          <li>__do_fault — mm/memory.c:5398</li>
+          <li>filemap_fault — mm/filemap.c:3540</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

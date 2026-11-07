@@ -5633,6 +5633,23 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>ext4_writepages() 生成并提交 bio，完成后清除脏标志</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>balance_dirty_pages — mm/page-writeback.c:1802</li>
+          <li>wb_workfn — fs/fs-writeback.c:2460</li>
+          <li>writeback_sb_inodes — fs/fs-writeback.c:1980</li>
+          <li>__writeback_single_inode — fs/fs-writeback.c:1776</li>
+          <li>do_writepages — mm/page-writeback.c:2560</li>
+          <li>ext4_writepages — fs/ext4/inode.c:3026</li>
+          <li>ext4_io_submit — fs/ext4/page-io.c:397</li>
+          <li>submit_bio — block/blk-core.c:952</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

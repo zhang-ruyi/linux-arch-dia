@@ -5743,6 +5743,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>最终返回已读字节数</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>ksys_read — fs/read_write.c:705</li>
+          <li>vfs_read — fs/read_write.c:554</li>
+          <li>new_sync_read — fs/read_write.c:483</li>
+          <li>file-&gt;f_op-&gt;read_iter — fs/read_write.c:493</li>
+          <li>ext4_file_read_iter — fs/ext4/file.c:130</li>
+          <li>generic_file_read_iter — mm/filemap.c:2965</li>
+          <li>filemap_read — mm/filemap.c:2777</li>
+          <li>filemap_get_pages — mm/filemap.c:2676</li>
+          <li>filemap_create_folio — mm/filemap.c:2609</li>
+          <li>filemap_read_folio — mm/filemap.c:2500</li>
+          <li>mapping-&gt;a_ops-&gt;read_folio — mm/filemap.c:2597</li>
+          <li>ext4_read_folio — fs/ext4/readpage.c:394</li>
+          <li>ext4_mpage_readpages — fs/ext4/readpage.c:210</li>
+          <li>blk_crypto_submit_bio — include/linux/blk-crypto.h:200</li>
+          <li>submit_bio — block/blk-core.c:952</li>
+          <li>copy_folio_to_iter — include/linux/uio.h:201</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

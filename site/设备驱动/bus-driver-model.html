@@ -5663,6 +5663,23 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>driver_probe_device() → really_probe() → drv-&gt;probe 完成绑定</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>driver_register — drivers/base/driver.c:150</li>
+          <li>bus_add_driver — drivers/base/bus.c:732</li>
+          <li>driver_attach — drivers/base/dd.c:1307</li>
+          <li>__driver_attach — drivers/base/dd.c:1232</li>
+          <li>driver_probe_device — drivers/base/dd.c:892</li>
+          <li>really_probe — drivers/base/dd.c:652</li>
+          <li>call_driver_probe — drivers/base/dd.c:621</li>
+          <li>drv-&gt;probe — drivers/base/dd.c:628</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

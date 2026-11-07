@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-startup-boot/candidate.json",
+    "sha256": "926f69175d72ea900134764db50a9b65d5e88d996b16dcb5882b0352bdbd62cc",
+    "bytes": 6037
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/设备驱动/startup-boot.html",
+    "sha256": "79df8bd49a2ec8a84211e0e1302878149010726f5acace6101cecc0712f28156",
+    "bytes": 840011
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-startup-boot/review-1/startup-boot.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-startup-boot/review-1/startup-boot.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-startup-boot/review-1/startup-boot.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3753,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

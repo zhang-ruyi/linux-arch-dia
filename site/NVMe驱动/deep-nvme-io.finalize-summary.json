@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-nvme-io/candidate.json",
+    "sha256": "9479a4e9de5f5dacdcf386f196818477b942ed66cb3c1fb7cc7fa8c9ecbb1403",
+    "bytes": 14472
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.html",
+    "sha256": "7576bcff691a6809377d8bc2fc4763a7eefd2ee097aaae2c64cb94e80d69d364",
+    "bytes": 887259
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/NVMe驱动/deep-nvme-io.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4620,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

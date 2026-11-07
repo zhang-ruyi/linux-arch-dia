@@ -266,6 +266,26 @@
         "管理队列固定 32 项,共享 tags 时 I/O 深度下限 34",
         "PM1725 与 QDEPTH_ONE 设备覆盖通用深度计算"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "nvme_probe (PCIe) — drivers/nvme/host/pci.c:3747",
+        "nvme_rdma_create_ctrl — drivers/nvme/host/rdma.c:2321",
+        "nvme_fc_create_ctrl — drivers/nvme/host/fc.c:3685",
+        "nvme_tcp_create_ctrl — drivers/nvme/host/tcp.c:2994",
+        "nvme_tcp_start_tls — drivers/nvme/host/tcp.c:1724",
+        "apple_nvme_probe — drivers/nvme/host/apple.c:1597",
+        "nvme_loop_create_ctrl — drivers/nvme/target/loop.c:552",
+        "nvmet_init — drivers/nvme/target/core.c:1943",
+        "nvmet_rdma_init — drivers/nvme/target/rdma.c:2102",
+        "nvmet_fc_init_module — drivers/nvme/target/fc.c:3003",
+        "nvmet_tcp_init — drivers/nvme/target/tcp.c:2244",
+        "nvme_auth_negotiate — drivers/nvme/host/auth.c:917",
+        "nvme_hwmon_init — drivers/nvme/host/hwmon.c:226",
+        "nvme_mpath_alloc_disk — drivers/nvme/host/multipath.c:726"
+      ]
     }
   ]
 }

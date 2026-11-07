@@ -1,0 +1,1441 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "browser-check",
+  "evidenceKind": "automated-browser",
+  "status": "pass",
+  "visualReview": "not-requested",
+  "provenance": "current",
+  "deliveryReceiptId": "852c511b-9554-4b5b-8b2b-4972c815ca8f",
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/进程管理/deep-process-create.html",
+    "sha256": "45c05028ec136dd04931054e85807d9661d03416cfd6d2f5c755d64f3d79dec1",
+    "bytes": 879369
+  },
+  "state": {
+    "detail": "read",
+    "motion": "still"
+  },
+  "chrome": {
+    "status": "available",
+    "executable": "/home/zhang/.cache/archify-chrome/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "diagnostics": [],
+  "containment": {
+    "status": "pass",
+    "policy": "fit-or-reader-declared-readable-vertical-scroll",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2205,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 2062,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1030,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 780,
+            "spaceAboveNodesPx": 245,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 524,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 471,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 119,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 119,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2516,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2307,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1153,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 873,
+            "spaceAboveNodesPx": 274,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 586,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 527,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 133,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 133,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2913,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2931,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "themeStates": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "light",
+        "resolvedTheme": "light",
+        "ok": true
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "requestedTheme": "dark",
+        "resolvedTheme": "dark",
+        "ok": true
+      }
+    ]
+  },
+  "readability": {
+    "status": "pass",
+    "minimumProjectedNodeTextPx": 6,
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2205,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 2062,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1030,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 780,
+            "spaceAboveNodesPx": 245,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 524,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 471,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 119,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 119,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2516,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2307,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1153,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 873,
+            "spaceAboveNodesPx": 274,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 586,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 527,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 133,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 133,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2913,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2931,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "viewerChrome": {
+    "status": "pass",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900,
+        "theme": "light",
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2205,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1376,
+        "diagramWidth": 1346,
+        "pageComposition": {
+          "bodyPaddingPx": 12,
+          "headerPx": 52,
+          "diagramChromePx": 78,
+          "svgPx": 2062,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1030,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 780,
+            "spaceAboveNodesPx": 245,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 524,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 471,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 119,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 119,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 59,
+            "spaceAboveNodesPx": 47,
+            "spaceBelowNodesPx": 13
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1600,
+        "height": 1000,
+        "theme": "light",
+        "innerWidth": 1600,
+        "innerHeight": 1000,
+        "scrollWidth": 1600,
+        "scrollHeight": 2516,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1536,
+        "diagramWidth": 1506,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2307,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1153,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 873,
+            "spaceAboveNodesPx": 274,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 586,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 527,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 6
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 133,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 133,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 67,
+            "spaceAboveNodesPx": 52,
+            "spaceBelowNodesPx": 14
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "theme": "light",
+        "innerWidth": 1920,
+        "innerHeight": 1080,
+        "scrollWidth": 1920,
+        "scrollHeight": 2913,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1856,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 60,
+          "diagramChromePx": 84,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 54,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      },
+      {
+        "width": 2048,
+        "height": 1320,
+        "theme": "light",
+        "innerWidth": 2048,
+        "innerHeight": 1320,
+        "scrollWidth": 2048,
+        "scrollHeight": 2931,
+        "overflowX": false,
+        "overflowY": true,
+        "verticalScrollAccepted": true,
+        "overflowDisposition": "readable-vertical-scroll",
+        "readerLayout": "adaptive",
+        "readerOverflow": "authored",
+        "readerFit": "width-first",
+        "ok": true,
+        "readerWidth": 1920,
+        "diagramWidth": 1765.5,
+        "pageComposition": {
+          "bodyPaddingPx": 64,
+          "headerPx": 68,
+          "diagramChromePx": 94,
+          "svgPx": 2705,
+          "cardsPx": 0,
+          "viewBoxHeight": 1803
+        },
+        "viewBoxWidth": 1177,
+        "workflowLanes": [
+          {
+            "frameId": "lane-2",
+            "heightPx": 1352,
+            "nodeCount": 17,
+            "nodeIds": [
+              "c_cgsch",
+              "c_dup",
+              "c_files",
+              "c_mm",
+              "c_schedfork",
+              "c_thread",
+              "c_arch",
+              "c_dupfd",
+              "c_dupfm",
+              "c_fpu",
+              "c_scx",
+              "c_sf"
+            ],
+            "nodeSpanPx": 1023,
+            "spaceAboveNodesPx": 321,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-3",
+            "heightPx": 687,
+            "nodeCount": 5,
+            "nodeIds": [
+              "f_act",
+              "f_enq",
+              "f_place",
+              "f_sel",
+              "f_wake"
+            ],
+            "nodeSpanPx": 618,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 8
+          },
+          {
+            "frameId": "lane-0",
+            "heightPx": 156,
+            "nodeCount": 1,
+            "nodeIds": [
+              "a_fork"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          },
+          {
+            "frameId": "lane-1",
+            "heightPx": 156,
+            "nodeCount": 2,
+            "nodeIds": [
+              "b_kernel",
+              "b_copy"
+            ],
+            "nodeSpanPx": 78,
+            "spaceAboveNodesPx": 62,
+            "spaceBelowNodesPx": 17
+          }
+        ],
+        "minimumProjectedNodeTextPx": 7.6,
+        "minimumProjectedNonEdgeTextPx": 7.6,
+        "minimumProjectedEdgeTextPx": 8,
+        "minimumProjectedNodeText": "arch/x86/kernel/fpu/core.c · 复制 FPU 状态",
+        "minimumProjectedNodeTextDetail": "context",
+        "minimumProjectedNodeTextOwner": {
+          "kind": "node",
+          "id": "c_fpu"
+        },
+        "minimumRequiredNodeTextPx": 6,
+        "readabilityOk": true,
+        "hasLegend": true,
+        "hasNavigationDock": true,
+        "legendDockIntersectionArea": 0,
+        "dockStageIntersectionArea": 0,
+        "dockStageGap": 10,
+        "requiredDockStageGap": 10,
+        "viewerChromeStageOk": true,
+        "viewerChromeReserve": 44,
+        "viewerChromeActive": true,
+        "viewerChromeOk": true,
+        "resolvedTheme": "light"
+      }
+    ]
+  },
+  "captures": {
+    "status": "not-requested",
+    "screenshots": [],
+    "contactSheet": null
+  },
+  "sidecars": {
+    "receipt": "deep-process-create.browser-check.json",
+    "files": []
+  }
+}

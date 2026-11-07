@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/candidate.json",
+    "sha256": "7171041d1e523f985413bae15c606adc1f69534e63eb81f01c44f788750eb3be",
+    "bytes": 7108
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.html",
+    "sha256": "0e02aac579089f8242d5aca68afc65b04ea9fa8f5dce3ffcfdd33839d123c61a",
+    "bytes": 846309
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/review-3/epoll-principle.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/review-3/epoll-principle.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/review-3/epoll-principle.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3129,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "ep-wq",
+            "from": "ep",
+            "to": "wq",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "wait-rdllist",
+            "from": "wait",
+            "to": "rdllist",
+            "label": "ep_poll() 检查",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "point": [
+            494,
+            259
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "ctl-cb",
+            "from": "ctl",
+            "to": "cb",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "bends": 4,
+          "stretch": 1.284
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "ep → wq crosses wait → rdllist: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "ctl → cb needs 4 bends: move node ctl or cb so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

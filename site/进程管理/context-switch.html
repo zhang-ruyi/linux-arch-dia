@@ -5602,6 +5602,23 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>必要时执行 mmdrop() 释放旧地址空间引用</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>__schedule() — kernel/sched/core.c:7061</li>
+          <li>context_switch() — kernel/sched/core.c:5451</li>
+          <li>prepare_task_switch() — kernel/sched/core.c:5286</li>
+          <li>switch_mm_irqs_off() — arch/x86/mm/tlb.c:783</li>
+          <li>switch_to() — arch/x86/include/asm/switch_to.h:49</li>
+          <li>__switch_to_asm() — arch/x86/entry/entry_64.S:177</li>
+          <li>__switch_to() — arch/x86/kernel/process_64.c:610</li>
+          <li>finish_task_switch() — kernel/sched/core.c:5318</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

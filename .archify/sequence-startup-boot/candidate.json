@@ -238,6 +238,21 @@
         "rest_init() 用 kernel_thread() 创建 kthreadd",
         "kernel_init 挂载 rootfs 后执行 /sbin/init"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "startup_64 — arch/x86/kernel/head_64.S:38",
+        "x86_64_start_kernel — arch/x86/kernel/head64.c:222",
+        "start_kernel — init/main.c:972",
+        "setup_arch — arch/x86/kernel/setup.c:884",
+        "mm_core_init — mm/mm_init.c:2699",
+        "sched_init — kernel/sched/core.c:8915",
+        "rest_init — init/main.c:671",
+        "kernel_init — init/main.c:1539",
+        "run_init_process — init/main.c:1457"
+      ]
     }
   ]
 }

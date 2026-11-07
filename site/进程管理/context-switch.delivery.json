@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "e5157a24-2749-4d7e-b47d-26bc142973a3",
+  "receiptId": "2402a0ae-e9b8-463a-8993-bcb063935dc9",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-context-switch/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/context-switch.html",
   "specification": {
-    "sha256": "6247ddc3a039819bd14494f13afc9f7dcc9cbff96305dc65d69d5540f456e6f1",
-    "bytes": 4280
+    "sha256": "36d7bfe71ef8a052d4528a251a9b7ce407ee582018e38c0b9dc3e0b6b24bab95",
+    "bytes": 4866
   },
   "artifact": {
-    "sha256": "ba7346ef0dce97d974c9700cf2f47dd92ffb37919c2aed769ca5f2544bda8bee",
-    "bytes": 834461
+    "sha256": "e684142d441d89874552da48df978e9f37e6836cc7c3bf5fe961aa16aba11bd7",
+    "bytes": 835213
   }
 }

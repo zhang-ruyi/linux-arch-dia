@@ -175,6 +175,21 @@
         "blk_mq_dispatch_rq_list() 按调度顺序把请求交给设备",
         "完成后经 blk_mq_complete_request() 与 bio_endio() 回传"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "submit_bio — block/blk-core.c:952",
+        "submit_bio_noacct — block/blk-core.c:817",
+        "blk_mq_submit_bio — block/blk-mq.c:3093",
+        "blk_mq_get_new_requests — block/blk-mq.c:3015",
+        "blk_mq_dispatch_rq_list — block/blk-mq.c:2085",
+        "queue_rq — block/blk-mq.c:2117",
+        "blk_mq_complete_request — block/blk-mq.c:1322",
+        "blk_mq_end_request — block/blk-mq.c:1145",
+        "bio_endio — block/bio.c:1762"
+      ]
     }
   ]
 }

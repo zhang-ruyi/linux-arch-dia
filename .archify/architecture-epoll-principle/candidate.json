@@ -337,6 +337,21 @@
         "无事件时休眠在 wq 上",
         "被唤醒后再次检查 rdllist"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "SYSCALL_DEFINE1(epoll_create1) — fs/eventpoll.c:2507",
+        "do_epoll_create — fs/eventpoll.c:2476",
+        "SYSCALL_DEFINE4(epoll_ctl) — fs/eventpoll.c:2732",
+        "do_epoll_ctl — fs/eventpoll.c:2708",
+        "ep_insert — fs/eventpoll.c:1880",
+        "ep_poll_callback — fs/eventpoll.c:1475",
+        "SYSCALL_DEFINE4(epoll_wait) — fs/eventpoll.c:2814",
+        "ep_poll — fs/eventpoll.c:2239",
+        "ep_send_events — fs/eventpoll.c:2112"
+      ]
     }
   ]
 }

@@ -59,6 +59,12 @@ permission:
 - 新图省略 `meta.viewBox`,按 `browser-check` 诊断再调整
 - 不修改他人产物、不手改 `site/index.html`(由脚本生成)
 
+## 调用链深度(两层)
+
+- 概览图按阶段聚合节点,但 `cards` 必须含一张 `完整调用链(源码核实)`:按真实顺序逐函数列出 `函数 — path:line`,全部 grep 核实
+- 需要逐函数深度时新建 `workflow` 深度图(`deep-*`):节点=函数、group 分阶段、25–50 节点、主元素带 `sources`
+- 更新已有候选后重跑 `finalize` 需加新的 `--out-dir .archify/<type>-<slug>/review-<N>`
+
 ## 内核速查
 
 | 主题 | 入口 |

@@ -191,6 +191,20 @@
         "主动方等待 2MSL 后释放连接",
         "该等待保证迟到的报文不会污染新连接"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "tcp_close — net/ipv4/tcp.c:3308",
+        "tcp_close_state — net/ipv4/tcp.c:3054",
+        "tcp_send_fin — net/ipv4/tcp_output.c:3801",
+        "tcp_transmit_skb — net/ipv4/tcp_output.c:1731",
+        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067",
+        "tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827",
+        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
+        "tcp_time_wait — net/ipv4/tcp_minisocks.c:326"
+      ]
     }
   ]
 }

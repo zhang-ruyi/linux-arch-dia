@@ -272,6 +272,21 @@
         "最终命名空间在 DELETING_NOIO 阶段移除",
         "删除路径不会回到 LIVE"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "nvme_reset_ctrl — drivers/nvme/host/core.c:215",
+        "nvme_reset_work — drivers/nvme/host/pci.c:3385",
+        "nvme_pci_enable — drivers/nvme/host/pci.c:3193",
+        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
+        "nvme_start_ctrl — drivers/nvme/host/core.c:5064",
+        "nvme_timeout — drivers/nvme/host/pci.c:1875",
+        "nvme_dev_disable — drivers/nvme/host/pci.c:3297",
+        "nvme_try_sched_reset — drivers/nvme/host/core.c:173",
+        "nvme_change_ctrl_state — drivers/nvme/host/core.c:574"
+      ]
     }
   ]
 }

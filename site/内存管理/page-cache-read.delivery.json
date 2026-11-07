@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "a599d208-2043-4845-bf16-9211a00c72dc",
+  "receiptId": "7cc8d79b-5439-49b5-af6e-592663bb999d",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-page-cache-read/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/内存管理/page-cache-read.html",
   "specification": {
-    "sha256": "ccb83fc9b3c7458c6f4d68ed34b1a75092188288420603e72c0344a206ce354c",
-    "bytes": 7272
+    "sha256": "1ca8d3fc5016062c736db1f6fe8fb168999b2e62772870cab9b44b33eae94baa",
+    "bytes": 8233
   },
   "artifact": {
-    "sha256": "ac6f21f7697648331f8d8ce31f3508f07c38366420391859c83681fa79d08374",
-    "bytes": 846287
+    "sha256": "91bf6afdd413fefce7f4c02af20d6efb9dbd5459f817ba6254efa5789452291c",
+    "bytes": 847490
   }
 }

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "fd5cbd22-ca88-46da-8e16-b1efec29af56",
+  "receiptId": "e66fbbb8-5327-4491-9d54-25ac0f0dcaf0",
   "status": "current",
   "command": "deliver",
   "type": "sequence",
   "input": "/home/zhang/opencode/code_analsys/.archify/sequence-signal-handling/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/进程管理/signal-handling.html",
   "specification": {
-    "sha256": "f7e55fa8b88a83020aa9791997bc0f1d6212f34445d049b9b35a6653bd1fc8cb",
-    "bytes": 4712
+    "sha256": "ad701b233a84e876f3444791a546c56ac6f1977ac02373a557cdac037c776512",
+    "bytes": 5623
   },
   "artifact": {
-    "sha256": "695c6e1722fcba99607dac8a65f41a89fc3cfa2c433f60d2dda51ea55f139f3c",
-    "bytes": 836670
+    "sha256": "2151eac245b7c076856731523e3e08318b5311a9767cf213014cc5125294299e",
+    "bytes": 837795
   }
 }

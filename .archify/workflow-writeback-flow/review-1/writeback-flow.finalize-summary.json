@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-writeback-flow/candidate.json",
+    "sha256": "30c509799cdf3242d119fb200aabb2af78b2b9e18dd492740bf61e6d2de99839",
+    "bytes": 6252
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/文件系统/writeback-flow.html",
+    "sha256": "dd314ab2603db71dbafb952d55e6321b56336b1e5dda122593a57b1a4461d558",
+    "bytes": 843845
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-writeback-flow/review-1/writeback-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-writeback-flow/review-1/writeback-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-writeback-flow/review-1/writeback-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3746,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -226,6 +226,22 @@
         "父进程 do_wait() → wait_consider_task() → wait_task_zombie()",
         "release_task() 释放 task_struct，进程彻底消亡"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "do_exit() — kernel/exit.c:929",
+        "exit_signals() — kernel/signal.c:3128",
+        "exit_mm() — kernel/exit.c:581",
+        "exit_files() — fs/file.c:518",
+        "exit_notify() — kernel/exit.c:771",
+        "do_notify_parent() — kernel/signal.c:2175",
+        "do_wait() — kernel/exit.c:1744",
+        "wait_consider_task() — kernel/exit.c:1487",
+        "wait_task_zombie() — kernel/exit.c:1207",
+        "release_task() — kernel/exit.c:249"
+      ]
     }
   ]
 }

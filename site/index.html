@@ -69,49 +69,49 @@ main { flex:1; padding:24px 28px; }
 <body>
 <aside>
   <h1>Linux 内核原理图解</h1>
-  <div class="sub">Archify 交互式内核原理图 · 共 37 张</div>
+  <div class="sub">Archify 交互式内核原理图 · 共 44 张</div>
   <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('进程管理')">
-          进程管理 <span class="count">8</span>
+          进程管理 <span class="count">9</span>
         </button>
-        <ul class="toc-items"><li><a href="#bottom-half">中断下半部三机制对比</a></li><li><a href="#process-states">Linux 进程状态机</a></li><li><a href="#context-switch">上下文切换细节</a></li><li><a href="#fork-process-creation">fork() 创建进程时序图</a></li><li><a href="#futex-wakeup">futex 用户态锁的等待与唤醒</a></li><li><a href="#signal-handling">信号生命周期</a></li><li><a href="#cfs-scheduling">CFS 调度主流程（EEVDF）</a></li><li><a href="#process-exit">进程退出与回收</a></li></ul>
+        <ul class="toc-items"><li><a href="#bottom-half">中断下半部三机制对比</a></li><li><a href="#process-states">Linux 进程状态机</a></li><li><a href="#context-switch">上下文切换细节</a></li><li><a href="#fork-process-creation">fork() 创建进程时序图</a></li><li><a href="#futex-wakeup">futex 用户态锁的等待与唤醒</a></li><li><a href="#signal-handling">信号生命周期</a></li><li><a href="#cfs-scheduling">CFS 调度主流程（EEVDF）</a></li><li><a href="#deep-process-create">fork() 创建进程深度调用链</a></li><li><a href="#process-exit">进程退出与回收</a></li></ul>
       </div>
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('设备驱动')">
-          设备驱动 <span class="count">3</span>
+          设备驱动 <span class="count">4</span>
         </button>
-        <ul class="toc-items"><li><a href="#bus-driver-model">设备驱动模型</a></li><li><a href="#block-io-flow">块 IO 路径</a></li><li><a href="#startup-boot">内核启动流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#bus-driver-model">设备驱动模型</a></li><li><a href="#block-io-flow">块 IO 路径</a></li><li><a href="#startup-boot">内核启动流程</a></li><li><a href="#deep-block-io">块层 IO 深度调用链</a></li></ul>
       </div>
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('网络协议栈')">
-          网络协议栈 <span class="count">7</span>
+          网络协议栈 <span class="count">8</span>
         </button>
-        <ul class="toc-items"><li><a href="#epoll-principle">epoll 三大数据结构与回调原理</a></li><li><a href="#tcp-state-machine">TCP 11 态状态机</a></li><li><a href="#napi-receive">NAPI 收包处理路径</a></li><li><a href="#packet-send">TCP 数据发送路径</a></li><li><a href="#socket-create">socket() 系统调用创建流程</a></li><li><a href="#tcp-close">TCP 四次挥手时序</a></li><li><a href="#tcp-handshake">TCP 三次握手时序</a></li></ul>
+        <ul class="toc-items"><li><a href="#epoll-principle">epoll 三大数据结构与回调原理</a></li><li><a href="#tcp-state-machine">TCP 11 态状态机</a></li><li><a href="#napi-receive">NAPI 收包处理路径</a></li><li><a href="#packet-send">TCP 数据发送路径</a></li><li><a href="#socket-create">socket() 系统调用创建流程</a></li><li><a href="#tcp-close">TCP 四次挥手时序</a></li><li><a href="#tcp-handshake">TCP 三次握手时序</a></li><li><a href="#deep-tcp-recv">TCP 收包深度调用链</a></li></ul>
       </div>
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('文件系统')">
-          文件系统 <span class="count">5</span>
+          文件系统 <span class="count">7</span>
         </button>
-        <ul class="toc-items"><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#vfs-architecture">VFS 虚拟文件系统架构</a></li><li><a href="#read-write-flow">文件读写全路径</a></li><li><a href="#deep-open">open 路径解析与打开深度调用链</a></li><li><a href="#deep-read">read 从系统调用到块层深度调用链</a></li><li><a href="#dentry-lookup">dentry 缓存路径查找</a></li><li><a href="#open-flow">打开文件流程</a></li><li><a href="#writeback-flow">脏页写回流程</a></li></ul>
       </div>
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('NVMe驱动')">
-          NVMe驱动 <span class="count">7</span>
+          NVMe驱动 <span class="count">8</span>
         </button>
-        <ul class="toc-items"><li><a href="#nvme-ctrl-states">NVMe 控制器状态机与超时复位</a></li><li><a href="#nvme-io-path">用户态完整 I/O 路径(读写)</a></li><li><a href="#nvme-queue-doorbell">SQ/CQ 队列对与门铃机制</a></li><li><a href="#nvme-uring-passthrough">io_uring 命令透传(uring_cmd)路径</a></li><li><a href="#nvme-support-scope">NVMe 支持范围与限制</a></li><li><a href="#nvme-identify-scan">控制器识别与命名空间扫描</a></li><li><a href="#nvme-pcie-init">NVMe PCIe 驱动初始化流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#nvme-ctrl-states">NVMe 控制器状态机与超时复位</a></li><li><a href="#nvme-io-path">用户态完整 I/O 路径(读写)</a></li><li><a href="#nvme-queue-doorbell">SQ/CQ 队列对与门铃机制</a></li><li><a href="#nvme-uring-passthrough">io_uring 命令透传(uring_cmd)路径</a></li><li><a href="#nvme-support-scope">NVMe 支持范围与限制</a></li><li><a href="#deep-nvme-io">NVMe IO 深度调用链</a></li><li><a href="#nvme-identify-scan">控制器识别与命名空间扫描</a></li><li><a href="#nvme-pcie-init">NVMe PCIe 驱动初始化流程</a></li></ul>
       </div>
 
       <div class="toc-cat">
         <button class="toc-cat-head" onclick="setCategory('内存管理')">
-          内存管理 <span class="count">6</span>
+          内存管理 <span class="count">7</span>
         </button>
-        <ul class="toc-items"><li><a href="#mmap-flow">mmap() 建立映射时序图</a></li><li><a href="#page-cache-read">文件读路径经 page cache 时序图</a></li><li><a href="#buddy-allocator">伙伴系统分配与释放流程</a></li><li><a href="#page-fault-flow">x86 缺页异常处理流程</a></li><li><a href="#page-reclaim">内存回收流程</a></li><li><a href="#slab-allocator">SLUB 分配器分配与释放流程</a></li></ul>
+        <ul class="toc-items"><li><a href="#mmap-flow">mmap() 建立映射时序图</a></li><li><a href="#page-cache-read">文件读路径经 page cache 时序图</a></li><li><a href="#buddy-allocator">伙伴系统分配与释放流程</a></li><li><a href="#deep-page-fault">缺页异常深度调用链</a></li><li><a href="#page-fault-flow">x86 缺页异常处理流程</a></li><li><a href="#page-reclaim">内存回收流程</a></li><li><a href="#slab-allocator">SLUB 分配器分配与释放流程</a></li></ul>
       </div>
 
       <div class="toc-cat">
@@ -603,6 +603,125 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">进程管理</span>
           <a class="open" href="进程管理/cfs-scheduling.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="设备驱动"
+               data-search="块层 io 深度调用链  设备驱动 workflow">
+        <header class="card-head">
+          <h3>块层 IO 深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="设备驱动/deep-block-io.html" loading="lazy" title="块层 IO 深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">设备驱动</span>
+          <a class="open" href="设备驱动/deep-block-io.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="NVMe驱动"
+               data-search="nvme io 深度调用链  nvme驱动 workflow">
+        <header class="card-head">
+          <h3>NVMe IO 深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="NVMe驱动/deep-nvme-io.html" loading="lazy" title="NVMe IO 深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">NVMe驱动</span>
+          <a class="open" href="NVMe驱动/deep-nvme-io.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="文件系统"
+               data-search="open 路径解析与打开深度调用链  文件系统 workflow">
+        <header class="card-head">
+          <h3>open 路径解析与打开深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="文件系统/deep-open.html" loading="lazy" title="open 路径解析与打开深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/deep-open.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="内存管理"
+               data-search="缺页异常深度调用链  内存管理 workflow">
+        <header class="card-head">
+          <h3>缺页异常深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="内存管理/deep-page-fault.html" loading="lazy" title="缺页异常深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">内存管理</span>
+          <a class="open" href="内存管理/deep-page-fault.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="进程管理"
+               data-search="fork() 创建进程深度调用链  进程管理 workflow">
+        <header class="card-head">
+          <h3>fork() 创建进程深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="进程管理/deep-process-create.html" loading="lazy" title="fork() 创建进程深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">进程管理</span>
+          <a class="open" href="进程管理/deep-process-create.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="文件系统"
+               data-search="read 从系统调用到块层深度调用链  文件系统 workflow">
+        <header class="card-head">
+          <h3>read 从系统调用到块层深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="文件系统/deep-read.html" loading="lazy" title="read 从系统调用到块层深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">文件系统</span>
+          <a class="open" href="文件系统/deep-read.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+        </footer>
+      </article>
+
+      <article class="card" data-type="workflow"
+               data-category="网络协议栈"
+               data-search="tcp 收包深度调用链  网络协议栈 workflow">
+        <header class="card-head">
+          <h3>TCP 收包深度调用链</h3>
+          <span class="badge badge-workflow">流程图</span>
+        </header>
+        
+        <div class="preview">
+          <iframe src="网络协议栈/deep-tcp-recv.html" loading="lazy" title="TCP 收包深度调用链"></iframe>
+        </div>
+        <footer class="card-foot">
+          <span class="cat">网络协议栈</span>
+          <a class="open" href="网络协议栈/deep-tcp-recv.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 

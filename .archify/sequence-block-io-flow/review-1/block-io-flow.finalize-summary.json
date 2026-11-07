@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/candidate.json",
+    "sha256": "2f98ea79d8abedef17d806b16e7e704ca6cb45b0a0ef7d4bfb20d527c3644ce3",
+    "bytes": 5415
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+    "sha256": "130a6c6075a9e538a0df7998afaf89d6fbd79d5d805b5109438dcdae57a4518b",
+    "bytes": 838609
+  },
+  "gates": {
+    "validate": "not-run",
+    "deliver": "fail",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "deliver",
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/review-1/block-io-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/review-1/block-io-flow.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 255,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "69b411e6-e012-4195-bd4b-1fdd550bb047",
+  "receiptId": "a7f4eaaa-f2c2-4dda-9438-e1af303d2169",
   "status": "current",
   "command": "deliver",
   "type": "architecture",
   "input": "/home/zhang/opencode/code_analsys/.archify/architecture-epoll-principle/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/网络协议栈/epoll-principle.html",
   "specification": {
-    "sha256": "a26d289688b08e3f727a5ef97bf24b19a5b13a139db62aca094c0d92da0535af",
-    "bytes": 6520
+    "sha256": "7171041d1e523f985413bae15c606adc1f69534e63eb81f01c44f788750eb3be",
+    "bytes": 7108
   },
   "artifact": {
-    "sha256": "ba81f1c3fcc696117903760b40ef2e42616a493f576f5bdcdfb380b77ebfda4a",
-    "bytes": 845548
+    "sha256": "0e02aac579089f8242d5aca68afc65b04ea9fa8f5dce3ffcfdd33839d123c61a",
+    "bytes": 846309
   }
 }

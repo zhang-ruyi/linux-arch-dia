@@ -5594,6 +5594,22 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>tcp_prot 的 sk_prot 与回调在此绑定</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>__sys_socket — net/socket.c:1788</li>
+          <li>__sys_socket_create — net/socket.c:1731</li>
+          <li>sock_create — net/socket.c:1707</li>
+          <li>__sock_create — net/socket.c:1580</li>
+          <li>inet_create — net/ipv4/af_inet.c:259</li>
+          <li>sk_alloc — net/core/sock.c:2303</li>
+          <li>tcp_prot — net/ipv4/tcp_ipv4.c:3335</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

@@ -5650,6 +5650,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>ext4 等具体文件系统通过 file_operations / inode_operations 落地实现</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>do_file_open — fs/namei.c:4882</li>
+          <li>path_openat — fs/namei.c:4843</li>
+          <li>vfs_open — fs/open.c:1047</li>
+          <li>f_op-&gt;open — fs/open.c:945</li>
+          <li>vfs_read — fs/read_write.c:554</li>
+          <li>f_op-&gt;read_iter — fs/read_write.c:493</li>
+          <li>filemap_read — mm/filemap.c:2777</li>
+          <li>generic_file_write_iter — mm/filemap.c:4492</li>
+          <li>filemap_write_and_wait — include/linux/pagemap.h:63</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

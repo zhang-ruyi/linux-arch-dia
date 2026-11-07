@@ -19,8 +19,16 @@
       "label": "网卡(硬件)",
       "sublabel": "硬件中断",
       "sources": [
-        { "path": "Documentation/networking/napi.rst", "line": 9, "label": "NAPI event handling" },
-        { "path": "Documentation/networking/napi.rst", "line": 18, "label": "softirq processing" }
+        {
+          "path": "Documentation/networking/napi.rst",
+          "line": 9,
+          "label": "NAPI event handling"
+        },
+        {
+          "path": "Documentation/networking/napi.rst",
+          "line": 18,
+          "label": "softirq processing"
+        }
       ]
     },
     {
@@ -29,9 +37,21 @@
       "label": "网卡驱动",
       "sublabel": "中断处理",
       "sources": [
-        { "path": "net/core/dev.c", "line": 6733, "label": "napi_schedule_prep" },
-        { "path": "include/linux/netdevice.h", "line": 558, "label": "napi_schedule" },
-        { "path": "include/linux/netdevice.h", "line": 4314, "label": "napi_gro_receive" }
+        {
+          "path": "net/core/dev.c",
+          "line": 6733,
+          "label": "napi_schedule_prep"
+        },
+        {
+          "path": "include/linux/netdevice.h",
+          "line": 558,
+          "label": "napi_schedule"
+        },
+        {
+          "path": "include/linux/netdevice.h",
+          "line": 4314,
+          "label": "napi_gro_receive"
+        }
       ]
     },
     {
@@ -40,9 +60,21 @@
       "label": "内核软中断",
       "sublabel": "NET_RX_SOFTIRQ",
       "sources": [
-        { "path": "net/core/dev.c", "line": 7910, "label": "net_rx_action" },
-        { "path": "net/core/dev.c", "line": 7782, "label": "napi_poll" },
-        { "path": "net/core/dev.c", "line": 5976, "label": "__netif_receive_skb_core" }
+        {
+          "path": "net/core/dev.c",
+          "line": 7910,
+          "label": "net_rx_action"
+        },
+        {
+          "path": "net/core/dev.c",
+          "line": 7782,
+          "label": "napi_poll"
+        },
+        {
+          "path": "net/core/dev.c",
+          "line": 5976,
+          "label": "__netif_receive_skb_core"
+        }
       ]
     },
     {
@@ -51,9 +83,21 @@
       "label": "IP 层",
       "sublabel": "ip_rcv / ip_local_deliver",
       "sources": [
-        { "path": "net/ipv4/ip_input.c", "line": 603, "label": "ip_rcv" },
-        { "path": "net/ipv4/ip_input.c", "line": 250, "label": "ip_local_deliver" },
-        { "path": "net/ipv4/ip_input.c", "line": 229, "label": "ip_local_deliver_finish" }
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 603,
+          "label": "ip_rcv"
+        },
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 250,
+          "label": "ip_local_deliver"
+        },
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 229,
+          "label": "ip_local_deliver_finish"
+        }
       ]
     },
     {
@@ -62,26 +106,109 @@
       "label": "TCP 层",
       "sublabel": "tcp_v4_rcv",
       "sources": [
-        { "path": "net/ipv4/tcp_ipv4.c", "line": 2067, "label": "tcp_v4_rcv" },
-        { "path": "net/ipv4/tcp_ipv4.c", "line": 1827, "label": "tcp_v4_do_rcv" },
-        { "path": "net/ipv4/tcp_input.c", "line": 7122, "label": "tcp_rcv_state_process" }
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 2067,
+          "label": "tcp_v4_rcv"
+        },
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 1827,
+          "label": "tcp_v4_do_rcv"
+        },
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 7122,
+          "label": "tcp_rcv_state_process"
+        }
       ]
     }
   ],
   "messages": [
-    { "id": "hw-irq", "from": "nic", "to": "drv", "y": 160, "label": "硬件中断(报文到达)", "variant": "emphasis" },
-    { "id": "schedule-napi", "from": "drv", "to": "soft", "y": 210, "label": "napi_schedule() 触发 NET_RX_SOFTIRQ", "note": "关闭本网卡中断", "variant": "emphasis" },
-    { "id": "poll", "from": "soft", "to": "drv", "y": 260, "label": "执行 napi_poll() 轮询收包", "variant": "return" },
-    { "id": "receive-skb", "from": "drv", "to": "soft", "y": 310, "label": "netif_receive_skb()", "note": "从环形队列取 skb;napi_gro_receive()", "variant": "emphasis" },
-    { "id": "ip-rcv", "from": "soft", "to": "ip", "y": 360, "label": "ip_rcv() 校验 IP 头", "note": "__netif_receive_skb_core() 按协议分发", "variant": "emphasis" },
-    { "id": "tcp-rcv", "from": "ip", "to": "tcp", "y": 415, "label": "tcp_v4_rcv() 定位 socket", "note": "ip_rcv_finish() 查路由;ip_local_deliver() → ip_local_deliver_finish() 按 L4 分发;tcp_v4_do_rcv() → tcp_rcv_state_process()", "variant": "emphasis" }
+    {
+      "id": "hw-irq",
+      "from": "nic",
+      "to": "drv",
+      "y": 160,
+      "label": "硬件中断(报文到达)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "schedule-napi",
+      "from": "drv",
+      "to": "soft",
+      "y": 210,
+      "label": "napi_schedule() 触发 NET_RX_SOFTIRQ",
+      "note": "关闭本网卡中断",
+      "variant": "emphasis"
+    },
+    {
+      "id": "poll",
+      "from": "soft",
+      "to": "drv",
+      "y": 260,
+      "label": "执行 napi_poll() 轮询收包",
+      "variant": "return"
+    },
+    {
+      "id": "receive-skb",
+      "from": "drv",
+      "to": "soft",
+      "y": 310,
+      "label": "netif_receive_skb()",
+      "note": "从环形队列取 skb;napi_gro_receive()",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ip-rcv",
+      "from": "soft",
+      "to": "ip",
+      "y": 360,
+      "label": "ip_rcv() 校验 IP 头",
+      "note": "__netif_receive_skb_core() 按协议分发",
+      "variant": "emphasis"
+    },
+    {
+      "id": "tcp-rcv",
+      "from": "ip",
+      "to": "tcp",
+      "y": 415,
+      "label": "tcp_v4_rcv() 定位 socket",
+      "note": "ip_rcv_finish() 查路由;ip_local_deliver() → ip_local_deliver_finish() 按 L4 分发;tcp_v4_do_rcv() → tcp_rcv_state_process()",
+      "variant": "emphasis"
+    }
   ],
   "activations": [
-    { "participant": "nic", "from": 155, "to": 216, "type": "external" },
-    { "participant": "drv", "from": 155, "to": 316, "type": "backend" },
-    { "participant": "soft", "from": 205, "to": 366, "type": "backend" },
-    { "participant": "ip", "from": 355, "to": 421, "type": "backend" },
-    { "participant": "tcp", "from": 410, "to": 441, "type": "backend" }
+    {
+      "participant": "nic",
+      "from": 155,
+      "to": 216,
+      "type": "external"
+    },
+    {
+      "participant": "drv",
+      "from": 155,
+      "to": 316,
+      "type": "backend"
+    },
+    {
+      "participant": "soft",
+      "from": 205,
+      "to": 366,
+      "type": "backend"
+    },
+    {
+      "participant": "ip",
+      "from": 355,
+      "to": 421,
+      "type": "backend"
+    },
+    {
+      "participant": "tcp",
+      "from": 410,
+      "to": 441,
+      "type": "backend"
+    }
   ],
   "cards": [
     {
@@ -108,6 +235,28 @@
       "items": [
         "tcp_v4_rcv() 定位 socket",
         "tcp_v4_do_rcv() 进入 TCP 状态机处理"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "napi_schedule — include/linux/netdevice.h:558",
+        "net_rx_action — net/core/dev.c:7910",
+        "napi_poll — net/core/dev.c:7782",
+        "__napi_poll — net/core/dev.c:7715",
+        "netif_receive_skb — net/core/dev.c:6458",
+        "netif_receive_skb_internal — net/core/dev.c:6383",
+        "__netif_receive_skb_core — net/core/dev.c:5976",
+        "ip_rcv — net/ipv4/ip_input.c:603",
+        "ip_rcv_finish — net/ipv4/ip_input.c:478",
+        "ip_local_deliver — net/ipv4/ip_input.c:250",
+        "ip_local_deliver_finish — net/ipv4/ip_input.c:229",
+        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067",
+        "tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827",
+        "tcp_rcv_established — net/ipv4/tcp_input.c:6470",
+        "tcp_rcv_state_process — net/ipv4/tcp_input.c:7122",
+        "tcp_data_queue — net/ipv4/tcp_input.c:5577"
       ]
     }
   ]

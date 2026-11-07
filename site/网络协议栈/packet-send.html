@@ -5565,6 +5565,29 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>网卡硬件发送完成后释放 skb</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>tcp_sendmsg — net/ipv4/tcp.c:1446</li>
+          <li>tcp_write_xmit — net/ipv4/tcp_output.c:2964</li>
+          <li>tcp_transmit_skb — net/ipv4/tcp_output.c:1731</li>
+          <li>ip_queue_xmit — net/ipv4/ip_output.c:545</li>
+          <li>__ip_queue_xmit — net/ipv4/ip_output.c:462</li>
+          <li>ip_local_out — net/ipv4/ip_output.c:125</li>
+          <li>__ip_local_out — net/ipv4/ip_output.c:102</li>
+          <li>ip_output — net/ipv4/ip_output.c:427</li>
+          <li>ip_finish_output — net/ipv4/ip_output.c:317</li>
+          <li>ip_finish_output2 — net/ipv4/ip_output.c:199</li>
+          <li>dev_queue_xmit — include/linux/netdevice.h:3444</li>
+          <li>__dev_queue_xmit — net/core/dev.c:4768</li>
+          <li>netdev_start_xmit — include/linux/netdevice.h:5403</li>
+          <li>ndo_start_xmit — include/linux/netdevice.h:5400</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

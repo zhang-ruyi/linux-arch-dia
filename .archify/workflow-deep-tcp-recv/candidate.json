@@ -1,0 +1,674 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "TCP 收包深度调用链",
+    "locale": "zh-CN",
+    "output": "site/网络协议栈/deep-tcp-recv.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "napi",
+      "label": "NAPI / 设备层"
+    },
+    {
+      "id": "ip",
+      "label": "IP 层"
+    },
+    {
+      "id": "tcp",
+      "label": "TCP 分发"
+    },
+    {
+      "id": "queuewake",
+      "label": "数据队列 / 唤醒"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g-napi",
+      "label": "阶段 1:硬件中断与 NAPI 收包",
+      "lane": "napi",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "g-ip",
+      "label": "阶段 2:IP 收包与本地投递",
+      "lane": "ip",
+      "fromCol": 1,
+      "toCol": 2
+    },
+    {
+      "id": "g-tcp",
+      "label": "阶段 3:TCP 查找与状态分发",
+      "lane": "tcp",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "g-queue",
+      "label": "阶段 4:数据排队与唤醒",
+      "lane": "queuewake",
+      "fromCol": 3,
+      "toCol": 5
+    }
+  ],
+  "mainPath": [
+    "net_rx_action",
+    "napi_poll",
+    "napi_poll_inner",
+    "napi_gro_receive",
+    "netif_receive_skb",
+    "netif_receive_skb_internal",
+    "netif_receive_skb_core",
+    "ip_rcv",
+    "ip_rcv_core",
+    "ip_rcv_finish",
+    "ip_rcv_finish_core",
+    "ip_local_deliver",
+    "ip_local_deliver_finish",
+    "ip_protocol_deliver_rcu",
+    "tcp_v4_rcv",
+    "tcp_v4_do_rcv",
+    "tcp_rcv_established",
+    "tcp_data_queue",
+    "tcp_data_ready",
+    "sock_def_readable",
+    "wake_up_interruptible_sync_poll",
+    "wake_up_sync_key",
+    "wake_up_common_lock",
+    "wake_up_common",
+    "ep_poll_callback"
+  ],
+  "nodes": [
+    {
+      "id": "net_rx_action",
+      "lane": "napi",
+      "col": 0,
+      "type": "backend",
+      "label": "net_rx_action",
+      "yOffset": -135,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 7910,
+          "label": "NET_RX_SOFTIRQ 处理函数"
+        }
+      ]
+    },
+    {
+      "id": "napi_poll",
+      "lane": "napi",
+      "col": 0,
+      "type": "backend",
+      "label": "napi_poll",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 7782,
+          "label": "napi_poll"
+        }
+      ]
+    },
+    {
+      "id": "napi_poll_inner",
+      "lane": "napi",
+      "col": 0,
+      "type": "backend",
+      "label": "__napi_poll",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 7715,
+          "label": "调用 n->poll"
+        }
+      ]
+    },
+    {
+      "id": "napi_gro_receive",
+      "lane": "napi",
+      "col": 0,
+      "type": "backend",
+      "label": "napi_gro_receive",
+      "yOffset": 135,
+      "sources": [
+        {
+          "path": "include/linux/netdevice.h",
+          "line": 4314,
+          "label": "GRO 收包入口"
+        }
+      ]
+    },
+    {
+      "id": "netif_receive_skb",
+      "lane": "napi",
+      "col": 1,
+      "type": "backend",
+      "label": "netif_receive_skb",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 6458,
+          "label": "netif_receive_skb"
+        }
+      ]
+    },
+    {
+      "id": "netif_receive_skb_internal",
+      "lane": "napi",
+      "col": 1,
+      "type": "backend",
+      "label": "netif_receive_skb_internal",
+      "yOffset": 0,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 6383,
+          "label": "RPS 后再分发"
+        }
+      ]
+    },
+    {
+      "id": "netif_receive_skb_core",
+      "lane": "napi",
+      "col": 1,
+      "type": "backend",
+      "label": "__netif_receive_skb_core",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "net/core/dev.c",
+          "line": 5976,
+          "label": "按 ptype 分发"
+        }
+      ]
+    },
+    {
+      "id": "ip_rcv",
+      "lane": "ip",
+      "col": 1,
+      "type": "backend",
+      "label": "ip_rcv",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 603,
+          "label": "IPv4 收包入口"
+        }
+      ]
+    },
+    {
+      "id": "ip_rcv_core",
+      "lane": "ip",
+      "col": 1,
+      "type": "backend",
+      "label": "ip_rcv_core",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 499,
+          "label": "校验 IPv4 首部"
+        }
+      ]
+    },
+    {
+      "id": "ip_rcv_finish",
+      "lane": "ip",
+      "col": 2,
+      "type": "backend",
+      "label": "ip_rcv_finish",
+      "yOffset": -180,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 478,
+          "label": "PRE_ROUTING 之后"
+        }
+      ]
+    },
+    {
+      "id": "ip_rcv_finish_core",
+      "lane": "ip",
+      "col": 2,
+      "type": "backend",
+      "label": "ip_rcv_finish_core",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 361,
+          "label": "查路由/early demux"
+        }
+      ]
+    },
+    {
+      "id": "ip_local_deliver",
+      "lane": "ip",
+      "col": 2,
+      "type": "backend",
+      "label": "ip_local_deliver",
+      "yOffset": 0,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 250,
+          "label": "本地投递入口"
+        }
+      ]
+    },
+    {
+      "id": "ip_local_deliver_finish",
+      "lane": "ip",
+      "col": 2,
+      "type": "backend",
+      "label": "ip_local_deliver_finish",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 229,
+          "label": "清理并交给 L4"
+        }
+      ]
+    },
+    {
+      "id": "ip_protocol_deliver_rcu",
+      "lane": "ip",
+      "col": 2,
+      "type": "backend",
+      "label": "ip_protocol_deliver_rcu",
+      "yOffset": 180,
+      "sources": [
+        {
+          "path": "net/ipv4/ip_input.c",
+          "line": 189,
+          "label": "按协议号分发"
+        }
+      ]
+    },
+    {
+      "id": "tcp_v4_rcv",
+      "lane": "tcp",
+      "col": 2,
+      "type": "backend",
+      "label": "tcp_v4_rcv",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 2067,
+          "label": "TCP 收包入口"
+        }
+      ]
+    },
+    {
+      "id": "tcp_v4_do_rcv",
+      "lane": "tcp",
+      "col": 2,
+      "type": "backend",
+      "label": "tcp_v4_do_rcv",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_ipv4.c",
+          "line": 1827,
+          "label": "快慢路径分流"
+        }
+      ]
+    },
+    {
+      "id": "tcp_rcv_established",
+      "lane": "tcp",
+      "col": 3,
+      "type": "backend",
+      "label": "tcp_rcv_established",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 6470,
+          "label": "ESTABLISHED 快路径"
+        }
+      ]
+    },
+    {
+      "id": "tcp_rcv_state_process",
+      "lane": "tcp",
+      "col": 3,
+      "type": "backend",
+      "label": "tcp_rcv_state_process",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 7122,
+          "label": "状态机慢路径"
+        }
+      ]
+    },
+    {
+      "id": "tcp_data_queue",
+      "lane": "queuewake",
+      "col": 3,
+      "type": "backend",
+      "label": "tcp_data_queue",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 5577,
+          "label": "数据排队入口"
+        }
+      ]
+    },
+    {
+      "id": "tcp_queue_rcv",
+      "lane": "queuewake",
+      "col": 3,
+      "type": "backend",
+      "label": "tcp_queue_rcv",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 5502,
+          "label": "挂入接收队列"
+        }
+      ]
+    },
+    {
+      "id": "tcp_data_ready",
+      "lane": "queuewake",
+      "col": 4,
+      "type": "messagebus",
+      "label": "tcp_data_ready",
+      "yOffset": -90,
+      "sources": [
+        {
+          "path": "net/ipv4/tcp_input.c",
+          "line": 5571,
+          "label": "触发可读回调"
+        }
+      ]
+    },
+    {
+      "id": "sock_def_readable",
+      "lane": "queuewake",
+      "col": 4,
+      "type": "messagebus",
+      "label": "sock_def_readable",
+      "yOffset": 0,
+      "sources": [
+        {
+          "path": "net/core/sock.c",
+          "line": 3647,
+          "label": "默认 sk_data_ready"
+        }
+      ]
+    },
+    {
+      "id": "wake_up_interruptible_sync_poll",
+      "lane": "queuewake",
+      "col": 4,
+      "type": "messagebus",
+      "label": "wake_up_interruptible_sync_poll",
+      "yOffset": 90,
+      "sources": [
+        {
+          "path": "include/linux/wait.h",
+          "line": 246,
+          "label": "唤醒等待队列"
+        }
+      ],
+      "width": 240
+    },
+    {
+      "id": "wake_up_sync_key",
+      "lane": "queuewake",
+      "col": 5,
+      "type": "messagebus",
+      "label": "__wake_up_sync_key",
+      "yOffset": -135,
+      "sources": [
+        {
+          "path": "kernel/sched/wait.c",
+          "line": 186,
+          "label": "__wake_up_sync_key"
+        }
+      ]
+    },
+    {
+      "id": "wake_up_common_lock",
+      "lane": "queuewake",
+      "col": 5,
+      "type": "messagebus",
+      "label": "__wake_up_common_lock",
+      "yOffset": -45,
+      "sources": [
+        {
+          "path": "kernel/sched/wait.c",
+          "line": 118,
+          "label": "持锁遍历等待项"
+        }
+      ]
+    },
+    {
+      "id": "wake_up_common",
+      "lane": "queuewake",
+      "col": 5,
+      "type": "messagebus",
+      "label": "__wake_up_common",
+      "yOffset": 45,
+      "sources": [
+        {
+          "path": "kernel/sched/wait.c",
+          "line": 92,
+          "label": "调用 wait->func"
+        }
+      ]
+    },
+    {
+      "id": "ep_poll_callback",
+      "lane": "queuewake",
+      "col": 5,
+      "type": "messagebus",
+      "label": "ep_poll_callback",
+      "yOffset": 135,
+      "sources": [
+        {
+          "path": "fs/eventpoll.c",
+          "line": 1475,
+          "label": "epoll 就绪回调"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-rx-napi",
+      "from": "net_rx_action",
+      "to": "napi_poll"
+    },
+    {
+      "id": "e-napi-dep",
+      "from": "napi_poll",
+      "to": "napi_poll_inner"
+    },
+    {
+      "id": "e-dep-gro",
+      "from": "napi_poll_inner",
+      "to": "napi_gro_receive",
+      "label": "驱动 poll"
+    },
+    {
+      "id": "e-gro-rx",
+      "from": "napi_gro_receive",
+      "to": "netif_receive_skb"
+    },
+    {
+      "id": "e-rx-int",
+      "from": "netif_receive_skb",
+      "to": "netif_receive_skb_internal"
+    },
+    {
+      "id": "e-int-core",
+      "from": "netif_receive_skb_internal",
+      "to": "netif_receive_skb_core"
+    },
+    {
+      "id": "e-core-ip",
+      "from": "netif_receive_skb_core",
+      "to": "ip_rcv",
+      "label": "协议分发"
+    },
+    {
+      "id": "e-ip-core",
+      "from": "ip_rcv",
+      "to": "ip_rcv_core"
+    },
+    {
+      "id": "e-core-finish",
+      "from": "ip_rcv_core",
+      "to": "ip_rcv_finish",
+      "label": "NF_HOOK"
+    },
+    {
+      "id": "e-finish-fcore",
+      "from": "ip_rcv_finish",
+      "to": "ip_rcv_finish_core"
+    },
+    {
+      "id": "e-fcore-deliver",
+      "from": "ip_rcv_finish_core",
+      "to": "ip_local_deliver"
+    },
+    {
+      "id": "e-deliver-dfinish",
+      "from": "ip_local_deliver",
+      "to": "ip_local_deliver_finish"
+    },
+    {
+      "id": "e-dfinish-proto",
+      "from": "ip_local_deliver_finish",
+      "to": "ip_protocol_deliver_rcu"
+    },
+    {
+      "id": "e-proto-tcp",
+      "from": "ip_protocol_deliver_rcu",
+      "to": "tcp_v4_rcv",
+      "label": "L4 分发"
+    },
+    {
+      "id": "e-tcp-do",
+      "from": "tcp_v4_rcv",
+      "to": "tcp_v4_do_rcv"
+    },
+    {
+      "id": "e-do-est",
+      "from": "tcp_v4_do_rcv",
+      "to": "tcp_rcv_established",
+      "label": "ESTABLISHED"
+    },
+    {
+      "id": "e-do-state",
+      "from": "tcp_v4_do_rcv",
+      "to": "tcp_rcv_state_process"
+    },
+    {
+      "id": "e-est-queue",
+      "from": "tcp_rcv_established",
+      "to": "tcp_data_queue"
+    },
+    {
+      "id": "e-state-queue",
+      "from": "tcp_rcv_state_process",
+      "to": "tcp_data_queue"
+    },
+    {
+      "id": "e-queue-rcv",
+      "from": "tcp_data_queue",
+      "to": "tcp_queue_rcv"
+    },
+    {
+      "id": "e-queue-ready",
+      "from": "tcp_data_queue",
+      "to": "tcp_data_ready",
+      "label": "数据可读"
+    },
+    {
+      "id": "e-ready-readable",
+      "from": "tcp_data_ready",
+      "to": "sock_def_readable"
+    },
+    {
+      "id": "e-readable-wake",
+      "from": "sock_def_readable",
+      "to": "wake_up_interruptible_sync_poll"
+    },
+    {
+      "id": "e-wake-sync",
+      "from": "wake_up_interruptible_sync_poll",
+      "to": "wake_up_sync_key"
+    },
+    {
+      "id": "e-sync-lock",
+      "from": "wake_up_sync_key",
+      "to": "wake_up_common_lock"
+    },
+    {
+      "id": "e-lock-common",
+      "from": "wake_up_common_lock",
+      "to": "wake_up_common"
+    },
+    {
+      "id": "e-common-epoll",
+      "from": "wake_up_common",
+      "to": "ep_poll_callback",
+      "label": "回调唤醒"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "收包主链(源码核实)",
+      "items": [
+        "net_rx_action — net/core/dev.c:7910 → napi_poll — net/core/dev.c:7782 → __napi_poll — net/core/dev.c:7715",
+        "__napi_poll 调用驱动 poll,经 napi_gro_receive — include/linux/netdevice.h:4314 进入协议栈",
+        "netif_receive_skb — net/core/dev.c:6458 → netif_receive_skb_internal — net/core/dev.c:6383 → __netif_receive_skb_core — net/core/dev.c:5976"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "IP 与 TCP 分层",
+      "items": [
+        "ip_rcv — net/ipv4/ip_input.c:603 → ip_rcv_core — net/ipv4/ip_input.c:499 校验首部",
+        "ip_rcv_finish — net/ipv4/ip_input.c:478 → ip_rcv_finish_core — net/ipv4/ip_input.c:361 查路由",
+        "ip_local_deliver — net/ipv4/ip_input.c:250 → ip_local_deliver_finish — net/ipv4/ip_input.c:229 → ip_protocol_deliver_rcu — net/ipv4/ip_input.c:189",
+        "tcp_v4_rcv — net/ipv4/tcp_ipv4.c:2067 → tcp_v4_do_rcv — net/ipv4/tcp_ipv4.c:1827;快路径 tcp_rcv_established — net/ipv4/tcp_input.c:6470,慢路径 tcp_rcv_state_process — net/ipv4/tcp_input.c:7122"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "数据排队与唤醒",
+      "items": [
+        "tcp_rcv_established 与 tcp_rcv_state_process 均在 net/ipv4/tcp_input.c:6659 / :7371 调用 tcp_data_queue",
+        "tcp_data_queue — net/ipv4/tcp_input.c:5577 → tcp_queue_rcv — net/ipv4/tcp_input.c:5502 挂入接收队列",
+        "乱序分支:tcp_data_queue → tcp_data_queue_ofo — net/ipv4/tcp_input.c:5351 → tcp_ofo_queue — net/ipv4/tcp_input.c:5276",
+        "tcp_data_ready — net/ipv4/tcp_input.c:5571 → sock_def_readable — net/core/sock.c:3647 → wake_up_interruptible_sync_poll — include/linux/wait.h:246 → __wake_up_common — kernel/sched/wait.c:92 → ep_poll_callback — fs/eventpoll.c:1475"
+      ]
+    }
+  ]
+}

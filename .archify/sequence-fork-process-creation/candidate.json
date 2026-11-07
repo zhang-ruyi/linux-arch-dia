@@ -209,6 +209,24 @@
         "父进程在 kernel_clone() 返回新任务 PID",
         "wake_up_new_task() 将子进程放入运行队列"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "SYSCALL_DEFINE0(fork)() — kernel/fork.c:2828",
+        "kernel_clone() — kernel/fork.c:2694",
+        "copy_process() — kernel/fork.c:1994",
+        "dup_task_struct() — kernel/fork.c:914",
+        "sched_fork() — kernel/sched/core.c:4803",
+        "copy_files() — kernel/fork.c:1642",
+        "copy_fs() — kernel/fork.c:1621",
+        "copy_sighand() — kernel/fork.c:1672",
+        "copy_signal() — kernel/fork.c:1721",
+        "copy_mm() — kernel/fork.c:1568",
+        "copy_thread() — arch/x86/kernel/process.c:170",
+        "wake_up_new_task() — kernel/sched/core.c:4941"
+      ]
     }
   ]
 }

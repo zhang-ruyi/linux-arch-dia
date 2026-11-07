@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-napi-receive/candidate.json",
+    "sha256": "309088875e5cd892eafee591febcad95b929d13cd026bf4677809a7c654ae99d",
+    "bytes": 6548
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/网络协议栈/napi-receive.html",
+    "sha256": "6cb68ac347253edb65a33499917a7a0036c006134f35c246f099befd8bd497ce",
+    "bytes": 834185
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-napi-receive/review-1/napi-receive.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-napi-receive/review-1/napi-receive.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-napi-receive/review-1/napi-receive.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3285,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

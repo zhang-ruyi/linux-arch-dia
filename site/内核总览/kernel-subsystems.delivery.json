@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "5520a1ee-753c-4651-8030-3ae393e28635",
+  "receiptId": "53cacb48-2e99-4b53-95b7-0197ece821a1",
   "status": "current",
   "command": "deliver",
   "type": "tree",
   "input": "/home/zhang/opencode/code_analsys/.archify/tree-kernel-subsystems/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/内核总览/kernel-subsystems.html",
   "specification": {
-    "sha256": "95190e7bff45dd3efc840e607dd95741fdccad2a227e0aef01a9ba8fca9d0008",
-    "bytes": 5040
+    "sha256": "1a1750c73005d5a083bc9bdbc4b136e2ecdb5638f4dc8993f5ce1fe7434dcd55",
+    "bytes": 6252
   },
   "artifact": {
-    "sha256": "2a5dbf42faf65b3153bd7209ff2478f956821a547f3e89a2d09aa40b3663da49",
-    "bytes": 874204
+    "sha256": "d3128b264951d6ba1a0c1d4f0b8cf8e00896d4cc19a1abaa62188e34a9c2ea0f",
+    "bytes": 875547
   }
 }

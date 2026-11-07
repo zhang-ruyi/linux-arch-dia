@@ -317,6 +317,21 @@
         "pdu 保存 bio/req,完成后卸载用户映射",
         "返回 -EIOCBQUEUED 表示请求已异步排队"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "io_uring_cmd — io_uring/uring_cmd.c:239",
+        "nvme_ns_chr_uring_cmd — drivers/nvme/host/ioctl.c:672",
+        "nvme_ns_uring_cmd — drivers/nvme/host/ioctl.c:648",
+        "nvme_uring_cmd_io — drivers/nvme/host/ioctl.c:445",
+        "nvme_alloc_user_request — drivers/nvme/host/ioctl.c:101",
+        "nvme_map_user_request — drivers/nvme/host/ioctl.c:124",
+        "blk_execute_rq_nowait — block/blk-mq.c:1415",
+        "nvme_queue_rq — drivers/nvme/host/pci.c:1436",
+        "nvme_uring_cmd_end_io — drivers/nvme/host/ioctl.c:411"
+      ]
     }
   ]
 }

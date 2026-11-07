@@ -5613,6 +5613,25 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>nvme_alloc_ns 建立块设备并加入控制器命名空间列表</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736</li>
+          <li>nvme_init_identify — drivers/nvme/host/core.c:3589</li>
+          <li>nvme_identify_ctrl — drivers/nvme/host/core.c:1479</li>
+          <li>nvme_start_ctrl — drivers/nvme/host/core.c:5064</li>
+          <li>nvme_queue_scan — drivers/nvme/host/core.c:158</li>
+          <li>nvme_scan_work — drivers/nvme/host/core.c:4578</li>
+          <li>nvme_scan_ns_list — drivers/nvme/host/core.c:4486</li>
+          <li>nvme_scan_ns_sequential — drivers/nvme/host/core.c:4537</li>
+          <li>nvme_scan_ns — drivers/nvme/host/core.c:4391</li>
+          <li>nvme_alloc_ns — drivers/nvme/host/core.c:4191</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

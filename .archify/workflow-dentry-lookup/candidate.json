@@ -160,6 +160,20 @@
         "通过 inode->i_op->lookup 回调具体文件系统",
         "ext4 读取目录块并填充 inode 后加入 dcache"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "path_openat — fs/namei.c:4843",
+        "link_path_walk — fs/namei.c:2578",
+        "walk_component — fs/namei.c:2265",
+        "lookup_fast — fs/namei.c:1843",
+        "__lookup_slow — fs/namei.c:1893",
+        "inode->i_op->lookup — fs/namei.c:1919",
+        "ext4_lookup — fs/ext4/namei.c:1760",
+        "ext4_lookup_entry — fs/ext4/namei.c:1689"
+      ]
     }
   ]
 }

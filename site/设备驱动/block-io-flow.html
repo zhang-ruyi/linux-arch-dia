@@ -5636,6 +5636,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>完成后经 blk_mq_complete_request() 与 bio_endio() 回传</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>submit_bio — block/blk-core.c:952</li>
+          <li>submit_bio_noacct — block/blk-core.c:817</li>
+          <li>blk_mq_submit_bio — block/blk-mq.c:3093</li>
+          <li>blk_mq_get_new_requests — block/blk-mq.c:3015</li>
+          <li>blk_mq_dispatch_rq_list — block/blk-mq.c:2085</li>
+          <li>queue_rq — block/blk-mq.c:2117</li>
+          <li>blk_mq_complete_request — block/blk-mq.c:1322</li>
+          <li>blk_mq_end_request — block/blk-mq.c:1145</li>
+          <li>bio_endio — block/bio.c:1762</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

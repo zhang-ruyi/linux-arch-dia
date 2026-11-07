@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-deep-block-io/candidate.json",
+    "sha256": "509b559852b7e0921705d93f8062e1ae7aaa2957563c7def1a43d31c3031ac9c",
+    "bytes": 15106
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/设备驱动/deep-block-io.html",
+    "sha256": "dc67bf5c13f5496bde72a2f3ae95ab9089036fa4e836f6c80851ca1cc9f03a66",
+    "bytes": 886366
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/设备驱动/deep-block-io.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/设备驱动/deep-block-io.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/设备驱动/deep-block-io.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4939,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

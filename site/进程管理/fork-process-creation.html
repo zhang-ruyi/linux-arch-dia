@@ -5619,6 +5619,27 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>wake_up_new_task() 将子进程放入运行队列</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>SYSCALL_DEFINE0(fork)() — kernel/fork.c:2828</li>
+          <li>kernel_clone() — kernel/fork.c:2694</li>
+          <li>copy_process() — kernel/fork.c:1994</li>
+          <li>dup_task_struct() — kernel/fork.c:914</li>
+          <li>sched_fork() — kernel/sched/core.c:4803</li>
+          <li>copy_files() — kernel/fork.c:1642</li>
+          <li>copy_fs() — kernel/fork.c:1621</li>
+          <li>copy_sighand() — kernel/fork.c:1672</li>
+          <li>copy_signal() — kernel/fork.c:1721</li>
+          <li>copy_mm() — kernel/fork.c:1568</li>
+          <li>copy_thread() — arch/x86/kernel/process.c:170</li>
+          <li>wake_up_new_task() — kernel/sched/core.c:4941</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

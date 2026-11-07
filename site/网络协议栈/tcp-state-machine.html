@@ -5722,6 +5722,21 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>SYN_RECV 收到 RST 可退回 LISTEN</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>tcp_set_state — net/ipv4/tcp.c:2960</li>
+          <li>tcp_rcv_state_process — net/ipv4/tcp_input.c:7122</li>
+          <li>tcp_rcv_established — net/ipv4/tcp_input.c:6470</li>
+          <li>tcp_time_wait — net/ipv4/tcp_minisocks.c:326</li>
+          <li>tcp_close — net/ipv4/tcp.c:3308</li>
+          <li>tcp_close_state — net/ipv4/tcp.c:3054</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

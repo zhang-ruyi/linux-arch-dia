@@ -5870,6 +5870,29 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>PM1725 与 QDEPTH_ONE 设备覆盖通用深度计算</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>nvme_probe (PCIe) — drivers/nvme/host/pci.c:3747</li>
+          <li>nvme_rdma_create_ctrl — drivers/nvme/host/rdma.c:2321</li>
+          <li>nvme_fc_create_ctrl — drivers/nvme/host/fc.c:3685</li>
+          <li>nvme_tcp_create_ctrl — drivers/nvme/host/tcp.c:2994</li>
+          <li>nvme_tcp_start_tls — drivers/nvme/host/tcp.c:1724</li>
+          <li>apple_nvme_probe — drivers/nvme/host/apple.c:1597</li>
+          <li>nvme_loop_create_ctrl — drivers/nvme/target/loop.c:552</li>
+          <li>nvmet_init — drivers/nvme/target/core.c:1943</li>
+          <li>nvmet_rdma_init — drivers/nvme/target/rdma.c:2102</li>
+          <li>nvmet_fc_init_module — drivers/nvme/target/fc.c:3003</li>
+          <li>nvmet_tcp_init — drivers/nvme/target/tcp.c:2244</li>
+          <li>nvme_auth_negotiate — drivers/nvme/host/auth.c:917</li>
+          <li>nvme_hwmon_init — drivers/nvme/host/hwmon.c:226</li>
+          <li>nvme_mpath_alloc_disk — drivers/nvme/host/multipath.c:726</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

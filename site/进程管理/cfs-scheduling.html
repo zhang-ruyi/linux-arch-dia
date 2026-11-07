@@ -5574,6 +5574,25 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>context_switch() → finish_task_switch()，随后 next 进程运行</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>schedule() — kernel/sched/core.c:7316</li>
+          <li>__schedule() — kernel/sched/core.c:7061</li>
+          <li>pick_next_task() — kernel/sched/core.c:6216</li>
+          <li>__pick_next_task() — kernel/sched/core.c:6124</li>
+          <li>pick_task_fair() — kernel/sched/fair.c:9912</li>
+          <li>pick_next_entity() — kernel/sched/fair.c:6376</li>
+          <li>pick_eevdf() — kernel/sched/fair.c:1136</li>
+          <li>entity_eligible() — kernel/sched/fair.c:939</li>
+          <li>context_switch() — kernel/sched/core.c:5451</li>
+          <li>finish_task_switch() — kernel/sched/core.c:5318</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

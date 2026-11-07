@@ -1,0 +1,637 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "缺页异常深度调用链",
+    "locale": "zh-CN",
+    "output": "site/内存管理/deep-page-fault.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "3b029c035b34bbc693405ddf759f0e9b920c27f1",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    {
+      "id": "entry",
+      "label": "1 · 异常入口与地址判断"
+    },
+    {
+      "id": "walk",
+      "label": "2 · 页表遍历与 PTE 分发"
+    },
+    {
+      "id": "anon",
+      "label": "3 · 匿名 / swap / NUMA / COW"
+    },
+    {
+      "id": "file",
+      "label": "4 · 文件映射缺页"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_entry",
+      "label": "入口",
+      "lane": "entry",
+      "fromCol": 0,
+      "toCol": 1,
+      "variant": "emphasis"
+    },
+    {
+      "id": "g_addr",
+      "label": "地址判断",
+      "lane": "entry",
+      "fromCol": 2,
+      "toCol": 4
+    },
+    {
+      "id": "g_walk",
+      "label": "页表遍历 → PTE 分发",
+      "lane": "walk",
+      "fromCol": 0,
+      "toCol": 5
+    },
+    {
+      "id": "g_leaf",
+      "label": "具体缺页处理 · 匿名 / swap / COW",
+      "lane": "anon",
+      "fromCol": 0,
+      "toCol": 5,
+      "variant": "dashed"
+    },
+    {
+      "id": "g_file",
+      "label": "具体缺页处理 · 文件",
+      "lane": "file",
+      "fromCol": 0,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "exc",
+      "lane": "entry",
+      "col": 0,
+      "type": "backend",
+      "label": "exc_page_fault",
+      "sublabel": "读取 CR2 / FRED 事件数据",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1492
+        }
+      ]
+    },
+    {
+      "id": "hpf",
+      "lane": "entry",
+      "col": 1,
+      "type": "backend",
+      "label": "handle_page_fault",
+      "sublabel": "kmmio 与地址空间分流",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1471
+        }
+      ]
+    },
+    {
+      "id": "kern",
+      "lane": "entry",
+      "col": 1,
+      "yOffset": 90,
+      "type": "backend",
+      "label": "do_kern_addr_fault",
+      "sublabel": "内核地址空间分支",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1143
+        }
+      ]
+    },
+    {
+      "id": "userf",
+      "lane": "entry",
+      "col": 2,
+      "type": "backend",
+      "label": "do_user_addr_fault",
+      "sublabel": "用户地址, 查找并锁定 VMA",
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1216
+        }
+      ]
+    },
+    {
+      "id": "lockvma",
+      "lane": "entry",
+      "col": 3,
+      "type": "backend",
+      "label": "lock_mm_and_find_vma",
+      "sublabel": "mmap_lock + find_vma",
+      "sources": [
+        {
+          "path": "mm/mmap_lock.c",
+          "line": 496
+        }
+      ]
+    },
+    {
+      "id": "hmf",
+      "lane": "entry",
+      "col": 4,
+      "type": "backend",
+      "label": "handle_mm_fault",
+      "sublabel": "校验 fault flags 后进入 mm",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6651
+        }
+      ]
+    },
+    {
+      "id": "hugetlb",
+      "lane": "entry",
+      "col": 4,
+      "yOffset": 90,
+      "type": "backend",
+      "label": "hugetlb_fault",
+      "sublabel": "is_vm_hugetlb_page 分支",
+      "sources": [
+        {
+          "path": "mm/hugetlb.c",
+          "line": 5941
+        }
+      ]
+    },
+    {
+      "id": "hmf2",
+      "lane": "walk",
+      "col": 5,
+      "type": "backend",
+      "label": "__handle_mm_fault",
+      "sublabel": "建立 vm_fault 并逐级遍历",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6417
+        }
+      ]
+    },
+    {
+      "id": "p4d",
+      "lane": "walk",
+      "col": 4,
+      "type": "backend",
+      "label": "p4d_alloc",
+      "sublabel": "缺表时 __p4d_alloc 补页表",
+      "sources": [
+        {
+          "path": "include/linux/mm.h",
+          "line": 3585
+        }
+      ]
+    },
+    {
+      "id": "pud",
+      "lane": "walk",
+      "col": 3,
+      "type": "backend",
+      "label": "pud_alloc",
+      "sublabel": "缺表时 __pud_alloc 补页表",
+      "sources": [
+        {
+          "path": "include/linux/mm.h",
+          "line": 3592
+        }
+      ]
+    },
+    {
+      "id": "pmd",
+      "lane": "walk",
+      "col": 2,
+      "type": "backend",
+      "label": "pmd_alloc",
+      "sublabel": "缺表时 __pmd_alloc 补页表",
+      "sources": [
+        {
+          "path": "include/linux/mm.h",
+          "line": 3599
+        }
+      ]
+    },
+    {
+      "id": "hpte",
+      "lane": "walk",
+      "col": 1,
+      "type": "backend",
+      "label": "handle_pte_fault",
+      "sublabel": "按 PTE 状态分发",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6335
+        }
+      ]
+    },
+    {
+      "id": "dopte",
+      "lane": "walk",
+      "col": 0,
+      "type": "backend",
+      "label": "do_pte_missing",
+      "sublabel": "PTE 为空, 页缺失",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4561
+        }
+      ]
+    },
+    {
+      "id": "anon",
+      "lane": "anon",
+      "col": 1,
+      "type": "backend",
+      "label": "do_anonymous_page",
+      "sublabel": "匿名映射, 零页或分配",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5287
+        }
+      ]
+    },
+    {
+      "id": "swap",
+      "lane": "anon",
+      "col": 2,
+      "yOffset": -90,
+      "type": "backend",
+      "label": "do_swap_page",
+      "sublabel": "PTE 非 present, swap 项",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4747
+        }
+      ]
+    },
+    {
+      "id": "swapin",
+      "lane": "anon",
+      "col": 2,
+      "yOffset": -30,
+      "type": "backend",
+      "label": "swapin_readahead",
+      "sublabel": "从 swap 预读/读入 folio",
+      "sources": [
+        {
+          "path": "mm/swap_state.c",
+          "line": 974
+        }
+      ]
+    },
+    {
+      "id": "numa",
+      "lane": "anon",
+      "col": 3,
+      "yOffset": 30,
+      "type": "backend",
+      "label": "do_numa_page",
+      "sublabel": "protnone, 跨节点迁移",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6109
+        }
+      ]
+    },
+    {
+      "id": "wp",
+      "lane": "anon",
+      "col": 4,
+      "yOffset": 120,
+      "type": "backend",
+      "label": "do_wp_page",
+      "sublabel": "写只读页, 写时复制",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 4244
+        }
+      ]
+    },
+    {
+      "id": "wpcopy",
+      "lane": "anon",
+      "col": 4,
+      "yOffset": 190,
+      "type": "backend",
+      "label": "wp_page_copy",
+      "sublabel": "复制页并替换 PTE",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 3853
+        }
+      ]
+    },
+    {
+      "id": "dofault",
+      "lane": "file",
+      "col": 0,
+      "type": "backend",
+      "label": "do_fault",
+      "sublabel": "文件映射缺页分发",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5964
+        }
+      ]
+    },
+    {
+      "id": "readfault",
+      "lane": "file",
+      "col": 1,
+      "yOffset": -60,
+      "type": "backend",
+      "label": "do_read_fault",
+      "sublabel": "只读缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5840
+        }
+      ]
+    },
+    {
+      "id": "cowfault",
+      "lane": "file",
+      "col": 2,
+      "type": "backend",
+      "label": "do_cow_fault",
+      "sublabel": "私有映射写缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5872
+        }
+      ]
+    },
+    {
+      "id": "sharedfault",
+      "lane": "file",
+      "col": 3,
+      "yOffset": 60,
+      "type": "backend",
+      "label": "do_shared_fault",
+      "sublabel": "共享映射写缺页",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5914
+        }
+      ]
+    },
+    {
+      "id": "dofaultcb",
+      "lane": "file",
+      "col": 4,
+      "type": "backend",
+      "label": "__do_fault",
+      "sublabel": "调用 vma->vm_ops->fault",
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 5398
+        }
+      ]
+    },
+    {
+      "id": "filemap",
+      "lane": "file",
+      "col": 5,
+      "yOffset": -30,
+      "type": "backend",
+      "label": "filemap_fault",
+      "sublabel": "文件页缓存 / 读盘",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 3540
+        }
+      ]
+    },
+    {
+      "id": "fileread",
+      "lane": "file",
+      "col": 5,
+      "yOffset": 30,
+      "type": "backend",
+      "label": "filemap_read_folio",
+      "sublabel": "a_ops->read_folio 读入页",
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2500
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-exc-hpf",
+      "from": "exc",
+      "to": "hpf",
+      "role": "main"
+    },
+    {
+      "id": "e-hpf-kern",
+      "from": "hpf",
+      "to": "kern",
+      "label": "内核空间",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-hpf-user",
+      "from": "hpf",
+      "to": "userf",
+      "label": "用户空间",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-user-lock",
+      "from": "userf",
+      "to": "lockvma",
+      "role": "main"
+    },
+    {
+      "id": "e-lock-hmf",
+      "from": "lockvma",
+      "to": "hmf",
+      "role": "main"
+    },
+    {
+      "id": "e-hmf-huge",
+      "from": "hmf",
+      "to": "hugetlb",
+      "label": "hugetlb",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-hmf-hmf2",
+      "from": "hmf",
+      "to": "hmf2",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-hmf2-p4d",
+      "from": "hmf2",
+      "to": "p4d",
+      "role": "main"
+    },
+    {
+      "id": "e-p4d-pud",
+      "from": "p4d",
+      "to": "pud",
+      "role": "main"
+    },
+    {
+      "id": "e-pud-pmd",
+      "from": "pud",
+      "to": "pmd",
+      "role": "main"
+    },
+    {
+      "id": "e-pmd-hpte",
+      "from": "pmd",
+      "to": "hpte",
+      "role": "main"
+    },
+    {
+      "id": "e-hpte-dopte",
+      "from": "hpte",
+      "to": "dopte",
+      "label": "PTE 为空",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-hpte-swap",
+      "from": "hpte",
+      "to": "swap",
+      "role": "branch"
+    },
+    {
+      "id": "e-hpte-numa",
+      "from": "hpte",
+      "to": "numa",
+      "role": "branch"
+    },
+    {
+      "id": "e-hpte-wp",
+      "from": "hpte",
+      "to": "wp",
+      "variant": "security",
+      "role": "branch",
+      "toSide": "right"
+    },
+    {
+      "id": "e-dopte-anon",
+      "from": "dopte",
+      "to": "anon",
+      "label": "匿名映射",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-dopte-file",
+      "from": "dopte",
+      "to": "dofault",
+      "label": "文件映射",
+      "role": "branch"
+    },
+    {
+      "id": "e-swap-swapin",
+      "from": "swap",
+      "to": "swapin",
+      "label": "swap 读入",
+      "role": "branch"
+    },
+    {
+      "id": "e-wp-wpcopy",
+      "from": "wp",
+      "to": "wpcopy",
+      "label": "复制页",
+      "role": "branch"
+    },
+    {
+      "id": "e-dofault-read",
+      "from": "dofault",
+      "to": "readfault",
+      "label": "只读",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-dofault-cow",
+      "from": "dofault",
+      "to": "cowfault",
+      "label": "私有写",
+      "role": "branch"
+    },
+    {
+      "id": "e-dofault-shared",
+      "from": "dofault",
+      "to": "sharedfault",
+      "label": "共享写",
+      "role": "branch"
+    },
+    {
+      "id": "e-read-cb",
+      "from": "readfault",
+      "to": "dofaultcb",
+      "role": "main"
+    },
+    {
+      "id": "e-cow-cb",
+      "from": "cowfault",
+      "to": "dofaultcb",
+      "role": "branch"
+    },
+    {
+      "id": "e-shared-cb",
+      "from": "sharedfault",
+      "to": "dofaultcb",
+      "role": "branch"
+    },
+    {
+      "id": "e-cb-filemap",
+      "from": "dofaultcb",
+      "to": "filemap",
+      "label": "vm_ops->fault",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e-filemap-read",
+      "from": "filemap",
+      "to": "fileread",
+      "label": "read_folio",
+      "role": "main"
+    }
+  ]
+}

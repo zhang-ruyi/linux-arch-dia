@@ -215,6 +215,28 @@
         "未命中时触发 readahead，并通过 submit_bio 读取块设备",
         "块设备返回后填充 folio，再完成用户缓冲区拷贝"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "读:ksys_read — fs/read_write.c:705",
+        "读:vfs_read — fs/read_write.c:554",
+        "读:ext4_file_read_iter — fs/ext4/file.c:130",
+        "读:generic_file_read_iter — mm/filemap.c:2965",
+        "读:filemap_read — mm/filemap.c:2777",
+        "读:filemap_get_pages — mm/filemap.c:2676",
+        "读:filemap_read_folio — mm/filemap.c:2500",
+        "读:ext4_read_folio — fs/ext4/readpage.c:394",
+        "读:submit_bio — block/blk-core.c:952",
+        "写:ksys_write — fs/read_write.c:728",
+        "写:vfs_write — fs/read_write.c:667",
+        "写:ext4_file_write_iter — fs/ext4/file.c:706",
+        "写:generic_perform_write — mm/filemap.c:4330",
+        "写:ext4_write_begin — fs/ext4/inode.c:1288",
+        "写:ext4_write_end — fs/ext4/inode.c:1439",
+        "写:balance_dirty_pages — mm/page-writeback.c:1802"
+      ]
     }
   ]
 }

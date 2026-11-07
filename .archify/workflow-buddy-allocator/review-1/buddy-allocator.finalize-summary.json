@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-buddy-allocator/candidate.json",
+    "sha256": "ebc01aa0009ebb28604740decd580672b2645f8ff8ba2e2e02549a378a990ee2",
+    "bytes": 9364
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内存管理/buddy-allocator.html",
+    "sha256": "f018ee90f415930b9e2276e9403d85565cffa8d91b5c4ef3e443af8e353f8988",
+    "bytes": 850924
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/workflow-buddy-allocator/review-1/buddy-allocator.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-buddy-allocator/review-1/buddy-allocator.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/workflow-buddy-allocator/review-1/buddy-allocator.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3888,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

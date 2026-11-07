@@ -166,6 +166,20 @@
         "__writeback_single_inode() 调用 address_space->writepages",
         "ext4_writepages() 生成并提交 bio，完成后清除脏标志"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "balance_dirty_pages — mm/page-writeback.c:1802",
+        "wb_workfn — fs/fs-writeback.c:2460",
+        "writeback_sb_inodes — fs/fs-writeback.c:1980",
+        "__writeback_single_inode — fs/fs-writeback.c:1776",
+        "do_writepages — mm/page-writeback.c:2560",
+        "ext4_writepages — fs/ext4/inode.c:3026",
+        "ext4_io_submit — fs/ext4/page-io.c:397",
+        "submit_bio — block/blk-core.c:952"
+      ]
     }
   ]
 }

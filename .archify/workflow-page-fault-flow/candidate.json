@@ -469,6 +469,30 @@
         "三者统一经 __do_fault 调用 vm_ops->fault",
         "filemap_fault 负责从磁盘读入文件页"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "exc_page_fault — arch/x86/mm/fault.c:1492",
+        "handle_page_fault — arch/x86/mm/fault.c:1471",
+        "do_user_addr_fault — arch/x86/mm/fault.c:1216 (用户态分支)",
+        "lock_mm_and_find_vma — mm/mmap_lock.c:496",
+        "handle_mm_fault — mm/memory.c:6651",
+        "__handle_mm_fault — mm/memory.c:6417",
+        "handle_pte_fault — mm/memory.c:6335",
+        "do_pte_missing — mm/memory.c:4561 (PTE 为空)",
+        "do_anonymous_page — mm/memory.c:5287 (匿名映射)",
+        "do_fault — mm/memory.c:5964 (文件映射)",
+        "do_swap_page — mm/memory.c:4747 (swap 项)",
+        "do_numa_page — mm/memory.c:6109 (NUMA 保护页)",
+        "do_wp_page — mm/memory.c:4244 (写只读页/COW)",
+        "do_read_fault — mm/memory.c:5840",
+        "do_cow_fault — mm/memory.c:5872",
+        "do_shared_fault — mm/memory.c:5914",
+        "__do_fault — mm/memory.c:5398",
+        "filemap_fault — mm/filemap.c:3540"
+      ]
     }
   ]
 }

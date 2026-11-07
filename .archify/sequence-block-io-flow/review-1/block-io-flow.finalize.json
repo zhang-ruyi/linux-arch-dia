@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-11-07T13:45:05.535Z",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/candidate.json",
+    "sha256": "2f98ea79d8abedef17d806b16e7e704ca6cb45b0a0ef7d4bfb20d527c3644ce3",
+    "bytes": 5415
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+    "sha256": "130a6c6075a9e538a0df7998afaf89d6fbd79d5d805b5109438dcdae57a4518b",
+    "bytes": 838609
+  },
+  "stages": {
+    "validate": {
+      "status": "not-run",
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 175,
+      "command": [
+        "/usr/bin/node",
+        "/home/zhang/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/candidate.json",
+        "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/home/zhang/workspace/Git/git.kernel.org/linux",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "be199be4-f1db-4840-8952-e8ee308ce7d3",
+        "stage": "prepare",
+        "type": "sequence",
+        "input": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/candidate.json",
+        "output": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+        "error": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\".",
+        "diagnostics": [
+          {
+            "code": "delivery/concurrent-attempt",
+            "severity": "error",
+            "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\".",
+            "subject": {
+              "output": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+              "lock": "/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json"
+            },
+            "evidence": {
+              "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\"."
+            },
+            "supportedFixes": [
+              "wait for the active delivery to finish, then retry"
+            ]
+          }
+        ],
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "delivery/concurrent-attempt",
+      "severity": "error",
+      "message": "Could not start delivery for \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\": Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\".",
+      "subject": {
+        "output": "/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html",
+        "lock": "/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json"
+      },
+      "evidence": {
+        "reason": "Another delivery attempt owns \"/home/zhang/opencode/code_analsys/site/设备驱动/block-io-flow.html\" through lock \"/home/zhang/opencode/code_analsys/site/设备驱动/.archify-delivery-lock.json\"."
+      },
+      "supportedFixes": [
+        "wait for the active delivery to finish, then retry"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/review-1/block-io-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/sequence-block-io-flow/review-1/block-io-flow.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "deliver",
+  "finishedAt": "2026-11-07T13:45:05.791Z",
+  "durationMs": 255,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

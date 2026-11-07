@@ -273,6 +273,22 @@
         "NS List 命令返回 DNR 时回退顺序扫描",
         "nvme_alloc_ns 建立块设备并加入控制器命名空间列表"
       ]
+    },
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "nvme_init_ctrl_finish — drivers/nvme/host/core.c:3736",
+        "nvme_init_identify — drivers/nvme/host/core.c:3589",
+        "nvme_identify_ctrl — drivers/nvme/host/core.c:1479",
+        "nvme_start_ctrl — drivers/nvme/host/core.c:5064",
+        "nvme_queue_scan — drivers/nvme/host/core.c:158",
+        "nvme_scan_work — drivers/nvme/host/core.c:4578",
+        "nvme_scan_ns_list — drivers/nvme/host/core.c:4486",
+        "nvme_scan_ns_sequential — drivers/nvme/host/core.c:4537",
+        "nvme_scan_ns — drivers/nvme/host/core.c:4391",
+        "nvme_alloc_ns — drivers/nvme/host/core.c:4191"
+      ]
     }
   ]
 }

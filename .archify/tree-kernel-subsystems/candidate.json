@@ -51,5 +51,19 @@
     { "id": "startup", "label": "x86 入口 startup_64", "parent": "boot", "sublabel": "arch/x86/kernel/head_64.S", "sources": [{ "path": "arch/x86/kernel/head_64.S", "line": 38 }] },
     { "id": "startkernel", "label": "start_kernel", "parent": "boot", "sublabel": "init/main.c", "sources": [{ "path": "init/main.c", "line": 972 }] },
     { "id": "initproc", "label": "init 进程", "parent": "boot", "sublabel": "init/main.c", "sources": [{ "path": "init/main.c", "line": 1539 }] }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "完整调用链(源码核实)",
+      "items": [
+        "进程 — kernel_clone(kernel/fork.c:2694) → copy_process(kernel/fork.c:1994) → wake_up_new_task(kernel/sched/core.c:4941)",
+        "内存 — handle_mm_fault(mm/memory.c:6651) → __handle_mm_fault(mm/memory.c:6417) → do_anonymous_page(mm/memory.c:5287)",
+        "文件 — do_sys_openat2(fs/open.c:1359) → do_file_open(fs/namei.c:4882) → do_open(fs/namei.c:4652) → vfs_open(fs/open.c:1047) → do_dentry_open(fs/open.c:885)",
+        "网络 — tcp_v4_rcv(net/ipv4/tcp_ipv4.c:2067) → tcp_v4_do_rcv(net/ipv4/tcp_ipv4.c:1827) → tcp_rcv_established(net/ipv4/tcp_input.c:6470)",
+        "驱动 — submit_bio(block/blk-core.c:952) → submit_bio_noacct(block/blk-core.c:817) → blk_mq_submit_bio(block/blk-mq.c:3093) → blk_mq_dispatch_rq_list(block/blk-mq.c:2085) → queue_rq(block/blk-mq.c:2117)",
+        "启动 — startup_64(arch/x86/kernel/head_64.S:38) → x86_64_start_kernel(arch/x86/kernel/head64.c:222) → start_kernel(init/main.c:972) → rest_init(init/main.c:671) → kernel_init(init/main.c:1539) → run_init_process(init/main.c:1457)"
+      ]
+    }
   ]
 }

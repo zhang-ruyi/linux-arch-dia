@@ -133,6 +133,18 @@ python3 -m http.server 8000 -d site --bind 0.0.0.0
 
 首页扫描 `.archify/*/candidate.json`,自动生成分类侧栏、搜索、类型筛选和 iframe 预览。
 
+### 调用链深度约定(两层)
+
+为避免版面拥挤,采用两层表达:
+
+1. **概览图**(现有 37 张):节点按阶段聚合,但每张图的 `cards` 中必须有一张:
+   `{"dot":"slate","title":"完整调用链(源码核实)","items":["函数 — path:line", ...]}`
+   按真实调用顺序逐函数列出完整链,函数名与行号必须 grep 核实。
+2. **函数级深度调用图**(`deep-*`):用 `workflow` 类型,节点就是函数,`sublabel` 写文件/职责,用 group 分阶段,允许 25–50 个节点;主元素带 `sources`。
+   当前覆盖:进程创建、缺页异常、TCP 收包、open、read、块层 IO、NVMe IO。
+
+修改已有概览图后必须重跑 `finalize` 并加新的 `--out-dir .../review-<N>`(原产物已持有 browser-check 证据)。
+
 ## 四、内核分析速查
 
 | 主题 | 入口线索 |

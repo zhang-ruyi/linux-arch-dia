@@ -5657,6 +5657,27 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>__slab_free 在 slab 空闲后通过 free_slab 把页块归还伙伴系统</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>kmalloc — include/linux/slab.h:1034</li>
+          <li>_kmalloc_noprof — include/linux/slab.h:960 (常量 size 快路径)</li>
+          <li>__kmalloc_noprof — mm/slub.c:5379</li>
+          <li>__do_kmalloc_node — mm/slub.c:5342</li>
+          <li>kmalloc_slab — mm/slab.h:389</li>
+          <li>slab_alloc_node — mm/slub.c:4920</li>
+          <li>__slab_alloc_node — mm/slub.c:4529 (慢路径)</li>
+          <li>allocate_slab — mm/slub.c:3387</li>
+          <li>kfree — mm/slub.c:6699</li>
+          <li>slab_free — mm/slub.c:6399</li>
+          <li>__slab_free — mm/slub.c:5664</li>
+          <li>free_slab — mm/slub.c:3490</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">

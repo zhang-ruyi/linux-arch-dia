@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/lifecycle-nvme-ctrl-states/candidate.json",
+    "sha256": "6d705a579b7703fca37a32b3d74527f2c25e85b2be696f1249591dd77e201638",
+    "bytes": 7799
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-ctrl-states.html",
+    "sha256": "9784f3a6a65f97c5f70187a4ac6512560bf1657f12b08e14f9a2397cf222895a",
+    "bytes": 846732
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-nvme-ctrl-states/review-1/nvme-ctrl-states.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-nvme-ctrl-states/review-1/nvme-ctrl-states.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/.archify/lifecycle-nvme-ctrl-states/review-1/nvme-ctrl-states.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-05T14:23:13.547Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3752,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -5662,6 +5662,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <li>被唤醒后再次检查 rdllist</li>
         </ul>
       </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot slate"></div>
+          <h3>完整调用链(源码核实)</h3>
+        </div>
+        <ul>
+          <li>SYSCALL_DEFINE1(epoll_create1) — fs/eventpoll.c:2507</li>
+          <li>do_epoll_create — fs/eventpoll.c:2476</li>
+          <li>SYSCALL_DEFINE4(epoll_ctl) — fs/eventpoll.c:2732</li>
+          <li>do_epoll_ctl — fs/eventpoll.c:2708</li>
+          <li>ep_insert — fs/eventpoll.c:1880</li>
+          <li>ep_poll_callback — fs/eventpoll.c:1475</li>
+          <li>SYSCALL_DEFINE4(epoll_wait) — fs/eventpoll.c:2814</li>
+          <li>ep_poll — fs/eventpoll.c:2239</li>
+          <li>ep_send_events — fs/eventpoll.c:2112</li>
+        </ul>
+      </div>
     </div>
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">
