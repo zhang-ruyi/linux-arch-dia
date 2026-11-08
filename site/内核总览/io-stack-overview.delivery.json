@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "30a3278e-0e96-413e-a48b-dd62a85a1a70",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/zhang/opencode/code_analsys/.archify/architecture-io-stack-overview/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核总览/io-stack-overview.html",
+  "specification": {
+    "sha256": "21151883d4bb266aec9218ec6951fbb074ece05a2a949f54afbd8808e8d34bf6",
+    "bytes": 6664
+  },
+  "artifact": {
+    "sha256": "b9eb27065d0e7d15b2c3693a97d34878bd1e98392bacff66fd4be8b4baf57f8c",
+    "bytes": 845408
+  }
+}

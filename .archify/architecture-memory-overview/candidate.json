@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "进程地址空间与内存管理全景",
+    "locale": "zh-CN",
+    "output": "site/内核总览/memory-overview.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "用户进程 VA",
+      "sublabel": "text / data / heap / mmap / stack",
+      "pos": [340, 40],
+      "size": [200, 60],
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 918,
+          "label": "find_vma"
+        }
+      ]
+    },
+    {
+      "id": "vma",
+      "type": "backend",
+      "label": "VMA 管理",
+      "sublabel": "find_vma / mmap_region",
+      "pos": [340, 160],
+      "size": [200, 70],
+      "sources": [
+        {
+          "path": "mm/mmap.c",
+          "line": 918,
+          "label": "find_vma"
+        },
+        {
+          "path": "mm/vma.c",
+          "line": 3147,
+          "label": "mmap_region"
+        }
+      ]
+    },
+    {
+      "id": "pagetable",
+      "type": "backend",
+      "label": "页表",
+      "sublabel": "pgd → p4d → pud → pmd → pte",
+      "pos": [340, 270],
+      "size": [200, 70],
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 451,
+          "label": "__pte_alloc"
+        }
+      ]
+    },
+    {
+      "id": "fault",
+      "type": "backend",
+      "label": "缺页异常",
+      "sublabel": "handle_mm_fault / do_anonymous_page / do_fault",
+      "pos": [340, 380],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/memory.c",
+          "line": 6949,
+          "label": "handle_mm_fault"
+        },
+        {
+          "path": "mm/memory.c",
+          "line": 5539,
+          "label": "do_anonymous_page"
+        },
+        {
+          "path": "mm/memory.c",
+          "line": 6216,
+          "label": "do_fault"
+        }
+      ]
+    },
+    {
+      "id": "buddy",
+      "type": "backend",
+      "label": "伙伴系统",
+      "sublabel": "__alloc_pages / 释放页帧",
+      "pos": [170, 520],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/page_alloc.c",
+          "line": 5494,
+          "label": "__alloc_pages_noprof"
+        },
+        {
+          "path": "mm/page_alloc.c",
+          "line": 1575,
+          "label": "__free_pages_ok"
+        }
+      ]
+    },
+    {
+      "id": "slab",
+      "type": "backend",
+      "label": "SLUB 分配器",
+      "sublabel": "kmem_cache_alloc / kmalloc",
+      "pos": [170, 660],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/slub.c",
+          "line": 5038,
+          "label": "kmem_cache_alloc_noprof"
+        },
+        {
+          "path": "mm/slub.c",
+          "line": 5548,
+          "label": "__kmalloc_noprof"
+        }
+      ]
+    },
+    {
+      "id": "pagecache",
+      "type": "database",
+      "label": "页缓存 page cache",
+      "sublabel": "filemap_fault / filemap_read",
+      "pos": [510, 520],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 3572,
+          "label": "filemap_fault"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 2816,
+          "label": "filemap_read"
+        }
+      ]
+    },
+    {
+      "id": "vmscan",
+      "type": "backend",
+      "label": "页面回收",
+      "sublabel": "shrink_node / pageout",
+      "pos": [510, 660],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/vmscan.c",
+          "line": 6457,
+          "label": "shrink_node"
+        },
+        {
+          "path": "mm/vmscan.c",
+          "line": 693,
+          "label": "pageout"
+        }
+      ]
+    },
+    {
+      "id": "swap",
+      "type": "external",
+      "label": "Swap 设备",
+      "sublabel": "swap_writeout / swap_read_folio",
+      "pos": [510, 800],
+      "size": [200, 80],
+      "sources": [
+        {
+          "path": "mm/page_io.c",
+          "line": 204,
+          "label": "swap_writeout"
+        },
+        {
+          "path": "mm/page_io.c",
+          "line": 458,
+          "label": "swap_read_folio"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "地址映射与缺页",
+      "wraps": ["vma", "pagetable", "fault"],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "页分配器",
+      "wraps": ["buddy", "slab"],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "user-vma",
+      "from": "user",
+      "to": "vma",
+      "label": "访问 VA",
+      "variant": "default"
+    },
+    {
+      "id": "vma-pagetable",
+      "from": "vma",
+      "to": "pagetable",
+      "label": "登记 VMA",
+      "variant": "default"
+    },
+    {
+      "id": "pagetable-fault",
+      "from": "pagetable",
+      "to": "fault",
+      "label": "缺页",
+      "variant": "default"
+    },
+    {
+      "id": "fault-buddy",
+      "from": "fault",
+      "to": "buddy",
+      "label": "写: 匿名页",
+      "variant": "emphasis",
+      "fromSide": "left",
+      "toSide": "top",
+      "via": [[270, 420], [270, 520]]
+    },
+    {
+      "id": "fault-pagecache",
+      "from": "fault",
+      "to": "pagecache",
+      "label": "读: 文件页",
+      "variant": "default",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [[610, 420], [610, 520]]
+    },
+    {
+      "id": "buddy-pagecache",
+      "from": "buddy",
+      "to": "pagecache",
+      "label": "提供页帧",
+      "variant": "default",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "buddy-slab",
+      "from": "buddy",
+      "to": "slab",
+      "label": "提供 slab 页",
+      "variant": "default",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "vmscan-pagecache",
+      "from": "vmscan",
+      "to": "pagecache",
+      "label": "回收 clean 页",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "vmscan-swap",
+      "from": "vmscan",
+      "to": "swap",
+      "label": "换出匿名页",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "用户地址空间与映射",
+      "items": [
+        "用户进程的 text/data/heap/mmap/stack 由一组 VMA 描述",
+        "find_vma() 按地址找到 VMA；mmap_region() 创建新映射",
+        "页表按 pgd→p4d→pud→pmd→pte 逐级建立，缺页时由 __pte_alloc() 补齐页表页"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "读 / 写",
+      "items": [
+        "读文件页缺页：handle_mm_fault() → do_fault() → filemap_fault()，从页缓存或磁盘取回 folio",
+        "写匿名页缺页：do_anonymous_page() 向伙伴系统申请页帧并建立 PTE",
+        "页缓存中的文件页同样由伙伴系统提供页帧，回收后再归还"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "回收与 swap",
+      "items": [
+        "shrink_node() 驱动页面回收，shrink_folio_list() 中的 pageout() 处理脏页",
+        "干净的页缓存可直接回收；匿名页经 swap_writeout() 换出到 Swap 设备",
+        "回收释放的页帧回到伙伴系统，slab 也可把空 slab 归还给伙伴系统"
+      ]
+    }
+  ]
+}

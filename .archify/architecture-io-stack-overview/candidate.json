@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Linux IO 栈总览",
+    "locale": "zh-CN",
+    "output": "site/内核总览/io-stack-overview.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "userbuf",
+      "type": "external",
+      "label": "用户 buffer / iov_iter",
+      "sublabel": "描述用户内存方向与长度",
+      "pos": [360, 40],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "include/linux/uio.h",
+          "line": 383,
+          "label": "iov_iter_ubuf"
+        },
+        {
+          "path": "lib/iov_iter.c",
+          "line": 174,
+          "label": "iov_iter_init"
+        }
+      ]
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "VFS",
+      "sublabel": "vfs_read / vfs_write",
+      "pos": [360, 160],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        },
+        {
+          "path": "fs/read_write.c",
+          "line": 667,
+          "label": "vfs_write"
+        }
+      ]
+    },
+    {
+      "id": "pagecache",
+      "type": "database",
+      "label": "page cache / folio",
+      "sublabel": "filemap_read / generic_perform_write",
+      "pos": [360, 280],
+      "size": [220, 80],
+      "sources": [
+        {
+          "path": "mm/filemap.c",
+          "line": 2816,
+          "label": "filemap_read"
+        },
+        {
+          "path": "mm/filemap.c",
+          "line": 4364,
+          "label": "generic_perform_write"
+        }
+      ]
+    },
+    {
+      "id": "bio",
+      "type": "backend",
+      "label": "block bio",
+      "sublabel": "submit_bio",
+      "pos": [360, 410],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "block/blk-core.c",
+          "line": 960,
+          "label": "submit_bio"
+        }
+      ]
+    },
+    {
+      "id": "blkmq",
+      "type": "backend",
+      "label": "blk-mq",
+      "sublabel": "blk_mq_submit_bio",
+      "pos": [360, 530],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "block/blk-mq.c",
+          "line": 3115,
+          "label": "blk_mq_submit_bio"
+        },
+        {
+          "path": "block/blk-mq.c",
+          "line": 3242,
+          "label": "blk_mq_try_issue_directly"
+        }
+      ]
+    },
+    {
+      "id": "nvme",
+      "type": "backend",
+      "label": "NVMe 驱动",
+      "sublabel": "nvme_queue_rq",
+      "pos": [360, 650],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "drivers/nvme/host/pci.c",
+          "line": 1663,
+          "label": "nvme_queue_rq"
+        }
+      ]
+    },
+    {
+      "id": "ssd",
+      "type": "external",
+      "label": "NVMe SSD",
+      "sublabel": "持久化存储设备",
+      "pos": [380, 770],
+      "size": [180, 60]
+    },
+    {
+      "id": "dio",
+      "type": "backend",
+      "label": "iomap_dio_rw",
+      "sublabel": "O_DIRECT 旁路页缓存",
+      "pos": [680, 160],
+      "size": [220, 70],
+      "sources": [
+        {
+          "path": "fs/iomap/direct-io.c",
+          "line": 911,
+          "label": "iomap_dio_rw"
+        },
+        {
+          "path": "fs/ext4/file.c",
+          "line": 69,
+          "label": "ext4_dio_read_iter"
+        },
+        {
+          "path": "block/fops.c",
+          "line": 401,
+          "label": "blkdev_direct_IO"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "页缓存（buffered）",
+      "wraps": ["pagecache"],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "块层",
+      "wraps": ["bio", "blkmq"],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "NVMe 驱动",
+      "wraps": ["nvme"],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "O_DIRECT 旁路",
+      "wraps": ["dio"],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "userbuf-vfs",
+      "from": "userbuf",
+      "to": "vfs",
+      "label": "read / write",
+      "variant": "default"
+    },
+    {
+      "id": "vfs-pagecache",
+      "from": "vfs",
+      "to": "pagecache",
+      "label": "buffered I/O",
+      "variant": "default"
+    },
+    {
+      "id": "pagecache-bio",
+      "from": "pagecache",
+      "to": "bio",
+      "label": "submit_bio",
+      "variant": "default"
+    },
+    {
+      "id": "bio-blkmq",
+      "from": "bio",
+      "to": "blkmq",
+      "label": "blk_mq_submit_bio",
+      "variant": "default"
+    },
+    {
+      "id": "blkmq-nvme",
+      "from": "blkmq",
+      "to": "nvme",
+      "label": "nvme_queue_rq",
+      "variant": "default"
+    },
+    {
+      "id": "nvme-ssd",
+      "from": "nvme",
+      "to": "ssd",
+      "label": "PCIe / NVMe 命令",
+      "variant": "default"
+    },
+    {
+      "id": "vfs-dio",
+      "from": "vfs",
+      "to": "dio",
+      "label": "O_DIRECT",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "dio-bio",
+      "from": "dio",
+      "to": "bio",
+      "label": "直接提交 bio",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "via": [[790, 445]],
+      "labelSegment": 1,
+      "labelDy": -10
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Buffered 视图",
+      "items": [
+        "read/write 经 VFS 进入 page cache：filemap_read() 读缓存，generic_perform_write() 写入 folio",
+        "缓存未命中或脏页回写时，page cache 通过 submit_bio() 把 bio 交给块层",
+        "块层经 blk-mq 排队与调度，最终由 NVMe 驱动下发命令到 SSD"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "O_DIRECT 视图",
+      "items": [
+        "设置 O_DIRECT 后，VFS 进入 iomap_dio_rw()，绕过 page cache",
+        "iomap_dio_rw() 直接构造 bio 提交到块层；块设备文件走 blkdev_direct_IO()",
+        "两条视图在 block bio 处汇合，底层 blk-mq 与 NVMe 驱动共用"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "关键符号（源码核实）",
+      "items": [
+        "vfs_read — fs/read_write.c:554",
+        "filemap_read — mm/filemap.c:2816",
+        "generic_perform_write — mm/filemap.c:4364",
+        "submit_bio — block/blk-core.c:960",
+        "blk_mq_submit_bio — block/blk-mq.c:3115",
+        "nvme_queue_rq — drivers/nvme/host/pci.c:1663",
+        "iomap_dio_rw — fs/iomap/direct-io.c:911"
+      ]
+    }
+  ]
+}

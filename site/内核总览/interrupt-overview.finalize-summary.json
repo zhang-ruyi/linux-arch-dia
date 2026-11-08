@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/workflow-interrupt-overview/candidate.json",
+    "sha256": "22ee8bdacd73ec34df79ac49fe2a2c434e21387911b4ab9a5ead5ae8ff1930d5",
+    "bytes": 6672
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/interrupt-overview.html",
+    "sha256": "83f2f6f8cce12d6031261cdae0dee09e3f6d2f27ca985362c12af6259f6bca8f",
+    "bytes": 844786
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/interrupt-overview.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/interrupt-overview.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/interrupt-overview.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3172,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

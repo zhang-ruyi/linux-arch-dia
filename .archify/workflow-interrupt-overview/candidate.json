@@ -1,0 +1,270 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "中断与下半部总览",
+    "locale": "zh-CN",
+    "output": "site/内核总览/interrupt-overview.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "lanes": [
+    { "id": "hw", "label": "硬件与入口" },
+    { "id": "top", "label": "上半部" },
+    { "id": "bottom", "label": "下半部" },
+    { "id": "ret", "label": "返回与调度" }
+  ],
+  "phases": [
+    { "id": "entry", "label": "入口", "fromCol": 0, "toCol": 1 },
+    { "id": "top-half", "label": "上半部处理", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "bottom-half", "label": "下半部与返回", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["hw", "idt", "dispatch", "handler", "exit", "softirq", "ret"],
+  "nodes": [
+    {
+      "id": "hw",
+      "lane": "hw",
+      "col": 0,
+      "type": "external",
+      "label": "硬件中断",
+      "sublabel": "设备触发 IRQ"
+    },
+    {
+      "id": "idt",
+      "lane": "hw",
+      "col": 1,
+      "type": "backend",
+      "label": "IDT / 入口",
+      "sublabel": "common_interrupt",
+      "sources": [
+        {
+          "path": "arch/x86/kernel/irq.c",
+          "line": 273,
+          "label": "DEFINE_IDTENTRY_IRQ(common_interrupt)"
+        },
+        {
+          "path": "arch/x86/kernel/idt.c",
+          "line": 209,
+          "label": "set_intr_gate"
+        }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "lane": "top",
+      "col": 2,
+      "type": "backend",
+      "label": "中断分发",
+      "sublabel": "generic_handle_irq",
+      "sources": [
+        {
+          "path": "kernel/irq/irqdesc.c",
+          "line": 700,
+          "label": "generic_handle_irq"
+        }
+      ]
+    },
+    {
+      "id": "handler",
+      "lane": "top",
+      "col": 3,
+      "type": "backend",
+      "label": "上半部 handler",
+      "sublabel": "__handle_irq_event_percpu",
+      "sources": [
+        {
+          "path": "kernel/irq/handle.c",
+          "line": 185,
+          "label": "__handle_irq_event_percpu"
+        },
+        {
+          "path": "include/linux/interrupt.h",
+          "line": 175,
+          "label": "request_irq"
+        }
+      ]
+    },
+    {
+      "id": "exit",
+      "lane": "top",
+      "col": 4,
+      "type": "backend",
+      "label": "irq_exit_rcu",
+      "sublabel": "中断退出 → 触发软中断",
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 807,
+          "label": "irq_exit_rcu"
+        }
+      ]
+    },
+    {
+      "id": "softirq",
+      "lane": "bottom",
+      "col": 5,
+      "type": "backend",
+      "label": "softirq / tasklet",
+      "sublabel": "do_softirq / tasklet_action",
+      "sources": [
+        {
+          "path": "kernel/softirq.c",
+          "line": 556,
+          "label": "do_softirq"
+        },
+        {
+          "path": "kernel/softirq.c",
+          "line": 1020,
+          "label": "tasklet_action"
+        }
+      ]
+    },
+    {
+      "id": "wq",
+      "lane": "bottom",
+      "col": 4,
+      "type": "messagebus",
+      "label": "workqueue",
+      "sublabel": "queue_work / worker_thread",
+      "sources": [
+        {
+          "path": "include/linux/workqueue.h",
+          "line": 697,
+          "label": "queue_work"
+        },
+        {
+          "path": "kernel/workqueue.c",
+          "line": 3604,
+          "label": "worker_thread"
+        }
+      ]
+    },
+    {
+      "id": "ret",
+      "lane": "ret",
+      "col": 5,
+      "type": "backend",
+      "label": "返回 / 调度",
+      "sublabel": "irqentry_exit / preempt_schedule_irq",
+      "sources": [
+        {
+          "path": "kernel/entry/common.c",
+          "line": 149,
+          "label": "irqentry_exit"
+        },
+        {
+          "path": "kernel/sched/core.c",
+          "line": 7650,
+          "label": "preempt_schedule_irq"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "hw-idt",
+      "from": "hw",
+      "to": "idt",
+      "label": "中断向量",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "idt-dispatch",
+      "from": "idt",
+      "to": "dispatch",
+      "label": "入口 / 保存上下文",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "dispatch-handler",
+      "from": "dispatch",
+      "to": "handler",
+      "label": "调用 action",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "handler-exit",
+      "from": "handler",
+      "to": "exit",
+      "label": "上半部返回",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "exit-softirq",
+      "from": "exit",
+      "to": "softirq",
+      "label": "pending → do_softirq",
+      "role": "main",
+      "variant": "emphasis"
+    },
+    {
+      "id": "softirq-ret",
+      "from": "softirq",
+      "to": "ret",
+      "label": "软中断完成",
+      "role": "return",
+      "variant": "default"
+    },
+    {
+      "id": "handler-wq",
+      "from": "handler",
+      "to": "wq",
+      "label": "queue_work 提交",
+      "role": "async",
+      "variant": "dashed"
+    },
+    {
+      "id": "wq-ret",
+      "from": "wq",
+      "to": "ret",
+      "label": "进程上下文执行",
+      "role": "async",
+      "variant": "dashed"
+    },
+    {
+      "id": "exit-ret",
+      "from": "exit",
+      "to": "ret",
+      "label": "无 pending 时直接返回",
+      "role": "branch",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "上半部",
+      "items": [
+        "硬件触发中断后经 IDT 进入 common_interrupt()",
+        "generic_handle_irq() 找到 irq_desc，调用 request_irq() 注册的 action",
+        "__handle_irq_event_percpu() 逐个执行 action，并记录返回值"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "下半部",
+      "items": [
+        "irq_exit_rcu() 发现 pending 软中断后调用 do_softirq()",
+        "softirq 执行 open_softirq() 注册的 action；tasklet 由 tasklet_action() 运行",
+        "workqueue 通过 queue_work() 提交，由 worker_thread() 在进程上下文执行"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "返回与调度",
+      "items": [
+        "irqentry_exit() 负责中断返回路径",
+        "返回前若 need_resched() 为真，preempt_schedule_irq() 触发调度",
+        "软中断与 workqueue 都可运行于进程上下文或内核线程，workqueue 允许睡眠"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-memory-overview/candidate.json",
+    "sha256": "f4951555e990962f3e8ebd851d942003f8d714ef899bf33e3ae92e7faf8bec37",
+    "bytes": 7507
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/memory-overview.html",
+    "sha256": "23ad98aafeb42c904165731b5720370b88a7934c2afd86fe8afb65540a2e3a04",
+    "bytes": 846555
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/memory-overview.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/memory-overview.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/memory-overview.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3140,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

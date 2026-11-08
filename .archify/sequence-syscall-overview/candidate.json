@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "系统调用总览:用户态 → 内核态 → 返回",
+    "locale": "zh-CN",
+    "output": "site/内核总览/syscall-overview.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "external",
+      "label": "用户进程",
+      "sublabel": "read(fd, buf, count)",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 723,
+          "label": "SYSCALL_DEFINE3(read)"
+        }
+      ]
+    },
+    {
+      "id": "libc",
+      "type": "frontend",
+      "label": "libc 封装",
+      "sublabel": "read() → syscall 指令",
+      "sources": [
+        {
+          "path": "arch/x86/entry/syscalls/syscall_64.tbl",
+          "line": 12,
+          "label": "read = 0（系统调用号 ABI）"
+        }
+      ]
+    },
+    {
+      "id": "entry",
+      "type": "backend",
+      "label": "entry_SYSCALL_64",
+      "sublabel": "入口 / SYSRET",
+      "sources": [
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 87,
+          "label": "entry_SYSCALL_64"
+        },
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 560,
+          "label": "swapgs_restore_regs_and_return_to_usermode"
+        }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "type": "backend",
+      "label": "do_syscall_64",
+      "sublabel": "保存 pt_regs",
+      "sources": [
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 79,
+          "label": "do_syscall_64"
+        },
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 57,
+          "label": "do_syscall_x64"
+        },
+        {
+          "path": "include/linux/entry-common.h",
+          "line": 338,
+          "label": "syscall_exit_to_user_mode"
+        }
+      ]
+    },
+    {
+      "id": "table",
+      "type": "backend",
+      "label": "系统调用分发",
+      "sublabel": "x64_sys_call",
+      "sources": [
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 37,
+          "label": "x64_sys_call"
+        },
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 29,
+          "label": "sys_call_table"
+        }
+      ]
+    },
+    {
+      "id": "vfs",
+      "type": "backend",
+      "label": "VFS 层",
+      "sublabel": "ksys_read / vfs_read",
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 705,
+          "label": "ksys_read"
+        },
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
+      ]
+    },
+    {
+      "id": "fs",
+      "type": "backend",
+      "label": "ext4 read_iter",
+      "sublabel": "ext4_file_read_iter",
+      "sources": [
+        {
+          "path": "fs/ext4/file.c",
+          "line": 132,
+          "label": "ext4_file_read_iter"
+        },
+        {
+          "path": "fs/ext4/file.c",
+          "line": 1055,
+          "label": ".read_iter = ext4_file_read_iter"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 235,
+      "label": "进入内核"
+    },
+    {
+      "from": 245,
+      "to": 330,
+      "label": "按系统调用号分发"
+    },
+    {
+      "from": 340,
+      "to": 445,
+      "label": "VFS / 文件系统"
+    },
+    {
+      "from": 450,
+      "to": 510,
+      "label": "返回用户态"
+    }
+  ],
+  "messages": [
+    {
+      "id": "call-read",
+      "from": "app",
+      "to": "libc",
+      "y": 160,
+      "label": "调用 read(fd, buf, count)",
+      "variant": "default"
+    },
+    {
+      "id": "libc-entry",
+      "from": "libc",
+      "to": "entry",
+      "y": 190,
+      "label": "syscall 指令（rax = 0）",
+      "variant": "emphasis"
+    },
+    {
+      "id": "entry-dispatch",
+      "from": "entry",
+      "to": "dispatch",
+      "y": 220,
+      "label": "构造 pt_regs，call do_syscall_64",
+      "variant": "emphasis"
+    },
+    {
+      "id": "dispatch-table",
+      "from": "dispatch",
+      "to": "table",
+      "y": 250,
+      "label": "do_syscall_x64(regs, nr)",
+      "variant": "default"
+    },
+    {
+      "id": "table-vfs",
+      "from": "table",
+      "to": "vfs",
+      "y": 280,
+      "label": "__x64_sys_read() → ksys_read",
+      "variant": "default"
+    },
+    {
+      "id": "vfs-fs",
+      "from": "vfs",
+      "to": "fs",
+      "y": 310,
+      "label": "f_op->read_iter()",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fs-return",
+      "from": "fs",
+      "to": "vfs",
+      "y": 345,
+      "label": "返回读取字节数",
+      "variant": "return",
+      "note": "read_iter 的返回值最终写入 regs->ax；负值表示错误码"
+    },
+    {
+      "id": "vfs-return",
+      "from": "vfs",
+      "to": "dispatch",
+      "y": 400,
+      "label": "vfs_read 返回 ret",
+      "variant": "return"
+    },
+    {
+      "id": "dispatch-exit",
+      "from": "dispatch",
+      "to": "entry",
+      "y": 430,
+      "label": "syscall_exit_to_user_mode()",
+      "variant": "return"
+    },
+    {
+      "id": "entry-libc",
+      "from": "entry",
+      "to": "libc",
+      "y": 460,
+      "label": "SYSRET / IRET 回到用户态",
+      "variant": "return"
+    },
+    {
+      "id": "libc-app",
+      "from": "libc",
+      "to": "app",
+      "y": 490,
+      "label": "read 返回",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "app",
+      "from": 155,
+      "to": 500,
+      "type": "external"
+    },
+    {
+      "participant": "libc",
+      "from": 155,
+      "to": 500,
+      "type": "frontend"
+    },
+    {
+      "participant": "entry",
+      "from": 210,
+      "to": 465,
+      "type": "backend"
+    },
+    {
+      "participant": "dispatch",
+      "from": 215,
+      "to": 445,
+      "type": "backend"
+    },
+    {
+      "participant": "table",
+      "from": 245,
+      "to": 330,
+      "type": "backend"
+    },
+    {
+      "participant": "vfs",
+      "from": 275,
+      "to": 415,
+      "type": "backend"
+    },
+    {
+      "participant": "fs",
+      "from": 305,
+      "to": 360,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "入口与分发",
+      "items": [
+        "用户态执行 syscall 指令后，CPU 进入 entry_SYSCALL_64，并在内核栈构造 pt_regs",
+        "do_syscall_64() 调用 do_syscall_x64()，在当前版本由 x64_sys_call() 按系统调用号分发",
+        "sys_call_table[] 仍保留系统调用地址，供 trace_syscalls 等使用，不再作为主分发路径"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "以 read 为例",
+      "items": [
+        "__x64_sys_read() 调用 ksys_read()，再进入 vfs_read()",
+        "vfs_read() 通过 file->f_op->read_iter() 调用到具体文件系统",
+        "读取结果写入 regs->ax，并沿调用链返回用户态"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "返回路径",
+      "items": [
+        "do_syscall_64() 内调用 syscall_exit_to_user_mode() 处理退出工作",
+        "返回值通过 SYSRET 快速返回，条件不满足时走 IRET 慢路径",
+        "换页表、恢复寄存器后回到 libc，最终返回用户进程"
+      ]
+    }
+  ]
+}

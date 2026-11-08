@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "989a7e20-3e37-4e05-b6b1-7bcf331eb0eb",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/zhang/opencode/code_analsys/.archify/architecture-memory-overview/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核总览/memory-overview.html",
+  "specification": {
+    "sha256": "f4951555e990962f3e8ebd851d942003f8d714ef899bf33e3ae92e7faf8bec37",
+    "bytes": 7507
+  },
+  "artifact": {
+    "sha256": "23ad98aafeb42c904165731b5720370b88a7934c2afd86fe8afb65540a2e3a04",
+    "bytes": 846555
+  }
+}

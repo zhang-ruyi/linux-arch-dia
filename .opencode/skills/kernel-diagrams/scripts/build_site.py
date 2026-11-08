@@ -193,23 +193,23 @@ def build_page(items, title):
 <title>__TITLE__</title>
 <style>
 :root {
-  --bg:#060a12; --bg2:#08101c; --panel:#0b1420; --card:#0d1726;
-  --border:#1b2a3d; --border2:#2a3d55; --text:#e6eefb; --muted:#7f93ad;
-  --emerald:#34d399; --cyan:#22d3ee; --amber:#fbbf24; --violet:#a78bfa;
+  --bg:#0f172a; --bg2:#13203a; --panel:#16233b; --card:#182741;
+  --border:#2b3d5c; --border2:#3f5878; --text:#eef4ff; --muted:#a6b6cf;
+  --emerald:#3ddc97; --cyan:#38bdf8; --amber:#fbbf24; --violet:#a78bfa;
   --grad:linear-gradient(120deg,#34d399,#22d3ee 55%,#60a5fa);
   --mono:ui-monospace,"SFMono-Regular","JetBrains Mono",Consolas,monospace;
 }
 * { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
 body {
-  display:grid; grid-template-columns:258px minmax(0,1fr);
+  display:grid; grid-template-columns:286px minmax(0,1fr);
   min-height:100vh; background:var(--bg); color:var(--text);
   font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
   background-image:
     radial-gradient(900px 520px at 10% -10%, rgba(52,211,153,.10), transparent 60%),
     radial-gradient(900px 520px at 96% 0%, rgba(34,211,238,.10), transparent 62%),
-    linear-gradient(rgba(52,211,153,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(52,211,153,.035) 1px, transparent 1px);
+    linear-gradient(rgba(61,220,151,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,220,151,.05) 1px, transparent 1px);
   background-size:auto, auto, 42px 42px, 42px 42px;
 }
 a { color:var(--emerald); text-decoration:none; }
@@ -218,7 +218,7 @@ a:hover { text-decoration:none; }
 /* ===== rail ===== */
 aside {
   position:sticky; top:0; height:100vh; overflow-y:auto;
-  border-right:1px solid var(--border); background:rgba(9,16,28,.86);
+  border-right:1px solid var(--border); background:rgba(15,23,42,.90);
   padding:20px 16px; backdrop-filter:blur(10px);
 }
 .brand { display:flex; align-items:center; gap:10px; color:var(--text); font-weight:800; letter-spacing:.02em; }
@@ -227,17 +227,17 @@ aside {
   color:#04120d; display:grid; place-items:center; font-weight:900; font-size:14px;
   box-shadow:0 8px 22px rgba(52,211,153,.25);
 }
-.brand small { display:block; color:var(--muted); font-family:var(--mono); font-size:10px; letter-spacing:.14em; font-weight:400; }
-.aside-label { color:var(--muted); font-size:10px; letter-spacing:.16em; text-transform:uppercase; margin:20px 0 8px; font-family:var(--mono); }
+.brand small { display:block; color:var(--muted); font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; font-weight:400; }
+.aside-label { color:var(--muted); font-size:11px; letter-spacing:.16em; text-transform:uppercase; margin:20px 0 8px; font-family:var(--mono); }
 #search {
-  width:100%; padding:8px 11px; border-radius:8px; border:1px solid var(--border);
-  background:var(--bg2); color:var(--text); font-size:12.5px; outline:none;
+  width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text); font-size:13.5px; outline:none;
 }
 #search:focus { border-color:var(--emerald); box-shadow:0 0 0 2px rgba(52,211,153,.12); }
 .chips { display:flex; flex-wrap:wrap; gap:6px; }
 .chip {
   border:1px solid var(--border); background:var(--panel); color:var(--muted);
-  padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;
+  padding:5px 11px; border-radius:999px; font-size:12.5px; cursor:pointer;
   transition:color .15s,border-color .15s,background .15s;
 }
 .chip:hover { color:var(--text); border-color:var(--border2); }
@@ -247,21 +247,21 @@ aside {
   display:flex; align-items:center; justify-content:space-between; gap:8px;
   width:100%; text-align:left; background:none; border:1px solid transparent;
   border-left:2px solid transparent; color:var(--muted); cursor:pointer;
-  padding:6px 8px; border-radius:0 6px 6px 0; font-size:12.5px;
+  padding:7px 9px; border-radius:0 6px 6px 0; font-size:14px;
   transition:color .15s,background .15s,border-color .15s;
 }
 .cat-btn:hover { color:var(--text); background:rgba(52,211,153,.06); }
 .cat-btn.active { color:var(--emerald); border-left-color:var(--emerald); background:rgba(52,211,153,.08); }
-.cat-btn .n { font-family:var(--mono); font-size:10.5px; color:var(--muted); }
+.cat-btn .n { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
 .deep-toggle {
   width:100%; margin-top:10px; display:flex; align-items:center; justify-content:space-between;
   border:1px dashed var(--border2); background:rgba(251,191,36,.05); color:var(--muted);
-  padding:7px 10px; border-radius:8px; font-size:11.5px; cursor:pointer;
+  padding:8px 10px; border-radius:8px; font-size:12.5px; cursor:pointer;
 }
 .deep-toggle.active { color:var(--amber); border-color:rgba(251,191,36,.55); background:rgba(251,191,36,.10); }
 .deep-toggle b { font-family:var(--mono); color:var(--amber); }
 .rail-links { margin-top:16px; padding-top:12px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:5px; }
-.rail-links a { color:var(--muted); font-size:12px; }
+.rail-links a { color:var(--muted); font-size:13px; }
 .rail-links a:hover { color:var(--emerald); }
 
 /* ===== main ===== */
@@ -319,8 +319,8 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
 .t-tree { color:#f9a8d4; border-color:rgba(244,114,182,.4); background:rgba(244,114,182,.07); }
 .deep-badge { font-size:9.5px; color:var(--amber); border:1px solid rgba(251,191,36,.5); background:rgba(251,191,36,.10); border-radius:4px; padding:1px 5px; font-family:var(--mono); }
 .win-body { padding:12px 12px 10px; }
-.win-body h3 { font-size:14.5px; letter-spacing:-.01em; }
-.win-body p { color:var(--muted); font-size:12px; line-height:1.5; margin:5px 0 10px; min-height:36px; }
+.win-body h3 { font-size:15px; letter-spacing:-.01em; }
+.win-body p { color:var(--muted); font-size:12.5px; line-height:1.5; margin:5px 0 10px; min-height:36px; }
 .preview { border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--bg2); }
 .preview iframe { width:100%; height:360px; border:0; display:block; }
 .win-foot { display:flex; justify-content:space-between; align-items:center; padding:8px 12px 10px; color:var(--muted); font-size:11.5px; }

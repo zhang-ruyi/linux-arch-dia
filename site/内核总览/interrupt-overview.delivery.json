@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "f8f8cd97-1f6a-4418-9c36-08833816c30f",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/home/zhang/opencode/code_analsys/.archify/workflow-interrupt-overview/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核总览/interrupt-overview.html",
+  "specification": {
+    "sha256": "22ee8bdacd73ec34df79ac49fe2a2c434e21387911b4ab9a5ead5ae8ff1930d5",
+    "bytes": 6672
+  },
+  "artifact": {
+    "sha256": "83f2f6f8cce12d6031261cdae0dee09e3f6d2f27ca985362c12af6259f6bca8f",
+    "bytes": 844786
+  }
+}

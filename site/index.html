@@ -6,23 +6,23 @@
 <title>Linux 内核原理图解</title>
 <style>
 :root {
-  --bg:#060a12; --bg2:#08101c; --panel:#0b1420; --card:#0d1726;
-  --border:#1b2a3d; --border2:#2a3d55; --text:#e6eefb; --muted:#7f93ad;
-  --emerald:#34d399; --cyan:#22d3ee; --amber:#fbbf24; --violet:#a78bfa;
+  --bg:#0f172a; --bg2:#13203a; --panel:#16233b; --card:#182741;
+  --border:#2b3d5c; --border2:#3f5878; --text:#eef4ff; --muted:#a6b6cf;
+  --emerald:#3ddc97; --cyan:#38bdf8; --amber:#fbbf24; --violet:#a78bfa;
   --grad:linear-gradient(120deg,#34d399,#22d3ee 55%,#60a5fa);
   --mono:ui-monospace,"SFMono-Regular","JetBrains Mono",Consolas,monospace;
 }
 * { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
 body {
-  display:grid; grid-template-columns:258px minmax(0,1fr);
+  display:grid; grid-template-columns:286px minmax(0,1fr);
   min-height:100vh; background:var(--bg); color:var(--text);
   font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
   background-image:
     radial-gradient(900px 520px at 10% -10%, rgba(52,211,153,.10), transparent 60%),
     radial-gradient(900px 520px at 96% 0%, rgba(34,211,238,.10), transparent 62%),
-    linear-gradient(rgba(52,211,153,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(52,211,153,.035) 1px, transparent 1px);
+    linear-gradient(rgba(61,220,151,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,220,151,.05) 1px, transparent 1px);
   background-size:auto, auto, 42px 42px, 42px 42px;
 }
 a { color:var(--emerald); text-decoration:none; }
@@ -31,7 +31,7 @@ a:hover { text-decoration:none; }
 /* ===== rail ===== */
 aside {
   position:sticky; top:0; height:100vh; overflow-y:auto;
-  border-right:1px solid var(--border); background:rgba(9,16,28,.86);
+  border-right:1px solid var(--border); background:rgba(15,23,42,.90);
   padding:20px 16px; backdrop-filter:blur(10px);
 }
 .brand { display:flex; align-items:center; gap:10px; color:var(--text); font-weight:800; letter-spacing:.02em; }
@@ -40,17 +40,17 @@ aside {
   color:#04120d; display:grid; place-items:center; font-weight:900; font-size:14px;
   box-shadow:0 8px 22px rgba(52,211,153,.25);
 }
-.brand small { display:block; color:var(--muted); font-family:var(--mono); font-size:10px; letter-spacing:.14em; font-weight:400; }
-.aside-label { color:var(--muted); font-size:10px; letter-spacing:.16em; text-transform:uppercase; margin:20px 0 8px; font-family:var(--mono); }
+.brand small { display:block; color:var(--muted); font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; font-weight:400; }
+.aside-label { color:var(--muted); font-size:11px; letter-spacing:.16em; text-transform:uppercase; margin:20px 0 8px; font-family:var(--mono); }
 #search {
-  width:100%; padding:8px 11px; border-radius:8px; border:1px solid var(--border);
-  background:var(--bg2); color:var(--text); font-size:12.5px; outline:none;
+  width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text); font-size:13.5px; outline:none;
 }
 #search:focus { border-color:var(--emerald); box-shadow:0 0 0 2px rgba(52,211,153,.12); }
 .chips { display:flex; flex-wrap:wrap; gap:6px; }
 .chip {
   border:1px solid var(--border); background:var(--panel); color:var(--muted);
-  padding:4px 10px; border-radius:999px; font-size:11.5px; cursor:pointer;
+  padding:5px 11px; border-radius:999px; font-size:12.5px; cursor:pointer;
   transition:color .15s,border-color .15s,background .15s;
 }
 .chip:hover { color:var(--text); border-color:var(--border2); }
@@ -60,21 +60,21 @@ aside {
   display:flex; align-items:center; justify-content:space-between; gap:8px;
   width:100%; text-align:left; background:none; border:1px solid transparent;
   border-left:2px solid transparent; color:var(--muted); cursor:pointer;
-  padding:6px 8px; border-radius:0 6px 6px 0; font-size:12.5px;
+  padding:7px 9px; border-radius:0 6px 6px 0; font-size:14px;
   transition:color .15s,background .15s,border-color .15s;
 }
 .cat-btn:hover { color:var(--text); background:rgba(52,211,153,.06); }
 .cat-btn.active { color:var(--emerald); border-left-color:var(--emerald); background:rgba(52,211,153,.08); }
-.cat-btn .n { font-family:var(--mono); font-size:10.5px; color:var(--muted); }
+.cat-btn .n { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
 .deep-toggle {
   width:100%; margin-top:10px; display:flex; align-items:center; justify-content:space-between;
   border:1px dashed var(--border2); background:rgba(251,191,36,.05); color:var(--muted);
-  padding:7px 10px; border-radius:8px; font-size:11.5px; cursor:pointer;
+  padding:8px 10px; border-radius:8px; font-size:12.5px; cursor:pointer;
 }
 .deep-toggle.active { color:var(--amber); border-color:rgba(251,191,36,.55); background:rgba(251,191,36,.10); }
 .deep-toggle b { font-family:var(--mono); color:var(--amber); }
 .rail-links { margin-top:16px; padding-top:12px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:5px; }
-.rail-links a { color:var(--muted); font-size:12px; }
+.rail-links a { color:var(--muted); font-size:13px; }
 .rail-links a:hover { color:var(--emerald); }
 
 /* ===== main ===== */
@@ -132,8 +132,8 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
 .t-tree { color:#f9a8d4; border-color:rgba(244,114,182,.4); background:rgba(244,114,182,.07); }
 .deep-badge { font-size:9.5px; color:var(--amber); border:1px solid rgba(251,191,36,.5); background:rgba(251,191,36,.10); border-radius:4px; padding:1px 5px; font-family:var(--mono); }
 .win-body { padding:12px 12px 10px; }
-.win-body h3 { font-size:14.5px; letter-spacing:-.01em; }
-.win-body p { color:var(--muted); font-size:12px; line-height:1.5; margin:5px 0 10px; min-height:36px; }
+.win-body h3 { font-size:15px; letter-spacing:-.01em; }
+.win-body p { color:var(--muted); font-size:12.5px; line-height:1.5; margin:5px 0 10px; min-height:36px; }
 .preview { border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--bg2); }
 .preview iframe { width:100%; height:360px; border:0; display:block; }
 .win-foot { display:flex; justify-content:space-between; align-items:center; padding:8px 12px 10px; color:var(--muted); font-size:11.5px; }
@@ -167,7 +167,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
   <div class="aside-label">Type</div>
   <div class="chips" id="type-chips"><button class="chip active" data-type="all">全部</button><button class="chip" data-type="architecture">架构图</button><button class="chip" data-type="lifecycle">状态机</button><button class="chip" data-type="sequence">时序图</button><button class="chip" data-type="tree">树形图</button><button class="chip" data-type="workflow">流程图</button></div>
   <div class="aside-label">Categories</div>
-  <nav class="cat-nav" id="cat-nav"><button class="cat-btn active" data-cat="all" data-target="">全部 <span class="n">52</span></button><button class="cat-btn" data-cat="内核总览" data-target="cat-0">内核总览 <span class="n">1</span></button><button class="cat-btn" data-cat="进程管理" data-target="cat-1">进程管理 <span class="n">9</span></button><button class="cat-btn" data-cat="内存管理" data-target="cat-2">内存管理 <span class="n">8</span></button><button class="cat-btn" data-cat="网络协议栈" data-target="cat-3">网络协议栈 <span class="n">8</span></button><button class="cat-btn" data-cat="文件系统" data-target="cat-4">文件系统 <span class="n">8</span></button><button class="cat-btn" data-cat="设备驱动" data-target="cat-5">设备驱动 <span class="n">4</span></button><button class="cat-btn" data-cat="NVMe驱动" data-target="cat-6">NVMe驱动 <span class="n">8</span></button><button class="cat-btn" data-cat="内核驱动框架" data-target="cat-7">内核驱动框架 <span class="n">4</span></button><button class="cat-btn" data-cat="存储技术" data-target="cat-8">存储技术 <span class="n">1</span></button><button class="cat-btn" data-cat="并发与同步" data-target="cat-9">并发与同步 <span class="n">1</span></button></nav>
+  <nav class="cat-nav" id="cat-nav"><button class="cat-btn active" data-cat="all" data-target="">全部 <span class="n">57</span></button><button class="cat-btn" data-cat="内核总览" data-target="cat-0">内核总览 <span class="n">6</span></button><button class="cat-btn" data-cat="进程管理" data-target="cat-1">进程管理 <span class="n">9</span></button><button class="cat-btn" data-cat="内存管理" data-target="cat-2">内存管理 <span class="n">8</span></button><button class="cat-btn" data-cat="网络协议栈" data-target="cat-3">网络协议栈 <span class="n">8</span></button><button class="cat-btn" data-cat="文件系统" data-target="cat-4">文件系统 <span class="n">8</span></button><button class="cat-btn" data-cat="设备驱动" data-target="cat-5">设备驱动 <span class="n">4</span></button><button class="cat-btn" data-cat="NVMe驱动" data-target="cat-6">NVMe驱动 <span class="n">8</span></button><button class="cat-btn" data-cat="内核驱动框架" data-target="cat-7">内核驱动框架 <span class="n">4</span></button><button class="cat-btn" data-cat="存储技术" data-target="cat-8">存储技术 <span class="n">1</span></button><button class="cat-btn" data-cat="并发与同步" data-target="cat-9">并发与同步 <span class="n">1</span></button></nav>
   <button class="deep-toggle" id="deep-toggle"><span>只看深度调用链</span><b>7</b></button>
   <div class="rail-links">
     <a href="../diagrams/">← 图集总览</a>
@@ -179,9 +179,9 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
   <section class="hero">
     <p class="eyebrow">LINUX <b>v7.4.0-rc1</b> · SOURCE-BACKED</p>
     <h1>Linux 内核<em>原理图解</em></h1>
-    <p class="lede">从进程、内存、网络、文件系统到块层与 NVMe;52 张可交互原理图,关键符号都对应真实源码的 <code>path:line</code>。</p>
+    <p class="lede">从进程、内存、网络、文件系统到块层与 NVMe;57 张可交互原理图,关键符号都对应真实源码的 <code>path:line</code>。</p>
     <div class="hero-stats">
-      <span><strong>52</strong>交互图</span>
+      <span><strong>57</strong>交互图</span>
       <span><strong>10</strong>分类</span>
       <span><strong>7</strong>深度链</span>
       <span>基线 <strong>d487237</strong></span>
@@ -202,10 +202,94 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
           <span class="cat-num">01</span>
           <h2>内核总览</h2>
           <span class="cat-sub">子系统全景</span>
-          <span class="cat-count">1</span>
+          <span class="cat-count">6</span>
           <span class="rule"></span>
         </div>
         <div class="grid">
+        <article class="card" data-type="architecture"
+                 data-category="内核总览"
+                 data-search="内核并发与同步全景 架构图 · 点击打开交互细节 内核总览 architecture">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/concurrency-overview</span>
+            
+            <span class="badge t-architecture">架构图</span>
+          </div>
+          <div class="win-body">
+            <h3>内核并发与同步全景</h3>
+            <p>架构图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/concurrency-overview.html" loading="lazy" title="内核并发与同步全景"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/concurrency-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
+        <article class="card" data-type="architecture"
+                 data-category="内核总览"
+                 data-search="linux io 栈总览 架构图 · 点击打开交互细节 内核总览 architecture">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/io-stack-overview</span>
+            
+            <span class="badge t-architecture">架构图</span>
+          </div>
+          <div class="win-body">
+            <h3>Linux IO 栈总览</h3>
+            <p>架构图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/io-stack-overview.html" loading="lazy" title="Linux IO 栈总览"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/io-stack-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
+        <article class="card" data-type="architecture"
+                 data-category="内核总览"
+                 data-search="进程地址空间与内存管理全景 架构图 · 点击打开交互细节 内核总览 architecture">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/memory-overview</span>
+            
+            <span class="badge t-architecture">架构图</span>
+          </div>
+          <div class="win-body">
+            <h3>进程地址空间与内存管理全景</h3>
+            <p>架构图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/memory-overview.html" loading="lazy" title="进程地址空间与内存管理全景"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/memory-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
+        <article class="card" data-type="sequence"
+                 data-category="内核总览"
+                 data-search="系统调用总览:用户态 → 内核态 → 返回 时序图 · 点击打开交互细节 内核总览 sequence">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/syscall-overview</span>
+            
+            <span class="badge t-sequence">时序图</span>
+          </div>
+          <div class="win-body">
+            <h3>系统调用总览:用户态 → 内核态 → 返回</h3>
+            <p>时序图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/syscall-overview.html" loading="lazy" title="系统调用总览:用户态 → 内核态 → 返回"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/syscall-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
         <article class="card" data-type="tree"
                  data-category="内核总览"
                  data-search="linux 内核核心子系统总览 按子系统分解,括号内为源码树代表位置(head 3b029c0,局部放大见各专题图) 内核总览 tree">
@@ -225,6 +309,27 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
           <div class="win-foot">
             <span>内核总览</span>
             <a href="内核总览/kernel-subsystems.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
+        <article class="card" data-type="workflow"
+                 data-category="内核总览"
+                 data-search="中断与下半部总览 流程图 · 点击打开交互细节 内核总览 workflow">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/interrupt-overview</span>
+            
+            <span class="badge t-workflow">流程图</span>
+          </div>
+          <div class="win-body">
+            <h3>中断与下半部总览</h3>
+            <p>流程图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/interrupt-overview.html" loading="lazy" title="中断与下半部总览"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/interrupt-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
           </div>
         </article></div>
       </section>
@@ -1391,7 +1496,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
       </section>
   <footer class="page-foot">
     <span>KERNEL ATLAS · Linux v7.4.0-rc1 · Archify</span>
-    <span>源码基线 d487237 · 52 张交互图 · 7 张深度链</span>
+    <span>源码基线 d487237 · 57 张交互图 · 7 张深度链</span>
   </footer>
 </main>
 <script>

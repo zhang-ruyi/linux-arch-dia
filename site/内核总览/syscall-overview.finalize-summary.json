@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-syscall-overview/candidate.json",
+    "sha256": "7e22f78880e35a5306cef8d5da9daedc3e291d5e8fc64ce483c7156009659cd5",
+    "bytes": 7431
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/syscall-overview.html",
+    "sha256": "c95b7aa30cc3f6ebedc2e330c510adefcd0ef51099869085b44c926d83fe102d",
+    "bytes": 841697
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/syscall-overview.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/syscall-overview.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/syscall-overview.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3215,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
