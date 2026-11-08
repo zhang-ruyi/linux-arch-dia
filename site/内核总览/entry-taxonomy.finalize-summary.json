@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/tree-entry-taxonomy/candidate.json",
+    "sha256": "1f20610989dab5d1cc23977b179fca31a067093ce38a85b603316be03af71e0c",
+    "bytes": 4039
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/entry-taxonomy.html",
+    "sha256": "5fd192b4cfd2916596bf1b7b69503c546eebca118f687700634f3afcda46e85a",
+    "bytes": 867658
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/entry-taxonomy.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/entry-taxonomy.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/entry-taxonomy.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3297,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

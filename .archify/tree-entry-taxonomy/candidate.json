@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "用户态 → 内核态:完整入口分类",
+    "locale": "zh-CN",
+    "output": "site/内核总览/entry-taxonomy.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+      "revision": "d48723711bae9b8cdc56719c448ba42fef28cbee",
+      "link_mode": "local-only"
+    }
+  },
+  "layout": { "direction": "down", "gapX": 24, "gapY": 36 },
+  "nodes": [
+    { "id": "root", "label": "用户态 → 内核态", "sublabel": "按硬件机制分类,带常见例子" },
+
+    { "id": "active", "parent": "root", "label": "主动陷入(指令)", "sublabel": "程序主动执行特权指令" },
+    { "id": "syscall64", "parent": "active", "label": "syscall(64 位)", "sublabel": "read / write,entry_SYSCALL_64", "sources": [{ "path": "arch/x86/entry/entry_64.S", "line": 87 }] },
+    { "id": "sysenter", "parent": "active", "label": "sysenter(32 位)", "sublabel": "read,entry_SYSENTER_compat", "sources": [{ "path": "arch/x86/entry/entry_64_compat.S", "line": 50 }] },
+    { "id": "int80", "parent": "active", "label": "int 0x80(32 位)", "sublabel": "getpid,entry_INT80_32", "sources": [{ "path": "arch/x86/entry/entry_32.S", "line": 933 }] },
+    { "id": "callgate", "parent": "active", "label": "int n / call gate", "sublabel": "软件中断;call gate 硬件支持但 Linux 不用" },
+
+    { "id": "async", "parent": "root", "label": "异步中断", "sublabel": "外部事件打断当前执行" },
+    { "id": "irq", "parent": "async", "label": "可屏蔽 IRQ", "sublabel": "定时器 tick / 网卡,common_interrupt", "sources": [{ "path": "arch/x86/kernel/irq.c", "line": 273 }] },
+    { "id": "nmi", "parent": "async", "label": "NMI", "sublabel": "不可屏蔽,exc_nmi", "sources": [{ "path": "arch/x86/kernel/nmi.c", "line": 536 }] },
+    { "id": "ipi", "parent": "async", "label": "IPI 核间中断", "sublabel": "CPU 之间发中断" },
+
+    { "id": "sync", "parent": "root", "label": "同步异常", "sublabel": "当前指令触发,fault / trap / abort" },
+    { "id": "fault", "parent": "sync", "label": "fault", "sublabel": "#PF 缺页 / #GP,exc_page_fault / exc_general_protection", "sources": [{ "path": "arch/x86/mm/fault.c", "line": 1492 }] },
+    { "id": "trap", "parent": "sync", "label": "trap", "sublabel": "int3 断点 / #DB,exc_int3", "sources": [{ "path": "arch/x86/kernel/traps.c", "line": 1004 }] },
+    { "id": "abort", "parent": "sync", "label": "abort", "sublabel": "#MC 机器检查 / #DF,exc_machine_check", "sources": [{ "path": "arch/x86/kernel/cpu/mce/core.c", "line": 2148 }] },
+
+    { "id": "special", "parent": "root", "label": "特殊边界", "sublabel": "进入的不是 Linux 内核,或旧 ABI" },
+    { "id": "smi", "parent": "special", "label": "SMI", "sublabel": "进入 SMM,不是 Linux 内核" },
+    { "id": "vmexit", "parent": "special", "label": "VM exit", "sublabel": "guest → hypervisor,不是 guest 内核" },
+    { "id": "vsyscall", "parent": "special", "label": "vsyscall 页错误模拟", "sublabel": "legacy,emulate_vsyscall_pf", "sources": [{ "path": "arch/x86/entry/vsyscall/vsyscall_64.c", "line": 257 }] },
+
+    { "id": "nokernel", "parent": "root", "label": "不进入内核", "sublabel": "看起来像系统调用,实际用户态完成" },
+    { "id": "vdso", "parent": "nokernel", "label": "vDSO", "sublabel": "clock_gettime,__vdso_clock_gettime", "sources": [{ "path": "arch/x86/entry/vdso/common/vclock_gettime.c", "line": 38 }] },
+
+    { "id": "return", "parent": "root", "label": "返回用户态", "sublabel": "入口之后怎么回去" },
+    { "id": "sysret", "parent": "return", "label": "sysretq / iretq", "sublabel": "syscall / 中断异常返回", "sources": [{ "path": "arch/x86/entry/entry_64.S", "line": 166 }] },
+    { "id": "sigreturn", "parent": "return", "label": "rt_sigreturn", "sublabel": "信号处理返回系统调用", "sources": [{ "path": "arch/x86/kernel/signal_64.c", "line": 246 }] }
+  ]
+}

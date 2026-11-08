@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "用户态 ↔ 内核态:所有进入途径",
+    "title": "进入内核路径详解:系统调用 / 中断 / 异常",
     "locale": "zh-CN",
     "output": "site/内核总览/user-kernel-entry.html",
     "quality_profile": "showcase",
@@ -13,52 +13,487 @@
     }
   },
   "components": [
-    { "id": "app", "type": "external", "label": "应用进程", "sublabel": "read / write / openat / clone", "pos": [40, 60], "size": [180, 66] },
-    { "id": "libc", "type": "backend", "label": "libc 封装", "sublabel": "syscall 指令", "pos": [250, 60], "size": [150, 66] },
-    { "id": "vdso", "type": "backend", "label": "vDSO", "sublabel": "clock_gettime,不进入内核", "pos": [430, 60], "size": [200, 66], "sources": [{ "path": "arch/x86/entry/vdso/common/vclock_gettime.c", "line": 38, "label": "__vdso_clock_gettime" }] },
-    { "id": "hw", "type": "external", "label": "硬件 IRQ / MSI-X", "sublabel": "定时器 tick / 网卡收包", "pos": [760, 60], "size": [200, 66] },
-
-    { "id": "sys_entry", "type": "backend", "label": "entry_SYSCALL_64", "sublabel": "syscall 指令(64 位),例 read", "pos": [40, 210], "size": [230, 70], "sources": [{ "path": "arch/x86/entry/entry_64.S", "line": 87, "label": "entry_SYSCALL_64" }] },
-    { "id": "int80", "type": "backend", "label": "int 0x80", "sublabel": "32 位兼容,例 getpid", "pos": [40, 320], "size": [230, 66], "sources": [{ "path": "arch/x86/entry/entry_32.S", "line": 933, "label": "entry_INT80_32" }, { "path": "arch/x86/entry/syscall_32.c", "line": 238, "label": "do_int80_syscall_32" }] },
-    { "id": "sysenter", "type": "backend", "label": "entry_SYSENTER_compat", "sublabel": "32 位 fast,例 read", "pos": [40, 430], "size": [230, 66], "sources": [{ "path": "arch/x86/entry/entry_64_compat.S", "line": 50, "label": "entry_SYSENTER_compat" }, { "path": "arch/x86/entry/syscall_32.c", "line": 290, "label": "do_fast_syscall_32" }] },
-    { "id": "dispatch", "type": "backend", "label": "do_syscall_64 / x64_sys_call", "sublabel": "分发到 __x64_sys_*", "pos": [370, 260], "size": [250, 70], "sources": [{ "path": "arch/x86/entry/syscall_64.c", "line": 79, "label": "do_syscall_64" }, { "path": "arch/x86/entry/syscall_64.c", "line": 37, "label": "x64_sys_call" }] },
-
-    { "id": "idt", "type": "security", "label": "IDT 门", "sublabel": "中断/异常入口", "pos": [760, 190], "size": [200, 64], "sources": [{ "path": "arch/x86/kernel/idt.c", "line": 209, "label": "IDT 初始化" }] },
-    { "id": "irq", "type": "backend", "label": "common_interrupt", "sublabel": "→ handle_irq_event", "pos": [760, 290], "size": [200, 64], "sources": [{ "path": "arch/x86/kernel/irq.c", "line": 273, "label": "common_interrupt" }, { "path": "kernel/irq/handle.c", "line": 255, "label": "handle_irq_event" }] },
-    { "id": "exc", "type": "backend", "label": "exc_page_fault / exc_int3", "sublabel": "缺页 / 断点 / 除零", "pos": [760, 390], "size": [200, 64], "sources": [{ "path": "arch/x86/mm/fault.c", "line": 1492, "label": "exc_page_fault" }, { "path": "arch/x86/kernel/traps.c", "line": 1004, "label": "exc_int3" }, { "path": "arch/x86/kernel/traps.c", "line": 380, "label": "exc_divide_error" }] },
-
-    { "id": "subsys", "type": "backend", "label": "内核子系统", "sublabel": "VFS / MM / net", "pos": [370, 560], "size": [260, 70], "sources": [{ "path": "fs/read_write.c", "line": 554, "label": "vfs_read" }] },
-    { "id": "ret", "type": "backend", "label": "sysretq / iretq", "sublabel": "返回用户态;信号 rt_sigreturn", "pos": [760, 560], "size": [210, 70], "sources": [{ "path": "arch/x86/entry/entry_64.S", "line": 166, "label": "sysretq" }, { "path": "arch/x86/entry/entry_64.S", "line": 659, "label": "iretq" }, { "path": "arch/x86/kernel/signal_64.c", "line": 246, "label": "rt_sigreturn" }] }
+    {
+      "id": "app",
+      "type": "external",
+      "label": "应用进程",
+      "sublabel": "read / write / openat / clone",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        180,
+        66
+      ]
+    },
+    {
+      "id": "libc",
+      "type": "backend",
+      "label": "libc 封装",
+      "sublabel": "syscall 指令",
+      "pos": [
+        250,
+        60
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "vdso",
+      "type": "backend",
+      "label": "vDSO",
+      "sublabel": "clock_gettime,不进入内核",
+      "pos": [
+        430,
+        60
+      ],
+      "size": [
+        200,
+        66
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/vdso/common/vclock_gettime.c",
+          "line": 38,
+          "label": "__vdso_clock_gettime"
+        }
+      ]
+    },
+    {
+      "id": "hw",
+      "type": "external",
+      "label": "硬件 IRQ / MSI-X",
+      "sublabel": "定时器 tick / 网卡收包",
+      "pos": [
+        760,
+        60
+      ],
+      "size": [
+        200,
+        66
+      ]
+    },
+    {
+      "id": "sys_entry",
+      "type": "backend",
+      "label": "entry_SYSCALL_64",
+      "sublabel": "syscall 指令(64 位),例 read",
+      "pos": [
+        40,
+        210
+      ],
+      "size": [
+        230,
+        70
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 87,
+          "label": "entry_SYSCALL_64"
+        }
+      ]
+    },
+    {
+      "id": "int80",
+      "type": "backend",
+      "label": "int 0x80",
+      "sublabel": "32 位兼容,例 getpid",
+      "pos": [
+        40,
+        320
+      ],
+      "size": [
+        230,
+        66
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/entry_32.S",
+          "line": 933,
+          "label": "entry_INT80_32"
+        },
+        {
+          "path": "arch/x86/entry/syscall_32.c",
+          "line": 238,
+          "label": "do_int80_syscall_32"
+        }
+      ]
+    },
+    {
+      "id": "sysenter",
+      "type": "backend",
+      "label": "entry_SYSENTER_compat",
+      "sublabel": "32 位 fast,例 read",
+      "pos": [
+        40,
+        430
+      ],
+      "size": [
+        230,
+        66
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/entry_64_compat.S",
+          "line": 50,
+          "label": "entry_SYSENTER_compat"
+        },
+        {
+          "path": "arch/x86/entry/syscall_32.c",
+          "line": 290,
+          "label": "do_fast_syscall_32"
+        }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "type": "backend",
+      "label": "do_syscall_64 / x64_sys_call",
+      "sublabel": "分发到 __x64_sys_*",
+      "pos": [
+        370,
+        260
+      ],
+      "size": [
+        250,
+        70
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 79,
+          "label": "do_syscall_64"
+        },
+        {
+          "path": "arch/x86/entry/syscall_64.c",
+          "line": 37,
+          "label": "x64_sys_call"
+        }
+      ]
+    },
+    {
+      "id": "idt",
+      "type": "security",
+      "label": "IDT 门",
+      "sublabel": "中断/异常入口",
+      "pos": [
+        760,
+        190
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/kernel/idt.c",
+          "line": 209,
+          "label": "IDT 初始化"
+        }
+      ]
+    },
+    {
+      "id": "irq",
+      "type": "backend",
+      "label": "common_interrupt",
+      "sublabel": "→ handle_irq_event",
+      "pos": [
+        760,
+        290
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/kernel/irq.c",
+          "line": 273,
+          "label": "common_interrupt"
+        },
+        {
+          "path": "kernel/irq/handle.c",
+          "line": 255,
+          "label": "handle_irq_event"
+        }
+      ]
+    },
+    {
+      "id": "exc",
+      "type": "backend",
+      "label": "exc_page_fault / exc_int3",
+      "sublabel": "缺页 / 断点 / 除零",
+      "pos": [
+        760,
+        390
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/mm/fault.c",
+          "line": 1492,
+          "label": "exc_page_fault"
+        },
+        {
+          "path": "arch/x86/kernel/traps.c",
+          "line": 1004,
+          "label": "exc_int3"
+        },
+        {
+          "path": "arch/x86/kernel/traps.c",
+          "line": 380,
+          "label": "exc_divide_error"
+        }
+      ]
+    },
+    {
+      "id": "subsys",
+      "type": "backend",
+      "label": "内核子系统",
+      "sublabel": "VFS / MM / net",
+      "pos": [
+        370,
+        560
+      ],
+      "size": [
+        260,
+        70
+      ],
+      "sources": [
+        {
+          "path": "fs/read_write.c",
+          "line": 554,
+          "label": "vfs_read"
+        }
+      ]
+    },
+    {
+      "id": "ret",
+      "type": "backend",
+      "label": "sysretq / iretq",
+      "sublabel": "返回用户态;信号 rt_sigreturn",
+      "pos": [
+        760,
+        560
+      ],
+      "size": [
+        210,
+        70
+      ],
+      "sources": [
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 166,
+          "label": "sysretq"
+        },
+        {
+          "path": "arch/x86/entry/entry_64.S",
+          "line": 659,
+          "label": "iretq"
+        },
+        {
+          "path": "arch/x86/kernel/signal_64.c",
+          "line": 246,
+          "label": "rt_sigreturn"
+        }
+      ]
+    }
   ],
   "boundaries": [
-    { "kind": "region", "label": "用户态", "wraps": ["app", "libc", "vdso"], "pad": 18 },
-    { "kind": "region", "label": "系统调用入口(64 / 32 位)", "wraps": ["sys_entry", "int80", "sysenter", "dispatch"], "pad": 18 },
-    { "kind": "region", "label": "中断 / 异常入口", "wraps": ["idt", "irq", "exc"], "pad": 18 },
-    { "kind": "region", "label": "内核处理", "wraps": ["subsys"], "pad": 18 },
-    { "kind": "region", "label": "返回", "wraps": ["ret"], "pad": 18 }
+    {
+      "kind": "region",
+      "label": "用户态",
+      "wraps": [
+        "app",
+        "libc",
+        "vdso"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "系统调用入口(64 / 32 位)",
+      "wraps": [
+        "sys_entry",
+        "int80",
+        "sysenter",
+        "dispatch"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "中断 / 异常入口",
+      "wraps": [
+        "idt",
+        "irq",
+        "exc"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "内核处理",
+      "wraps": [
+        "subsys"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "返回",
+      "wraps": [
+        "ret"
+      ],
+      "pad": 18
+    }
   ],
   "connections": [
-    { "id": "app-libc", "from": "app", "to": "libc", "label": "read/write/openat", "variant": "emphasis" },
-    { "id": "libc-sys", "from": "libc", "to": "sys_entry", "label": "syscall", "variant": "emphasis" },
-    { "id": "app-int80", "from": "app", "to": "int80", "label": "int 0x80 → getpid" },
-    { "id": "app-sysenter", "from": "app", "to": "sysenter", "label": "sysenter → read" },
-    { "id": "app-vdso", "from": "app", "to": "vdso", "label": "clock_gettime(无内核)", "variant": "dashed" },
-    { "id": "app-exc", "from": "app", "to": "exc", "label": "int3 / #PF / 除零", "variant": "dashed" },
-    { "id": "hw-idt", "from": "hw", "to": "idt", "label": "IRQ / MSI-X", "variant": "emphasis" },
-    { "id": "sys-dispatch", "from": "sys_entry", "to": "dispatch", "label": "do_syscall_64", "variant": "emphasis" },
-    { "id": "int80-dispatch", "from": "int80", "to": "dispatch", "label": "do_int80_syscall_32" },
-    { "id": "sysenter-dispatch", "from": "sysenter", "to": "dispatch", "label": "do_fast_syscall_32" },
-    { "id": "dispatch-subsys", "from": "dispatch", "to": "subsys", "label": "__x64_sys_* → VFS/MM/net", "variant": "emphasis" },
-    { "id": "idt-irq", "from": "idt", "to": "irq", "label": "common_interrupt", "variant": "emphasis" },
-    { "id": "idt-exc", "from": "idt", "to": "exc", "label": "exc_*" },
-    { "id": "irq-subsys", "from": "irq", "to": "subsys", "label": "设备 / 定时器" },
-    { "id": "exc-subsys", "from": "exc", "to": "subsys", "label": "缺页 / 陷阱处理" },
-    { "id": "dispatch-ret", "from": "dispatch", "to": "ret", "label": "返回", "variant": "emphasis" },
-    { "id": "subsys-ret", "from": "subsys", "to": "ret", "label": "完成" },
-    { "id": "ret-app", "from": "ret", "to": "app", "label": "sysretq / iretq", "variant": "emphasis" }
+    {
+      "id": "app-libc",
+      "from": "app",
+      "to": "libc",
+      "label": "read/write/openat",
+      "variant": "emphasis"
+    },
+    {
+      "id": "libc-sys",
+      "from": "libc",
+      "to": "sys_entry",
+      "label": "syscall",
+      "variant": "emphasis"
+    },
+    {
+      "id": "app-int80",
+      "from": "app",
+      "to": "int80",
+      "label": "int 0x80 → getpid"
+    },
+    {
+      "id": "app-sysenter",
+      "from": "app",
+      "to": "sysenter",
+      "label": "sysenter → read"
+    },
+    {
+      "id": "app-vdso",
+      "from": "app",
+      "to": "vdso",
+      "label": "clock_gettime(无内核)",
+      "variant": "dashed"
+    },
+    {
+      "id": "app-exc",
+      "from": "app",
+      "to": "exc",
+      "label": "int3 / #PF / 除零",
+      "variant": "dashed"
+    },
+    {
+      "id": "hw-idt",
+      "from": "hw",
+      "to": "idt",
+      "label": "IRQ / MSI-X",
+      "variant": "emphasis"
+    },
+    {
+      "id": "sys-dispatch",
+      "from": "sys_entry",
+      "to": "dispatch",
+      "label": "do_syscall_64",
+      "variant": "emphasis"
+    },
+    {
+      "id": "int80-dispatch",
+      "from": "int80",
+      "to": "dispatch",
+      "label": "do_int80_syscall_32"
+    },
+    {
+      "id": "sysenter-dispatch",
+      "from": "sysenter",
+      "to": "dispatch",
+      "label": "do_fast_syscall_32"
+    },
+    {
+      "id": "dispatch-subsys",
+      "from": "dispatch",
+      "to": "subsys",
+      "label": "__x64_sys_* → VFS/MM/net",
+      "variant": "emphasis"
+    },
+    {
+      "id": "idt-irq",
+      "from": "idt",
+      "to": "irq",
+      "label": "common_interrupt",
+      "variant": "emphasis"
+    },
+    {
+      "id": "idt-exc",
+      "from": "idt",
+      "to": "exc",
+      "label": "exc_*"
+    },
+    {
+      "id": "irq-subsys",
+      "from": "irq",
+      "to": "subsys",
+      "label": "设备 / 定时器"
+    },
+    {
+      "id": "exc-subsys",
+      "from": "exc",
+      "to": "subsys",
+      "label": "缺页 / 陷阱处理"
+    },
+    {
+      "id": "dispatch-ret",
+      "from": "dispatch",
+      "to": "ret",
+      "label": "返回",
+      "variant": "emphasis"
+    },
+    {
+      "id": "subsys-ret",
+      "from": "subsys",
+      "to": "ret",
+      "label": "完成"
+    },
+    {
+      "id": "ret-app",
+      "from": "ret",
+      "to": "app",
+      "label": "sysretq / iretq",
+      "variant": "emphasis"
+    }
   ],
   "cards": [
-    { "dot": "cyan", "title": "四类入口", "items": ["系统调用:主动, syscall / int 0x80 / sysenter", "中断:异步, 硬件 IRQ / MSI-X", "异常/陷阱:被动, #PF / int3 / 除零", "快速路径: vDSO, 完全不进入内核"] },
-    { "dot": "amber", "title": "返回路径", "items": ["64 位 syscall 用 sysretq", "中断/异常用 iretq", "信号处理返回用 rt_sigreturn 系统调用"] }
+    {
+      "dot": "cyan",
+      "title": "四类入口",
+      "items": [
+        "系统调用:主动, syscall / int 0x80 / sysenter",
+        "中断:异步, 硬件 IRQ / MSI-X",
+        "异常/陷阱:被动, #PF / int3 / 除零",
+        "快速路径: vDSO, 完全不进入内核"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "返回路径",
+      "items": [
+        "64 位 syscall 用 sysretq",
+        "中断/异常用 iretq",
+        "信号处理返回用 rt_sigreturn 系统调用"
+      ]
+    }
   ]
 }

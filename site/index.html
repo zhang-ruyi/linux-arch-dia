@@ -167,7 +167,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
   <div class="aside-label">Type</div>
   <div class="chips" id="type-chips"><button class="chip active" data-type="all">全部</button><button class="chip" data-type="architecture">架构图</button><button class="chip" data-type="lifecycle">状态机</button><button class="chip" data-type="sequence">时序图</button><button class="chip" data-type="tree">树形图</button><button class="chip" data-type="workflow">流程图</button></div>
   <div class="aside-label">Categories</div>
-  <nav class="cat-nav" id="cat-nav"><button class="cat-btn active" data-cat="all" data-target="">全部 <span class="n">57</span></button><button class="cat-btn" data-cat="内核总览" data-target="cat-0">内核总览 <span class="n">6</span></button><button class="cat-btn" data-cat="进程管理" data-target="cat-1">进程管理 <span class="n">9</span></button><button class="cat-btn" data-cat="内存管理" data-target="cat-2">内存管理 <span class="n">8</span></button><button class="cat-btn" data-cat="网络协议栈" data-target="cat-3">网络协议栈 <span class="n">8</span></button><button class="cat-btn" data-cat="文件系统" data-target="cat-4">文件系统 <span class="n">8</span></button><button class="cat-btn" data-cat="设备驱动" data-target="cat-5">设备驱动 <span class="n">4</span></button><button class="cat-btn" data-cat="NVMe驱动" data-target="cat-6">NVMe驱动 <span class="n">8</span></button><button class="cat-btn" data-cat="内核驱动框架" data-target="cat-7">内核驱动框架 <span class="n">4</span></button><button class="cat-btn" data-cat="存储技术" data-target="cat-8">存储技术 <span class="n">1</span></button><button class="cat-btn" data-cat="并发与同步" data-target="cat-9">并发与同步 <span class="n">1</span></button></nav>
+  <nav class="cat-nav" id="cat-nav"><button class="cat-btn active" data-cat="all" data-target="">全部 <span class="n">58</span></button><button class="cat-btn" data-cat="内核总览" data-target="cat-0">内核总览 <span class="n">7</span></button><button class="cat-btn" data-cat="进程管理" data-target="cat-1">进程管理 <span class="n">9</span></button><button class="cat-btn" data-cat="内存管理" data-target="cat-2">内存管理 <span class="n">8</span></button><button class="cat-btn" data-cat="网络协议栈" data-target="cat-3">网络协议栈 <span class="n">8</span></button><button class="cat-btn" data-cat="文件系统" data-target="cat-4">文件系统 <span class="n">8</span></button><button class="cat-btn" data-cat="设备驱动" data-target="cat-5">设备驱动 <span class="n">4</span></button><button class="cat-btn" data-cat="NVMe驱动" data-target="cat-6">NVMe驱动 <span class="n">8</span></button><button class="cat-btn" data-cat="内核驱动框架" data-target="cat-7">内核驱动框架 <span class="n">4</span></button><button class="cat-btn" data-cat="存储技术" data-target="cat-8">存储技术 <span class="n">1</span></button><button class="cat-btn" data-cat="并发与同步" data-target="cat-9">并发与同步 <span class="n">1</span></button></nav>
   <button class="deep-toggle" id="deep-toggle"><span>只看深度调用链</span><b>7</b></button>
   <div class="rail-links">
     <a href="../diagrams/">← 图集总览</a>
@@ -179,9 +179,9 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
   <section class="hero">
     <p class="eyebrow">LINUX <b>v7.4.0-rc1</b> · SOURCE-BACKED</p>
     <h1>Linux 内核<em>原理图解</em></h1>
-    <p class="lede">从进程、内存、网络、文件系统到块层与 NVMe;57 张可交互原理图,关键符号都对应真实源码的 <code>path:line</code>。</p>
+    <p class="lede">从进程、内存、网络、文件系统到块层与 NVMe;58 张可交互原理图,关键符号都对应真实源码的 <code>path:line</code>。</p>
     <div class="hero-stats">
-      <span><strong>57</strong>交互图</span>
+      <span><strong>58</strong>交互图</span>
       <span><strong>10</strong>分类</span>
       <span><strong>7</strong>深度链</span>
       <span>基线 <strong>d487237</strong></span>
@@ -202,7 +202,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
           <span class="cat-num">01</span>
           <h2>内核总览</h2>
           <span class="cat-sub">子系统全景</span>
-          <span class="cat-count">6</span>
+          <span class="cat-count">7</span>
           <span class="rule"></span>
         </div>
         <div class="grid">
@@ -250,7 +250,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
         </article>
         <article class="card" data-type="architecture"
                  data-category="内核总览"
-                 data-search="用户态 ↔ 内核态:所有进入途径 架构图 · 点击打开交互细节 内核总览 architecture">
+                 data-search="进入内核路径详解:系统调用 / 中断 / 异常 架构图 · 点击打开交互细节 内核总览 architecture">
           <div class="win-bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="win-path">内核总览/user-kernel-entry</span>
@@ -258,10 +258,10 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
             <span class="badge t-architecture">架构图</span>
           </div>
           <div class="win-body">
-            <h3>用户态 ↔ 内核态:所有进入途径</h3>
+            <h3>进入内核路径详解:系统调用 / 中断 / 异常</h3>
             <p>架构图 · 点击打开交互细节</p>
             <div class="preview">
-              <iframe src="内核总览/user-kernel-entry.html" loading="lazy" title="用户态 ↔ 内核态:所有进入途径"></iframe>
+              <iframe src="内核总览/user-kernel-entry.html" loading="lazy" title="进入内核路径详解:系统调用 / 中断 / 异常"></iframe>
             </div>
           </div>
           <div class="win-foot">
@@ -288,6 +288,27 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
           <div class="win-foot">
             <span>内核总览</span>
             <a href="内核总览/syscall-overview.html" target="_blank" rel="noopener">打开交互图 ↗</a>
+          </div>
+        </article>
+        <article class="card" data-type="tree"
+                 data-category="内核总览"
+                 data-search="用户态 → 内核态:完整入口分类 树形图 · 点击打开交互细节 内核总览 tree">
+          <div class="win-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="win-path">内核总览/entry-taxonomy</span>
+            
+            <span class="badge t-tree">树形图</span>
+          </div>
+          <div class="win-body">
+            <h3>用户态 → 内核态:完整入口分类</h3>
+            <p>树形图 · 点击打开交互细节</p>
+            <div class="preview">
+              <iframe src="内核总览/entry-taxonomy.html" loading="lazy" title="用户态 → 内核态:完整入口分类"></iframe>
+            </div>
+          </div>
+          <div class="win-foot">
+            <span>内核总览</span>
+            <a href="内核总览/entry-taxonomy.html" target="_blank" rel="noopener">打开交互图 ↗</a>
           </div>
         </article>
         <article class="card" data-type="tree"
@@ -1496,7 +1517,7 @@ main { min-width:0; padding:30px clamp(20px,4vw,58px) 80px; }
       </section>
   <footer class="page-foot">
     <span>KERNEL ATLAS · Linux v7.4.0-rc1 · Archify</span>
-    <span>源码基线 d487237 · 57 张交互图 · 7 张深度链</span>
+    <span>源码基线 d487237 · 58 张交互图 · 7 张深度链</span>
   </footer>
 </main>
 <script>

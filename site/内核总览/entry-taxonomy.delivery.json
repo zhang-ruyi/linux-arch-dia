@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "abec5925-95e8-4c4f-924d-3d9d5ebe712d",
+  "status": "current",
+  "command": "deliver",
+  "type": "tree",
+  "input": "/home/zhang/opencode/code_analsys/.archify/tree-entry-taxonomy/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核总览/entry-taxonomy.html",
+  "specification": {
+    "sha256": "1f20610989dab5d1cc23977b179fca31a067093ce38a85b603316be03af71e0c",
+    "bytes": 4039
+  },
+  "artifact": {
+    "sha256": "5fd192b4cfd2916596bf1b7b69503c546eebca118f687700634f3afcda46e85a",
+    "bytes": 867658
+  }
+}
