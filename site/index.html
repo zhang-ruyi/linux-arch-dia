@@ -69,7 +69,7 @@ main { flex:1; padding:24px 28px; }
 <body>
 <aside>
   <h1>Linux 内核原理图解</h1>
-  <div class="sub">Archify 交互式内核原理图 · 共 58 张</div>
+  <div class="sub">Archify 交互式内核原理图 · 共 52 张</div>
   <input id="search" type="text" placeholder="搜索标题 / 分类 / 类型..." oninput="applyFilters()">
 
       <div class="toc-cat">
@@ -112,13 +112,6 @@ main { flex:1; padding:24px 28px; }
           存储技术 <span class="count">1</span>
         </button>
         <ul class="toc-items"><li><a href="#io-uring-aio">io_uring / libaio / POSIX AIO 三种异步 IO</a></li></ul>
-      </div>
-
-      <div class="toc-cat">
-        <button class="toc-cat-head" onclick="setCategory('LLM推理')">
-          LLM推理 <span class="count">6</span>
-        </button>
-        <ul class="toc-items"><li><a href="#lmcache-architecture">LMCache 架构:KVCache 缓存层</a></li><li><a href="#vllm-architecture">vLLM V1 架构总览</a></li><li><a href="#vllm-paged-attention">PagedAttention 与前缀缓存</a></li><li><a href="#lmcache-kv-flow">LMCache KV 命中、加载与写回</a></li><li><a href="#vllm-lmcache-integration">vLLM + LMCache 联合请求链路</a></li><li><a href="#vllm-request-lifecycle">vLLM 请求生命周期与连续批处理</a></li></ul>
       </div>
 
       <div class="toc-cat">
@@ -261,23 +254,6 @@ main { flex:1; padding:24px 28px; }
       </article>
 
       <article class="card" data-type="architecture"
-               data-category="LLM推理"
-               data-search="lmcache 架构:kvcache 缓存层  llm推理 architecture">
-        <header class="card-head">
-          <h3>LMCache 架构:KVCache 缓存层</h3>
-          <span class="badge badge-architecture">架构图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/lmcache-architecture.html" loading="lazy" title="LMCache 架构:KVCache 缓存层"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/lmcache-architecture.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="architecture"
                data-category="文件系统"
                data-search="vfs 虚拟文件系统架构 vfs 四大核心对象(super_block/inode/dentry/file)与底层文件系统、页缓存的关系 文件系统 architecture">
         <header class="card-head">
@@ -291,40 +267,6 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">文件系统</span>
           <a class="open" href="文件系统/vfs-architecture.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="architecture"
-               data-category="LLM推理"
-               data-search="vllm v1 架构总览  llm推理 architecture">
-        <header class="card-head">
-          <h3>vLLM V1 架构总览</h3>
-          <span class="badge badge-architecture">架构图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/vllm-architecture.html" loading="lazy" title="vLLM V1 架构总览"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/vllm-architecture.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="architecture"
-               data-category="LLM推理"
-               data-search="pagedattention 与前缀缓存  llm推理 architecture">
-        <header class="card-head">
-          <h3>PagedAttention 与前缀缓存</h3>
-          <span class="badge badge-architecture">架构图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/vllm-paged-attention.html" loading="lazy" title="PagedAttention 与前缀缓存"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/vllm-paged-attention.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -478,23 +420,6 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">进程管理</span>
           <a class="open" href="进程管理/futex-wakeup.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="sequence"
-               data-category="LLM推理"
-               data-search="lmcache kv 命中、加载与写回  llm推理 sequence">
-        <header class="card-head">
-          <h3>LMCache KV 命中、加载与写回</h3>
-          <span class="badge badge-sequence">时序图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/lmcache-kv-flow.html" loading="lazy" title="LMCache KV 命中、加载与写回"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/lmcache-kv-flow.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
@@ -716,40 +641,6 @@ main { flex:1; padding:24px 28px; }
         <footer class="card-foot">
           <span class="cat">网络协议栈</span>
           <a class="open" href="网络协议栈/tcp-handshake.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="sequence"
-               data-category="LLM推理"
-               data-search="vllm + lmcache 联合请求链路  llm推理 sequence">
-        <header class="card-head">
-          <h3>vLLM + LMCache 联合请求链路</h3>
-          <span class="badge badge-sequence">时序图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/vllm-lmcache-integration.html" loading="lazy" title="vLLM + LMCache 联合请求链路"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/vllm-lmcache-integration.html" target="_blank" rel="noopener">打开交互图 ↗</a>
-        </footer>
-      </article>
-
-      <article class="card" data-type="sequence"
-               data-category="LLM推理"
-               data-search="vllm 请求生命周期与连续批处理  llm推理 sequence">
-        <header class="card-head">
-          <h3>vLLM 请求生命周期与连续批处理</h3>
-          <span class="badge badge-sequence">时序图</span>
-        </header>
-        
-        <div class="preview">
-          <iframe src="LLM推理/vllm-request-lifecycle.html" loading="lazy" title="vLLM 请求生命周期与连续批处理"></iframe>
-        </div>
-        <footer class="card-foot">
-          <span class="cat">LLM推理</span>
-          <a class="open" href="LLM推理/vllm-request-lifecycle.html" target="_blank" rel="noopener">打开交互图 ↗</a>
         </footer>
       </article>
 
