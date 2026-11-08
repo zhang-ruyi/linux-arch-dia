@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/sequence-lmcache-kv-flow/candidate.json",
+    "sha256": "49cf3eae563e62076f0fd8e19a4985a50fcee0db79a6b6931f79c11fb7cb1ec7",
+    "bytes": 7816
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/LLM推理/lmcache-kv-flow.html",
+    "sha256": "84a38a3be471a429816585c1123b17ba88e80846e46ca6c3c9832bc3f41fecfe",
+    "bytes": 849461
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/LLM推理/lmcache-kv-flow.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/LLM推理/lmcache-kv-flow.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/LLM推理/lmcache-kv-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3514,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

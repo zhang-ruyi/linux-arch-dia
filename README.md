@@ -5,7 +5,7 @@
 - 所有图都是独立、可离线打开的 HTML(自带明暗主题、动效、缩放与导出)
 - 每张图的主元素都标注了已核实的源码 `path:line`
 - 图源是可编辑的 JSON-IR(`.archify/*/candidate.json`),不是渲染后的死图
-- 当前图集:**52 张**(45 张概览/专题 + 7 张函数级深度调用链),源码基线 Linux `d487237`(v7.4.0-rc1)
+- 当前图集:**58 张**(51 张概览/专题 + 7 张函数级深度调用链),源码基线 Linux `d487237`(v7.4.0-rc1)
 
 ## 图集一览
 
@@ -21,6 +21,7 @@
 | 内核驱动框架 | 4 | device/driver/bus 模型、probe 绑定时序、devres 生命周期、file_operations 分发 |
 | 存储技术 | 1 | io_uring / libaio / POSIX AIO 三种异步 IO |
 | 并发与同步 | 1 | 并发原语选择决策流程(RCU / seqlock / per-CPU / 锁) |
+| LLM 推理 | 6 | vLLM 架构/请求生命周期/PagedAttention、LMCache 架构/KV 流、联合请求链路 |
 
 深度调用链(函数级,`deep-*`):fork 创建进程、缺页异常、TCP 收包、open 路径解析、read 到块层、块层 IO、NVMe IO。每张概览图内还附有一张「完整调用链(源码核实)」卡片,按真实调用顺序列出函数与 `path:line`。
 

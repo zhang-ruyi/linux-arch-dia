@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "e2a7e9b9-f232-4413-b228-1a3de6a27c73",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/home/zhang/opencode/code_analsys/.archify/sequence-lmcache-kv-flow/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/LLM推理/lmcache-kv-flow.html",
+  "specification": {
+    "sha256": "49cf3eae563e62076f0fd8e19a4985a50fcee0db79a6b6931f79c11fb7cb1ec7",
+    "bytes": 7816
+  },
+  "artifact": {
+    "sha256": "84a38a3be471a429816585c1123b17ba88e80846e46ca6c3c9832bc3f41fecfe",
+    "bytes": 849461
+  }
+}
