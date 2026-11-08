@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "3c4bcc71-d5f6-430c-a2d9-da82c3398244",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/zhang/opencode/code_analsys/.archify/architecture-user-kernel-entry/candidate.json",
+  "output": "/home/zhang/opencode/code_analsys/site/内核总览/user-kernel-entry.html",
+  "specification": {
+    "sha256": "d1e501315fb1913305aedeba739ec6fba51a803aa10e33be85af5c3c43b552d6",
+    "bytes": 6743
+  },
+  "artifact": {
+    "sha256": "ff667415dbb1c20f1660ee2e84843439af40d32f0b98c1900586354966949f5d",
+    "bytes": 864930
+  }
+}

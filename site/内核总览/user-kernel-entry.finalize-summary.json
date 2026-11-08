@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/home/zhang/opencode/code_analsys/.archify/architecture-user-kernel-entry/candidate.json",
+    "sha256": "d1e501315fb1913305aedeba739ec6fba51a803aa10e33be85af5c3c43b552d6",
+    "bytes": 6743
+  },
+  "artifact": {
+    "path": "/home/zhang/opencode/code_analsys/site/内核总览/user-kernel-entry.html",
+    "sha256": "ff667415dbb1c20f1660ee2e84843439af40d32f0b98c1900586354966949f5d",
+    "bytes": 864930
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/home/zhang/opencode/code_analsys/site/内核总览/user-kernel-entry.finalize.json",
+    "summaryReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/user-kernel-entry.finalize-summary.json",
+    "browserCheckReceipt": "/home/zhang/opencode/code_analsys/site/内核总览/user-kernel-entry.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-08T04:02:44.764Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5194,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 16,
+      "routesOverSuggestedBends": 5,
+      "routesOverSuggestedStretch": 3
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "libc-sys",
+            "from": "libc",
+            "to": "sys_entry",
+            "label": "syscall",
+            "collectionIndex": 1,
+            "artifactIndex": 2
+          },
+          "right": {
+            "id": "app-sysenter",
+            "from": "app",
+            "to": "sysenter",
+            "label": "sysenter → read",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "point": [
+            273,
+            235.90000000000006
+          ]
+        },
+        {
+          "left": {
+            "id": "libc-sys",
+            "from": "libc",
+            "to": "sys_entry",
+            "label": "syscall",
+            "collectionIndex": 1,
+            "artifactIndex": 2
+          },
+          "right": {
+            "id": "app-vdso",
+            "from": "app",
+            "to": "vdso",
+            "label": "clock_gettime(无内核)",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "point": [
+            324.99999999999994,
+            150
+          ]
+        },
+        {
+          "left": {
+            "id": "app-sysenter",
+            "from": "app",
+            "to": "sysenter",
+            "label": "sysenter → read",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "app-exc",
+            "from": "app",
+            "to": "exc",
+            "label": "int3 / #PF / 除零",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "point": [
+            155,
+            415
+          ],
+          "sharedNode": "app"
+        },
+        {
+          "left": {
+            "id": "app-sysenter",
+            "from": "app",
+            "to": "sysenter",
+            "label": "sysenter → read",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "sys-dispatch",
+            "from": "sys_entry",
+            "to": "dispatch",
+            "label": "do_syscall_64",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            273,
+            252
+          ]
+        },
+        {
+          "left": {
+            "id": "app-sysenter",
+            "from": "app",
+            "to": "sysenter",
+            "label": "sysenter → read",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "int80-dispatch",
+            "from": "int80",
+            "to": "dispatch",
+            "label": "do_int80_syscall_32",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "point": [
+            273,
+            353
+          ]
+        },
+        {
+          "left": {
+            "id": "app-exc",
+            "from": "app",
+            "to": "exc",
+            "label": "int3 / #PF / 除零",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "sysenter-dispatch",
+            "from": "sysenter",
+            "to": "dispatch",
+            "label": "do_fast_syscall_32",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "point": [
+            312,
+            415
+          ]
+        },
+        {
+          "left": {
+            "id": "app-exc",
+            "from": "app",
+            "to": "exc",
+            "label": "int3 / #PF / 除零",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "dispatch-subsys",
+            "from": "dispatch",
+            "to": "subsys",
+            "label": "__x64_sys_* → VFS/MM/net",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            485.9,
+            415
+          ]
+        },
+        {
+          "left": {
+            "id": "app-exc",
+            "from": "app",
+            "to": "exc",
+            "label": "int3 / #PF / 除零",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "irq-subsys",
+            "from": "irq",
+            "to": "subsys",
+            "label": "设备 / 定时器",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            500.9500000000001,
+            415
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "app-libc",
+            "from": "app",
+            "to": "libc",
+            "label": "read/write/openat",
+            "collectionIndex": 0,
+            "artifactIndex": 1
+          },
+          "bends": 3,
+          "stretch": 1.445
+        },
+        {
+          "relationship": {
+            "id": "app-int80",
+            "from": "app",
+            "to": "int80",
+            "label": "int 0x80 → getpid",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 4,
+          "stretch": 1.823
+        },
+        {
+          "relationship": {
+            "id": "app-sysenter",
+            "from": "app",
+            "to": "sysenter",
+            "label": "sysenter → read",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "bends": 4,
+          "stretch": 1.733
+        },
+        {
+          "relationship": {
+            "id": "app-vdso",
+            "from": "app",
+            "to": "vdso",
+            "label": "clock_gettime(无内核)",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1.154,
+          "directCorridorBlockers": [
+            {
+              "id": "libc",
+              "label": "libc 封装",
+              "box": [
+                250,
+                60,
+                150,
+                66
+              ]
+            }
+          ]
+        },
+        {
+          "relationship": {
+            "id": "ret-app",
+            "from": "ret",
+            "to": "app",
+            "label": "sysretq / iretq",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "bends": 4,
+          "stretch": 1.053
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "app has 4 relationships facing its right side, which fits 3 ports: make that side at least 74px, or move some of those neighbours so they face another side of app.",
+      "libc → sys_entry crosses app → sysenter: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "libc → sys_entry crosses app → vdso: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "app → sysenter and app → exc cross next to app: move node sysenter or exc so the two reach app from different sides (for example one level with it, one directly above or below it).",
+      "app → sysenter crosses sys_entry → dispatch: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "app → sysenter crosses int80 → dispatch: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "app → exc crosses sysenter → dispatch: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "app → exc crosses dispatch → subsys: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}
