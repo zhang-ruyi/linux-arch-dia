@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "0a03f117-c105-4121-8720-6181b63ec4da",
+  "receiptId": "55b62b8f-7fcb-43b8-8ccc-5f59aa528266",
   "status": "current",
   "command": "deliver",
   "type": "tree",
   "input": "/home/zhang/opencode/code_analsys/.archify/tree-nvme-support-scope/candidate.json",
   "output": "/home/zhang/opencode/code_analsys/site/NVMe驱动/nvme-support-scope.html",
   "specification": {
-    "sha256": "12d0771b93b7669754e843919756429f153656dc003690eea0e91ccf9f02b67b",
-    "bytes": 10477
+    "sha256": "868a57c5f4be34dd81aca4e54b3b2e2374eec62dc9f389a8d68815dab69e22a6",
+    "bytes": 10479
   },
   "artifact": {
-    "sha256": "8a144593d44e4f8194302557b8008b94cb9310e2e00c19f91b9ae464b287507f",
-    "bytes": 880674
+    "sha256": "3c6e642f6935fdc2261fef74d1ecfeb9f32336232ceeb87ebbf57e9e0fc34580",
+    "bytes": 880690
   }
 }

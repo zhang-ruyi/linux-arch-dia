@@ -23,7 +23,7 @@
     {
       "id": "nvme",
       "label": "NVMe 支持范围",
-      "sublabel": "Linux v7.2-rc3 · drivers/nvme",
+      "sublabel": "Linux v7.4.0-rc1 · drivers/nvme",
       "sources": [
         {
           "path": "drivers/nvme/host/Kconfig",

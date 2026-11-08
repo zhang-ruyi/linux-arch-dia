@@ -21,7 +21,7 @@
   "nodes": [
     {
       "id": "kernel",
-      "label": "Linux 内核 v7.2-rc3",
+      "label": "Linux 内核 v7.4.0-rc1",
       "sublabel": "源码树 git.kernel.org/torvalds/linux"
     },
     {
