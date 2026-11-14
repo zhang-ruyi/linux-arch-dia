@@ -28,6 +28,7 @@
 | `~/opencode/workspace/ruy` | `zhang-ruyi/ruy` | 博客源码(持久位置);`/tmp` 下的旧 clone 已清理 |
 | `~/opencode/workspace/ruy-fnos` | (待归档) | 博客 → 飞牛 fnOS 原生应用工程(`build.sh` / `deploy.sh`) |
 | `~/opencode/workspace/clash-doctor` | `zhang-ruyi/clash-doctor` | 软路由代理体检工具 |
+| `~/opencode/workspace/daily-digest` | `zhang-ruyi/daily-digest` | 每日 4 批 AI/内核/半导体新闻推送(企微),路由 cron 运行 |
 | `~/opencode/workspace/llm-arch-dia` | `zhang-ruyi/llm-arch-dia` | LLM 图集源码(含构建产物 `site/`) |
 
 注意:
