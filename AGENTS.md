@@ -109,6 +109,7 @@
 |---|---|---|
 | `clash-doctor` | `~/opencode/workspace/clash-doctor` | 软路由代理体检:模式/节点/规则/出口实测 + 修复指南;支持 `--sub` 订阅校验、`--oc` SSH/UCI 配置层、`--fix` 自动修复、`--watch`;凭证 `~/.config/opencode/clash.env` |
 | `ruy-fnos` | `~/opencode/workspace/ruy-fnos` | 博客 → 飞牛 fnOS 应用;`build.sh` 打包、`FNOS_PW=... ./deploy.sh` 构建并部署 |
+| `daily-digest` | `~/opencode/workspace/daily-digest` | 每日新闻推送(AI 08:00 / 内核 12:00 / 半导体 17:00),企微机器人;路由 cron 运行,日志 `/var/log/daily-digest.log` |
 
 ## 5. 接下来
 
@@ -229,6 +230,18 @@ $CHROME --headless --no-sandbox --disable-gpu --hide-scrollbars \
   --virtual-time-budget=1500 --screenshot=/tmp/opencode/m.png \
   http://127.0.0.1:8010/2026/11/18/io-data-journey.html
 ```
+
+### 每日新闻推送(daily-digest)
+
+```bash
+cd ~/opencode/workspace/daily-digest
+python3 digest.py ai                      # 立即推送
+python3 digest.py kernel --dry-run        # 预览
+python3 digest.py semi --hours 48 --per-source 4
+ssh root@192.168.5.75 'python3 /etc/daily-digest/digest.py ai --dry-run'
+```
+
+路由器定时:`08:00 ai` / `12:00 kernel` / `17:00 semi`(`/etc/crontabs/root`);去重状态 `/etc/daily-digest/seen.json`。
 
 ### 代理体检(clash-doctor)
 
