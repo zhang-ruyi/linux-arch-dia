@@ -24,8 +24,11 @@
 | `/tmp/opencode/llm-arch-dia-repo` | `zhang-ruyi/llm-arch-dia` | LLM 图集(vLLM/LMCache),Bento UI |
 | `/tmp/opencode/ruy-blog` | `zhang-ruyi/ruy` | Jekyll 博客、文章、微信 `wechat/` 源文件与产物 |
 | `/tmp/opencode/skills-repo` | `zhang-ruyi/skills` | 可复用 skill 归档(含 `wechat-article`) |
+| `/home/zhang/opencode/workspace/` | (本地) | **新工具/项目的默认存放目录**,每个项目一个子目录,例如 `workspace/clash-doctor` |
 
 注意:
+
+- **新工具、脚本、实验项目默认放 `/home/zhang/opencode/workspace/<project>/`**;不要再放 `/tmp/opencode`(实测会被清理,2026-11-15 已发生过)。
 
 - `/tmp/opencode` 是临时工作区,可能被清理。缺失时用 SSH 重新 clone:`git@github.com:zhang-ruyi/<repo>.git`。
 - 博客线上地址:`https://zhang-ruyi.github.io/ruy/`;permalink 为 `/:year/:month/:day/:title.html`。
@@ -81,6 +84,12 @@
 | `layout-map` | 已归档 |
 | `tree-map` | 已归档 |
 | `wechat-article` | 已归档并推送 |
+
+### 本地工具
+
+| 工具 | 路径 | 用途 |
+|---|---|---|
+| `clash-doctor` | `~/opencode/workspace/clash-doctor` | 软路由代理体检:模式/节点/规则/出口实测 + 修复指南;凭证 `~/.config/opencode/clash.env` |
 
 ## 5. 接下来
 
