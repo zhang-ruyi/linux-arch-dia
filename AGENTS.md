@@ -24,7 +24,11 @@
 | `/tmp/opencode/llm-arch-dia-repo` | `zhang-ruyi/llm-arch-dia` | LLM 图集(vLLM/LMCache),Bento UI |
 | `/tmp/opencode/ruy-blog` | `zhang-ruyi/ruy` | Jekyll 博客、文章、微信 `wechat/` 源文件与产物 |
 | `/tmp/opencode/skills-repo` | `zhang-ruyi/skills` | 可复用 skill 归档(含 `wechat-article`) |
-| `/home/zhang/opencode/workspace/` | (本地) | **新工具/项目的默认存放目录**,每个项目一个子目录,例如 `workspace/clash-doctor` |
+| `/home/zhang/opencode/workspace/` | (本地) | **新工具/项目的默认存放目录**,每个项目一个子目录 |
+| `~/opencode/workspace/ruy` | `zhang-ruyi/ruy` | 博客源码(持久位置);`/tmp` 下的旧 clone 已清理 |
+| `~/opencode/workspace/ruy-fnos` | (待归档) | 博客 → 飞牛 fnOS 原生应用工程(`build.sh` / `deploy.sh`) |
+| `~/opencode/workspace/clash-doctor` | `zhang-ruyi/clash-doctor` | 软路由代理体检工具 |
+| `~/opencode/workspace/llm-arch-dia` | `zhang-ruyi/llm-arch-dia` | LLM 图集源码(含构建产物 `site/`) |
 
 注意:
 
@@ -33,6 +37,7 @@
 - `/tmp/opencode` 是临时工作区,可能被清理。缺失时用 SSH 重新 clone:`git@github.com:zhang-ruyi/<repo>.git`。
 - 博客线上地址:`https://zhang-ruyi.github.io/ruy/`;permalink 为 `/:year/:month/:day/:title.html`。
 - 本地服务目录映射:`/tmp/opencode/serve/ruy` → `/tmp/opencode/_site_test`,端口 8123。
+- **飞牛 NAS**:`192.168.5.53`(Web 5666;应用端口 8899)。SSH 用户 `zhang`,已加入本机公钥 `~/.ssh/id_ed25519_router`;`sudo` 需密码,脚本用 `FNOS_PW` 环境变量传入,不写入仓库。
 - 内核源码默认:`/home/zhang/workspace/Git/linux`(2026-11-15 由 `~/workspace/Git/git.kernel.org/linux` move 而来;origin 已改为 `https://github.com/zhang-ruyi/linux.git` fork)。
 - 本地 vLLM/LMCache checkout 的 origin 是 `zhang-ruyi/vllm`、`zhang-ruyi/LMCache`(不是上游);Archify `meta.repository.url` 必须与实际 origin 一致,否则 repository-evidence 门禁失败。
 
@@ -76,6 +81,19 @@
 - 中文标点全角、中文引号、组件字号上调、390px 预览;草稿箱两篇已原地更新,**未发布**。
 - 微信流程已固化为 skill:`zhang-ruyi/skills` → `skills/wechat-article`(commit `49e691b`)。
 
+### fnOS 应用(ruy-fnos)
+
+- 把博客 + 两个图集打包成飞牛原生应用 `RUY 知识库`,已安装运行在 `192.168.5.53`,端口 `8899`。
+- 形态:原生应用(端口服务),`cmd/main` 起 `python3 -m http.server`,`ctl_stop=true`、`service_port=8899`。
+- 内容:19 个博客页面 + 58 张 Linux 图 + 7 张 LLM 图,离线可读;包约 15MB。
+- 移动端:`tools/mobile.css` 修复文章页横向溢出(CSS Grid `1fr` 被内容撑成 920px,需 `minmax(0,1fr)`)、宽图组件内部滚动、关闭滚动淡入。
+- 构建:`build.sh`(Jekyll → 复制图集 → 注入 CSS/改写链接 → 版本 +1 → fnpack);部署:`deploy.sh`(卸载→安装→启动→验证)。
+- 踩过的坑:
+  - 飞牛不支持同 appname 覆盖安装,必须**先卸载再装**(否则版本号不变、内容不更新)。
+  - CGI 入口(iframe + `/cgi/ThirdParty/<app>/index.cgi/`)在 v0.1.2 能显示图标但点击无反应;端口服务模式可用。
+  - 入口 `port` 与 manifest `service_port` 必须一致;给入口硬写系统端口 5666 会导致图标消失。
+- 仓库状态:工程在 `~/opencode/workspace/ruy-fnos`,**尚未建 git 仓库/推送**。
+
 ### Skills
 
 | Skill | 状态 |
@@ -89,16 +107,19 @@
 
 | 工具 | 路径 | 用途 |
 |---|---|---|
-| `clash-doctor` | `~/opencode/workspace/clash-doctor` | 软路由代理体检:模式/节点/规则/出口实测 + 修复指南;凭证 `~/.config/opencode/clash.env` |
+| `clash-doctor` | `~/opencode/workspace/clash-doctor` | 软路由代理体检:模式/节点/规则/出口实测 + 修复指南;支持 `--sub` 订阅校验、`--oc` SSH/UCI 配置层、`--fix` 自动修复、`--watch`;凭证 `~/.config/opencode/clash.env` |
+| `ruy-fnos` | `~/opencode/workspace/ruy-fnos` | 博客 → 飞牛 fnOS 应用;`build.sh` 打包、`FNOS_PW=... ./deploy.sh` 构建并部署 |
 
 ## 5. 接下来
 
-1. **微信草稿**:用户在后台预览两篇草稿;确认手机端渲染后手动群发。若某组件仍挤/断行,只调该组件的内联样式并 `draft/update`,不新建草稿。
-2. **Skill 同步(可选)**:把 `wechat-article` 复制到项目 `.opencode/skills/` 或全局,便于下次直接触发。
-3. **博客同步(可选)**:把微信版文字/图卡改动回灌到 `_posts/*.md`,保持网页与公众号一致。
-4. **图集继续**:按需补图/修图;改动必须重跑四门禁并做浏览器检查。
-5. **GitHub**:`gh` token 已失效;仓库操作用 SSH。新建仓库需用户手动或重新登录 `gh`。
-6. **工具沉淀**:把新出现的稳定模式(layout-map/tree-map/dataflow)继续归档到 `zhang-ruyi/skills`。
+1. **内核证据校验脚本**:写 `verify_sources.py`,用 `git show <revision>:<path>` 校验 `.archify/*/candidate.json` 的 `sources` 与卡片 `函数 — path:line`;修掉审计发现的 3 条卡片偏差(startup_64、dev 误解析、__napi_poll)与 `workflow-concurrency-primitives` 缺失的 `meta.repository`。
+2. **ruy-fnos 归档**:工程尚未建 git 仓库;确认后推送到 `zhang-ruyi/ruy-fnos`(或并入其他仓库)。
+3. **微信草稿**:用户在后台预览两篇草稿;确认手机端渲染后手动群发。若某组件仍挤/断行,只调该组件的内联样式并 `draft/update`,不新建草稿。
+4. **Skill 同步(可选)**:把 `wechat-article` 复制到项目 `.opencode/skills/` 或全局,便于下次直接触发。
+5. **博客同步(可选)**:把微信版文字/图卡改动回灌到 `_posts/*.md`,保持网页与公众号一致。
+6. **图集继续**:按需补图/修图;改动必须重跑四门禁并做浏览器检查。图集更新后需重跑 `ruy-fnos/build.sh`。
+7. **GitHub**:`gh` token 已失效;仓库操作用 SSH。新建仓库需用户手动或重新登录 `gh`。
+8. **工具沉淀**:把新出现的稳定模式(layout-map/tree-map/dataflow)继续归档到 `zhang-ruyi/skills`。
 
 ## 6. 开发约束(必须遵守)
 
@@ -148,6 +169,16 @@
 - 不使用 `pkill -f`(会误杀当前 shell);查端口用 `ss -tlnp | grep ':8000'`,取 pid 再 kill。
 - 代理:`192.168.5.75:7890`;微信 API 用 `trust_env=False` 直连(白名单 IP `117.22.85.159`,以实际出口为准)。浏览器访问内网时需绕代理。
 
+### 6.5 飞牛 fnOS 应用
+
+- 应用工程放 `~/opencode/workspace/ruy-fnos`;每次内容更新跑 `FNOS_PW=... ./deploy.sh`。
+- 飞牛**不支持同 appname 覆盖安装**,必须卸载后安装;`deploy.sh` 已封装。
+- 桌面入口 `port` 必须等于 manifest `service_port`;不要写系统端口(5666 等),否则图标不显示。
+- 静态站用端口服务(`python3 -m http.server`),不用 CGI 入口(当前版本点击无反应)。
+- 图集目录随包分发时,需把 `../diagrams/`、`../posts/`、`../` 改写成根路径(`tools/postprocess.py` 已处理)。
+- 移动端改动只改 `tools/mobile.css`;改完必须用 390px 截图复核(文章页、首页、图集页)。
+- `FNOS_PW` / SSH 私钥不进仓库;NAS 上 `appcenter-cli` 需 sudo。
+
 ## 7. 常用命令
 
 ### 微信文章
@@ -176,6 +207,38 @@ python3 scripts/wechat_draft.py test
 python3 scripts/wechat_draft.py create --html html/a.html --cover cover.jpg --digest "摘要"
 python3 scripts/wechat_draft.py update --media-id <DRAFT_ID> --html html/a.html
 python3 scripts/wechat_draft.py list
+```
+
+### 飞牛 fnOS 应用
+
+```bash
+cd ~/opencode/workspace/ruy-fnos
+./build.sh                                # 只打包:ruy/ruy.fpk
+FNOS_PW='...' ./deploy.sh                 # 构建 + 卸载旧版 + 安装 + 启动 + 验证
+curl --noproxy '*' -s -o /dev/null -w '%{http_code}\n' http://192.168.5.53:8899/
+```
+
+移动端复核(390px):
+
+```bash
+cd ~/opencode/workspace/ruy-fnos/ruy/app/www
+python3 -m http.server 8010 --bind 127.0.0.1 &
+CHROME=$HOME/.cache/archify-chrome/chrome-headless-shell-linux64/chrome-headless-shell
+$CHROME --headless --no-sandbox --disable-gpu --hide-scrollbars \
+  --force-device-scale-factor=2 --window-size=390,1600 \
+  --virtual-time-budget=1500 --screenshot=/tmp/opencode/m.png \
+  http://127.0.0.1:8010/2026/11/18/io-data-journey.html
+```
+
+### 代理体检(clash-doctor)
+
+```bash
+cd ~/opencode/workspace/clash-doctor
+python3 clash_doctor.py                    # 体检
+python3 clash_doctor.py --fix --yes        # 运行时修复
+python3 clash_doctor.py --sub '<订阅URL>'    # 订阅格式/UA 校验
+python3 clash_doctor.py --oc status        # OpenClash 配置层(SSH)
+python3 clash_doctor.py --watch 60         # 定时观察
 ```
 
 ### Jekyll
@@ -215,6 +278,10 @@ git push origin main
 | 组件像表格 | 改成字段卡/流程卡,不要两列+虚线 |
 | 本地预览 404/空白 | 检查 `/tmp/opencode/serve` 软链与 `_site_test`;确认端口 |
 | 图片/字体加载失败 | 微信不加载外链;全部内联/上传素材 |
+| 飞牛安装后版本没变 | 先 `uninstall` 再 `install`;不支持同 appname 覆盖 |
+| 飞牛桌面图标消失 | 入口 `port` 必须等于 `service_port`;不要写系统端口 5666 |
+| 飞牛点击「打开」无反应 | 改用端口服务模式,不用 CGI 入口 |
+| 移动端文章横向溢出 | `.article-layout` 用 `minmax(0,1fr)`;`io-box` 等加 `overflow-x:auto` |
 
 ## 9. 验收清单
 
@@ -227,5 +294,6 @@ git push origin main
 - [ ] 390px 预览无溢出/断词/孤字
 - [ ] 「阅读原文」链接 200
 - [ ] 草稿箱预览确认;未自动发布
+- [ ] fnOS 应用:文章页/首页/图集页 390px 无横向溢出;包内图集返回链接可用
 - [ ] 无密钥/token 进入仓库
 - [ ] commit 信息清晰,只包含预期文件
