@@ -115,7 +115,7 @@ systemctl --user enable --now linux-arch-dia
    node ~/.agents/skills/archify/bin/archify.mjs finalize sequence \
      .archify/sequence-fork-process-creation/candidate.json \
      site/进程管理/fork-process-creation.html \
-     --repo-root ~/workspace/Git/git.kernel.org/linux \
+     --repo-root /home/zhang/workspace/Git/linux \
      --quality showcase --json
    ```
 
@@ -166,7 +166,7 @@ export ARCHIFY_CHROME_NO_SANDBOX=1   # Ubuntu 下 userns 被禁用时必须
 
 ### 1. 分析源码并核实符号
 
-源码树示例:`~/workspace/Git/git.kernel.org/linux`。
+源码树示例:`/home/zhang/workspace/Git/linux`。
 
 ```bash
 # 找定义
@@ -174,7 +174,7 @@ grep -rn "handle_mm_fault" mm/memory.c | head
 # 找调用者
 grep -rn "handle_mm_fault(" --include="*.c" | grep -v "handle_mm_fault(struct"
 # 取当前 HEAD,写入 candidate 的 meta.repository.revision
-git -C ~/workspace/Git/git.kernel.org/linux rev-parse HEAD
+git -C /home/zhang/workspace/Git/linux rev-parse HEAD
 ```
 
 规则:写进图的每个函数名、结构体名、行号都必须在源码树中 `grep` 核实,不要凭记忆(例如 `do_filp_open` 自 7.2 起改名为 `do_file_open`,`send_signal` 为 `send_signal_locked`)。
@@ -247,7 +247,7 @@ export ARCHIFY_CHROME_NO_SANDBOX=1
 node ~/.agents/skills/archify/bin/archify.mjs finalize sequence \
   .archify/sequence-example-read/candidate.json \
   site/文件系统/example-read.html \
-  --repo-root ~/workspace/Git/git.kernel.org/linux \
+  --repo-root /home/zhang/workspace/Git/linux \
   --quality showcase --json
 ```
 

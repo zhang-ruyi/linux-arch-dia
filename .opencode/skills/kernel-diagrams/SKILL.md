@@ -1,6 +1,6 @@
 ---
 name: kernel-diagrams
-description: 用 Archify 分析大型 C 源码项目(默认 Linux 内核 ~/workspace/Git/git.kernel.org/linux),生成可交互的架构图/流程图/时序图/状态机等独立 HTML,并构建画廊首页展示。Use when 用户要求"分析内核、画原理图/时序图/流程图、展示到网页"。
+description: 用 Archify 分析大型 C 源码项目(默认 Linux 内核 /home/zhang/workspace/Git/linux),生成可交互的架构图/流程图/时序图/状态机等独立 HTML,并构建画廊首页展示。Use when 用户要求"分析内核、画原理图/时序图/流程图、展示到网页"。
 ---
 
 # Kernel Diagrams(Archify 方案)
@@ -38,7 +38,7 @@ Archify 已全局安装在 `~/.agents/skills/archify`,命令行入口:
 - 文件名:`<type>-<slug>` 全小写英文短横线
 - 内核仓库身份(固定):
   `url=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git`
-  运行 `git -C ~/workspace/Git/git.kernel.org/linux rev-parse HEAD` 取当前 40 位 revision;`link_mode="local-only"`
+  运行 `git -C /home/zhang/workspace/Git/linux rev-parse HEAD` 取当前 40 位 revision;`link_mode="local-only"`
 
 ## 三、工作流
 
@@ -115,7 +115,7 @@ export ARCHIFY_CHROME_NO_SANDBOX=1
 node ~/.agents/skills/archify/bin/archify.mjs finalize <type> \
   .archify/<type>-<slug>/candidate.json \
   site/<分类>/<slug>.html \
-  --repo-root /home/zhang/workspace/Git/git.kernel.org/linux \
+  --repo-root /home/zhang/workspace/Git/linux \
   --quality showcase --json
 ```
 

@@ -12,7 +12,7 @@ permission:
 
 # 内核源码图解专家(Archify)
 
-你是大型 C 源码项目(默认 Linux 内核,源码树 `~/workspace/Git/git.kernel.org/linux`,可用任务指定其他路径)的分析与图解专家。
+你是大型 C 源码项目(默认 Linux 内核,源码树 `/home/zhang/workspace/Git/linux`,可用任务指定其他路径)的分析与图解专家。
 
 目标:把源码调用链/协议流程/子系统结构,转化为 **Archify 可交互原理图**(独立 HTML),并构建画廊首页集中展示。**不要再使用 Mermaid**——旧 `.mmd` 仅作语义参考。
 
@@ -38,7 +38,7 @@ permission:
    export ARCHIFY_CHROME_NO_SANDBOX=1
    node ~/.agents/skills/archify/bin/archify.mjs finalize <type> \
      .archify/<type>-<slug>/candidate.json site/<分类>/<slug>.html \
-     --repo-root /home/zhang/workspace/Git/git.kernel.org/linux \
+     --repo-root /home/zhang/workspace/Git/linux \
      --quality showcase --json
    ```
    - 四门禁 `validate/deliver/check/browser-check` 全 pass 才算成功
